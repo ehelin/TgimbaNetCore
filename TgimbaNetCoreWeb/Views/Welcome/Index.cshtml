@@ -1,0 +1,121 @@
+﻿@model TgimbaNetCoreWebShared.Models.SharedWelcomeModel
+@{
+    ViewData["Title"] = "Welcome Page";
+}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var userCnt = document.getElementById('UserCnt');
+        userCnt.innerHTML = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[0]) as String);
+
+        drawCategoryChart();
+        drawAchievedChart();
+        drawCreatedDateChart();
+    }
+
+    function drawCategoryChart(results) {
+        var data = google.visualization.arrayToDataTable([
+            ['Category', 'Category'],
+            ['Hot', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[1]) as String))],
+            ['Warm', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[2]) as String))],
+            ['Cool', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[3]) as String))]
+        ]);
+
+        var options = {
+            title: 'Categories'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('Category'));
+        chart.draw(data, options);
+    }
+    function drawAchievedChart(results) {
+        var data = google.visualization.arrayToDataTable([
+            ['Achieved', 'Achieved'],
+            ['True', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[4]) as String))],
+            ['False', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[5]) as String))]
+        ]);
+
+        var options = {
+            title: 'Achieved'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('Achieved'));
+        chart.draw(data, options);
+
+    }
+    //TODO - Fix so the years are dynamic
+    function drawCreatedDateChart(results) {
+        var data = google.visualization.arrayToDataTable([
+            ['Created Year', 'Created Year'],
+            ['2015', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[6]) as String))],
+            ['2016', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[7]) as String))],
+            ['2017', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[8]) as String))],
+            ['2018', Number(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardData[9]) as String))]
+        ]);
+
+        var options = {
+            title: 'Created Year'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('Created'));
+        chart.draw(data, options);
+    }
+</script>
+
+<div class="Html5JqueryBody" onload="drawChart()">
+    <div align="center"><h2>Welcome to 'The Globe In My Bucket <i>Application</i>' <br />(TGIMBA)</h2></div>
+
+    <div>
+        <table class="DashboardSpan">
+            <tr>
+                <td class="DashboardTotalUsers" >
+                    <div id="UserCnt" name="UserCnt" ></div>
+                </td>
+                <td class="DashboardPartSpan" ><div id="Category" name="Category" ></div></td>
+                <td class="DashboardPartSpan" ><div id="Achieved" name="Achieved" ></div></td>
+                <td class="DashboardPartSpan" ><div id="Created" name="Created\" ></div></td>  
+                </tr>
+        </table>
+    </div>
+    
+    <p>
+        NOTICE: TGIMBA will be in a perpetual state of development for its .NET Core Vanilla JavaScript update for the 
+        near future.  The basic site works and I will be adding more functionality in the days to come.  I hope to have the 
+        re-write complete so the old site's functionality is reintroduced by the end of the year with the updated Android 
+        application to follow.   
+    </p>
+
+    <p>I am documenting this process on my blog <a href="https://erichelin.wordpress.com">here</a> if anyone wants to follow along :)</p>
+
+    <p>
+        This is a site to place your desired list of things you wish to complete while you are alive.
+    </p>
+    <p>
+        I created TGIMBA because I am passionate about living my life through such a list.  It keeps me focused
+        since there are so many things I wish to do.  I truly believe that you have between now and the
+        time your number is up and what you do with it is up to you.
+    </p>
+    <p>
+        This is also a work in progress that is allowing me to explore different technologies and how they
+        can be applied to the Internet. There are no warranties (implied or otherwise) and everyone is free
+        to use it as is.
+    </p> 
+
+    @*<p>
+        Please click <a id="login" href="https://www.tgimba.com/Home/Index">here</a>
+        to start.
+    </p>
+    <p>
+        Login as the demo user to preview the application functionality <a id="demoLogin" href="http://www.tgimba.com/WebRequest/DirectRequestDemoUser">here.</a>
+    </p>*@
+
+</div>
+

@@ -1,0 +1,37 @@
+﻿.header {
+    background-color:navy;
+    color:white;
+    text-align:center;
+    font-size: 100%;
+}
+.detailArea {
+    color:navy;
+    border:solid;
+}
+.body {
+    background-color:white;
+    color:navy;
+    text-align:center;
+}
+.yellowBlue {
+    color:navy;
+    font-size: 120%;
+}
+.answerHide{
+    display:none;
+}
+.answerShow{
+    display:block;
+}
+.conjuncationHide{
+    display:none;
+}
+.conjuncationShow{
+    display:block;
+}
+.masterConjuncationHide{
+    display:none;
+}
+.masterConjuncationShow{
+    display:block;
+}

@@ -1,0 +1,13 @@
+﻿.DashboardSpan {
+    width: 100%;
+    height: 30%;
+    margin: auto;
+    font-family: Arial;
+}
+
+.DashboardPartSpan {
+    width: 30%;
+    height: 30%;
+    margin: auto;
+    font-family: Arial;
+}
