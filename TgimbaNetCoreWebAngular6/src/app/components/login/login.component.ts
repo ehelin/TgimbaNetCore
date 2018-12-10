@@ -46,6 +46,7 @@ export class LoginComponent {
 			data => {
 				if (data !== null && data !== undefined && data !== '') {
 					alert('Logged In');
+					this.router.navigate(['/main']);
 				} else {
 					alert('Username and/or password is not correct.  Please try again');
 				}

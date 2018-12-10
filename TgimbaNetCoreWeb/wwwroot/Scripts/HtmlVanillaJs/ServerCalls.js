@@ -50,7 +50,8 @@ ServerCalls.ProcessLogin = function(view, params) {
         function (token) {
             if (token !== null && token !== undefined && token.length > 0) {
                 //SessionSetToken(SESSION_TOKEN, token);	   
-                alert('Username is logged in');     
+                alert('Username is logged in');   
+				Display.LoadView(VIEW_MAIN);  
             } else {
                 // TODO - reset user and pass text boxes to empty
                 alert('Username and/or password is incorrect');                

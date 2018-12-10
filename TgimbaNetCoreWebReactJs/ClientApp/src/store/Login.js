@@ -13,9 +13,7 @@ export const actionCreators = {
 export const reducer = (state, action) => {
 	state = state || initialState;
 
-	if (action.type === ACTION_TYPE_LOGIN) {
-		//alert('login (u/p) - ' + action.username + '/' + action.password); 
-														   															 
+	if (action.type === ACTION_TYPE_LOGIN) {															 
 		// TODO - move to utility function
 		var host = window.location.protocol + "//"
 			+ window.location.hostname + ':' + window.location.port;
@@ -30,6 +28,10 @@ export const reducer = (state, action) => {
 				&& data.currentTarget.response.length > 0)
 			{
 				alert('User is logged in!');
+				// TODO - move to utility function
+				var host = window.location.protocol + "//"
+					+ window.location.hostname + ':' + window.location.port;
+				window.location = host + '/main';
 			} else {
 				alert('User is not logged in!');
 			}
