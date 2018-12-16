@@ -4,7 +4,8 @@ using SharedControllers = TgimbaNetCoreWebShared.Controllers;
 using SharedModels = TgimbaNetCoreWebShared.Models;
 
 namespace TgimbaNetCoreWeb.Controllers
-{
+{			 
+	[RequireHttpsAttribute]
     public class WelcomeController : Controller
     {
 		private SharedControllers.SharedWelcomeController sharedWelcomeController = null;

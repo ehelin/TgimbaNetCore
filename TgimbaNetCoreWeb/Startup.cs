@@ -40,7 +40,8 @@ namespace TgimbaNetCoreWeb
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles();	   
+			app.UseHttpsRedirection();
 
             app.UseMvc(routes =>
             {
