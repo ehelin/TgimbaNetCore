@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsShared", "TestShared\T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestJavaScriptV2", "TestJavaScriptV2\TestJavaScriptV2.csproj", "{234F724E-F026-4475-BBFB-924E4F7D4586}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TgimbaNetCoreWebShared", "TgimbaNetCoreWebShared\TgimbaNetCoreWebShared.csproj", "{81334608-BA69-427E-BB7B-99861B473211}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaNetCoreWebShared", "TgimbaNetCoreWebShared\TgimbaNetCoreWebShared.csproj", "{81334608-BA69-427E-BB7B-99861B473211}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

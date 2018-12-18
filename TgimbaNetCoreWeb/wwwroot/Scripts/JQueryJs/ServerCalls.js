@@ -30,7 +30,7 @@ function JQueryLogin(params) {
 
 	if (token && token.length > 0){
 		alert('JQuery logged in!');
-		Display.LoadView(VIEW_MAIN);  
+		MainController.Index();
 	} else {				 
 		alert('JQuery not logged in!');
 	}					 

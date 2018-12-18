@@ -3,14 +3,15 @@
 Display.SetView = function(view, contentDiv, loadedView) {
 	contentDiv.innerHTML = loadedView;	
 
-	if (view === VIEW_LOGIN) 
-	{			
+	if (view === VIEW_LOGIN) {
 		Display.SetTitle(LOGIN_VIEW_DIV, VANILLA_JAVASCRIPT_LOGIN_TITLE);
-	} 
-	else if (view === VIEW_REGISTRATION) 
-	{										   
+	}
+	else if (view === VIEW_REGISTRATION) {
 		Display.SetTitle(REGISTRATION_VIEW_DIV, VANILLA_JAVASCRIPT_REGISTRATION_TITLE);
-	} 
+	}
+	else if (view === VIEW_MENU) {
+		Display.SetTitle(MENU_VIEW_DIV, VANILLA_JAVASCRIPT_MENU_TITLE);		
+	}
 	else {
 		Error('Unknown view');
 	}

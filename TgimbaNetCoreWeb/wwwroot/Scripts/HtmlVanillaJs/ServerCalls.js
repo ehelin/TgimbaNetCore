@@ -48,17 +48,16 @@ ServerCalls.ProcessLogin = function(view, params) {
     return ServerCall.Post(view, formData)
         .then(
         function (token) {
-            if (token !== null && token !== undefined && token.length > 0) {
-                //SessionSetToken(SESSION_TOKEN, token);	   
+            if (token !== null && token !== undefined && token.length > 0) {	
+				// TODO - remove alert 
                 alert('Username is logged in');   
-				Display.LoadView(VIEW_MAIN);  
+
+				SessionSetToken(SESSION_TOKEN, token);
+				MainController.Index();		           
             } else {
                 // TODO - reset user and pass text boxes to empty
                 alert('Username and/or password is incorrect');                
             }
-									 
-			// TODO - figure out set view for multiple views
-            //SetView();
         });
 };
 
