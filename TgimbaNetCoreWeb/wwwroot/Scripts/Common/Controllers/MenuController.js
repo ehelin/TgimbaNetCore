@@ -17,7 +17,9 @@ MenuController.RunAlgorithm = function () {
 };
 
 MenuController.LogOut = function () {
-	alert('LogOut() clicked');
+	alert('LogOut() clicked');	   
+	SessionClearStorage();	 
+	ApplicationFlow.SetView();
 };
 
 MenuController.Cancel = function () {

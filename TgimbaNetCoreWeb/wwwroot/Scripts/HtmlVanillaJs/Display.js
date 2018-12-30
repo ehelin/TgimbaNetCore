@@ -12,6 +12,9 @@ Display.SetView = function(view, contentDiv, loadedView) {
 	else if (view === VIEW_MENU) {
 		Display.SetTitle(MENU_VIEW_DIV, VANILLA_JAVASCRIPT_MENU_TITLE);		
 	}
+	else if (view === VIEW_MAIN) {
+		Display.SetTitle(MAIN_VIEW_DIV, VANILLA_JAVASCRIPT_MAIN_TITLE);
+	}
 	else {
 		Error('Unknown view');
 	}

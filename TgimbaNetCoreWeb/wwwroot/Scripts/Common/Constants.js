@@ -7,6 +7,7 @@ var CONTENT_DIV = 'csHtmlContentDiv';
 var LOGIN_VIEW_DIV = 'lbLoginTitleDiv';
 var REGISTRATION_VIEW_DIV = 'lbRegistrationTitleDiv';
 var MENU_VIEW_DIV = 'menuTitleDiv';
+var MAIN_VIEW_DIV = 'lbMainTitleDiv';
 
 var VIEW_MAIN =	'/Markup/HtmlVanillaJs/Views/Main/Index.html';
 var VIEW_LOGIN = '/Markup/HtmlVanillaJs/Views/Login/Index.html';
@@ -28,8 +29,10 @@ var USER_CONTROL_LOGIN_PASS = 'tbLoginPassword';
 
 var JQUERY_LOGIN_TITLE = 'JQuery - Login'; 			 
 var JQUERY_REGISTRATION_TITLE = 'JQuery - Registration';
-var JQUERY_MENU_TITLE = 'JQuery - Menu';
+var JQUERY_MENU_TITLE = 'JQuery - Menu';				 
+var JQUERY_MAIN_TITLE = 'JQuery - Main';
 
 var VANILLA_JAVASCRIPT_LOGIN_TITLE = 'Vanilla JavaScript - Login';
 var VANILLA_JAVASCRIPT_REGISTRATION_TITLE = 'Vanilla JavaScript - Registration';
-var VANILLA_JAVASCRIPT_MENU_TITLE = 'Vanilla JavaScript - Menu';
+var VANILLA_JAVASCRIPT_MENU_TITLE = 'Vanilla JavaScript - Menu';				 
+var VANILLA_JAVASCRIPT_MAIN_TITLE = 'Vanilla JavaScript - Main';

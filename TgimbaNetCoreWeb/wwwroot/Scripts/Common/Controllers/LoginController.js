@@ -16,7 +16,7 @@ LoginController.Login = function() {
 								);
 	
 	if (IsJQueryClient()) {
-		JQueryLogin(params);
+		ServerCalls.JQueryLogin(params);
 	} else {
 		ServerCalls.ProcessLogin(LOGIN_PROCESS_USER, params);
 	}   

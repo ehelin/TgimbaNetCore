@@ -53,9 +53,9 @@ namespace TgimbaNetCoreWeb
 					name: "vanillaJsEntry",
 					template: "{controller=Home}/{action=HtmlVanillaJsIndex}/{id?}");
 
-				//routes.MapRoute(
-				//	name: "default",
-				//	template: "{controller=Home}/{action=HtmlJQueryIndex}/{id?}");
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Home}/{action=HtmlJQueryIndex}/{id?}");
 
 				//routes.MapSpaFallbackRoute(
 				//	name: "spa-fallback",

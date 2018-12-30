@@ -3,14 +3,11 @@
 Display.LoadView = function(view) { 	
     var contentDiv = Display.GetContentDiv();
 
-    GetView(view, contentDiv);
-
-	// TODO - best place for this?
-	//ApplyEventHandlers();
+    ServerCalls.GetView(view, contentDiv);
 }
 
 Display.GetContentDiv = function() {   
-	var contentDiv = $('#csHtmlContentDiv');
+	var contentDiv = $('#' + CONTENT_DIV);
     
     isNullUndefined(contentDiv, 'JQuery->Display.js', 'contentDiv');
 

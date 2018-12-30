@@ -22,7 +22,7 @@ RegistrationController.Register = function() {
 								);
 
 	if (IsJQueryClient()) {				 
-	    JQueryRegistration(params);
+		ServerCalls.JQueryRegistration(params);
 	} else {
 		ServerCalls.ProcessRegistration(REGISTRATION_PROCESS_REGISTRATION, params);
 	}   
