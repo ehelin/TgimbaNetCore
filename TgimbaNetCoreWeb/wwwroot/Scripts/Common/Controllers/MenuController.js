@@ -17,11 +17,10 @@ MenuController.RunAlgorithm = function () {
 };
 
 MenuController.LogOut = function () {
-	alert('LogOut() clicked');	   
 	SessionClearStorage();	 
 	ApplicationFlow.SetView();
 };
 
 MenuController.Cancel = function () {
-	alert('Cancel() clicked');
+	ApplicationFlow.SetView();
 };

@@ -20,5 +20,7 @@ export class MainComponent {
 		//				+ window.location.hostname + ':' + window.location.port; 
 	}
 
-
+	public ShowMainMenu() {
+		this.router.navigate(['/menu']);
+	}							   		  			   
 }

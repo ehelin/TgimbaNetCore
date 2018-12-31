@@ -1,6 +1,9 @@
 ﻿import { Injectable, Component, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';					 
+import { Session } from 'protractor';
+import { ConstantsComponent } from '../common/constants.component';
+import { SessionComponent } from '../common/session.component';
 
 @Component({
 	selector: 'app-root',
@@ -22,6 +25,17 @@ export class LoginComponent {
 						+ window.location.hostname + ':' + window.location.port; 
 	}
 
+	public static IsLoggedIn(): boolean {
+		var token = SessionComponent.SessionGetToken(ConstantsComponent.SESSION_TOKEN);
+
+		if (token !== undefined && token !== null && token.length > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}			 
+	}
+
 	public Register() {
 		this.router.navigate(['/registration']);	
 	}						
@@ -41,11 +55,13 @@ export class LoginComponent {
 		return this.http.post(
 			url,
 			null,
-			{ headers: headers }
+			{ headers: headers }										  
 		).subscribe(
 			data => {
 				if (data !== null && data !== undefined && data !== '') {
 					alert('Logged In');
+					let token = JSON.stringify(data);
+					SessionComponent.SessionSetToken(ConstantsComponent.SESSION_TOKEN, token);
 					this.router.navigate(['/main']);
 				} else {
 					alert('Username and/or password is not correct.  Please try again');
