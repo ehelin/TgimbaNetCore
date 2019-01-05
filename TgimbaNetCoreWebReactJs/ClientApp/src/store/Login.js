@@ -13,7 +13,7 @@ export const actionCreators = {
 export const reducer = (state, action) => {
 	state = state || initialState;
 
-	if (action.type === ACTION_TYPE_LOGIN) {															 
+	if (action.type === ACTION_TYPE_LOGIN) {	   
 		// TODO - move to utility function
 		var host = window.location.protocol + "//"
 			+ window.location.hostname + ':' + window.location.port;

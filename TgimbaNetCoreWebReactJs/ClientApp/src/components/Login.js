@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Login';
+import Button  from './Button';
 
 class Login extends React.Component {
 	constructor(props) {
@@ -9,12 +10,12 @@ class Login extends React.Component {
 		this.state = { username: null, password: null };
 	}
 
-	render() {
+	render() {								
 		let { username, password } = this.state;	
 
 		const processLogin = _ => {									 
 			this.props.login(username, password);
-		}
+		}					
 
 		const navigateRegistration = _ => {			 
 			// TODO - move to utility function
@@ -56,9 +57,9 @@ class Login extends React.Component {
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<button onClick={processLogin} id="hvJsLoginBtn">Login</button>
-							<button onClick={navigateRegistration} id="hvJsRegisterPanelBtn">Register</button>
+						<td>		 								   
+							<Button onPress={processLogin} id="hvJsLoginBtn">Login</Button>
+							<Button onPress={navigateRegistration} id="hvJsRegisterPanelBtn">Register</Button>							  
 						</td>
 					</tr>
 				</table>

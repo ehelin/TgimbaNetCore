@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Registration from './components/Registration';
 import FetchData from './components/FetchData';
 import Main from './components/Main';
+import Button from './components/Button';
 
 export default () => (
   <Layout>
