@@ -7,14 +7,15 @@ import Login from './components/Login';
 import Registration from './components/Registration';
 import FetchData from './components/FetchData';
 import Main from './components/Main';
-import Button from './components/Button';
+import MainMenu from './components/MainMenu';
 
 export default () => (
   <Layout>
     <Route exact path='/' component={Login} />	  
     <Route exact path='/login' component={Login} />	  
     <Route exact path='/register' component={Registration} />	
-    <Route exact path='/main' component={Main} />
+	<Route exact path='/main' component={Main} />
+	<Route exact path='/mainmenu' component={MainMenu} />	   
     <Route path='/counter' component={Counter} />	
 	<Route exact path='/home' component={Home} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />

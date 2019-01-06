@@ -1,4 +1,5 @@
-﻿const ACTION_TYPE_LOGIN = 'LOGIN';			
+﻿const ACTION_TYPE_LOGIN = 'LOGIN';
+
 const initialState = {
 	username: null,
 	password: null

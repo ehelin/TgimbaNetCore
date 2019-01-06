@@ -2,6 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Registration';
+import Button from './Button';
 
 class Registration extends React.Component {
 	constructor(props) {
@@ -91,13 +92,11 @@ class Registration extends React.Component {
 					</tr>
 					<tr>
 						<td>
-							<button onClick={processRegistration} id="hvJsRegisterBtn">Register</button>
-							<button onClick={processCancel} id="hvJsRegisterCancelBtn">Cancel</button>
+							<Button onPress={processRegistration} id="hvJsRegisterBtn">Register</Button>
+							<Button onPress={processCancel} id="hvJsRegisterCancelBtn">Cancel</Button>
 						</td>
 					</tr>
-				</table>
-
-
+				</table>   
 			</div>
 		);
 

@@ -7,6 +7,7 @@ import * as Registration from './Registration';
 import * as Main from './Main';
 import * as WeatherForecasts from './WeatherForecasts';	
 import * as Button from './Button';
+import * as MainMenu from './MainMenu';
 
 export default function configureStore(history, initialState) {
   const reducers = {
@@ -15,6 +16,7 @@ export default function configureStore(history, initialState) {
 	  weatherForecasts: WeatherForecasts.reducer,
 	  register: Registration.reducer,
 	  main: Main.reducer,
+	  mainmenu: MainMenu.reducer,
 	  button: Button.reducer
   };
 
