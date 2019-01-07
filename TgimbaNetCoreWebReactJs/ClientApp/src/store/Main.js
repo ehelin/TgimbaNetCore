@@ -1,4 +1,6 @@
-﻿const ACTION_TYPE_MAIN_MENU = 'MainMenu';
+﻿var utilsRef = require('../common/Utilities');
+
+const ACTION_TYPE_MAIN_MENU = 'MainMenu';
 const initialState = {};
 
 export const actionCreators = {
@@ -10,12 +12,11 @@ export const actionCreators = {
 export const reducer = (state, action) => {
 	state = state || initialState;
 
-	// TODO - move to utility function
-	var host = window.location.protocol + "//"
-		+ window.location.hostname + ':' + window.location.port;
+	var utils = Object.create(utilsRef.Utilities);
+	var host = utils.GetHost();
 
 	if (action.type == ACTION_TYPE_MAIN_MENU) {
-		alert('main menu reducer');
+		//alert('main menu reducer');
 		window.location = host + '/mainmenu';
 	}
 

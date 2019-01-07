@@ -1,4 +1,8 @@
-﻿const ACTION_TYPE_LOGIN = 'LOGIN';
+﻿var utilsRef = require('../common/Utilities');
+var constantsRef = require('../common/Constants');
+var sessionRef = require('../common/Session');
+
+const ACTION_TYPE_LOGIN = 'LOGIN';
 
 const initialState = {
 	username: null,
@@ -14,13 +18,13 @@ export const actionCreators = {
 export const reducer = (state, action) => {
 	state = state || initialState;
 
-	if (action.type === ACTION_TYPE_LOGIN) {	   
-		// TODO - move to utility function
-		var host = window.location.protocol + "//"
-			+ window.location.hostname + ':' + window.location.port;
+	if (action.type === ACTION_TYPE_LOGIN) {	   							  
+		var utils = Object.create(utilsRef.Utilities); 
+		var host = utils.GetHost();
 								
 		const url = host + '/Home/Login?encodedUser=' + btoa(action.username)
 					+ '&encodedPass=' + btoa(action.password);
+
 		const xhr = new XMLHttpRequest();
 		xhr.open('post', url, true);
 		xhr.onload = (data) => {
@@ -28,10 +32,14 @@ export const reducer = (state, action) => {
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0)
 			{
-				alert('User is logged in!');
-				// TODO - move to utility function
-				var host = window.location.protocol + "//"
-					+ window.location.hostname + ':' + window.location.port;
+				alert('User is logged in');
+															   
+				var token = data.currentTarget.response; 				  
+				var constants = Object.create(constantsRef.Constants); 
+				var session = Object.create(sessionRef.Session); 
+													  
+				session.SessionSetToken(constants.SESSION_TOKEN, token);
+				 
 				window.location = host + '/main';
 			} else {
 				alert('User is not logged in!');

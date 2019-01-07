@@ -1,4 +1,6 @@
-﻿const ACTION_TYPE_REGISTRATION = 'REGISTRATION';
+﻿var utilsRef = require('../common/Utilities');
+
+const ACTION_TYPE_REGISTRATION = 'REGISTRATION';
 const ACTION_TYPE_CANCEL = 'CANCEL';
 const initialState = {
 	username: null,
@@ -15,11 +17,10 @@ export const actionCreators = {
 };
 
 export const reducer = (state, action) => {
-	state = state || initialState;
+	state = state || initialState;				
 
-	// TODO - move to utility function
-	var host = window.location.protocol + "//"
-		+ window.location.hostname + ':' + window.location.port;
+	var utils = Object.create(utilsRef.Utilities);
+	var host = utils.GetHost();
 
 	if (action.type === ACTION_TYPE_REGISTRATION) {
 		const url = host + '/Home/Registration?'

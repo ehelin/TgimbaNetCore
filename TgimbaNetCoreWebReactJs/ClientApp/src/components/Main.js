@@ -12,7 +12,7 @@ class Main extends React.Component {
 
 	render() {
 		const showMainMenu = _ => {
-			alert('main menu display');
+			//alert('main menu display');
 			this.props.main();
 		}
 
@@ -25,7 +25,7 @@ class Main extends React.Component {
 		return (	   
 			<div style={panelStyle}>
 				<h1>React JS - Main Panel</h1>
-				<Button onPress={showMainMenu} id="hvJsRegisterBtn">Menu</Button>
+				<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
 				<p>main.html</p>
 			</div>
 

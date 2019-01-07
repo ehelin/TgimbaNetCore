@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Login';
-import Button  from './Button';
+import Button from './Button';
+var utilsRef = require('../common/Utilities');
 
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { username: null, password: null };
+		this.state = { username: null, password: null };	
+
+		var utils = Object.create(utilsRef.Utilities);	
+		if (utils.IsLoggedIn()) {
+			var host = utils.GetHost();
+			window.location = host + '/main';	
+		}  			
 	}
 
 	render() {								
@@ -17,10 +24,9 @@ class Login extends React.Component {
 			this.props.login(username, password);
 		}					
 
-		const navigateRegistration = _ => {			 
-			// TODO - move to utility function
-			var host = window.location.protocol + "//"
-				+ window.location.hostname + ':' + window.location.port;
+		const navigateRegistration = _ => {
+			var utils = Object.create(utilsRef.Utilities);
+			var host = utils.GetHost();
 			window.location = host + '/register';
 		}
 

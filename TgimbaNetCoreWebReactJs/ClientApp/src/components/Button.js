@@ -9,14 +9,14 @@ class Button extends React.Component {
 	}
 
 	render() {
-		const { onPress, children } = this.props;  
+		const { onPress, children, id } = this.props;  
 
 		//var tableStyle = {					 
 		//	"width": "100%",			
 		//};
 
 		return (		   
-			<button type="button" onClick={onPress}>
+			<button type="button" onClick={onPress} id={id}>
 				{children}
 			</button>
 		);
