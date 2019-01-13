@@ -45,17 +45,17 @@ namespace TgimbaNetCoreWeb
 
             app.UseMvc(routes =>
             {
+				routes.MapRoute(
+					name: "welcome",
+					template: "{controller=Welcome}/{action=Index}/{id?}");
+
 				//routes.MapRoute(
-				//	name: "welcome",
-				//	template: "{controller=Welcome}/{action=Index}/{id?}");
+				//	name: "vanillaJsEntry",
+				//	template: "{controller=Home}/{action=HtmlVanillaJsIndex}/{id?}");
 
-				routes.MapRoute(
-					name: "vanillaJsEntry",
-					template: "{controller=Home}/{action=HtmlVanillaJsIndex}/{id?}");
-
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=HtmlJQueryIndex}/{id?}");
+				//routes.MapRoute(
+				//	name: "default",
+				//	template: "{controller=Home}/{action=HtmlJQueryIndex}/{id?}");
 
 				//routes.MapSpaFallbackRoute(
 				//	name: "spa-fallback",

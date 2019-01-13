@@ -6,6 +6,10 @@
     Load();
 });
 
+//$(document).ready(function () {
+//    Initialize();
+//});
+
 function Load() {
     ResetPage();
     BuildMnuButton();
