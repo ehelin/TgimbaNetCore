@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;				   
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.interfaces;    
-using Shared;            
+using Shared.interfaces;  		  
+using TgimbaNetCoreWebShared;  	 			   
 using API;
 
 namespace TgimbaNetCoreWeb

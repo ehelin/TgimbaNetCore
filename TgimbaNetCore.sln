@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{DF03EF18-F786-4297-81D1-DDE60318AE39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsDAL", "TestsDAL\TestsDAL.csproj", "{7AEC3ADE-D43E-4758-8B57-10125D2CDC87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsDAL-Integration", "TestsDAL\TestsDAL-Integration.csproj", "{7AEC3ADE-D43E-4758-8B57-10125D2CDC87}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4584033D-F538-457D-AB20-588B537A7865}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,15 +20,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{7E8FA25C-A969-4229-BC9F-36BA4BD71187}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAPI", "TestAPI\TestAPI.csproj", "{BA8F2896-10F0-41B8-B345-36C33983708B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsAPI-Integration", "TestAPI\TestsAPI-Integration.csproj", "{BA8F2896-10F0-41B8-B345-36C33983708B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaNetCoreWeb", "TgimbaNetCoreWeb\TgimbaNetCoreWeb.csproj", "{CF678192-CA9C-4ACD-B859-828F35EA5F8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsTgimbaNetCoreWeb", "TestTgimbaNetCoreWeb\TestsTgimbaNetCoreWeb.csproj", "{BCE35BDF-40CC-4ACE-9E2C-BF8C412A0C8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsTgimbaNetCoreWeb-Unit", "TestTgimbaNetCoreWeb\TestsTgimbaNetCoreWeb-Unit.csproj", "{BCE35BDF-40CC-4ACE-9E2C-BF8C412A0C8E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsShared", "TestShared\TestsShared.csproj", "{1DDCF869-166F-46EA-ADAB-C3168E96B788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsShared-Unit", "TestShared\TestsShared-Unit.csproj", "{1DDCF869-166F-46EA-ADAB-C3168E96B788}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestJavaScriptV2", "TestJavaScriptV2\TestJavaScriptV2.csproj", "{234F724E-F026-4475-BBFB-924E4F7D4586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestJavaScriptV2-Unit", "TestJavaScriptV2\TestJavaScriptV2-Unit.csproj", "{234F724E-F026-4475-BBFB-924E4F7D4586}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaNetCoreWebShared", "TgimbaNetCoreWebShared\TgimbaNetCoreWebShared.csproj", "{81334608-BA69-427E-BB7B-99861B473211}"
 EndProject

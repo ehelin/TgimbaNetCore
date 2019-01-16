@@ -2,7 +2,7 @@
 
 namespace TgimbaNetCoreWeb.Controllers
 { 
-	[RequireHttpsAttribute]
+	//[RequireHttpsAttribute]
     public class SpanishController : Controller
     {			
         public SpanishController() {}

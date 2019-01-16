@@ -4,7 +4,7 @@ using Shared.interfaces;
 using Shared.misc;
 using System;
 
-namespace TestAPI
+namespace TestsAPIIntegration
 {
     [TestClass]
     public class ApiTests : BaseTest
@@ -77,7 +77,7 @@ namespace TestAPI
         }
         private void UpsertBucketListItemTest(string token, string listItemName, string dbIdStr = "")
         {
-            string singleLineBucketListItem = GetBucketListItemSingleString(user, listItemName, dbIdStr, false);
+            string singleLineBucketListItem = TestUtilities.GetBucketListItemSingleString(user, listItemName, dbIdStr, false);
 
             var result = service.UpsertBucketListItem
             (
@@ -106,11 +106,11 @@ namespace TestAPI
                 Assert.IsTrue(bucketListItem[0].IndexOf(dbIdStr) != -1);
             }
 
-            return GetBucketListItemDbId(bucketListItem[0]);
+            return TestUtilities.GetBucketListItemDbId(bucketListItem[0]);
         }
         private void UpsertBucketListItemV2Test(string token, string listItemName, string dbIdStr)
         {
-            string singleLineBucketListItem = GetBucketListItemSingleString(user, listItemName, dbIdStr, true);
+            string singleLineBucketListItem = TestUtilities.GetBucketListItemSingleString(user, listItemName, dbIdStr, true);
 
             var result = service.UpsertBucketListItemV2
              (

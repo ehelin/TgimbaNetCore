@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Shared.misc
+﻿namespace Shared.misc
 {
     public class Enums
     {
-        public enum LogLevel { Error, Info, Verbose}
+        public enum LogLevel { Error, Info, Verbose }  
+        public enum BucketListItemTypes { Cold, Warm, Hot }
     }
 }

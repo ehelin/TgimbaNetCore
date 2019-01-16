@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;	  				   
-using Shared.interfaces;		 
-using SharedControllers = TgimbaNetCoreWebShared.Controllers;	
-using SharedModels = TgimbaNetCoreWebShared.Models;
+using Shared.interfaces;		 					 		  
+using TgimbaNetCoreWebShared;  	 					  
+using TgimbaNetCoreWebShared.Models;
+using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
 {			 
-	[RequireHttpsAttribute]
+	//[RequireHttpsAttribute]
     public class WelcomeController : Controller
     {
-		private SharedControllers.SharedWelcomeController sharedWelcomeController = null;
+		private SharedWelcomeController sharedWelcomeController = null;
 		private ITgimbaService service = null;
 
         public WelcomeController(ITgimbaService service, IWebClient webClient)
         {
-			sharedWelcomeController = new SharedControllers.SharedWelcomeController(service, webClient);
+			sharedWelcomeController = new SharedWelcomeController(service, webClient);
 			this.service = service;
 		}
 				
         public IActionResult Index()
         {
-            SharedModels.SharedWelcomeModel model = new SharedModels.SharedWelcomeModel(this.service);
+            var model = new SharedWelcomeModel(this.service);
             return View(model);
         }
     }
