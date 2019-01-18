@@ -6,7 +6,7 @@ namespace TgimbaNetCoreWebShared.Models
 	{
 		public string Name { get; set;}	 
 		public string DateCreated { get; set;}	  
-		public Enums.BucketListItemTypes Type { get; set;}
+		public Enums.BucketListItemTypes BucketListItemType { get; set;}
 		public bool Completed { get; set;}
 		public string Latitude { get; set;}
 		public string Longitude { get; set;}

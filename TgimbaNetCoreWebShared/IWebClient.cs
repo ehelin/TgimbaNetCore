@@ -7,7 +7,12 @@ namespace TgimbaNetCoreWebShared
 	{
 		string Login(string encodedUser, string encodedPass);
 		bool Registration(string encodedUser, string encodedEmail, string encodedPassword);
-		bool AddBucketListItem(SharedBucketListModel bucketListItem);
+		bool AddBucketListItem
+		(
+			SharedBucketListModel bucketListItem,
+			string encodedUser, 
+			string encodedToken
+		);
 		List<SharedBucketListModel> GetBucketListItems
 		(
 			string encodedUserName, 

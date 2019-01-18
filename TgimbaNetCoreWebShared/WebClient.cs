@@ -14,9 +14,20 @@ namespace TgimbaNetCoreWebShared
             this.service = service;
         }
 
-		public bool AddBucketListItem(SharedBucketListModel bucketListItem) {
-			// TODO - handle the model to string[] conversion
-			throw new NotImplementedException();
+		public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken) 
+		{
+			var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
+
+			var result = this.service.UpsertBucketListItemV2(bucketListItemArray, encodedUser, encodedToken);
+
+			if (result != null && result.Length == 1 && result[0] == "TokenValid")
+			{		 
+				return true;
+			}
+			else 
+			{	   
+				return false;
+			}				
 		}
 
 		public List<SharedBucketListModel> GetBucketListItems
@@ -25,8 +36,14 @@ namespace TgimbaNetCoreWebShared
 			string encodedSortString, 
 			string encodedToken
 		){	 											
-			// TODO - handle the string[] to model conversion
-			throw new NotImplementedException();
+			var result = this.service.GetBucketListItemsV2(encodedUserName, encodedSortString, encodedToken);
+			
+			// TODO - handle multiple bucket list items
+			var convertedModel = Utilities.ConvertStringArrayToModel(result);
+			var list = new List<SharedBucketListModel>();
+			list.Add(convertedModel);
+
+			return list;
 		}
 
         public string Login(string encodedUser, string encodedPass)

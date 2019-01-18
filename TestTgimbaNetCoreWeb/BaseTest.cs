@@ -52,54 +52,18 @@ namespace TestTgimbaNetCoreWeb
 																"base64EncodedGoodSortString", 
 																"base64EncodedGoodToken"
 																)).Returns(bucketListItems);  		
-																												  
-			string[] noResult = new string[] {"No Items"};
-			mockITgimbaService.Setup(x => x.GetBucketListItemsV2(						 
-																"base64EncodedBadUser", 
-																"base64EncodedBadSortString", 
-																"base64EncodenBadToken"
-																)).Returns(noResult);
 						  			   													  
 			string[] upsertResult = new string[] {"TokenValid"};
 			var encodedBucketListItemsSingleLine = TestUtilities.GetBucketListItemSingleString(
 																			"base64EncodedGoodUser",
 																			"newBucketListItem", 
-																			"dbId", 
+																			null, 
 																			true);				
 			mockITgimbaService.Setup(x => x.UpsertBucketListItemV2(
 																encodedBucketListItemsSingleLine,
 																"base64EncodedGoodUser", 		  
 																"base64EncodedGoodToken"
 																)).Returns(upsertResult);
-
-			upsertResult = new string[] {"ERR_000002-Token Expired"};
-			encodedBucketListItemsSingleLine = TestUtilities.GetBucketListItemSingleString(
-																			"base64EncodedBadUser",
-																			"newBucketListItem", 
-																			"dbId", 
-																			true);				
-			mockITgimbaService.Setup(x => x.UpsertBucketListItemV2(
-																encodedBucketListItemsSingleLine,
-																"base64EncodedGoodUser", 		  
-																"base64EncodedGoodToken"
-																)).Returns(upsertResult);					
-		}
-		
-		protected SharedBucketListModel GetBucketListModel(string dbId = null)
-		{
-			var model = new SharedBucketListModel
-			{
-				Name = "Test Bucket List Item",
-				DateCreated = DateTime.UtcNow.ToString(),
-				Type = Shared.misc.Enums.BucketListItemTypes.Hot,
-				Completed = false,
-				Latitude = "Lat",
-				Longitude = "Lon",
-				DatabaseId = dbId,
-				UserName = "userName"
-			};
-
-			return model;
 		}
 	}
 }

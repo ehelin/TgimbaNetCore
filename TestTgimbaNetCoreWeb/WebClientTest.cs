@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TgimbaNetCoreWebShared;
+using TestsAPIIntegration;
 using Shared.interfaces;
 using Shared.misc;									  
 
@@ -50,30 +51,42 @@ namespace TestTgimbaNetCoreWeb
 
 		[TestMethod]
 		public void Test_GoodAddBucketListItem()
-		{
-			// TODO - complete test
-			Assert.IsTrue(false);
+		{						   
+			var bucketListItem = TestUtilities.GetBucketListItem("base64EncodedGoodUser", "newBucketListItem", null, true);
+			var bucketListItemModel = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "newBucketListItem", null, true);
+			
+			var bucketListAdded = GetWebClient().AddBucketListItem(bucketListItemModel, "base64EncodedGoodUser", "base64EncodedGoodToken");
+	   
+			Assert.IsTrue(bucketListAdded);
 		}	
 
 		[TestMethod]
 		public void Test_BadAddBucketListItem()
-		{
-			// TODO - complete test	   
-			Assert.IsTrue(false);
+		{		  
+			var bucketListItem = TestUtilities.GetBucketListItem("base64EncodedGoodUser", "newBucketListItem", null, true);
+			var bucketListItemModel = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "newBucketListItem", null, true);
+			
+			var bucketListAdded = GetWebClient().AddBucketListItem(bucketListItemModel, "base64EncodedBadUser", null);
+	   
+			Assert.IsFalse(bucketListAdded);
 		}
 
 		[TestMethod]
 		public void Test_GoodGetBucketListItems()
 		{
-			// TODO - complete test	   
-			Assert.IsTrue(false);
+			var bucketListItem = GetWebClient().GetBucketListItems("base64EncodedGoodUser", "base64EncodedGoodSortString", "base64EncodedGoodToken");
+	   
+			Assert.IsNotNull(bucketListItem); 
+			Assert.IsTrue(bucketListItem.Count == 1);
+			Assert.AreEqual("newBucketListItem", bucketListItem[0].Name);
 		}
 
 		[TestMethod]
 		public void Test_BadGetBucketListItems()
-		{
-			// TODO - complete test
-			Assert.IsTrue(false);
+		{							
+			var bucketListItem = GetWebClient().GetBucketListItems("", "", "");
+	   
+			Assert.IsNull(bucketListItem[0]); 									   
 		}			  
 		  				
 		private IWebClient GetWebClient() {

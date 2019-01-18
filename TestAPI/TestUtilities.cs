@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Shared.misc;
+using TgimbaNetCoreWebShared.Models;
 
 namespace TestsAPIIntegration
 {
@@ -25,6 +24,22 @@ namespace TestsAPIIntegration
 
             return singleLineBucketListItem;
         }
+		public static SharedBucketListModel GetBucketListItemModel(string userName, string listItemName = "", string dbIdStr = "", bool extended = false)
+        {	 						  
+			SharedBucketListModel model = new SharedBucketListModel
+			{
+				Name = listItemName,
+				DateCreated = "12/15/2010",
+				BucketListItemType = Enums.BucketListItemTypes.Hot, // TODO - set
+				Completed = true,
+				Latitude = "123.333",			   
+				Longitude = "555.1345",
+				DatabaseId = dbIdStr,
+				UserName = userName 
+			};	
+
+			return model;
+		}
         public static string[] GetBucketListItem(string userName, string listItemName = "", string dbIdStr = "", bool extended = false)
         {
             string[] bucketListItems;
