@@ -1,7 +1,7 @@
 ﻿using Shared.interfaces;		
 using TgimbaNetCoreWebShared.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Collections.Generic;
 
 namespace TgimbaNetCoreWebShared.Controllers
 {
@@ -11,15 +11,19 @@ namespace TgimbaNetCoreWebShared.Controllers
             : base(service, webClient) { }
 
 		[HttpPost]
-		public bool AddBucketListItem()
+		public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken)
 		{
-			throw new NotImplementedException();
+			var itemAdded = webClient.AddBucketListItem(bucketListItem, encodedUser, encodedToken);
+
+			return itemAdded;
 		}
 
 		[HttpGet]
-		public SharedBucketListModel GetBucketListItems()
-		{
-			throw new NotImplementedException();
+		public List<SharedBucketListModel> GetBucketListItems(string encodedUserName, string encodedSortString, string encodedToken) 
+		{					
+			var bucketListItem = webClient.GetBucketListItems(encodedUserName, encodedSortString, encodedToken);
+
+			return bucketListItem;
 		}
 	}
 }

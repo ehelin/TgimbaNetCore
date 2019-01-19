@@ -68,15 +68,15 @@ namespace TgimbaNetCoreWebShared
 			return registered;
 		} 
 
-		public string[] AddBucketListItem(
-			string encodedBucketListItems, 
-			string encodedUser, 
-			string encodedToken
-		)
-		{
-			string[] items = service.UpsertBucketListItemV2(encodedBucketListItems, encodedUser, encodedToken);
+		//public string[] AddBucketListItem(
+		//	string encodedBucketListItems, 
+		//	string encodedUser, 
+		//	string encodedToken
+		//)
+		//{
+		//	string[] items = service.UpsertBucketListItemV2(encodedBucketListItems, encodedUser, encodedToken);
 			
-			return items;
-		}
+		//	return items;
+		//}
 	}
 }

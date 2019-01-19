@@ -1,8 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TgimbaNetCoreWebShared;
-using TestsAPIIntegration;
-using Shared.interfaces;
-using Shared.misc;									  
+using TestsAPIIntegration;							  
 
 namespace TestTgimbaNetCoreWeb
 {
@@ -12,23 +10,15 @@ namespace TestTgimbaNetCoreWeb
 		[TestMethod]
 		public void Test_GoodRegistration()
 		{				
-			bool goodRegistration = GetWebClient().Registration(
-																"base64EncodedGoodUser", 
-																"base64EncodedGoodEmail", 
-																"base64EncodedGoodPass"
-																);
-									  
+			bool goodRegistration = GetWebClient().Registration("base64EncodedGoodUser", "base64EncodedGoodEmail", "base64EncodedGoodPass");
+							  
 			Assert.AreEqual(true, goodRegistration);
 		}
 
 		[TestMethod]
 		public void Test_BadRegistration()
 		{
-			bool goodRegistration = GetWebClient().Registration(
-																"base64EncodedBadUser", 
-																"base64EncodedBadEmail", 
-																"base64EncodedBadPass"
-																);
+			bool goodRegistration = GetWebClient().Registration("base64EncodedBadUser", "base64EncodedBadEmail", "base64EncodedBadPass");
 									  
 			Assert.AreEqual(false, goodRegistration);
 		}

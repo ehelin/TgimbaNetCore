@@ -19,6 +19,7 @@ namespace TestTgimbaNetCoreWeb
             mockWebClient = new Mock<IWebClient>();
 
             SetupGetDashboard();
+			SetUpTgimbaService();
 			SetupWebClient();
         }					
 
@@ -32,7 +33,7 @@ namespace TestTgimbaNetCoreWeb
             mockITgimbaService.Setup(x => x.GetDashboard()).Returns(data);
         }
 
-		private void SetupWebClient() {
+		private void SetUpTgimbaService() {
 			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedGoodUser", "base64EncodedGoodPass")).Returns("token");
 			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedBadUser", "base64EncodedBadPass")).Returns("");
 			mockITgimbaService.Setup(x => x.ProcessUserRegistration(
@@ -64,6 +65,23 @@ namespace TestTgimbaNetCoreWeb
 																"base64EncodedGoodUser", 		  
 																"base64EncodedGoodToken"
 																)).Returns(upsertResult);
+		}
+		private void SetupWebClient() 
+		{																										  
+			var bucketListItem = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser","newBucketListItem", "dbId", true);
+			var bucketListItems = new List<SharedBucketListModel>();
+			bucketListItems.Add(bucketListItem);
+			mockWebClient.Setup(x => x.GetBucketListItems(						 
+														"base64EncodedGoodUser", 
+														"base64EncodedGoodSortString", 
+														"base64EncodedGoodToken"
+														)).Returns(bucketListItems);  		
+
+			mockWebClient.Setup(x => x.AddBucketListItem(
+														It.IsAny<SharedBucketListModel>(),
+														"base64EncodedGoodUser", 		
+														"base64EncodedGoodToken"
+														)).Returns(true);
 		}
 	}
 }

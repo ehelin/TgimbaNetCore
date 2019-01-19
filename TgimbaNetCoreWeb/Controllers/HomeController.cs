@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using Shared.interfaces;		 
-using SharedControllers = TgimbaNetCoreWebShared.Controllers;	
-using SharedModels = TgimbaNetCoreWebShared.Models;
+using Microsoft.AspNetCore.Mvc;						  
 
 namespace TgimbaNetCoreWeb.Controllers
 {				 
