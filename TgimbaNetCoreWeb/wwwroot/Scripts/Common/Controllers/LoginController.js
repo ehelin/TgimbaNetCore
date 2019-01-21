@@ -6,7 +6,7 @@ LoginController.ParameterNames = [
 ];
 
 LoginController.Index = function () {
-	Display.LoadView(VIEW_LOGIN);
+	Display.LoadView(VIEW_LOGIN, null);
 };
 						   
 LoginController.Login = function() {

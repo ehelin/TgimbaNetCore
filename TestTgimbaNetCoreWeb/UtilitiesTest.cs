@@ -23,19 +23,20 @@ namespace TestTgimbaNetCoreWeb
 		[TestMethod]
 		public void Test_ConvertStringArrayToModel()
 		{
-			var bucketListItemArray = TestUtilities.GetBucketListItem("base64EncodedGoodUser", "testBucketLIstItem", null, true);
+			var bucketListItemSingleLine = TestUtilities.GetBucketListItemSingleString("base64EncodedGoodUser", "testBucketLIstItem", null, true);
+			string[] bucketListItemArray = new string[] { bucketListItemSingleLine };
 			var bucketListItemModel = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "testBucketLIstItem", null, true);
 									  
-			var convertedBucketListItem = SharedWeb.Utilities.ConvertStringArrayToModel(bucketListItemArray);
+			var convertedBucketListItem = SharedWeb.Utilities.ConvertStringArrayToModelList(bucketListItemArray);
 	
-			Assert.AreEqual(bucketListItemModel.Name, convertedBucketListItem.Name);	 
-			Assert.AreEqual(bucketListItemModel.DateCreated, convertedBucketListItem.DateCreated);
-			Assert.AreEqual(bucketListItemModel.BucketListItemType, convertedBucketListItem.BucketListItemType);
-			Assert.AreEqual(bucketListItemModel.Completed, convertedBucketListItem.Completed);
-			Assert.AreEqual(bucketListItemModel.Latitude, convertedBucketListItem.Latitude);
-			Assert.AreEqual(bucketListItemModel.Longitude, convertedBucketListItem.Longitude);
-			Assert.AreEqual(bucketListItemModel.DatabaseId, convertedBucketListItem.DatabaseId);
-			Assert.AreEqual(bucketListItemModel.UserName, convertedBucketListItem.UserName);
+			Assert.AreEqual(bucketListItemModel.Name, convertedBucketListItem[0].Name);	 
+			Assert.AreEqual(bucketListItemModel.DateCreated, convertedBucketListItem[0].DateCreated);
+			Assert.AreEqual(bucketListItemModel.BucketListItemType, convertedBucketListItem[0].BucketListItemType);
+			Assert.AreEqual(bucketListItemModel.Completed, convertedBucketListItem[0].Completed);
+			Assert.AreEqual(bucketListItemModel.Latitude, convertedBucketListItem[0].Latitude);
+			Assert.AreEqual(bucketListItemModel.Longitude, convertedBucketListItem[0].Longitude);
+			Assert.AreEqual(bucketListItemModel.DatabaseId, convertedBucketListItem[0].DatabaseId);
+			//Assert.AreEqual(bucketListItemModel.UserName, convertedBucketListItem[0].UserName);
 		}
 
 		[TestMethod]
@@ -57,7 +58,7 @@ namespace TestTgimbaNetCoreWeb
 		[TestMethod]
 		public void Test_ConvertCategoryColdToEnum()
 		{	
-			var enumValue = SharedWeb.Utilities.ConvertCategoryToEnum("Cold");
+			var enumValue = SharedWeb.Utilities.ConvertCategoryToEnum("Cool");
 	
 			Assert.AreEqual(Enums.BucketListItemTypes.Cold, enumValue);
 		}

@@ -1,7 +1,18 @@
-﻿<div>
+﻿<script type="text/javascript">	
+		alert('hi mom 2');
+	function LoadMainPage() {
+		alert('hi mom');
+		//var bucketListItems = Display.HtmlContent;
+		//alert('TODO - load data here into this .html file - bucket list string length: ' + bucketListItems.length);
+
+	}
+
+	LoadMainPage();
+</script>
+<div>
 	<label id="lbMainTitleDiv"></label>
 </div>
 <div style="text-align:center; width: 100%">   
 	<input type="button" value="Menu" id="btnMainMenu" onclick="MainController.ShowMenu()" />
-	<p>main.html</p>	
+	<table id="bucketListItems" />
 </div>

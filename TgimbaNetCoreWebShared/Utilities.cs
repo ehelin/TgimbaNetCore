@@ -1,4 +1,5 @@
-﻿using System;					 
+﻿using System;		
+using System.Collections.Generic;			 
 using Shared.misc;
 using TgimbaNetCoreWebShared.Models;
 
@@ -6,25 +7,34 @@ namespace TgimbaNetCoreWebShared
 {
 	public class Utilities
 	{										   
-		public static SharedBucketListModel ConvertStringArrayToModel(string[] bucketListItem) 
+		public static List<SharedBucketListModel> ConvertStringArrayToModelList(string[] bucketListItems) 
 		{
-			SharedBucketListModel model = null;
+			List<SharedBucketListModel> modelList = null;
 
-			if (bucketListItem != null && bucketListItem.Length == 8) // 8 contains fields for 
+			if (bucketListItems != null && bucketListItems.Length > 0) 
 			{
-				model = new SharedBucketListModel{
-					Name = bucketListItem[0],
-					DateCreated = bucketListItem[1],
-					BucketListItemType = Utilities.ConvertCategoryToEnum(bucketListItem[2]),
-					Completed = bucketListItem[3] == "1" ? true : false,
-					Latitude = bucketListItem[4],			   
-					Longitude = bucketListItem[5],
-					DatabaseId = bucketListItem[6],
-					UserName = bucketListItem[7] 
-				};
+				modelList = new List<SharedBucketListModel>();
+
+				foreach(string bucketListItemStr in bucketListItems) 
+				{
+					string[] bucketListItem = bucketListItemStr.Split(',');
+ 																														
+					var model = new SharedBucketListModel{
+						Name = bucketListItem[1],
+						DateCreated = bucketListItem[2],
+						BucketListItemType = Utilities.ConvertCategoryToEnum(bucketListItem[3]),
+						Completed = bucketListItem[4] == "1" ? true : false,
+						Latitude = bucketListItem[5],			   
+						Longitude = bucketListItem[6],
+						DatabaseId = bucketListItem[7] != "" ? bucketListItem[7] : null//,
+						//UserName = bucketListItem[7] 
+					};
+			
+					modelList.Add(model);
+				}
 			}
 
-			return model;
+			return modelList;
 		}
 
 		public static string ConvertModelToString(SharedBucketListModel model) 
@@ -56,7 +66,7 @@ namespace TgimbaNetCoreWebShared
 			{
 				return Enums.BucketListItemTypes.Warm;
 			} 
-			else if(category == "Cold") 
+			else if(category == "Cool") 
 			{
 				return Enums.BucketListItemTypes.Cold;
 			}

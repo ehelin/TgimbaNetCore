@@ -66,17 +66,16 @@ namespace TestTgimbaNetCoreWeb
 		{
 			var bucketListItem = GetWebClient().GetBucketListItems("base64EncodedGoodUser", "base64EncodedGoodSortString", "base64EncodedGoodToken");
 	   
-			Assert.IsNotNull(bucketListItem); 
-			Assert.IsTrue(bucketListItem.Count == 1);
+			Assert.IsNotNull(bucketListItem); 			
 			Assert.AreEqual("newBucketListItem", bucketListItem[0].Name);
 		}
 
 		[TestMethod]
 		public void Test_BadGetBucketListItems()
 		{							
-			var bucketListItem = GetWebClient().GetBucketListItems("", "", "");
+			var bucketItemList = GetWebClient().GetBucketListItems("", "", "");
 	   
-			Assert.IsNull(bucketListItem[0]); 									   
+			Assert.IsNull(bucketItemList); 									   
 		}			  
 		  				
 		private IWebClient GetWebClient() {

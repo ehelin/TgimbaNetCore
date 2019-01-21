@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.interfaces;		
 using TgimbaNetCoreWebShared; 
-using TgimbaNetCoreWebShared.Controllers;	   
+using TgimbaNetCoreWebShared.Controllers;
+using TgimbaNetCoreWebShared.Models;	
+using System.Collections.Generic;   
 
 namespace TgimbaNetCoreWeb.Controllers
 {				 
@@ -13,6 +15,18 @@ namespace TgimbaNetCoreWeb.Controllers
         public BucketListItemController(ITgimbaService service, IWebClient webClient)
         {
 			sharedBucketListController = new SharedBucketListController(service, webClient);
-		}
+		}	  
+
+        [HttpPost]
+        public bool AddBucketListItem(SharedBucketListModel model, string encodedUser, string encodedToken)
+        {
+            return sharedBucketListController.AddBucketListItem(model, encodedUser,	encodedToken);
+        }
+		   
+        [HttpGet]
+        public List<SharedBucketListModel> GetBucketListItems(string encodedUserName, string encoderedSortString, string encodedToken)
+        {
+            return sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken);
+        }
     }
 }

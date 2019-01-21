@@ -1,7 +1,7 @@
 ﻿var MenuController = Object.create(BaseController);
 
 MenuController.Index = function () {
-	Display.LoadView(VIEW_MENU);
+	Display.LoadView(VIEW_MENU, null);
 };
 
 MenuController.AddBucketListItem = function () {

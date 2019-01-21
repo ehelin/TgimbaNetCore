@@ -36,12 +36,8 @@ namespace TgimbaNetCoreWebShared
 			string encodedSortString, 
 			string encodedToken
 		){	 											
-			var result = this.service.GetBucketListItemsV2(encodedUserName, encodedSortString, encodedToken);
-			
-			// TODO - handle multiple bucket list items
-			var convertedModel = Utilities.ConvertStringArrayToModel(result);
-			var list = new List<SharedBucketListModel>();
-			list.Add(convertedModel);
+			var result = this.service.GetBucketListItemsV2(encodedUserName, encodedSortString, encodedToken);	  														   
+			var list = Utilities.ConvertStringArrayToModelList(result);		   
 
 			return list;
 		}

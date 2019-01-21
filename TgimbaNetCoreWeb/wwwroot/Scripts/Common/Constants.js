@@ -1,4 +1,5 @@
-﻿var SESSION_TOKEN = 'SessionToken';			
+﻿var SESSION_TOKEN = 'SessionToken';		
+var SESSION_USERNAME = 'SessionUsername';	
 var SESSION_CLIENT = 'SessionClient';
 var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';
@@ -15,8 +16,11 @@ var VIEW_REGISTRATION = '/Markup/HtmlVanillaJs/Views/Registration/Index.html';
 var VIEW_MENU =	'/Markup/HtmlVanillaJs/Views/Menu/Index.html'
 var VIEW_WELCOME = '/Welcome/Index';
 
-var LOGIN_PROCESS_USER = '/Home/Login';	
-var REGISTRATION_PROCESS_REGISTRATION = '/Home/Registration';
+var LOGIN_PROCESS_USER = '/Login/Login';	
+var REGISTRATION_PROCESS_REGISTRATION = '/Registration/Registration';
+var BUCKET_LIST_PROCESS_GET = '/BucketListItem/GetBucketListItems';
+var BUCKET_LIST_PROCESS_ADD = '/BucketListItem/AddBucketListItem';
+//var REGISTRATION_PROCESS_REGISTRATION = '/Home/Registration';
 
 var VALUE_TYPE_LOGIN_USERNAME = 'loginUsernameValue';
 var VALUE_TYPE_LOGIN_PASSWORD = 'loginPasswordValue';

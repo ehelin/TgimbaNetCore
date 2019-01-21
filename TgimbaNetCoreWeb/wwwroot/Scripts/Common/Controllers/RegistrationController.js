@@ -8,11 +8,11 @@ RegistrationController.ParameterNames = [
 ];
 
 RegistrationController.Index = function() {
-	Display.LoadView(VIEW_REGISTRATION);
+	Display.LoadView(VIEW_REGISTRATION, null);
 }
 
 RegistrationController.Cancel = function() {
-	Display.LoadView(VIEW_LOGIN);
+	Display.LoadView(VIEW_LOGIN, null);
 };
 
 RegistrationController.Register = function() {

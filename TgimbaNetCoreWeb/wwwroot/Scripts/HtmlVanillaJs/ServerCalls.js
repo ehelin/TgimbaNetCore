@@ -1,11 +1,11 @@
 ﻿var ServerCalls = {};
 
-ServerCalls.GetView = function(viewUrl, contentDiv) {
+ServerCalls.GetView = function(viewUrl, contentDiv, htmlContent) {
     try {
         return ServerCall.Get(viewUrl)
             .then(
             function (response) {
-				Display.SetView(viewUrl, contentDiv, response);
+				Display.SetView(viewUrl, contentDiv, response, htmlContent);
             });
     }
     catch (ex) {
@@ -13,11 +13,32 @@ ServerCalls.GetView = function(viewUrl, contentDiv) {
     }
 };
 
+ServerCalls.GetBucketListItems = function(url, params) {
+	var formData = new FormData();
+	var userName = params[0];	 
+	var token = params[1];
+
+	var queryUrl = BUCKET_LIST_PROCESS_GET + "?encodedUserName=" + btoa(userName) + "&encoderedSortString=" + btoa("") + "&encodedToken=" + btoa(token);
+
+	return ServerCall.Get(queryUrl)
+			.then(
+				function(response) {
+					// TODO - check for no response?
+					var htmlContent = response;
+
+					// TODO - start here - call GET to retrieve bucket list items
+
+					Display.LoadView(VIEW_MAIN, htmlContent);
+				});
+};
+
 ServerCalls.ProcessLogin = function(view, params) {
 	var formData = new FormData();
+	var userName = params[0];	 
+	var passWord = params[1];
 
-	formData.append("user", btoa(params[0]));
-	formData.append("pass", btoa(params[1]));
+	formData.append("user", btoa(userName));
+	formData.append("pass", btoa(passWord));
 
     return ServerCall.Post(view, formData)
         .then(
@@ -27,6 +48,7 @@ ServerCalls.ProcessLogin = function(view, params) {
                 alert('Username is logged in');   
 
 				SessionSetToken(SESSION_TOKEN, token);
+				SessionSetUsername(SESSION_USERNAME, userName);
 				MainController.Index();		           
             } else {
                 // TODO - reset user and pass text boxes to empty
@@ -51,7 +73,7 @@ ServerCalls.ProcessRegistration = function (view, params) {
 					&& goodRegistration === 'true')  // TODO - convert boolean from string
 				{
 					alert('User is registered');
-					Display.LoadView(VIEW_LOGIN);
+					Display.LoadView(VIEW_LOGIN, null);
 				} else {
 					alert('User is not registered');
 				}

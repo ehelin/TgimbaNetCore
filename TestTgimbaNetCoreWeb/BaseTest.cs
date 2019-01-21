@@ -47,12 +47,13 @@ namespace TestTgimbaNetCoreWeb
 																	"base64EncodedBadPass"
 																	)).Returns(false);
 																												  
-			var bucketListItems = TestUtilities.GetBucketListItem("base64EncodedGoodUser","newBucketListItem", "dbId", true);
+			var bucketListItemSingleLine = TestUtilities.GetBucketListItemSingleString("base64EncodedGoodUser","newBucketListItem", "dbId", true);
+			string[] bucketLIstitems = new string[] { bucketListItemSingleLine };											
 			mockITgimbaService.Setup(x => x.GetBucketListItemsV2(						 
 																"base64EncodedGoodUser", 
 																"base64EncodedGoodSortString", 
 																"base64EncodedGoodToken"
-																)).Returns(bucketListItems);  		
+																)).Returns(bucketLIstitems);  		
 						  			   													  
 			string[] upsertResult = new string[] {"TokenValid"};
 			var encodedBucketListItemsSingleLine = TestUtilities.GetBucketListItemSingleString(

@@ -4,7 +4,6 @@ var ApplicationFlow = {};
 ApplicationFlow.SetView = function(view) { 	   	   	   						
 	if (LoginController.IsLoggedIn() === true) {   
 		MainController.Index();
-        //Display.LoadView(VIEW_MAIN);
     }	   
     else {          
         return LoginController.Index();
