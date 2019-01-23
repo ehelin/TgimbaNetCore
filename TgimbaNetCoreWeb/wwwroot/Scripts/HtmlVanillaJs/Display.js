@@ -8,7 +8,7 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent) {
 
 	if (htmlContent) {
 		Display.HtmlContent = htmlContent;
-		// TODO - load view w/Content
+		LoadMainPage();
 	}
 };
 		
