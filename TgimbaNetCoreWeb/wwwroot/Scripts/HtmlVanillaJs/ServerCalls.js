@@ -23,12 +23,10 @@ ServerCalls.GetBucketListItems = function(url, params) {
 	return ServerCall.Get(queryUrl)
 			.then(
 				function(response) {
-					// TODO - check for no response?
-					var htmlContent = response;
-
-					// TODO - start here - call GET to retrieve bucket list items
-
-					Display.LoadView(VIEW_MAIN, htmlContent);
+					// TODO - check for no response?										 
+					isNullUndefined(response); 
+					var bucketListItems = JSON.parse(response);
+					Display.LoadView(VIEW_MAIN, bucketListItems);
 				});
 };
 
