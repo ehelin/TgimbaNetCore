@@ -12,7 +12,7 @@ ServerCalls.GetView = function(viewUrl, contentDiv, htmlContent) {
         return Error_Handler('LoadView(view) - ' + view + ' - Error: ' + ex);
     }
 };
-
+	  
 ServerCalls.GetBucketListItems = function(url, params) {
 	var formData = new FormData();
 	var userName = params[0];	 
@@ -28,6 +28,11 @@ ServerCalls.GetBucketListItems = function(url, params) {
 					var bucketListItems = JSON.parse(response);
 					Display.LoadView(VIEW_MAIN, bucketListItems);
 				});
+};
+
+ServerCalls.AddBucketListItem = function (url, params) {
+	alert('ServerCalls.AddBucketListItem() -> Implement');
+	// TODO convert params (use process login as example) and post.
 };
 
 ServerCalls.ProcessLogin = function(view, params) {

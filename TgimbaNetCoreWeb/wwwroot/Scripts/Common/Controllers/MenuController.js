@@ -5,7 +5,7 @@ MenuController.Index = function () {
 };
 
 MenuController.AddBucketListItem = function () {
-	alert('AddBucketListItem() clicked');
+	Display.LoadView(VIEW_MAIN_ADD, null);
 };
 
 MenuController.SortBucketListItem = function () {

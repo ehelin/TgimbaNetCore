@@ -30,6 +30,10 @@ Display.SetTitleLogic = function(view) {
 	else if (view === VIEW_MAIN) {
 		Display.SetTitle(MAIN_VIEW_DIV, VANILLA_JAVASCRIPT_MAIN_TITLE);
 	}
+	else if (view === VIEW_MAIN_ADD) {
+		Display.SetTitle(ADD_VIEW_DIV, VANILLA_JAVASCRIPT_MAIN_ADD_TITLE);
+		MainController.SetAddViewDate();
+	}
 	else {
 		Error('Unknown view');
 	}

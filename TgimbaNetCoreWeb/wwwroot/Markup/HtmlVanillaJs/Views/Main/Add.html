@@ -1,0 +1,52 @@
+﻿<div>
+	<label id="lbAddTitleDiv"></label>
+</div>
+<table width="100%">
+    <tr>                   
+         <td style="text-align:center">         
+            <label>Item Name:</label>
+            <input type="text" id="USER_CONTROL_ADD_ITEM_NAME" />
+        </td>
+    </tr>
+    <tr>      
+        <td style="text-align:center; font-weight:100">
+            <label>Date Created:</label>
+            <input type="text" id="USER_CONTROL_ADD_DATE_CREATED" readonly />
+        </td>
+    </tr>		   
+	<tr>                   
+         <td style="text-align:center">         
+            <label>Category:</label>
+			 <select id="USER_CONTROL_ADD_ITEM_CATEGORY">
+			  <option value="Hot">Hot</option>
+			  <option value="Warm">Warm</option>
+			  <option value="Cool">Cool</option>
+			</select>
+        </td>
+    </tr>
+    <tr>      
+        <td style="text-align:center; font-weight:100">
+            <label>Completed:</label>
+			<input type="checkbox" id="USER_CONTROL_ADD_COMPLETED" value="Completed" checked>
+            <!--<input type="text" id="USER_CONTROL_ADD_COMPLETED" />-->
+        </td>
+    </tr>  	 
+	<tr>                   
+         <td style="text-align:center">         
+            <label>Latitude:</label>
+            <input type="text" id="USER_CONTROL_ADD_LATITUDE" />
+        </td>
+    </tr>
+    <tr>      
+        <td style="text-align:center; font-weight:100">
+            <label>Longitude:</label>
+            <input type="text" id="USER_CONTROL_ADD_LONGITUDE" />
+        </td>
+    </tr>  
+    <tr>
+        <td style="text-align:center">
+            <input type="button" id="hvJsAddSubmitBtn" value="Add" onclick="MainController.Add()"/>
+			<input type="button" id="hvJsAddCancellBtn" value="Cancel" onclick="MainController.Index()" />
+        </td>
+    </tr>
+</table>
