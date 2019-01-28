@@ -15,13 +15,22 @@ BaseController.SetParameters = function(parameterNames, file) {
 	return paramValues;
 }
 
-BaseController.GetParameter = function(ctrl, type, file) {
+BaseController.GetParameter = function (ctrl, type, file) {
+	var value = null;
+
 	if (!HasValue(ctrl, type, file))
     {
         return;
     }       
 
-    var value = document.getElementById(ctrl).value;
+	ctrlObj = document.getElementById(ctrl);
+	if (ctrlObj.type === 'checkbox') {
+		value = ctrlObj.checked;
+	} else if (ctrlObj.type === 'select-one') {
+		value = ctrlObj.options[ctrlObj.selectedIndex].value;
+	} else {
+		value = ctrlObj.value;
+	} 
 
 	return value;
 }

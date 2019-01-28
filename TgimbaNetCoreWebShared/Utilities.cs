@@ -10,6 +10,7 @@ namespace TgimbaNetCoreWebShared
 		public static List<SharedBucketListModel> ConvertStringArrayToModelList(string[] bucketListItems) 
 		{
 			List<SharedBucketListModel> modelList = null;
+			SharedBucketListModel model = null;
 
 			if (bucketListItems != null && bucketListItems.Length > 0) 
 			{
@@ -18,17 +19,24 @@ namespace TgimbaNetCoreWebShared
 				foreach(string bucketListItemStr in bucketListItems) 
 				{
 					string[] bucketListItem = bucketListItemStr.Split(',');
- 																														
-					var model = new SharedBucketListModel{
-						Name = bucketListItem[1],
-						DateCreated = bucketListItem[2],
-						BucketListItemType = Utilities.ConvertCategoryToEnum(bucketListItem[3]),
-						Completed = bucketListItem[4] == "1" ? true : false,
-						Latitude = bucketListItem[5],			   
-						Longitude = bucketListItem[6],
-						DatabaseId = bucketListItem[7] != "" ? bucketListItem[7] : null//,
-						//UserName = bucketListItem[7] 
-					};
+
+					// TODO - handle expired token error = ERR_000002-Token Expired
+					if (bucketListItem[0] == "ERR_000002-Token Expired") {
+						model = new SharedBucketListModel{ 
+							DatabaseId = "ERR_000002-Token Expired"
+						};	   
+					} else {																							
+						model = new SharedBucketListModel{
+							Name = bucketListItem[1],
+							DateCreated = bucketListItem[2],
+							BucketListItemType = Utilities.ConvertCategoryToEnum(bucketListItem[3]),
+							Completed = bucketListItem[4] == "1" ? true : false,
+							Latitude = bucketListItem[5],			   
+							Longitude = bucketListItem[6],
+							DatabaseId = bucketListItem[7] != "" ? bucketListItem[7] : null//,
+							//UserName = bucketListItem[7] 
+						};
+					}
 			
 					modelList.Add(model);
 				}

@@ -31,8 +31,38 @@ ServerCalls.GetBucketListItems = function(url, params) {
 };
 
 ServerCalls.AddBucketListItem = function (url, params) {
-	alert('ServerCalls.AddBucketListItem() -> Implement');
-	// TODO convert params (use process login as example) and post.
+	var user = SessionGetUsername(SESSION_USERNAME);
+	var token = SessionGetToken(SESSION_TOKEN);
+
+	var bucketListModel = {
+		Name: params[0],
+		DateCreated: params[1],
+		BucketListItemType: params[2],
+		Completed: params[3],
+		Latitude: params[4],		  
+		Longitude: params[5],
+		DatabaseId: null,
+		UserName: user,
+	};								   
+	  
+	var jsonData = JSON.stringify
+	({ 
+		model: bucketListModel,
+		encodedUser: btoa(user),
+		encodedToken: btoa(token)
+	});	 
+									 
+	//var formData = new FormData();	 
+	//formData.append("model", jsonData);
+	//formData.append("encodedUser", btoa(user)); 
+	//formData.append("encodedToken", btoa(token));			  
+
+	return ServerCall.PostBody(url, jsonData)
+		.then(
+			function (response) {
+				// TODO - handle response
+				var resp = response;
+			});
 };
 
 ServerCalls.ProcessLogin = function(view, params) {
