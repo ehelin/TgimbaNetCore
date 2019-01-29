@@ -60,7 +60,7 @@ namespace TestTgimbaNetCoreWeb
 		{	
 			var enumValue = SharedWeb.Utilities.ConvertCategoryToEnum("Cool");
 	
-			Assert.AreEqual(Enums.BucketListItemTypes.Cold, enumValue);
+			Assert.AreEqual(Enums.BucketListItemTypes.Cool, enumValue);
 		}
 
 		[TestMethod]

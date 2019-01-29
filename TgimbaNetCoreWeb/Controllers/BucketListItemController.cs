@@ -18,15 +18,37 @@ namespace TgimbaNetCoreWeb.Controllers
 		}	  
 
         [HttpPost]
-        public bool AddBucketListItem(SharedBucketListModel model, string encodedUser, string encodedToken)
+        public bool AddBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
+									string Latitude,string Longitude, string DatabaseId, string UserName, 
+									string encodedUser, string encodedToken)
         {
-            return sharedBucketListController.AddBucketListItem(model, encodedUser,	encodedToken);
+            var model = ConvertArgsToModel(Name, DateCreated, BucketListItemType, Completed, 
+												Latitude, Longitude, DatabaseId, UserName);
+			
+			return sharedBucketListController.AddBucketListItem(model, encodedUser,	encodedToken);
         }
 		   
         [HttpGet]
         public List<SharedBucketListModel> GetBucketListItems(string encodedUserName, string encoderedSortString, string encodedToken)
         {
             return sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken);
-        }
+        }	 
+
+		// TODO - temp solution - figure out why Vanilla javascript model has null values
+		private SharedBucketListModel ConvertArgsToModel(string Name, string DateCreated, string BucketListItemType, string Completed, 
+														string Latitude,string Longitude, string DatabaseId, string UserName) {
+			var model = new SharedBucketListModel() {
+				Name = Name, 
+				DateCreated = DateCreated,
+				BucketListItemType = Utilities.ConvertCategoryToEnum(BucketListItemType),
+				Completed = System.Convert.ToBoolean(Completed),
+				Latitude = Latitude,  
+				Longitude = Longitude,
+				DatabaseId = DatabaseId,
+				UserName =	 UserName
+			};
+
+			return model;
+		}
     }
 }

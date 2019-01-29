@@ -3,6 +3,6 @@
     public class Enums
     {
         public enum LogLevel { Error, Info, Verbose }  
-        public enum BucketListItemTypes { Cold, Warm, Hot }
+        public enum BucketListItemTypes { Cool, Cold, Warm, Hot }
     }
 }

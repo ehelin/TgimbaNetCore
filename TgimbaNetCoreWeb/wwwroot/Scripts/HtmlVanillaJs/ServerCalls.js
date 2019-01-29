@@ -31,37 +31,30 @@ ServerCalls.GetBucketListItems = function(url, params) {
 };
 
 ServerCalls.AddBucketListItem = function (url, params) {
+	var formData = new FormData();	 
 	var user = SessionGetUsername(SESSION_USERNAME);
-	var token = SessionGetToken(SESSION_TOKEN);
 
-	var bucketListModel = {
-		Name: params[0],
-		DateCreated: params[1],
-		BucketListItemType: params[2],
-		Completed: params[3],
-		Latitude: params[4],		  
-		Longitude: params[5],
-		DatabaseId: null,
-		UserName: user,
-	};								   
-	  
-	var jsonData = JSON.stringify
-	({ 
-		model: bucketListModel,
-		encodedUser: btoa(user),
-		encodedToken: btoa(token)
-	});	 
-									 
-	//var formData = new FormData();	 
-	//formData.append("model", jsonData);
-	//formData.append("encodedUser", btoa(user)); 
-	//formData.append("encodedToken", btoa(token));			  
+	formData.append("Name", params[0]);
+	formData.append("DateCreated", params[1]);	
+	formData.append("BucketListItemType", params[2]);
+	formData.append("Completed", params[3]);
+	formData.append("Latitude", params[4]);
+	formData.append("Longitude", params[5]);
+	formData.append("DatabaseId", '');		
+	formData.append("UserName", user);	  
+	formData.append("encodedUser", btoa(user)); 
+	formData.append("encodedToken", btoa(SessionGetToken(SESSION_TOKEN)));			  
 
-	return ServerCall.PostBody(url, jsonData)
+	return ServerCall.Post(url, formData)
 		.then(
 			function (response) {
-				// TODO - handle response
-				var resp = response;
+				// TODO - convert response to boolean
+				if (response && response === "true") {	  
+					MainController.Index();		           
+				} else {
+					// TODO - handle error
+					alert('Add failed');
+				}
 			});
 };
 

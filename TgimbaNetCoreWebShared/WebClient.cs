@@ -17,8 +17,9 @@ namespace TgimbaNetCoreWebShared
 		public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken) 
 		{
 			var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
+			var bucketListItemArrayBase64 = Shared.misc.Utilities.EncodeClientBase64String(bucketListItemArray);
 
-			var result = this.service.UpsertBucketListItemV2(bucketListItemArray, encodedUser, encodedToken);
+			var result = this.service.UpsertBucketListItemV2(bucketListItemArrayBase64, encodedUser, encodedToken);
 
 			if (result != null && result.Length == 1 && result[0] == "TokenValid")
 			{		 

@@ -76,6 +76,10 @@ namespace TgimbaNetCoreWebShared
 			} 
 			else if(category == "Cool") 
 			{
+				return Enums.BucketListItemTypes.Cool;
+			}  
+			else if(category == "Cold") 
+			{
 				return Enums.BucketListItemTypes.Cold;
 			}
 			else 
