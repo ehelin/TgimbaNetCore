@@ -69,10 +69,7 @@ ServerCalls.ProcessLogin = function(view, params) {
     return ServerCall.Post(view, formData)
         .then(
         function (token) {
-            if (token !== null && token !== undefined && token.length > 0) {	
-				// TODO - remove alert 
-                alert('Username is logged in');   
-
+            if (token !== null && token !== undefined && token.length > 0) {
 				SessionSetToken(SESSION_TOKEN, token);
 				SessionSetUsername(SESSION_USERNAME, userName);
 				MainController.Index();		           
@@ -98,7 +95,6 @@ ServerCalls.ProcessRegistration = function (view, params) {
 					&& goodRegistration !== ''
 					&& goodRegistration === 'true')  // TODO - convert boolean from string
 				{
-					alert('User is registered');
 					Display.LoadView(VIEW_LOGIN, null);
 				} else {
 					alert('User is not registered');

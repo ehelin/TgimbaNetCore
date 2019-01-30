@@ -25,7 +25,15 @@ namespace TgimbaNetCoreWebShared
 						model = new SharedBucketListModel{ 
 							DatabaseId = "ERR_000002-Token Expired"
 						};	   
-					} else {																							
+					} 
+					// TODO - handle no items
+					else if (bucketListItem[0] == "No Items") {
+						break;
+						//model = new SharedBucketListModel{ 
+						//	DatabaseId = "No Items"
+						//};	 
+					}
+					else {																							
 						model = new SharedBucketListModel{
 							Name = bucketListItem[1],
 							DateCreated = bucketListItem[2],

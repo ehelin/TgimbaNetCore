@@ -22,17 +22,19 @@
 <script type="text/javascript">	
 	function LoadMainPage()
 	{
-		var bucketListHtmlTable = '';
-		var bucketListData = Display.HtmlContent;
-		var htmlDiv = document.getElementById('bucketListItems');
-
+		var bucketListData = Display.HtmlContent; 		  
+		var htmlDiv = document.getElementById('bucketListItems');	
 		isNullUndefined(htmlDiv, 'HtmlVanillaJsIndex.cshtml', 'cannot find html bucket list item div');
-
-		// NOTE: style just temporary until css is added
-		var tablePrefix = '<table style="width:100%;border: solid 1px black;">';
-		var tableSuffix = '</table>';
-
-		bucketListHtmlTable += tablePrefix;
+	
+		if (bucketListData.length > 0) {
+			var bucketListHtmlTable = CreateBucketListTable(bucketListData);
+																			 
+			htmlDiv.innerHTML = bucketListHtmlTable;
+		}
+	}
+	function CreateBucketListTable(bucketListData) {
+		// NOTE: style just temporary until css is added	  
+		var bucketListHtmlTable = '<table style="width:100%;border: solid 1px black;">';
 
 		for (var i = 0; i < bucketListData.length; i++) {
 			var curBucketListItem = bucketListData[i];
@@ -52,9 +54,9 @@
 			bucketListHtmlTable += '</tr>';	  
 		}			  
 
-		bucketListHtmlTable += tableSuffix;	 
+		bucketListHtmlTable += '</table>';	
 
-		htmlDiv.innerHTML = bucketListHtmlTable;
+		return bucketListHtmlTable;
 	}
 </script>
 
