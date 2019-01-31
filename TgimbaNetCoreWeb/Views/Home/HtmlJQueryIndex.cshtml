@@ -21,6 +21,47 @@
 <script src="@Url.Content("~/Scripts/Common/ApplicationFlow.js")" type="text/javascript"></script>	
 <script src="@Url.Content("~/Scripts/Common/Constants.js")" type="text/javascript"></script>																									 
 
+<script type="text/javascript">	
+	function LoadMainPage()
+	{
+		var bucketListData = Display.HtmlContent; 		  
+		var htmlDiv = document.getElementById('bucketListItems');	
+		isNullUndefined(htmlDiv, 'HtmlVanillaJsIndex.cshtml', 'cannot find html bucket list item div');
+	
+		if (bucketListData.length > 0) {
+			var bucketListHtmlTable = CreateBucketListTable(bucketListData);
+																			 
+			htmlDiv.innerHTML = bucketListHtmlTable;
+		}
+	}
+	function CreateBucketListTable(bucketListData) {
+		// NOTE: style just temporary until css is added	  
+		var bucketListHtmlTable = '<table style="width:100%;border: solid 1px black;">';
+
+		for (var i = 0; i < bucketListData.length; i++) {
+			var curBucketListItem = bucketListData[i];
+			bucketListHtmlTable += '<tr>';		   
+			var arrayCtr = i + 1;
+
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + arrayCtr.toString() + '</td>'; 
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.name + '</td>';
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.dateCreated + '</td>';
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.bucketListItemType + '</td>';
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.completed + '</td>';
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.latitude + '</td>';
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.longitude + '</td>';	
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.databaseId + '</td>';
+			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.userName + '</td>';
+				
+			bucketListHtmlTable += '</tr>';	  
+		}			  
+
+		bucketListHtmlTable += '</table>';	
+
+		return bucketListHtmlTable;
+	}
+</script>
+
 <div id="csHtmlContentDiv"></div>
 
 <script type="text/javascript">

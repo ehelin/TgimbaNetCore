@@ -21,6 +21,12 @@ namespace TgimbaNetCoreWebShared.Models
 		[DataMember]
 		public string DatabaseId { get; set;}
 		[DataMember]		 
-		public string UserName { get; set;}			   
+		public string UserName { get; set;}
+
+		// TODO - temporarily to handle JQuery Post
+		[DataMember]		 
+		public string encodedUser { get; set;}
+		[DataMember]		 
+		public string encodedToken { get; set;}		   
 	}
 }

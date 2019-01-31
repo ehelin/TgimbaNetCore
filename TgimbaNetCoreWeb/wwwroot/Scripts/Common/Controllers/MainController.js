@@ -34,9 +34,8 @@ MainController.Add = function () {
 		"MainController.js"
 	);
 
-	if (IsJQueryClient()) {
-		alert('implement jquery add');
-		// TODO - implement
+	if (IsJQueryClient()) {			
+		ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
 	} else {
 		ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
 	}  
