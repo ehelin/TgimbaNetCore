@@ -26,7 +26,7 @@ export class LoginComponent {
 	}
 
 	public static IsLoggedIn(): boolean {
-		var token = SessionComponent.SessionGetToken(ConstantsComponent.SESSION_TOKEN);
+		var token = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN);
 
 		if (token !== undefined && token !== null && token.length > 0) {
 			return true;
@@ -60,7 +60,8 @@ export class LoginComponent {
 			data => {
 				if (data !== null && data !== undefined && data !== '') {
 					let token = JSON.stringify(data);
-					SessionComponent.SessionSetToken(ConstantsComponent.SESSION_TOKEN, token);
+					SessionComponent.SessionSetValue(ConstantsComponent.SESSION_TOKEN, token);
+					SessionComponent.SessionSetValue(ConstantsComponent.SESSION_USERNAME, loginUsername);
 					this.router.navigate(['/main']);
 				} else {
 					alert('Username and/or password is not correct.  Please try again');

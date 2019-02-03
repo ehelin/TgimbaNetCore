@@ -14,11 +14,11 @@ export class SessionComponent {
 	constructor() {}
 
 	//token -------------------------------------------------------
-	public static SessionSetToken(key, value) {
+	public static SessionSetValue(key, value) {
 		sessionStorage.setItem(key, value);
 	}
 
-	public static SessionGetToken(key) {
+	public static SessionGetValue(key) {
 		var val = sessionStorage.getItem(key);
 		return val;
 	}

@@ -1,5 +1,17 @@
 ﻿<h1>Angular 6 Type Script - Main</h1>
 <div style="text-align:center; width: 100%">	 	
 	<button (click)="ShowMainMenu()" id="btnMainMenu">Menu</button>
-	<div id="bucketListItems" />
+	<div *ngFor="let d of htmlTableWData" id="bucketListItems">
+		<table border="1">
+			<tr>					  
+			   <td>{{d.number}}</td> 
+			   <td>Name: {{d.name}}</td> 
+			   <td>DateCreated: {{d.dateCreated}}</td>
+			   <td>BucketListItemType: {{d.bucketListItemType}}</td>
+			   <td>Completed: {{d.completed}}</td>
+			   <td>Latitude: {{d.latitude}}</td>
+			   <td>Longitude: {{d.longitude}}</td>
+			</tr>
+		</table>
+	</div>
 </div>

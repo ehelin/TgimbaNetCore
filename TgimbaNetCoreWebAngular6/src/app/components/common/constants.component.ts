@@ -10,5 +10,6 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class ConstantsComponent {				   
-	public static get SESSION_TOKEN(): string { return "SessionToken"; }				 
+	public static get SESSION_TOKEN(): string { return "SessionToken"; }
+	public static get SESSION_USERNAME(): string { return "SessionUserName"; }				 
 }
