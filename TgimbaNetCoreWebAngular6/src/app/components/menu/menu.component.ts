@@ -2,7 +2,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
-import { SessionComponent } from '../common/session.component';	 
+import { SessionComponent } from '../common/session.component';
+import { UtilitiesComponent } from '../common/utilities.component';
 
 @Component({
 	selector: 'app-root',
@@ -12,18 +13,17 @@ import { SessionComponent } from '../common/session.component';
 
 @Injectable()
 export class MenuComponent {		
-	//private baseUrl: string;	 
+	private baseUrl: string;	 
 
 	constructor(
 		private http: HttpClient,
 		private router: Router
-	) {								   											   
-		//this.baseUrl = window.location.protocol + "//"
-		//				+ window.location.hostname + ':' + window.location.port; 
+	) {
+		this.baseUrl = UtilitiesComponent.GetBaseUrl(); 
 	}
 
 	public AddBucketListItem() {
-		alert('AddBucketListItem() clicked');
+		this.router.navigate(['/add']);
 	};
 
 	public SortBucketListItem() {

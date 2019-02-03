@@ -10,13 +10,15 @@ import { MainComponent } from './components/main/main.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SessionComponent } from './components/common/session.component';
 import { ConstantsComponent } from './components/common/constants.component';
-//import { ApplicationFlowComponent } from './components/common/applicationflow.component';
+import { UtilitiesComponent } from './components/common/utilities.component';
+import { AddComponent } from './components/add/add.component';
 
 const routes: Routes = [
 	{ path: 'login',  component: LoginComponent },
 	{ path: 'registration', component: RegistrationComponent },
 	{ path: 'main', component: MainComponent },
-	{ path: 'menu', component: MenuComponent }
+	{ path: 'menu', component: MenuComponent },
+	{ path: 'add', component: AddComponent }
 ];
 
 @NgModule({
@@ -27,7 +29,9 @@ const routes: Routes = [
 		MainComponent,
 		MenuComponent,
 		SessionComponent,
-		ConstantsComponent//, 
+		ConstantsComponent,
+		UtilitiesComponent,
+		AddComponent
 		//ApplicationFlowComponent
 	],
 	imports: [

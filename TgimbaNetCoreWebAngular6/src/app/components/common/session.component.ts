@@ -4,22 +4,14 @@ import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
-	templateUrl: './emptyHtml/session.component.html',
-	//styleUrls: ['./session.component.css']
+	templateUrl: './emptyHtml/session.component.html'
 })
 
 @Injectable()
 export class SessionComponent {		
 	private static sessionStorage = new Map();
 
-	constructor(
-		//private http: HttpClient,
-		//private router: Router
-	) {				
-		//sessionStorage = new Map();
-		//this.baseUrl = window.location.protocol + "//"
-		//				+ window.location.hostname + ':' + window.location.port; 
-	}
+	constructor() {}
 
 	//token -------------------------------------------------------
 	public static SessionSetToken(key, value) {

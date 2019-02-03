@@ -1,6 +1,7 @@
 ﻿import { Injectable, Component, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { UtilitiesComponent } from '../common/utilities.component';
 
 @Component({
 	selector: 'app-root',
@@ -19,9 +20,8 @@ export class RegistrationComponent {
 	constructor(
 		private http: HttpClient,
 		private router: Router
-	) {
-		this.baseUrl = window.location.protocol + "//"
-			+ window.location.hostname + ':' + window.location.port; 
+	) {										   
+		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 	}				
 
 	public Cancel() {						  
@@ -39,7 +39,7 @@ export class RegistrationComponent {
 		let encodedPassValue = btoa(password);
 		let encodedEmailValue = btoa(email);
 
-		const url = this.baseUrl + '/Home/Registration?'
+		const url = this.baseUrl + '/Registration/Registration?'
 			+ 'encodedUser=' + encodedUserValue
 			+ '&encodedPass=' + encodedPassValue
 			+ '&encodedEmail=' + encodedEmailValue;
@@ -55,7 +55,6 @@ export class RegistrationComponent {
 		).subscribe(
 			data => {
 				if (data !== null && data !== undefined && data !== '') {
-					alert('Registration succeeded!');
 					this.router.navigate(['/login']);
 				} else {
 					alert('Registration failed');

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;  
 using Shared.interfaces;         
-using Shared;       
+using TgimbaNetCoreWebShared;
 using API;
 
 namespace TgimbaNetCoreWeb

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Session } from 'protractor';
 import { ConstantsComponent } from '../common/constants.component';
 import { SessionComponent } from '../common/session.component';
+import { UtilitiesComponent } from '../common/utilities.component';
 
 @Component({
 	selector: 'app-root',
@@ -20,9 +21,8 @@ export class LoginComponent {
 	constructor(
 		private http: HttpClient,
 		private router: Router
-	) {								   											   
-		this.baseUrl = window.location.protocol + "//"
-						+ window.location.hostname + ':' + window.location.port; 
+	) {								   											
+		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 	}
 
 	public static IsLoggedIn(): boolean {
@@ -44,7 +44,7 @@ export class LoginComponent {
 		let encodedUserValue = btoa(loginUsername);
 		let encodedPassValue = btoa(loginPassword);
 									
-		const url = this.baseUrl + '/Home/Login?'
+		const url = this.baseUrl + '/Login/Login?'
 			+ 'encodedUser=' + encodedUserValue
 			+ '&encodedPass=' + encodedPassValue;
 
@@ -59,7 +59,6 @@ export class LoginComponent {
 		).subscribe(
 			data => {
 				if (data !== null && data !== undefined && data !== '') {
-					alert('Logged In');
 					let token = JSON.stringify(data);
 					SessionComponent.SessionSetToken(ConstantsComponent.SESSION_TOKEN, token);
 					this.router.navigate(['/main']);
