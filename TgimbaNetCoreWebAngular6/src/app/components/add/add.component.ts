@@ -15,12 +15,12 @@ import { UtilitiesComponent } from '../common/utilities.component';
 @Injectable()
 export class AddComponent {		
 	private baseUrl: string;
-	public itemName;
+	public itemName = '';
 	public dateCreated;
-	public category;
-	public completed;
-	public latitude;
-	public longitude;
+	public category = 'Warm';
+	public completed = undefined;
+	public latitude = '';
+	public longitude = '';
 
 	constructor(
 		private http: HttpClient,
@@ -45,22 +45,15 @@ export class AddComponent {
 		longitude: string
 	) {
 		let userName = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_USERNAME);
-		let token = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN);
-
-		//formData.append("Name", params[0]);
-		//formData.append("DateCreated", params[1]);
-		//formData.append("BucketListItemType", params[2]);
-		//formData.append("Completed", params[3]);
-		//formData.append("Latitude", params[4]);
-		//formData.append("Longitude", params[5]);
+		let token = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN);		   
 
 		const url = this.baseUrl + '/BucketListItem/AddBucketListItem?'
 			+ 'Name=' + itemName
 			+ '&DateCreated=' + dateCreated
 			+ '&BucketListItemType=' + category
-			+ '&Completed=' + completed
-			+ '&Latitude=' + latitude
-			+ '&Longitude=' + longitude
+			+ '&Completed=' + (completed === 'true' ? true : false).toString()
+			+ '&Latitude=' + (latitude === '' ? 0 : latitude).toString()
+			+ '&Longitude=' + (longitude === '' ? 0 : longitude).toString()
 			+ '&DatabaseId=' + ''
 			+ '&UserName=' + userName
 			+ '&encodedUser=' + btoa(userName)
