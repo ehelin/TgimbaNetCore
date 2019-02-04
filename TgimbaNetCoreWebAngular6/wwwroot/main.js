@@ -378,56 +378,60 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddComponent", function() { return AddComponent; });
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _common_utilities_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/utilities.component */ "./src/app/components/common/utilities.component.ts");
+/* harmony import */ var _common_constants_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/constants.component */ "./src/app/components/common/constants.component.ts");
+/* harmony import */ var _common_session_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/session.component */ "./src/app/components/common/session.component.ts");
+/* harmony import */ var _common_utilities_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../common/utilities.component */ "./src/app/components/common/utilities.component.ts");
 
 
-//import { SessionComponent } from '../common/session.component';
+
+
 
 var AddComponent = /** @class */ (function () {
     function AddComponent(http, router) {
         this.http = http;
         this.router = router;
-        this.baseUrl = _common_utilities_component__WEBPACK_IMPORTED_MODULE_2__["UtilitiesComponent"].GetBaseUrl();
+        this.baseUrl = _common_utilities_component__WEBPACK_IMPORTED_MODULE_4__["UtilitiesComponent"].GetBaseUrl();
+        var today = new Date();
+        this.dateCreated = today.toLocaleDateString('en-US');
     }
     AddComponent.prototype.Cancel = function () {
         this.router.navigate(['/main']);
     };
     AddComponent.prototype.Add = function (itemName, dateCreated, category, completed, latitude, longitude) {
-        alert('add');
-        //let encodedItemName = btoa(itemName);
-        //let encodedDateCreated = btoa(dateCreated);
-        //let encodedCategory = btoa(category);
-        //let encodedCompleted = btoa(completed);
-        //let encodedLatitude = btoa(latitude);
-        //let encodedLongitude = btoa(longitude);
-        //const url = this.baseUrl + '/BucketListItem/AddBucketListItem?'
-        //	+ 'encodedItemName=' + encodedItemName
-        //	+ '&encodedDateCreated=' + encodedDateCreated
-        //	+ '&encodedCategory=' + encodedCategory
-        //	+ '&encodedCompleted=' + encodedCompleted
-        //	+ '&encodedLatitude=' + encodedLatitude
-        //	+ '&encodedLongitude=' + encodedLongitude;
-        //const headers = new HttpHeaders()
-        //	.set('Content-Type', 'application/json')
-        //	.set('Accept', 'application/json');
-        //return this.http.post(
-        //	url,
-        //	null,
-        //	{ headers: headers }										  
-        //).subscribe(
-        //	data => {
-        //		// TODO - convert response to boolean
-        //		if (data && data === "true") {
-        //			alert('Add succeeded');
-        //		} else {
-        //			// TODO - handle error
-        //			alert('Add failed');
-        //		}
-        //	},
-        //	error => {
-        //		alert('Error: ' + error);
-        //	}
-        //);
+        var _this = this;
+        var userName = _common_session_component__WEBPACK_IMPORTED_MODULE_3__["SessionComponent"].SessionGetValue(_common_constants_component__WEBPACK_IMPORTED_MODULE_2__["ConstantsComponent"].SESSION_USERNAME);
+        var token = _common_session_component__WEBPACK_IMPORTED_MODULE_3__["SessionComponent"].SessionGetValue(_common_constants_component__WEBPACK_IMPORTED_MODULE_2__["ConstantsComponent"].SESSION_TOKEN);
+        //formData.append("Name", params[0]);
+        //formData.append("DateCreated", params[1]);
+        //formData.append("BucketListItemType", params[2]);
+        //formData.append("Completed", params[3]);
+        //formData.append("Latitude", params[4]);
+        //formData.append("Longitude", params[5]);
+        var url = this.baseUrl + '/BucketListItem/AddBucketListItem?'
+            + 'Name=' + itemName
+            + '&DateCreated=' + dateCreated
+            + '&BucketListItemType=' + category
+            + '&Completed=' + completed
+            + '&Latitude=' + latitude
+            + '&Longitude=' + longitude
+            + '&DatabaseId=' + ''
+            + '&UserName=' + userName
+            + '&encodedUser=' + btoa(userName)
+            + '&encodedToken=' + btoa(token);
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]()
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json');
+        return this.http.post(url, null, { headers: headers }).subscribe(function (data) {
+            if (data && data === true) {
+                _this.router.navigate(['/main']);
+            }
+            else {
+                // TODO - handle error
+                alert('Add failed');
+            }
+        }, function (error) {
+            alert('Error: ' + error);
+        });
     };
     return AddComponent;
 }());
