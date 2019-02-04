@@ -22,7 +22,7 @@ export const reducer = (state, action) => {
 		var utils = Object.create(utilsRef.Utilities); 
 		var host = utils.GetHost();
 								
-		const url = host + '/Home/Login?encodedUser=' + btoa(action.username)
+		const url = host + '/Login/Login?encodedUser=' + btoa(action.username)
 					+ '&encodedPass=' + btoa(action.password);
 
 		const xhr = new XMLHttpRequest();
@@ -31,9 +31,7 @@ export const reducer = (state, action) => {
 			if (data && data.currentTarget
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0)
-			{
-				alert('User is logged in');
-															   
+			{									   
 				var token = data.currentTarget.response; 				  
 				var constants = Object.create(constantsRef.Constants); 
 				var session = Object.create(sessionRef.Session); 

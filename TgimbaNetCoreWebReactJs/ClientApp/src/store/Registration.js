@@ -23,7 +23,7 @@ export const reducer = (state, action) => {
 	var host = utils.GetHost();
 
 	if (action.type === ACTION_TYPE_REGISTRATION) {
-		const url = host + '/Home/Registration?'
+		const url = host + '/Registration/Registration?'
 			+ 'encodedUser=' + btoa(action.username)
 			+ '&encodedPass=' + btoa(action.password)
 			+ '&encodedEmail=' + btoa(action.email);
@@ -35,8 +35,7 @@ export const reducer = (state, action) => {
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
 				&& data.currentTarget.respose !== false
-			) {	
-				alert('Registration succeeded!');
+			) {									   
 				window.location = host + '/login';				
 			} else {
 				alert('Registration failed!');

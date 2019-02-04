@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.interfaces;
 using Shared;                
 using API;
+using TgimbaNetCoreWebShared;
 
 namespace TgimbaNetCoreWebReactJs
 {
