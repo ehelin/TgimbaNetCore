@@ -8,16 +8,18 @@ import * as Main from './Main';
 import * as WeatherForecasts from './WeatherForecasts';	
 import * as Button from './Button';
 import * as MainMenu from './MainMenu';
+import * as Add from './Add';
 
 export default function configureStore(history, initialState) {
   const reducers = {
-	  login: Login.reducer,
+	  add: Add.reducer,
+	  button: Button.reducer,
 	  counter: Counter.reducer,
-	  weatherForecasts: WeatherForecasts.reducer,
-	  register: Registration.reducer,
+	  login: Login.reducer,
 	  main: Main.reducer,
 	  mainmenu: MainMenu.reducer,
-	  button: Button.reducer
+	  register: Registration.reducer,	
+	  weatherForecasts: WeatherForecasts.reducer
   };
 
   const middleware = [

@@ -21,6 +21,14 @@ var Utilities = {
 		else {
 			return false;
 		}
+	},
+
+	GetDefaultTableStyle: function () {
+		return {
+			"width": "100%",
+			"text-align": "center",
+			"vertical-align": " middle"
+		};
 	}
 };
 

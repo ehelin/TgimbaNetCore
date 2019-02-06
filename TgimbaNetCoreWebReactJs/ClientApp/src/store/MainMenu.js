@@ -34,7 +34,7 @@ export const reducer = (state, action) => {
 	var host = utils.GetHost();
 
 	if (action.type === ACTION_TYPE_ADD) {
-		//alert('Add was clicked!');
+		window.location = host + '/add';
 	}
 	else if (action.type === ACTION_TYPE_SORT) {
 		//alert('Sort was clicked!');
