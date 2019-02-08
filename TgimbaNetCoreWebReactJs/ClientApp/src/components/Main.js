@@ -3,16 +3,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Main';
 import Button from './Button';
+var utilsRef = require('../common/Utilities');
 
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
+
+		var utils = Object.create(utilsRef.Utilities);
+		if (utils.IsLoggedIn()) {
+			this.props.load();
+		}  
 	}
 
 	render() {
-		const showMainMenu = _ => {
-			//alert('main menu display');
+		const showMainMenu = _ => {		   
 			this.props.main();
 		}
 
@@ -28,7 +33,6 @@ class Main extends React.Component {
 				<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
 				<p>main.html</p>
 			</div>
-
 		);
 	};
 }

@@ -13,7 +13,7 @@ var Utilities = {
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);
 
-		var token = session.SessionGetToken(constants.SESSION_TOKEN);					  
+		var token = session.SessionGet(constants.SESSION_TOKEN);					  
 
 		if (token !== undefined && token !== null && token.length > 0) {
 			return true;

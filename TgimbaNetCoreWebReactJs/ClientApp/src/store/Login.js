@@ -36,7 +36,8 @@ export const reducer = (state, action) => {
 				var constants = Object.create(constantsRef.Constants); 
 				var session = Object.create(sessionRef.Session); 
 													  
-				session.SessionSetToken(constants.SESSION_TOKEN, token);
+				session.SessionSet(constants.SESSION_TOKEN, token);
+				session.SessionSet(constants.SESSION_USERNAME, action.username);
 				 
 				window.location = host + '/main';
 			} else {

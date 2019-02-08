@@ -1,11 +1,11 @@
 ﻿var Session = {	
 	SessonStorage: new Map(),
 
-	SessionSetToken: function(key, value) {
+	SessionSet: function(key, value) {
 		sessionStorage.setItem(key, value);
 	},
 
-	SessionGetToken: function(key) {
+	SessionGet: function(key) {
 		var val = sessionStorage.getItem(key);
 		return val;
 	},
