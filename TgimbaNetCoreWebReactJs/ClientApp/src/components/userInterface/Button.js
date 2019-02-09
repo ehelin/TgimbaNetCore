@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../store/Button';	
+import { actionCreators } from '../../store/userInterface/Button';	
 
 class Button extends React.Component {
 	constructor(props) {
@@ -10,10 +10,6 @@ class Button extends React.Component {
 
 	render() {
 		const { onPress, children, id } = this.props;  
-
-		//var tableStyle = {					 
-		//	"width": "100%",			
-		//};
 
 		return (		   
 			<button type="button" onClick={onPress} id={id}>

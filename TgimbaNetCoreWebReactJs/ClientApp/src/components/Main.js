@@ -2,7 +2,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Main';
-import Button from './Button';
+import Button from './userInterface/Button';
+import Table from './userInterface/Table';
 var utilsRef = require('../common/Utilities');
 
 class Main extends React.Component {
@@ -30,42 +31,7 @@ class Main extends React.Component {
 	render() {
 		const showMainMenu = _ => {		   
 			this.props.main();
-		}
-
-		const bucketListItems = [
-			{
-				name: 'Eat at flowParis restraurant (on Westhimer)',
-				dateCreated: '8/05/2015',
-				bucketListItemType: 3,
-				completed: 'true',
-				latitude: 29.7371000000,
-				longitude: 95.4803000000,
-				databaseId: 109,
-				userName: null
-			},
-			{
-				name: 'see sink holes at Cenote Samula Yucatan Mexico',
-				dateCreated: '8/07/2015',  
-				bucketListItemType: 3,
-				completed: 'false',
-				latitude: 34.7371000000,
-				longitude: 35.4803000000,	 
-				databaseId: 110,
-				userName: null
-			}
-		]
-
-		var trList = bucketListItems.map((bucketListItem, index) => {
-			return (
-				<tr key={bucketListItem.name}>
-					<td>{bucketListItem.name}</td>
-					<td>{bucketListItem.dateCreated}</td>
-					<td>{bucketListItem.bucketListItemType}</td>
-					<td>{bucketListItem.completed}</td>
-					<td>{bucketListItem.latitude}</td>
-					<td>{bucketListItem.longitude}</td>
-				</tr>);
-		});
+		}			 
 
 		var panelStyle = {
 			"width": "100%",
@@ -73,38 +39,13 @@ class Main extends React.Component {
 			"vertical-align": " middle"
 		};
 
-		return (<div style={panelStyle}>
-			<h1>React JS - Main Panel</h1>
-			<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
-			<table border="1">
-				<thead>
-					<th>Name</th>
-					<th>Date Created</th>
-					<th>Category</th>
-					<th>Completed</th>
-					<th>Latitude</th>
-					<th>Longitude</th>
-				</thead>
-				<tbody>
-					{trList}
-				</tbody>
-			</table>
-		</div>);
-
-	
-
-		//return (	   
-		//	<div style={panelStyle}>
-		//		<h1>React JS - Main Panel</h1>
-		//		<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
-		//		<table border="1">
-		//			<tr>
-		//				<td>col 1</td>
-		//				<td>col 2</td>
-		//			</tr>
-		//		</table>
-		//	</div>
-		//);
+		return (
+			<div style={panelStyle}>
+				<h1>React JS - Main Panel</h1>
+				<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
+				<Table></Table>
+			</div>
+		);
 	};
 }
 

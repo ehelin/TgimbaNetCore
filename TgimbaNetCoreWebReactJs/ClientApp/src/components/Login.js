@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Login';
-import Button from './Button';
+import Button from './userInterface/Button';
 var utilsRef = require('../common/Utilities');
 
 class Login extends React.Component {

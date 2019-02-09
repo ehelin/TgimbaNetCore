@@ -2,7 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Registration';
-import Button from './Button';
+import Button from './userInterface/Button';
 
 class Registration extends React.Component {
 	constructor(props) {
