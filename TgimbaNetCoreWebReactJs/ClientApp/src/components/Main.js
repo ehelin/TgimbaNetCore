@@ -9,29 +9,22 @@ var utilsRef = require('../common/Utilities');
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
-		if (props && props.bucketListItems && props.bucketListItems.length > 0) {
-			this.state = props.bucketListItems;
-		} else {
-			this.state = {
-				bucketListItems: []
-			};	 
-		}
+		this.state = { bucketListItems: null };
+	}	  
 
-		//var utils = Object.create(utilsRef.Utilities);
-		//if (utils.IsLoggedIn()) {
-		//	this.props.load();
-		//}  
+	componentDidMount() {
+		this.props.load();							 
 	}
 
-	//componentDidMount() {
-	//	this.props.load();
-	//	//this.props.loadSchools(this.props.termId);
-	//}
+	componentWillReceiveProps(nextProps) {
+		this.props.load();
+	}
 
 	render() {
+		let { bucketListItems } = this.state;
 		const showMainMenu = _ => {		   
 			this.props.main();
-		}			 
+		}	
 
 		var panelStyle = {
 			"width": "100%",
@@ -40,12 +33,14 @@ class Main extends React.Component {
 		};
 
 		return (
-			<div style={panelStyle}>
-				<h1>React JS - Main Panel</h1>
-				<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
-				<Table></Table>
-			</div>
-		);
+			this.props.bucketListItems ?
+				<div style={panelStyle}>
+					<h1>React JS - Main Panel</h1>
+					<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
+					<Table bucketListItems={this.props.bucketListItems}></Table>
+				</div> :
+				<div> Loading ... </div>
+		);			
 	};
 }
 

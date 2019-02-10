@@ -9,28 +9,7 @@ class Table extends React.Component {
 	}
 
 	render() {
-		const bucketListItems = [
-			{
-				name: 'Eat at flowParis restraurant (on Westhimer)',
-				dateCreated: '8/05/2015',
-				bucketListItemType: 3,
-				completed: 'true',
-				latitude: 29.7371000000,
-				longitude: 95.4803000000,
-				databaseId: 109,
-				userName: null
-			},
-			{
-				name: 'see sink holes at Cenote Samula Yucatan Mexico',
-				dateCreated: '8/07/2015',
-				bucketListItemType: 3,
-				completed: 'false',
-				latitude: 34.7371000000,
-				longitude: 35.4803000000,
-				databaseId: 110,
-				userName: null
-			}
-		]
+		const { bucketListItems } = this.props;
 
 		var trList = bucketListItems.map((bucketListItem, index) => {
 			return (
