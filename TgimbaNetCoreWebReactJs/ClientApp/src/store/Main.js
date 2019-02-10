@@ -39,12 +39,19 @@ export const actionCreators = {
 		const response = await fetch(url);
 		const bucketListItems = await response.json();
 
+		for (let i = 0; i < bucketListItems.length; i++) {
+			bucketListItems[i].number = i + 1;
+		}
+
 		dispatch({ type: ACTION_TYPE_LOAD, bucketListItems });
 	}
 };
 
 export const reducer = (state, action) => {
-	state = state || initialState;			
+	state = state || initialState;		
+
+	var utils = Object.create(utilsRef.Utilities);
+	var host = utils.GetHost();
 
 	if (action.type == ACTION_TYPE_MAIN_MENU) {	  
 		window.location = host + '/mainmenu';

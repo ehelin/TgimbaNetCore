@@ -14,6 +14,7 @@ class Table extends React.Component {
 		var trList = bucketListItems.map((bucketListItem, index) => {
 			return (
 				<tr key={bucketListItem.name}>
+					<td>{bucketListItem.number}</td>
 					<td>{bucketListItem.name}</td>
 					<td>{bucketListItem.dateCreated}</td>
 					<td>{bucketListItem.bucketListItemType}</td>
@@ -24,7 +25,8 @@ class Table extends React.Component {
 		});	
 
 		return (<table border="1">
-				<thead>
+				<thead>			 
+					<th></th>
 					<th>Name</th>
 					<th>Date Created</th>
 					<th>Category</th>
