@@ -9,12 +9,12 @@ class Add extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: null,
-			dateCreated: null,
-			bucketListItemType: null,
+			name: '',
+			dateCreated: new Date().toLocaleDateString('en-US'),
+			bucketListItemType: 'Cool',
 			completed: null,
-			latitude: null,
-			longitude: null
+			latitude: '',
+			longitude: ''
 		};
 	}
 
@@ -62,9 +62,11 @@ class Add extends React.Component {
 					<tr>
 						<td>
 							<label>Category:</label>
-							<select id="USER_CONTROL_ADD_ITEM_CATEGORY" value={bucketListItemType}>
+							<select id="USER_CONTROL_ADD_ITEM_CATEGORY"
+								value={bucketListItemType}
+								onChange={event => this.setState({ bucketListItemType: event.target.value })}							>
 								<option value="Hot">Hot</option>
-								<option value="Warm" selected="selected">Warm</option>
+								<option value="Warm">Warm</option>
 								<option value="Cool">Cool</option>
 							</select>
 						</td>
@@ -77,7 +79,7 @@ class Add extends React.Component {
 								type="checkbox"
 								value={completed}
 								onChange={event => this.setState({ completed: event.target.value })}
-								checked
+								//checked
 							/>
 						</td>
 					</tr>

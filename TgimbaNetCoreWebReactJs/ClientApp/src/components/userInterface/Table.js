@@ -18,7 +18,7 @@ class Table extends React.Component {
 					<td>{bucketListItem.name}</td>
 					<td>{bucketListItem.dateCreated}</td>
 					<td>{bucketListItem.bucketListItemType}</td>
-					<td>{bucketListItem.completed}</td>
+					<td>{bucketListItem.completed === true ? 'true' : 'false'}</td>
 					<td>{bucketListItem.latitude}</td>
 					<td>{bucketListItem.longitude}</td>
 				</tr>);
