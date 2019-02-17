@@ -21,16 +21,9 @@ BaseController.GetParameter = function (ctrl, type, file) {
 	if (!HasValue(ctrl, type, file))
     {
         return;
-    }       
+	}       
 
-	ctrlObj = document.getElementById(ctrl);
-	if (ctrlObj.type === 'checkbox') {
-		value = ctrlObj.checked;
-	} else if (ctrlObj.type === 'select-one') {
-		value = ctrlObj.options[ctrlObj.selectedIndex].value;
-	} else {
-		value = ctrlObj.value;
-	} 
+	value = GetElementValue(ctrl);	// Utilities.js
 
 	return value;
 }

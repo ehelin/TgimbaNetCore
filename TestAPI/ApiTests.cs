@@ -36,7 +36,7 @@ namespace TestsAPIIntegration
         }
 
         [TestMethod]
-        public void RunApiIntegrationTest()
+        public void RunApiIntegraationTest()
         {
             //clean up in case these tests get our of sync
             DeleteUser(user, email, password);

@@ -22,6 +22,46 @@ function HasValue(ctrlId, type, file) {
     return true;
 }
 
+function SetElementValue(ctrlName, value) {
+	ctrlObj = document.getElementById(ctrlName);
+
+	if (ctrlObj.type === 'checkbox') {
+		if (value === 'true' || value === true) {
+			ctrlObj.checked = true;
+		} else {
+			ctrlObj.checked = false;
+		}
+	} else if (ctrlObj.type === 'select-one') {
+		ctrlObj.selectedIndex = value-1;
+	} else {
+		ctrlObj.value = value;
+	}
+
+	return value;
+}
+
+function GetElementValue(ctrlName) {
+	var ctrlObj = GetElement(ctrlName);
+
+	if (ctrlObj.type === 'checkbox') {
+		value = ctrlObj.checked;
+	} else if (ctrlObj.type === 'select-one') {
+		value = ctrlObj.options[ctrlObj.selectedIndex].value;
+	} else {
+		value = ctrlObj.value;
+	}
+
+	return value;  
+}
+
+function GetElement(ctrlName) {
+	var ctrlObj = document.getElementById(ctrlName);
+
+	isNullUndefined(ctrlObj, 'Utilities.js', 'ctrl exists');
+
+	return ctrlObj
+}
+
 function GetHost() {
     var host = window.location.origin;
 

@@ -41,8 +41,7 @@ namespace TestTgimbaNetCoreWeb
 
 		[TestMethod]
 		public void Test_GoodAddBucketListItem()
-		{						   
-			var bucketListItem = TestUtilities.GetBucketListItem("base64EncodedGoodUser", "newBucketListItem", null, true);
+		{						   																							  
 			var bucketListItemModel = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "newBucketListItem", null, true);
 			
 			var bucketListAdded = GetWebClient().AddBucketListItem(bucketListItemModel, "base64EncodedGoodUser", "base64EncodedGoodToken");
@@ -52,14 +51,31 @@ namespace TestTgimbaNetCoreWeb
 
 		[TestMethod]
 		public void Test_BadAddBucketListItem()
-		{		  
-			var bucketListItem = TestUtilities.GetBucketListItem("base64EncodedGoodUser", "newBucketListItem", null, true);
+		{		  																												  
 			var bucketListItemModel = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "newBucketListItem", null, true);
 			
 			var bucketListAdded = GetWebClient().AddBucketListItem(bucketListItemModel, "base64EncodedBadUser", null);
 	   
 			Assert.IsFalse(bucketListAdded);
 		}
+										   
+		[TestMethod]
+		public void Test_GoodEditBucketListItem()
+		{						   																										 
+			var bucketListItemModel = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "editedBucketListItem", "123", true); 			
+			var bucketListAdded = GetWebClient().EditBucketListItem(bucketListItemModel, "base64EncodedGoodUser", "base64EncodedGoodToken");
+	   
+			Assert.IsTrue(bucketListAdded);
+		}	
+
+		[TestMethod]
+		public void Test_BadEditBucketListItem()
+		{		  																												  
+			var bucketListItemModel = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "newBucketListItem", null, true);  			
+			var bucketListAdded = GetWebClient().EditBucketListItem(bucketListItemModel, "base64EncodedBadUser", null);
+	   
+			Assert.IsFalse(bucketListAdded);
+		}									
 
 		[TestMethod]
 		public void Test_GoodGetBucketListItems()

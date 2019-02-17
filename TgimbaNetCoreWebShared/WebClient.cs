@@ -31,6 +31,28 @@ namespace TgimbaNetCoreWebShared
 			}				
 		}
 
+		public bool EditBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken)
+		{										
+			var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
+			var bucketListItemArrayBase64 = Shared.misc.Utilities.EncodeClientBase64String(bucketListItemArray);
+
+			var result = this.service.UpsertBucketListItemV2(bucketListItemArrayBase64, encodedUser, encodedToken);
+
+			if (result != null && result.Length == 1 && result[0] == "TokenValid")
+			{		 
+				return true;
+			}
+			else 
+			{	   
+				return false;
+			}	
+		}		   
+
+		public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
+		{
+			throw new NotImplementedException();
+		}
+
 		public List<SharedBucketListModel> GetBucketListItems
 		(
 			string encodedUserName, 
@@ -38,7 +60,7 @@ namespace TgimbaNetCoreWebShared
 			string encodedToken
 		){	 											
 			var result = this.service.GetBucketListItemsV2(encodedUserName, encodedSortString, encodedToken);	  														   
-			var list = Utilities.ConvertStringArrayToModelList(result);		   
+			var list = Utilities.ConvertStringArrayToModelList(result, encodedUserName);		   
 
 			return list;
 		}
@@ -63,17 +85,6 @@ namespace TgimbaNetCoreWebShared
 			registered = service.ProcessUserRegistration(encodedUser, encodedEmail, encodedPassword);
 
 			return registered;
-		} 
-
-		//public string[] AddBucketListItem(
-		//	string encodedBucketListItems, 
-		//	string encodedUser, 
-		//	string encodedToken
-		//)
-		//{
-		//	string[] items = service.UpsertBucketListItemV2(encodedBucketListItems, encodedUser, encodedToken);
-			
-		//	return items;
-		//}
+		} 		   
 	}
 }

@@ -7,7 +7,7 @@ namespace TgimbaNetCoreWebShared
 {
 	public class Utilities
 	{										   
-		public static List<SharedBucketListModel> ConvertStringArrayToModelList(string[] bucketListItems) 
+		public static List<SharedBucketListModel> ConvertStringArrayToModelList(string[] bucketListItems, string encodedUserName = "") 
 		{
 			List<SharedBucketListModel> modelList = null;
 			SharedBucketListModel model = null;
@@ -41,8 +41,10 @@ namespace TgimbaNetCoreWebShared
 							Completed = bucketListItem[4] == "1" ? true : false,
 							Latitude = bucketListItem[5],			   
 							Longitude = bucketListItem[6],
-							DatabaseId = bucketListItem[7] != "" ? bucketListItem[7] : null//,
-							//UserName = bucketListItem[7] 
+							DatabaseId = bucketListItem[7] != "" ? bucketListItem[7] : null,//,
+							UserName = !string.IsNullOrEmpty(encodedUserName) 
+											? Shared.misc.Utilities.DecodeClientBase64String(encodedUserName) 
+												: ""
 						};
 					}
 			

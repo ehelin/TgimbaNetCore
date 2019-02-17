@@ -6,7 +6,41 @@ namespace TestTgimbaNetCoreWeb
 {
     [TestClass]
     public class SharedBucketListControllerTests : BaseTest
-    {			  		
+    {	
+		[TestMethod]
+		public void TestSharedBucketListController_EditBucketListItem_GoodParameters()
+		{						
+			var bucketListItem = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "editedBucketListItem", "123", true);
+			var itemUpdated =  GetController().EditBucketListItem(bucketListItem, "base64EncodedGoodUser", "base64EncodedGoodToken");
+
+			Assert.IsTrue(itemUpdated);					 
+		}
+		
+		[TestMethod]
+		public void TestSharedBucketListController_EditBucketListItem_BadParameters()
+		{																									 
+			var bucketListItem = TestUtilities.GetBucketListItemModel("base64EncodedGoodUser", "editedBucketListItem", null, true);
+			var itemUpdated =  GetController().EditBucketListItem(bucketListItem, "base64EncodedBadUser", "base64EncodedBadToken");
+
+			Assert.IsFalse(itemUpdated);	
+		}
+
+		[TestMethod]
+		public void TestSharedBucketListController_DeleteBucketListItem_GoodParameters()
+		{																															
+			var itemDeleted =  GetController().DeleteBucketListItem("123", "base64EncodedGoodUser", "base64EncodedGoodToken");
+
+			Assert.IsTrue(itemDeleted);					 
+		}
+		
+		[TestMethod]
+		public void TestSharedBucketListController_DeleteBucketListItem_BadParameters()
+		{																									 					  
+			var itemDeleted =  GetController().DeleteBucketListItem(null, "base64EncodedBadUser", "base64EncodedBadToken");
+
+			Assert.IsFalse(itemDeleted);	
+		}
+		  		
 		[TestMethod]
 		public void TestSharedBucketListController_AddBucketListItem_GoodParameters()
 		{						
@@ -23,8 +57,7 @@ namespace TestTgimbaNetCoreWeb
 
 			Assert.IsFalse(itemAdded);	
 		}
-
-		// TODO - add a test for multiple items
+												
 		[TestMethod]
 		public void TestSharedBucketListController_GetBucketListItems_GoodParameters()
 		{													  

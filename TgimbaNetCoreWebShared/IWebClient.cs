@@ -13,6 +13,18 @@ namespace TgimbaNetCoreWebShared
 			string encodedUser, 
 			string encodedToken
 		);
+		bool EditBucketListItem
+		(
+			SharedBucketListModel bucketListItem,
+			string encodedUser, 
+			string encodedToken
+		);
+		bool DeleteBucketListItem
+		(
+			string dbId,
+			string encodedUser, 
+			string encodedToken
+		);
 		List<SharedBucketListModel> GetBucketListItems
 		(
 			string encodedUserName, 

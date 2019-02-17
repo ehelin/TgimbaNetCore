@@ -32,40 +32,12 @@ namespace TestTgimbaNetCoreWeb
             };
             mockITgimbaService.Setup(x => x.GetDashboard()).Returns(data);
         }
-
 		private void SetUpTgimbaService() {
-			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedGoodUser", "base64EncodedGoodPass")).Returns("token");
-			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedBadUser", "base64EncodedBadPass")).Returns("");
-			mockITgimbaService.Setup(x => x.ProcessUserRegistration(
-																	"base64EncodedGoodUser", 
-																	"base64EncodedGoodEmail", 
-																	"base64EncodedGoodPass"
-																	)).Returns(true);
-			mockITgimbaService.Setup(x => x.ProcessUserRegistration(
-																	"base64EncodedBadUser", 
-																	"base64EncodedBadEmail", 
-																	"base64EncodedBadPass"
-																	)).Returns(false);
-																												  
-			var bucketListItemSingleLine = TestUtilities.GetBucketListItemSingleString("base64EncodedGoodUser","newBucketListItem", "dbId", true);
-			string[] bucketLIstitems = new string[] { bucketListItemSingleLine };											
-			mockITgimbaService.Setup(x => x.GetBucketListItemsV2(						 
-																"base64EncodedGoodUser", 
-																"base64EncodedGoodSortString", 
-																"base64EncodedGoodToken"
-																)).Returns(bucketLIstitems);  		
-						  			   													  
-			string[] upsertResult = new string[] {"TokenValid"};
-			var encodedBucketListItemsSingleLine = TestUtilities.GetBucketListItemSingleString(
-																			"base64EncodedGoodUser",
-																			"newBucketListItem", 
-																			null, 
-																			true);				
-			mockITgimbaService.Setup(x => x.UpsertBucketListItemV2(
-																encodedBucketListItemsSingleLine,
-																"base64EncodedGoodUser", 		  
-																"base64EncodedGoodToken"
-																)).Returns(upsertResult);
+			SetUpTgimbaServiceProcessUser();
+			SetUpTgimbaServiceProcessUserRegistration();
+			SetUpTgimbaServiceAddBucketListItem();
+			SetUpTgimbaServiceDeleteBucketListItem();
+			SetUpTgimbaServiceAddEditBucketListItem();					
 		}
 		private void SetupWebClient() 
 		{																										  
@@ -83,6 +55,89 @@ namespace TestTgimbaNetCoreWeb
 														"base64EncodedGoodUser", 		
 														"base64EncodedGoodToken"
 														)).Returns(true);
+			  
+			mockWebClient.Setup(x => x.EditBucketListItem(
+														It.Is<SharedBucketListModel>(a => !string.IsNullOrEmpty(a.DatabaseId)),
+														"base64EncodedGoodUser", 		
+														"base64EncodedGoodToken"
+														)).Returns(true);
+
+			mockWebClient.Setup(x => x.DeleteBucketListItem(
+														It.Is<string>(a => !string.IsNullOrEmpty(a)),
+														"base64EncodedGoodUser", 		
+														"base64EncodedGoodToken"
+														)).Returns(true);		
+		}
+
+		private void SetUpTgimbaServiceProcessUser() {			
+			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedGoodUser", "base64EncodedGoodPass")).Returns("token");
+			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedBadUser", "base64EncodedBadPass")).Returns("");
+		}
+		private void SetUpTgimbaServiceProcessUserRegistration() {														
+			mockITgimbaService.Setup(x => x.ProcessUserRegistration(
+																	"base64EncodedGoodUser", 
+																	"base64EncodedGoodEmail", 
+																	"base64EncodedGoodPass"
+																	)).Returns(true);
+			mockITgimbaService.Setup(x => x.ProcessUserRegistration(
+																	"base64EncodedBadUser", 
+																	"base64EncodedBadEmail", 
+																	"base64EncodedBadPass"
+																	)).Returns(false);
+		} 
+		private void SetUpTgimbaServiceGetBucketListItems() {			
+			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedGoodUser", "base64EncodedGoodPass")).Returns("token");
+			mockITgimbaService.Setup(x => x.ProcessUser("base64EncodedBadUser", "base64EncodedBadPass")).Returns("");
+		} 												  
+		private void SetUpTgimbaServiceAddBucketListItem() {	
+			var bucketListItemSingleLine = TestUtilities.GetBucketListItemSingleString("base64EncodedGoodUser","newBucketListItem", "dbId", true);
+			string[] bucketLIstitems = new string[] { bucketListItemSingleLine };											
+			mockITgimbaService.Setup(x => x.GetBucketListItemsV2(						 
+																"base64EncodedGoodUser", 
+																"base64EncodedGoodSortString", 
+																"base64EncodedGoodToken"
+																)).Returns(bucketLIstitems);  	
+		}
+		private void SetUpTgimbaServiceDeleteBucketListItem() {						 				  
+			string[] upsertResult = new string[] {"TokenValid"};
+			mockITgimbaService.Setup(x => x.DeleteBucketListItem(123, 
+																"base64EncodedGoodUser", 		  
+																"base64EncodedGoodToken"   
+																)).Returns(upsertResult); 
+		}
+		private void SetUpTgimbaServiceAddEditBucketListItem() {									  
+			string[] upsertResult = new string[] {"TokenValid"};
+			var encodedBucketListItemsSingleLine = TestUtilities.GetBucketListItemSingleString(
+																			"base64EncodedGoodUser",
+																			"newBucketListItem", 
+																			null, 
+																			true);	
+			var editedEncodedBucketListItemsSingleLine = TestUtilities.GetBucketListItemSingleString(
+																			"base64EncodedGoodUser",
+																			"editedBucketListItem", 
+																			"123", 
+																			true);	
+			encodedBucketListItemsSingleLine = Shared.misc.Utilities.EncodeClientBase64String(encodedBucketListItemsSingleLine);	
+			editedEncodedBucketListItemsSingleLine = Shared.misc.Utilities.EncodeClientBase64String(editedEncodedBucketListItemsSingleLine);				
+				
+			mockITgimbaService.Setup(x => x.UpsertBucketListItemV2(
+																It.IsAny<string>(),
+																"base64EncodedGoodUser", 		  
+																"base64EncodedGoodToken"
+																)).Returns(
+																(
+																	string encodedBucketListItems, 
+																	string encodedUser, 
+																	string encodedToken
+																) =>
+																{
+																	if (encodedBucketListItems == encodedBucketListItemsSingleLine
+																		|| encodedBucketListItems == editedEncodedBucketListItemsSingleLine) 
+																	{
+																		return upsertResult;
+																	}
+																	return null;
+																});						
 		}
 	}
 }
