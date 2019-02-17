@@ -25,6 +25,30 @@ ServerCall.Post = function (subUrl, formData)
     return promise;
 };
 
+ServerCall.Delete = function (subUrl, formData) {
+	var promise = new Promise(
+		function (resolve, reject) {
+			var request = new XMLHttpRequest();
+
+			request.onreadystatechange = function (err) {
+				if (request.readyState === 4) {
+					successCallback();
+				}
+			};
+
+			var base_url = GetHost();
+			request.open("DELETE", base_url + subUrl);
+			request.send(formData);
+
+			successCallback = function () {
+				return resolve(request.responseText);
+			}
+		}
+	);
+
+	return promise;
+};
+
 ServerCall.PostBody = function (subUrl, body)
 {
     var promise = new Promise(

@@ -32,7 +32,14 @@ function SetElementValue(ctrlName, value) {
 			ctrlObj.checked = false;
 		}
 	} else if (ctrlObj.type === 'select-one') {
-		ctrlObj.selectedIndex = value-1;
+		//3 hot, 2 warm, 1 cold, 0 cool
+		if (value === '3') {
+			ctrlObj.selectedIndex = 0;		//hot
+		} else if (value === '2') {
+			ctrlObj.selectedIndex = 1;		//warm
+		} else {
+			ctrlObj.selectedIndex = 2;		//cool/cold
+		}								 
 	} else {
 		ctrlObj.value = value;
 	}

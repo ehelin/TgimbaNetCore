@@ -7,10 +7,27 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent) {
 	Display.SetTitleLogic(view);	
 
 	if (htmlContent) {
-		Display.HtmlContent = htmlContent;
-		LoadMainPage();
+		if (view === VIEW_MAIN_EDIT) {
+			Display.BindEditView(htmlContent);
+		}
+		// load bucket list item view
+		else {
+			Display.HtmlContent = htmlContent;
+			LoadMainPage();
+		}
 	}
-};
+};								
+
+Display.BindEditView = function (htmlContent) {
+	SetElementValue('USER_CONTROL_EDIT_ITEM_NAME', htmlContent[0]);
+	SetElementValue('USER_CONTROL_EDIT_DATE_CREATED', htmlContent[1]);
+	SetElementValue('USER_CONTROL_EDIT_ITEM_CATEGORY', htmlContent[2]);
+	SetElementValue('USER_CONTROL_EDIT_COMPLETED', htmlContent[3]);
+	SetElementValue('USER_CONTROL_EDIT_LATITUDE', htmlContent[4]);
+	SetElementValue('USER_CONTROL_EDIT_LONGITUDE', htmlContent[5]);
+	SetElementValue('USER_CONTROL_EDIT_DBID', htmlContent[6]);
+	SetElementValue('USER_CONTROL_EDIT_USERNAME', htmlContent[7]);
+}
 
 Display.SetTitleLogic = function(view) {			   
 	if (view === VIEW_LOGIN)  {				   
@@ -27,8 +44,11 @@ Display.SetTitleLogic = function(view) {
 	}
 	// TODO - implement this one
 	else if (view === VIEW_MAIN_ADD) {
-		Display.SetTitle(ADD_VIEW_DIV, VANILLA_JAVASCRIPT_MAIN_ADD_TITLE);
+		$('#' + ADD_VIEW_DIV).html(JQUERY_ADD_TITLE);
 		MainController.SetAddViewDate();
+	}
+	else if (view === VIEW_MAIN_EDIT) {
+		$('#' + EDIT_VIEW_DIV).html(JQUERY_EDIT_TITLE);
 	}
 	else {
 		Error('Unknown view');

@@ -12,11 +12,9 @@ ServerCalls.GetBucketListItems = function(url, params) {
 
 	var queryUrl = BUCKET_LIST_PROCESS_GET + "?encodedUserName=" + btoa(userName) + "&encoderedSortString=" + btoa("") + "&encodedToken=" + btoa(token);
 	
-    var response = CallService(queryUrl, 'get');
+	var response = CallService(queryUrl, 'get');
 
-	// TODO - check for no response?										 
-	isNullUndefined(response); 
-	//var bucketListItems = jQuery.parseJSON(response);
+	isNullUndefined(response); 							
 	Display.LoadView(VIEW_MAIN, response);
 };
 
@@ -46,6 +44,54 @@ ServerCalls.AddBucketListItem = function (url, params) {
 		// TODO - handle error
 		alert('Add failed');
 	}
+};
+						   
+ServerCalls.EditBucketListItem = function (url, params) {
+	var user = SessionGetUsername(SESSION_USERNAME);
+	var jsonData = JSON.stringify
+		({
+			Name: params[0],
+			DateCreated: params[1],
+			BucketListItemType: params[2],
+			Completed: params[3],
+			Latitude: params[4],
+			Longitude: params[5],
+			DatabaseId: params[6],
+			UserName: params[7],
+			encodedUser: btoa(user),
+			encodedToken: btoa(SessionGetToken(SESSION_TOKEN))
+		});
+
+	response = CallService('/BucketListItem/EditBucketListItemJQuery',
+		'post',
+		'application/json; charset=utf-8',
+		jsonData);
+	if (response && response === true) {
+		MainController.Index();
+	} else {
+		// TODO - handle error
+		alert('Add failed');
+	}
+};
+
+ServerCalls.DeleteBucketListItem = function (url, dbId) {	  
+	var jsonData = JSON.stringify
+		({
+			DbId: dbId,
+			Username: btoa(SessionGetUsername(SESSION_USERNAME)),
+			Token: btoa(SessionGetToken(SESSION_TOKEN))
+		});
+
+	var goodRegistration = CallService('/BucketListItem/JQueryDeleteBucketListItem',
+		'delete',
+		'application/json; charset=utf-8',
+		jsonData);
+
+	if (goodRegistration === true) {
+		MainController.Index();
+	} else {
+		alert('JQuery delete failed!');
+	}	
 };
 
 ServerCalls.JQueryLogin = function(params) {	  

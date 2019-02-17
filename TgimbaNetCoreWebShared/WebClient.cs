@@ -49,8 +49,18 @@ namespace TgimbaNetCoreWebShared
 		}		   
 
 		public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
-		{
-			throw new NotImplementedException();
+		{										  
+			int databaseId = Convert.ToInt32(dbId);
+			var result = this.service.DeleteBucketListItem(databaseId, encodedUser, encodedToken);
+
+			if (result != null && result.Length == 1 && result[0] == "TokenValid")
+			{		 
+				return true;
+			}
+			else 
+			{	   
+				return false;
+			}	
 		}
 
 		public List<SharedBucketListModel> GetBucketListItems

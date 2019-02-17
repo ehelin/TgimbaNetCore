@@ -15,7 +15,9 @@ MainController.Edit_ParameterNames = [
 	"EDIT_ITEM_CATEGORY",
 	"EDIT_COMPLETED",
 	"EDIT_LATITUDE",
-	"EDIT_LONGITUDE"	
+	"EDIT_LONGITUDE",
+	"EDIT_DBID",
+	"EDIT_USERNAME"
 ];
 	 
 MainController.Index = function (bucketListItems) {
@@ -56,20 +58,24 @@ MainController.FormEditClick = function (itemName, dateCreated, bucketListItemTy
 	ServerCalls.GetView(VIEW_MAIN_EDIT, contentDiv, editFormValues)
 };
 
-MainController.FormDeleteClick = function (itemName, dbId) {
-	alert('you clicked delete: (Item/dbId) (' + itemName + '/' + dbId + ')');
+MainController.FormDeleteClick = function (dbId) {							   
+	if (IsJQueryClient()) {
+		ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
+	} else {
+		ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
+	}
 };
 
 MainController.Edit = function () {
 	var params = BaseController.SetParameters(
-		MainController.Add_ParameterNames,
+		MainController.Edit_ParameterNames,
 		"MainController.js"
 	);
 
 	if (IsJQueryClient()) {
-		ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
+		ServerCalls.EditBucketListItem(BUCKET_LIST_PROCESS_EDIT, params);
 	} else {
-		ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
+		ServerCalls.EditBucketListItem(BUCKET_LIST_PROCESS_EDIT, params);
 	}
 };
 

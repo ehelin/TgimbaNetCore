@@ -21,17 +21,17 @@ namespace TgimbaNetCoreWebShared.Controllers
 		[HttpPost]
 		public bool EditBucketListItem(SharedBucketListModel model, string encodedUser, string encodedToken)
 		{ 
-			var itemAdded = webClient.EditBucketListItem(model, encodedUser, encodedToken);
+			var itemEdited = webClient.EditBucketListItem(model, encodedUser, encodedToken);
 
-			return itemAdded;
+			return itemEdited;
 		}
 			   
 		[HttpDelete]
 		public bool DeleteBucketListItem(string dbIt, string encodedUser, string encodedToken)
 		{ 
-			var itemAdded = webClient.DeleteBucketListItem(dbIt, encodedUser, encodedToken);
+			var itemDeleted = webClient.DeleteBucketListItem(dbIt, encodedUser, encodedToken);
 
-			return itemAdded;
+			return itemDeleted;
 		}
 
 		[HttpGet]

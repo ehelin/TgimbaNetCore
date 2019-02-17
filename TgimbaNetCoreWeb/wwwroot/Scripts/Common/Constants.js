@@ -24,6 +24,8 @@ var LOGIN_PROCESS_USER = '/Login/Login';
 var REGISTRATION_PROCESS_REGISTRATION = '/Registration/Registration';
 var BUCKET_LIST_PROCESS_GET = '/BucketListItem/GetBucketListItems';
 var BUCKET_LIST_PROCESS_ADD = '/BucketListItem/AddBucketListItem';
+var BUCKET_LIST_PROCESS_EDIT = '/BucketListItem/EditBucketListItem';
+var BUCKET_LIST_PROCESS_DELETE = '/BucketListItem/DeleteBucketListItem';
 
 var VALUE_TYPE_LOGIN_USERNAME = 'loginUsernameValue';
 var VALUE_TYPE_LOGIN_PASSWORD = 'loginPasswordValue';
@@ -38,6 +40,8 @@ var JQUERY_LOGIN_TITLE = 'JQuery - Login';
 var JQUERY_REGISTRATION_TITLE = 'JQuery - Registration';
 var JQUERY_MENU_TITLE = 'JQuery - Menu';				 
 var JQUERY_MAIN_TITLE = 'JQuery - Main';
+var JQUERY_ADD_TITLE = 'JQuery - Add';
+var JQUERY_EDIT_TITLE = 'JQuery - Edit';
 
 var VANILLA_JAVASCRIPT_LOGIN_TITLE = 'Vanilla JavaScript - Login';
 var VANILLA_JAVASCRIPT_REGISTRATION_TITLE = 'Vanilla JavaScript - Registration';

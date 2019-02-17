@@ -33,6 +33,12 @@ namespace TgimbaNetCoreWeb.Controllers
 			
 			return sharedBucketListController.AddBucketListItem(model, encodedUser,	encodedToken);
         }
+	
+		[HttpPost]
+        public bool EditBucketListItemJQuery([FromBody] SharedBucketListModel model)
+        {
+			return sharedBucketListController.EditBucketListItem(model, model.encodedUser, model.encodedToken);
+        }
 				  	
 		[HttpPost]
 		public bool EditBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
@@ -44,6 +50,12 @@ namespace TgimbaNetCoreWeb.Controllers
 			
 			return sharedBucketListController.EditBucketListItem(model, encodedUser, encodedToken);
 		}
+							      
+        [HttpDelete]
+        public bool JQueryDeleteBucketListItem([FromBody] SharedDeleteModel model)
+        {									   																	  
+			return sharedBucketListController.DeleteBucketListItem(model.DbId, model.Username, model.Token);
+        }
 
 		[HttpDelete]
 		public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
@@ -54,7 +66,8 @@ namespace TgimbaNetCoreWeb.Controllers
 		[HttpGet]
         public List<SharedBucketListModel> GetBucketListItems(string encodedUserName, string encoderedSortString, string encodedToken)
         {
-            return sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken);
+            var result = sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken);
+			return result;
         }	 
 
 		// TODO - temp solution - figure out why Vanilla javascript model has null values

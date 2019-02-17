@@ -53,14 +53,12 @@
 			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.databaseId + '</td>';
 			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.userName + '</td>';			   
 	 		 
-			bucketListHtmlTable += '<td style="border: solid 1px black;">'
-				+ '<input type="button" value="Edit" onclick="MainController.FormEditClick(\''
-						+ curBucketListItem.name + '\', ' + curBucketListItem.databaseId + ')" ></input>'	
-				+ '</td >';	
+			bucketListHtmlTable += AddEditButton(curBucketListItem);
+
 			bucketListHtmlTable += '<td style="border: solid 1px black;">'								  
-				+ '<input type="button" value="Delete" onclick="MainController.FormDeleteClick(\''
-						+ curBucketListItem.name + '\', ' + curBucketListItem.databaseId + ')" ></input>'
-				+ '</td >';			  
+				+ '<input type="button" value="Delete" onclick="MainController.FormDeleteClick('
+							+ curBucketListItem.databaseId + ')" ></input>'
+				+ '</td >';			  	  
 				
 			bucketListHtmlTable += '</tr>';	  
 		}			  
@@ -68,7 +66,24 @@
 		bucketListHtmlTable += '</table>';	
 
 		return bucketListHtmlTable;
-	}		
+	}			
+
+	function AddEditButton(curBucketListItem) {
+		var editButton = '<td style="border: solid 1px black;">'
+			+ '<input type="button" value="Edit" onclick = "MainController.FormEditClick('	   
+				+ '\'' + curBucketListItem.name + '\', '
+				+ '\'' + curBucketListItem.dateCreated + '\', '
+				+ '\'' + curBucketListItem.bucketListItemType + '\', '
+				+ '\'' + curBucketListItem.completed + '\', '
+				+ '\'' + curBucketListItem.latitude + '\', '
+				+ '\'' + curBucketListItem.longitude + '\', '
+				+ '\'' + curBucketListItem.databaseId + '\', '
+				+ '\'' + curBucketListItem.userName + '\''	 
+			+ ')" ></input>'	
+			+ '</td >';	
+
+		return editButton;
+	}
 </script>
 
 <div id="csHtmlContentDiv"></div>

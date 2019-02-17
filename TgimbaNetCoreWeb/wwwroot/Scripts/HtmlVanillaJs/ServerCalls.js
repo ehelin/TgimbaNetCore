@@ -30,6 +30,34 @@ ServerCalls.GetBucketListItems = function(url, params) {
 				});
 };
 
+ServerCalls.EditBucketListItem = function (url, params) {
+	var formData = new FormData();
+	var user = SessionGetUsername(SESSION_USERNAME);
+
+	formData.append("Name", params[0]);
+	formData.append("DateCreated", params[1]);
+	formData.append("BucketListItemType", params[2]);
+	formData.append("Completed", params[3]);
+	formData.append("Latitude", params[4]);
+	formData.append("Longitude", params[5]);
+	formData.append("DatabaseId", params[6]);
+	formData.append("UserName", params[7]);
+	formData.append("encodedUser", btoa(user));
+	formData.append("encodedToken", btoa(SessionGetToken(SESSION_TOKEN)));
+
+	return ServerCall.Post(url, formData)
+		.then(
+			function (response) {
+				// TODO - convert response to boolean
+				if (response && response === "true") {
+					MainController.Index();
+				} else {
+					// TODO - handle error
+					alert('Add failed');
+				}
+			});
+};
+
 ServerCalls.AddBucketListItem = function (url, params) {
 	var formData = new FormData();	 
 	var user = SessionGetUsername(SESSION_USERNAME);
@@ -51,6 +79,27 @@ ServerCalls.AddBucketListItem = function (url, params) {
 				// TODO - convert response to boolean
 				if (response && response === "true") {	  
 					MainController.Index();		           
+				} else {
+					// TODO - handle error
+					alert('Add failed');
+				}
+			});
+};
+
+ServerCalls.DeleteBucketListItem = function (url, dbId) {
+	var formData = new FormData();
+	var user = SessionGetUsername(SESSION_USERNAME);
+													 
+	formData.append("dbId", dbId);
+	formData.append("encodedUser", btoa(user));
+	formData.append("encodedToken", btoa(SessionGetToken(SESSION_TOKEN)));
+
+	return ServerCall.Delete(url, formData)
+		.then(
+			function (response) {
+				// TODO - convert response to boolean
+				if (response && response === "true") {
+					MainController.Index();
 				} else {
 					// TODO - handle error
 					alert('Add failed');
