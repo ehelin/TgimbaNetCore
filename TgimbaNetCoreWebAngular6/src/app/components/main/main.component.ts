@@ -24,6 +24,34 @@ export class MainComponent {
 		this.LoadBucketListItems();
 	}
 
+
+	MainController.FormEditClick = function (itemName, dateCreated, bucketListItemType,
+		completed, latitude, longitude,
+		dbId, userName) {
+		var editFormValues = [];
+
+		editFormValues.push(itemName);
+		editFormValues.push(dateCreated);
+		editFormValues.push(bucketListItemType);
+		editFormValues.push(completed);
+		editFormValues.push(latitude);
+		editFormValues.push(longitude);
+		editFormValues.push(dbId);
+		editFormValues.push(userName);				
+
+		// START here -> get parameters to edit.html component
+
+		//ServerCalls.GetView(VIEW_MAIN_EDIT, contentDiv, editFormValues)
+	};
+
+	public FormEdit(dbId) {
+		//if (IsJQueryClient()) {
+		//	ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
+		//} else {
+		//	ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
+		//}
+	};
+
 	public ShowMainMenu() {
 		this.router.navigate(['/menu']);
 	}					

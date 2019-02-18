@@ -10,8 +10,18 @@
 			   <td>BucketListItemType: {{d.bucketListItemType}}</td>
 			   <td>Completed: {{d.completed}}</td>
 			   <td>Latitude: {{d.latitude}}</td>
-			   <td>Longitude: {{d.longitude}}</td>
+			   <td>Longitude: {{d.longitude}}</td>	 
+			   <td>
+				   	<button (click)="FormEdit(itemName, dateCreated, category, completed, latitude, longitude, dbId, userName)" id="hvJsFormEditBtn">Edit</button>	  
+				</td>
+			   <td>
+				   <button (click)="FormDelete(dbId)" id="hvJsFormDeleteBtn">Delete</button>
+			   </td>
 			</tr>
 		</table>
 	</div>
 </div>
+
+
+
+       

@@ -16,6 +16,18 @@ namespace TgimbaNetCoreWeb.Controllers
         {
 			sharedBucketListController = new SharedBucketListController(service, webClient);
 		}	  
+								\
+		[HttpPost]
+        public bool EditBucketListItem([FromBody] SharedBucketListModel model)
+        {
+			return sharedBucketListController.EditBucketListItem(model, model.encodedUser, model.encodedToken);
+        }		
+							      
+        [HttpDelete]
+        public bool DeleteBucketListItem([FromBody] SharedDeleteModel model)
+        {									   																	  
+			return sharedBucketListController.DeleteBucketListItem(model.DbId, model.Username, model.Token);
+        }					  
 			
 		[HttpPost]
         public bool AddBucketListItemJQuery([FromBody] SharedBucketListModel model)
