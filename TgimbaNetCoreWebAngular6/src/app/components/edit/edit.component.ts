@@ -7,13 +7,13 @@ import { SessionComponent } from '../common/session.component';
 import { UtilitiesComponent } from '../common/utilities.component';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './add.component.html',
-	styleUrls: ['./add.component.css']
+	selector: 'app-edit-component',
+	templateUrl: './edit.component.html',
+	styleUrls: ['./edit.component.css']
 })
 
 @Injectable()
-export class AddComponent {		
+export class EditComponent {		
 	private baseUrl: string;
 	public itemName = '';
 	public dateCreated;
@@ -30,6 +30,10 @@ export class AddComponent {
 	) {
 		this.baseUrl = UtilitiesComponent.GetBaseUrl();			
 	}	
+
+	public Display() {
+		alert('Edit -> Display()');
+	}
 
 	public Cancel() {
 		this.router.navigate(['/main']);

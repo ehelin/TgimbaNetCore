@@ -1,9 +1,10 @@
-﻿import { Injectable, Component, Inject } from '@angular/core';
+﻿import { Injectable, Component, Inject, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UtilitiesComponent } from '../common/utilities.component';
 import { Router } from '@angular/router';
 import { SessionComponent } from '../common/session.component';
 import { ConstantsComponent } from '../common/constants.component';
+import { EditComponent } from '../edit/edit.component';
 	 
 @Component({
 	selector: 'app-root',
@@ -16,41 +17,24 @@ export class MainComponent {
 	private baseUrl: string;
 	public htmlTableWData: any;
 
+	@Input() editComponent: EditComponent;
+
 	constructor(
 		private http: HttpClient,
 		private router: Router
 	) {
-		this.baseUrl = UtilitiesComponent.GetBaseUrl();	 
+		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 		this.LoadBucketListItems();
 	}
 
-
-	MainController.FormEditClick = function (itemName, dateCreated, bucketListItemType,
-		completed, latitude, longitude,
-		dbId, userName) {
-		var editFormValues = [];
-
-		editFormValues.push(itemName);
-		editFormValues.push(dateCreated);
-		editFormValues.push(bucketListItemType);
-		editFormValues.push(completed);
-		editFormValues.push(latitude);
-		editFormValues.push(longitude);
-		editFormValues.push(dbId);
-		editFormValues.push(userName);				
-
-		// START here -> get parameters to edit.html component
-
-		//ServerCalls.GetView(VIEW_MAIN_EDIT, contentDiv, editFormValues)
+	public FormEdit(bucketListItem) {
+		alert('TODO - implement FormEdit');
+		this.editComponent.Display(); 
 	};
 
-	public FormEdit(dbId) {
-		//if (IsJQueryClient()) {
-		//	ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
-		//} else {
-		//	ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
-		//}
-	};
+	public FormDelete(databaseId) {
+		alert('TODO - implement FormDelete');
+	};										
 
 	public ShowMainMenu() {
 		this.router.navigate(['/menu']);

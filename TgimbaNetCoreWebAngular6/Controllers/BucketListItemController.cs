@@ -16,7 +16,7 @@ namespace TgimbaNetCoreWeb.Controllers
         {
 			sharedBucketListController = new SharedBucketListController(service, webClient);
 		}	  
-								\
+								
 		[HttpPost]
         public bool EditBucketListItem([FromBody] SharedBucketListModel model)
         {

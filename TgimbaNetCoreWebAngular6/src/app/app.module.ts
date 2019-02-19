@@ -12,13 +12,15 @@ import { SessionComponent } from './components/common/session.component';
 import { ConstantsComponent } from './components/common/constants.component';
 import { UtilitiesComponent } from './components/common/utilities.component';
 import { AddComponent } from './components/add/add.component';
+import { EditComponent } from './components/edit/edit.component';
 
 const routes: Routes = [
 	{ path: 'login',  component: LoginComponent },
 	{ path: 'registration', component: RegistrationComponent },
 	{ path: 'main', component: MainComponent },
 	{ path: 'menu', component: MenuComponent },
-	{ path: 'add', component: AddComponent }
+	{ path: 'add', component: AddComponent },
+	{ path: 'edit', component: EditComponent }
 ];
 
 @NgModule({
@@ -31,7 +33,8 @@ const routes: Routes = [
 		SessionComponent,
 		ConstantsComponent,
 		UtilitiesComponent,
-		AddComponent
+		AddComponent,
+		EditComponent
 		//ApplicationFlowComponent
 	],
 	imports: [

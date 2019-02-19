@@ -1,26 +1,31 @@
 ﻿<h1>Angular 6 Type Script - Main</h1>
 <div style="text-align:center; width: 100%">	 	
 	<button (click)="ShowMainMenu()" id="btnMainMenu">Menu</button>
-	<div *ngFor="let d of htmlTableWData" id="bucketListItems">
+	<div *ngFor="let bucketListItem of htmlTableWData" id="bucketListItems">
 		<table border="1">
 			<tr>					  
-			   <td>{{d.number}}</td> 
-			   <td>Name: {{d.name}}</td> 
-			   <td>DateCreated: {{d.dateCreated}}</td>
-			   <td>BucketListItemType: {{d.bucketListItemType}}</td>
-			   <td>Completed: {{d.completed}}</td>
-			   <td>Latitude: {{d.latitude}}</td>
-			   <td>Longitude: {{d.longitude}}</td>	 
+			   <td>{{bucketListItem.number}}</td> 
+			   <td>Name: {{bucketListItem.name}}</td> 
+			   <td>DateCreated: {{bucketListItem.dateCreated}}</td>
+			   <td>BucketListItemType: {{bucketListItem.bucketListItemType}}</td>
+			   <td>Completed: {{bucketListItem.completed}}</td>
+			   <td>Latitude: {{bucketListItem.latitude}}</td>
+			   <td>Longitude: {{bucketListItem.longitude}}</td>	 
+			   <td>Latitude: {{bucketListItem.latitude}}</td>
+			   <td>Longitude: {{bucketListItem.longitude}}</td>	
+			   <td>DbId: {{bucketListItem.databaseId}}</td>
+			   <td>UserName: {{bucketListItem.userName}}</td>
 			   <td>
-				   	<button (click)="FormEdit(itemName, dateCreated, category, completed, latitude, longitude, dbId, userName)" id="hvJsFormEditBtn">Edit</button>	  
+				   	<button (click)="FormEdit(bucketListItem)" id="hvJsFormEditBtn">Edit</button>	  
 				</td>
 			   <td>
-				   <button (click)="FormDelete(dbId)" id="hvJsFormDeleteBtn">Delete</button>
+				   <button (click)="FormDelete(bucketListItem.databaseId)" id="hvJsFormDeleteBtn">Delete</button>
 			   </td>
 			</tr>
 		</table>
 	</div>
 </div>
+<app-edit-component #editComponent></app-edit-component>
 
 
 
