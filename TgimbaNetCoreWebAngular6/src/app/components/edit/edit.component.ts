@@ -1,10 +1,11 @@
 ﻿import { Injectable, Component, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';					 
+import { Router, ActivatedRoute, Params } from '@angular/router'; 			 
 import { Session } from 'protractor';
 import { ConstantsComponent } from '../common/constants.component';
 import { SessionComponent } from '../common/session.component';
 import { UtilitiesComponent } from '../common/utilities.component';
+import { EditService } from './edit.service';
 
 @Component({
 	selector: 'app-edit-component',
@@ -22,17 +23,36 @@ export class EditComponent {
 	public latitude = '';
 	public longitude = '';
 	public dbId = '';
-	public userNameParam = '';
+	public userNameParam = '';		   
 
 	constructor(
 		private http: HttpClient,
-		private router: Router
+		private router: Router, 
+		private route: ActivatedRoute,
+		private editService: EditService
 	) {
-		this.baseUrl = UtilitiesComponent.GetBaseUrl();			
+		this.baseUrl = UtilitiesComponent.GetBaseUrl();
+		let bucketListItem = this.editService.getBucketListItem();
+		this.Display(bucketListItem);		
 	}	
+		  
+	private Display(bucketListItem: any) {		
+		this.itemName = bucketListItem.name;
+		this.dateCreated = bucketListItem.dateCreated;
+		this.completed = bucketListItem.completed;
+		this.latitude = bucketListItem.latitude;
+		this.longitude = bucketListItem.longitude;
+		this.dbId = bucketListItem.databaseId;
+		this.userNameParam = bucketListItem.userName;	
 
-	public Display() {
-		alert('Edit -> Display()');
+		//3 hot, 2 warm, 1 cold, 0 cool						 
+		if (bucketListItem.bucketListItemType === '3') {
+			this.category = 'Hot';// = 0;		//hot
+		} else if (bucketListItem.bucketListItemType === '2') {
+			this.category = 'Warm';//		//warm
+		} else {
+			this.category = 'Cool';//		//cool/cold
+		}	
 	}
 
 	public Cancel() {

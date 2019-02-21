@@ -4,7 +4,7 @@ import { UtilitiesComponent } from '../common/utilities.component';
 import { Router } from '@angular/router';
 import { SessionComponent } from '../common/session.component';
 import { ConstantsComponent } from '../common/constants.component';
-import { EditComponent } from '../edit/edit.component';
+import { EditService } from '../edit/edit.service';
 	 
 @Component({
 	selector: 'app-root',
@@ -15,21 +15,20 @@ import { EditComponent } from '../edit/edit.component';
 @Injectable()
 export class MainComponent {		
 	private baseUrl: string;
-	public htmlTableWData: any;
-
-	@Input() editComponent: EditComponent;
+	public htmlTableWData: any;				   
 
 	constructor(
 		private http: HttpClient,
-		private router: Router
+		private router: Router,
+		private editService: EditService
 	) {
 		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 		this.LoadBucketListItems();
 	}
 
 	public FormEdit(bucketListItem) {
-		alert('TODO - implement FormEdit');
-		this.editComponent.Display(); 
+		this.editService.setBucketListItem(bucketListItem);
+		this.router.navigate(['/edit']);				
 	};
 
 	public FormDelete(databaseId) {

@@ -12,6 +12,7 @@ import { SessionComponent } from './components/common/session.component';
 import { ConstantsComponent } from './components/common/constants.component';
 import { UtilitiesComponent } from './components/common/utilities.component';
 import { AddComponent } from './components/add/add.component';
+import { EditService } from './components/edit/edit.service';
 import { EditComponent } from './components/edit/edit.component';
 
 const routes: Routes = [
@@ -43,7 +44,9 @@ const routes: Routes = [
 		HttpClientModule, 
 		RouterModule.forRoot(routes),
 	],		
-	providers: [],
+	providers: [
+		EditService
+	],
 	bootstrap: [AppComponent],
 	exports: [RouterModule]
 })		   
