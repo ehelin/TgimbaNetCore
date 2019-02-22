@@ -46,9 +46,9 @@ export class EditComponent {
 		this.userNameParam = bucketListItem.userName;	
 
 		//3 hot, 2 warm, 1 cold, 0 cool						 
-		if (bucketListItem.bucketListItemType === '3') {
+		if (bucketListItem.bucketListItemType === 3) {
 			this.category = 'Hot';// = 0;		//hot
-		} else if (bucketListItem.bucketListItemType === '2') {
+		} else if (bucketListItem.bucketListItemType === 2) {
 			this.category = 'Warm';//		//warm
 		} else {
 			this.category = 'Cool';//		//cool/cold
@@ -59,28 +59,19 @@ export class EditComponent {
 		this.router.navigate(['/main']);
 	}						
 
-	public Edit(
-	    itemName: string,
-		dateCreated: string,
-		category: string,
-		completed: string,
-		latitude: string,
-		longitude: string, 
-		dbId: string,
-		userNameParam: string
-	) {
+	public Edit() {
 		let userName = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_USERNAME);
-		let token = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN);		   
+		let token = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN);	
 
 		const url = this.baseUrl + '/BucketListItem/EditBucketListItem?'
-			+ 'Name=' + itemName
-			+ '&DateCreated=' + dateCreated
-			+ '&BucketListItemType=' + category
-			+ '&Completed=' + (completed === 'true' ? true : false).toString()
-			+ '&Latitude=' + (latitude === '' ? 0 : latitude).toString()
-			+ '&Longitude=' + (longitude === '' ? 0 : longitude).toString()
-			+ '&DatabaseId=' + dbId
-			+ '&UserName=' + userNameParam
+			+ 'Name=' + this.itemName
+			+ '&DateCreated=' + this.dateCreated
+			+ '&BucketListItemType=' + this.category
+			+ '&Completed=' + (this.completed).toString()
+			+ '&Latitude=' + (this.latitude === '' ? 0 : this.latitude).toString()
+			+ '&Longitude=' + (this.longitude === '' ? 0 : this.longitude).toString()
+			+ '&DatabaseId=' + this.dbId
+			+ '&UserName=' + this.userNameParam
 			+ '&encodedUser=' + btoa(userName)
 			+ '&encodedToken=' + btoa(token);									  
 
@@ -98,7 +89,7 @@ export class EditComponent {
 					this.router.navigate(['/main']);
 				} else {
 					// TODO - handle error
-					alert('Add failed');
+					alert('Edit failed');
 				}
 			},
 			error => {

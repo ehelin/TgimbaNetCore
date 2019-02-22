@@ -18,17 +18,22 @@ namespace TgimbaNetCoreWeb.Controllers
 		}	  
 								
 		[HttpPost]
-        public bool EditBucketListItem([FromBody] SharedBucketListModel model)
-        {
-			return sharedBucketListController.EditBucketListItem(model, model.encodedUser, model.encodedToken);
-        }		
-							      
+        public bool EditBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
+									string Latitude,string Longitude, string DatabaseId, string UserName, 
+									string encodedUser, string encodedToken)
+        {								   
+            var model = ConvertArgsToModel(Name, DateCreated, BucketListItemType, Completed, 
+												Latitude, Longitude, DatabaseId, UserName);
+
+			return sharedBucketListController.EditBucketListItem(model, encodedUser, encodedToken);
+        }				  
+									 			      
         [HttpDelete]
-        public bool DeleteBucketListItem([FromBody] SharedDeleteModel model)
+        public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
         {									   																	  
-			return sharedBucketListController.DeleteBucketListItem(model.DbId, model.Username, model.Token);
-        }					  
-			
+			return sharedBucketListController.DeleteBucketListItem(dbId, encodedUser, encodedToken);
+        }		   
+
 		[HttpPost]
         public bool AddBucketListItemJQuery([FromBody] SharedBucketListModel model)
         {

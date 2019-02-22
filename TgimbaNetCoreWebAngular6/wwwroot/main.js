@@ -673,7 +673,7 @@ function View_EditComponent_0(_l) { return _angular_core__WEBPACK_IMPORTED_MODUL
         var pd_4 = ((_co.longitude = $event) !== false);
         ad = (pd_4 && ad);
     } return ad; }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](71, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["DefaultValueAccessor"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["COMPOSITION_BUFFER_MODE"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](1024, null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NG_VALUE_ACCESSOR"], function (p0_0) { return [p0_0]; }, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["DefaultValueAccessor"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](73, 671744, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgModel"], [[8, null], [8, null], [8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NG_VALUE_ACCESSOR"]]], { model: [0, "model"] }, { update: "ngModelChange" }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](75, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControl"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](76, 0, null, null, 5, "tr", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](77, 0, null, null, 4, "td", [["style", "text-align:center"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](78, 0, null, null, 1, "button", [["id", "hvJsEditSubmitBtn"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.Edit(_co.itemName, _co.dateCreated, _co.category, _co.completed, _co.latitude, _co.longitude, _co.dbId, _co.userNameParam) !== false);
+        var pd_0 = (_co.Edit() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Edit"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](80, 0, null, null, 1, "button", [["id", "hvJsEditCancellBtn"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.Cancel() !== false);
@@ -763,12 +763,11 @@ var EditComponent = /** @class */ (function () {
         this.longitude = bucketListItem.longitude;
         this.dbId = bucketListItem.databaseId;
         this.userNameParam = bucketListItem.userName;
-        //3 hot, 2 warm, 1 cold, 0 cool
-        this.category = bucketListItem.bucketListItemType;
-        if (bucketListItem.bucketListItemType === '3') {
+        //3 hot, 2 warm, 1 cold, 0 cool						 
+        if (bucketListItem.bucketListItemType === 3) {
             this.category = 'Hot'; // = 0;		//hot
         }
-        else if (bucketListItem.bucketListItemType === '2') {
+        else if (bucketListItem.bucketListItemType === 2) {
             this.category = 'Warm'; //		//warm
         }
         else {
@@ -778,19 +777,19 @@ var EditComponent = /** @class */ (function () {
     EditComponent.prototype.Cancel = function () {
         this.router.navigate(['/main']);
     };
-    EditComponent.prototype.Edit = function (itemName, dateCreated, category, completed, latitude, longitude, dbId, userNameParam) {
+    EditComponent.prototype.Edit = function () {
         var _this = this;
         var userName = _common_session_component__WEBPACK_IMPORTED_MODULE_3__["SessionComponent"].SessionGetValue(_common_constants_component__WEBPACK_IMPORTED_MODULE_2__["ConstantsComponent"].SESSION_USERNAME);
         var token = _common_session_component__WEBPACK_IMPORTED_MODULE_3__["SessionComponent"].SessionGetValue(_common_constants_component__WEBPACK_IMPORTED_MODULE_2__["ConstantsComponent"].SESSION_TOKEN);
         var url = this.baseUrl + '/BucketListItem/EditBucketListItem?'
-            + 'Name=' + itemName
-            + '&DateCreated=' + dateCreated
-            + '&BucketListItemType=' + category
-            + '&Completed=' + (completed === 'true' ? true : false).toString()
-            + '&Latitude=' + (latitude === '' ? 0 : latitude).toString()
-            + '&Longitude=' + (longitude === '' ? 0 : longitude).toString()
-            + '&DatabaseId=' + dbId
-            + '&UserName=' + userNameParam
+            + 'Name=' + this.itemName
+            + '&DateCreated=' + this.dateCreated
+            + '&BucketListItemType=' + this.category
+            + '&Completed=' + (this.completed).toString()
+            + '&Latitude=' + (this.latitude === '' ? 0 : this.latitude).toString()
+            + '&Longitude=' + (this.longitude === '' ? 0 : this.longitude).toString()
+            + '&DatabaseId=' + this.dbId
+            + '&UserName=' + this.userNameParam
             + '&encodedUser=' + btoa(userName)
             + '&encodedToken=' + btoa(token);
         var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]()
@@ -802,7 +801,7 @@ var EditComponent = /** @class */ (function () {
             }
             else {
                 // TODO - handle error
-                alert('Add failed');
+                alert('Edit failed');
             }
         }, function (error) {
             alert('Error: ' + error);
@@ -1113,7 +1112,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var MainComponent = /** @class */ (function () {
-    //@Input() editComponent: EditComponent;
     function MainComponent(http, router, editService) {
         this.http = http;
         this.router = router;
@@ -1124,14 +1122,28 @@ var MainComponent = /** @class */ (function () {
     MainComponent.prototype.FormEdit = function (bucketListItem) {
         this.editService.setBucketListItem(bucketListItem);
         this.router.navigate(['/edit']);
-        //alert('TODO - implement FormEdit');
-        //this.editComponent.Display(); 
-        //{ path: 'edit/:bucketListItemParam', component: EditComponent }
-        //this.router.navigate(["call", caller]);
     };
     ;
     MainComponent.prototype.FormDelete = function (databaseId) {
-        alert('TODO - implement FormDelete');
+        var _this = this;
+        var userName = _common_session_component__WEBPACK_IMPORTED_MODULE_3__["SessionComponent"].SessionGetValue(_common_constants_component__WEBPACK_IMPORTED_MODULE_4__["ConstantsComponent"].SESSION_USERNAME);
+        var token = _common_session_component__WEBPACK_IMPORTED_MODULE_3__["SessionComponent"].SessionGetValue(_common_constants_component__WEBPACK_IMPORTED_MODULE_4__["ConstantsComponent"].SESSION_TOKEN);
+        var url = this.baseUrl + '/BucketListItem/DeleteBucketListItem?'
+            + 'dbId=' + databaseId
+            + '&encodedUser=' + btoa(userName)
+            + '&encodedToken=' + btoa(token);
+        return this.http.delete(url)
+            .subscribe(function (data) {
+            if (data && data === true) {
+                _this.LoadBucketListItems();
+            }
+            else {
+                // TODO - handle error
+                alert('Delete failed');
+            }
+        }, function (error) {
+            alert('Error: ' + error);
+        });
     };
     ;
     MainComponent.prototype.ShowMainMenu = function () {

@@ -32,7 +32,29 @@ export class MainComponent {
 	};
 
 	public FormDelete(databaseId) {
-		alert('TODO - implement FormDelete');
+		let userName = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_USERNAME);
+		let token = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN);		   
+
+		const url = this.baseUrl + '/BucketListItem/DeleteBucketListItem?'
+			+ 'dbId=' + databaseId		   
+			+ '&encodedUser=' + btoa(userName)
+			+ '&encodedToken=' + btoa(token);		
+
+		return this.http.delete(url)
+			.subscribe(
+			data => {
+				if (data && data === true) {
+					this.LoadBucketListItems();
+				} else {
+					// TODO - handle error
+					alert('Delete failed');
+				}
+			},
+			error => {
+				alert('Error: ' + error);
+			}
+		);
+		
 	};										
 
 	public ShowMainMenu() {
