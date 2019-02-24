@@ -25,7 +25,7 @@ class Main extends React.Component {
 		const showMainMenu = _ => {		   
 			this.props.main();
 		}	
-
+	
 		var panelStyle = {
 			"width": "100%",
 			"text-align": "center",

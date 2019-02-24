@@ -22,6 +22,23 @@ namespace TgimbaNetCoreWeb.Controllers
         {
 			return sharedBucketListController.AddBucketListItem(model, model.encodedUser, model.encodedToken);
         }
+		  	
+		[HttpPost]
+		public bool EditBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
+									string Latitude,string Longitude, string DatabaseId, string UserName, 
+									string encodedUser, string encodedToken)
+		{ 																		
+            var model = ConvertArgsToModel(Name, DateCreated, BucketListItemType, Completed, 
+												Latitude, Longitude, DatabaseId, UserName);
+			
+			return sharedBucketListController.EditBucketListItem(model, encodedUser, encodedToken);
+		}
+
+		[HttpDelete]
+		public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
+		{
+			return sharedBucketListController.DeleteBucketListItem(dbId, encodedUser, encodedToken);
+		}
 
         [HttpPost]
         public bool AddBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
