@@ -20,6 +20,15 @@ class Main extends React.Component {
 		this.props.load();
 	}
 
+	formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
+		// TODO - pump data to edit.js form
+		alert('main formEdit: ' + name);
+	}
+
+	formDelete(id) {
+		this.props.delete(id);
+	}
+
 	render() {
 		let { bucketListItems } = this.state;
 		const showMainMenu = _ => {		   
@@ -37,7 +46,7 @@ class Main extends React.Component {
 				<div style={panelStyle}>
 					<h1>React JS - Main Panel</h1>
 					<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
-					<Table bucketListItems={this.props.bucketListItems}></Table>
+					<Table bucketListItems={this.props.bucketListItems} main={this}></Table>
 				</div> :
 				<div> Loading ... </div>
 		);			

@@ -5,16 +5,19 @@ import { actionCreators } from '../../store/userInterface/Table';
 import Button from '../userInterface/Button';
 
 class Table extends React.Component {
+	main;
+
 	constructor(props) {
 		super(props);
+		this.main = props.main;
 	}
 
 	formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
-		alert('formDelete: ' + name);
+		this.main.formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName);
 	}
 
 	formDelete(id) {
-		alert('formDelete: ' + id);
+		this.main.formDelete(id);
 	}
 
 	render() {
