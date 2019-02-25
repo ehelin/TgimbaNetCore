@@ -5,6 +5,7 @@ var sessionRef = require('../common/Session');
 const ACTION_TYPE_MAIN_MENU = 'MainMenu';
 const ACTION_TYPE_LOAD = 'Load';
 const ACTION_TYPE_DELETE = 'Delete';
+const ACTION_TYPE_EDIT = 'Edit';
 						 
 const initialState = {
 	bucketListItems: null
@@ -18,7 +19,17 @@ export const actionCreators = {
 		// TODO - call redux handler, delete selected item and redisplay main form
 		alert('main redux formDelete: ' + id);
 		dispatch({ type: ACTION_TYPE_DELETE });
-	}, 		
+	}, 	
+	edit: (name, dateCreated, bucketListItemType, completed,
+		latitude, longitude, databaseId, userName) => async (dispatch, getState) =>
+		{
+		// TODO - call redux handler, delete selected item and redisplay main form
+		//alert('main redux formDelete: ' + id);
+		dispatch({
+			type: ACTION_TYPE_EDIT, name, dateCreated,
+			bucketListItemType, completed, latitude, longitude, databaseId, userName
+		});
+	}, 	
 	load: () => async (dispatch, getState) => {
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);
@@ -53,9 +64,12 @@ export const reducer = (state, action) => {
 			bucketListItems: action.bucketListItems
 		};
 	}
-	if (action.type == ACTION_TYPE_MAIN_MENU) {
+	else if (action.type == ACTION_TYPE_MAIN_MENU) {
 		window.location = host + '/mainmenu';
 	}
+	else if (action.type === ACTION_TYPE_EDIT) {		   
+		window.location = host + '/edit';
+	}											  
 
 	return state;
 };

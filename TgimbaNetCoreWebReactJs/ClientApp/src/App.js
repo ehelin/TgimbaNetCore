@@ -10,11 +10,13 @@ import Login from './components/Login';
 import Main from './components/Main';
 import MainMenu from './components/MainMenu';
 import Registration from './components/Registration';
+import Edit from './components/Edit';
 
 export default () => (
   <Layout>									   
     <Route path='/add' component={Add} />  
-    <Route path='/counter' component={Counter} />			
+    <Route path='/counter' component={Counter} />	
+    <Route path='/edit' component={Edit} />  		
     <Route exact path='/' component={Login} />	  	
 	<Route exact path='/home' component={Home} />
     <Route exact path='/login' component={Login} />	  	

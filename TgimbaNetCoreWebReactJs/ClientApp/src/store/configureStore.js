@@ -9,7 +9,9 @@ import * as WeatherForecasts from './WeatherForecasts';
 import * as Button from './userInterface/Button';	  
 import * as MainMenu from './MainMenu';
 import * as Add from './Add';
+import * as Edit from './Edit';
 import * as Table from './userInterface/Table';
+import * as BucketListItem from './userInterface/BucketListItem';
 
 export default function configureStore(history, initialState) {
   const reducers = {
@@ -21,6 +23,8 @@ export default function configureStore(history, initialState) {
 	  mainmenu: MainMenu.reducer,
 	  register: Registration.reducer,	
 	  table: Table.reducer,
+	  bucketListItem: BucketListItem.reducer,
+	  edit: Edit.reducer,
 	  weatherForecasts: WeatherForecasts.reducer
   };
 

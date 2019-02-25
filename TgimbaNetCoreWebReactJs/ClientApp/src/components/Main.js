@@ -21,8 +21,7 @@ class Main extends React.Component {
 	}
 
 	formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
-		// TODO - pump data to edit.js form
-		alert('main formEdit: ' + name);
+		this.props.edit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName);
 	}
 
 	formDelete(id) {
