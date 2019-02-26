@@ -15,11 +15,11 @@ export const reducer = (state, action) => {
 	state = state || initialState;
 
 	if (action.type === ACTION_TYPE_BUCKETLISTITEM_ADD) {
-		alert('add reducer');
+		//alert('add reducer');
 	}
 
 	if (action.type === ACTION_TYPE_BUCKETLISTITEM_EDIT) {
-		alert('edit reducer');
+		//alert('edit reducer');
 	}
 
 	return state;

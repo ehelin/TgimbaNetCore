@@ -50,7 +50,7 @@ export const reducer = (state, action) => {
 	state = state || initialState;
 
 	if (action.type == ACTION_TYPE_EDIT_TO_SERVER) {
-		alert('edit reducer action');
+		//alert('edit reducer action');
 		//var constants = Object.create(constantsRef.Constants);
 		//var session = Object.create(sessionRef.Session);			  
 
@@ -91,19 +91,19 @@ export const reducer = (state, action) => {
 		var host = utils.GetHost();
 		window.location = host + '/login';
 	}											   
-	else if (action.type === ACTION_TYPE_EDIT) {
-		return {
-			...state,
-			name: action.name,
-			dateCreated: action.dateCreated,
-			bucketListItemType: action.bucketListItemType,
-			completed: action.completed,
-			latitude: action.latitude,									
-			longitude: action.longitude, 
-			databaseId: action.databaseId, 
-			userName: action.userName 
-		};
-	}
+	//else if (action.type === ACTION_TYPE_EDIT) {
+	//	return {
+	//		...state,
+	//		name: action.name,
+	//		dateCreated: action.dateCreated,
+	//		bucketListItemType: action.bucketListItemType,
+	//		completed: action.completed,
+	//		latitude: action.latitude,									
+	//		longitude: action.longitude, 
+	//		databaseId: action.databaseId, 
+	//		userName: action.userName 
+	//	};
+	//}
 		//var utils = Object.create(utilsRef.Utilities);
 		//var host = utils.GetHost();
 		//window.location = host + '/edit';

@@ -67,8 +67,17 @@ export const reducer = (state, action) => {
 	else if (action.type == ACTION_TYPE_MAIN_MENU) {
 		window.location = host + '/mainmenu';
 	}
-	else if (action.type === ACTION_TYPE_EDIT) {		   
-		window.location = host + '/edit';
+	else if (action.type === ACTION_TYPE_EDIT) {
+		var queryString = '?name=' + action.name
+			+ '&dateCreated=' + action.dateCreated
+			+ '&bucketListItemType=' + action.bucketListItemType
+			+ '&completed=' + action.completed
+			+ '&latitude=' + action.latitude
+			+ '&longitude=' + action.longitude
+			+ '&databaseId=' + action.databaseId
+			+ '&userName=' + action.userName;
+					   
+		window.location = host + '/edit' + queryString;
 	}											  
 
 	return state;

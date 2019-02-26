@@ -12,15 +12,25 @@ class BucketListItem extends React.Component {
 		super(props);
 		this.parentFormAddEdit = props.parent;
 		this.state = {
-			name: '',
-			dateCreated: new Date().toLocaleDateString('en-US'),
-			bucketListItemType: 'Cool',
-			completed: null,
-			latitude: '',
-			longitude: '',
-			databaseId: '',
-			userName: ''
+			name: props.name ? props.name : '',
+			dateCreated: props.dateCreated ? props.dateCreated : new Date().toLocaleDateString('en-US'),
+			bucketListItemType: this.setCategory(props.bucketListItemType),
+			completed: props.completed && props.completed === 'true' ? true : false,
+			latitude: props.latitude ? props.latitude : '',
+			longitude: props.longitude ? props.longitude : '',
+			databaseId: props.databaseId ? props.databaseId : '',
+			userName: props.userName ? props.userName : ''
 		};
+	}
+
+	setCategory(bucketListItemType) {
+		if (bucketListItemType && bucketListItemType === '3') {
+			return 'Hot';
+		} else if (bucketListItemType && bucketListItemType === '2') {
+			return 'Warm';
+		} else {
+			return 'Cool';
+		}
 	}
 
 	formSubmit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
@@ -86,6 +96,7 @@ class BucketListItem extends React.Component {
 								id="USER_CONTROL_ADD_COMPLETED"
 								type="checkbox"
 								value={completed}
+								checked={completed}
 								onChange={event => this.setState({ completed: event.target.value })}
 							//checked
 							/>
