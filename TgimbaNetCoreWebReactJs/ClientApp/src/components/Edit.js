@@ -1,13 +1,13 @@
 ﻿import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../store/Add'; // TODO -> add
+import { actionCreators } from '../store/Edit'; 
 import Button from './userInterface/Button';
 import BucketListItem from './userInterface/BucketListItem';
 var utilsRef = require('../common/Utilities');
 const queryString = require('query-string');
    
-class Add extends React.Component {
+class Edit extends React.Component {
 	constructor(props) {
 		super(props);
 		const parsed = queryString.parse(this.props.location.search);
@@ -25,8 +25,7 @@ class Add extends React.Component {
 	}			  
 
 	formSubmit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
-		alert('edit submit - ' + name);
-		//this.props.add(name, dateCreated, bucketListItemType, completed, latitude, longitude);
+		this.props.edit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName);
 	}
 
 	formCancel() {
@@ -55,7 +54,7 @@ class Add extends React.Component {
 }
 
 export default connect(
-	state => state.add,
+	state => state.edit,
 	dispatch => bindActionCreators(actionCreators, dispatch)
-)(Add)
+)(Edit)
 

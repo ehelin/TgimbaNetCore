@@ -7,6 +7,7 @@ var utilsRef = require('../../common/Utilities');
    
 class BucketListItem extends React.Component {
 	parentFormAddEdit;
+	state;
 
 	constructor(props) {
 		super(props);
@@ -15,7 +16,10 @@ class BucketListItem extends React.Component {
 			name: props.name ? props.name : '',
 			dateCreated: props.dateCreated ? props.dateCreated : new Date().toLocaleDateString('en-US'),
 			bucketListItemType: this.setCategory(props.bucketListItemType),
-			completed: props.completed && props.completed === 'true' ? true : false,
+			completed: props.completed
+				&& (props.completed === 'true' || props.completed === true)
+					? 'on' : null,
+			//completed: null,
 			latitude: props.latitude ? props.latitude : '',
 			longitude: props.longitude ? props.longitude : '',
 			databaseId: props.databaseId ? props.databaseId : '',
@@ -41,12 +45,29 @@ class BucketListItem extends React.Component {
 		this.parentFormAddEdit.formCancel();
 	}
 
+	//handleChangeChk() {
+	//	this.setState({
+	//		completed: !this.state.checked
+	//	});
+	//}
+
 	render() {						
 		let { name, dateCreated, bucketListItemType, completed, latitude,
 			longitude, databaseId, userName, onPress, onChange, onCancel } = this.state;
 	
 		var utils = Object.create(utilsRef.Utilities);
 		var tableStyle = utils.GetDefaultTableStyle();
+
+		const toggleComplete = _ => {
+			if (completed === 'on') {
+				completed = null;
+			} else {
+				completed = 'on';
+			}
+			//this.props.toggle(completed);
+			//this.state.completed = completed;
+			//this.props.login(username, password);
+		}
 
 		return (
 			<div>
@@ -92,14 +113,18 @@ class BucketListItem extends React.Component {
 					<tr>
 						<td>
 							<label>Completed:</label>
-							<input
+							<input type="checkbox"
 								id="USER_CONTROL_ADD_COMPLETED"
-								type="checkbox"
+								onChange={toggleComplete}
+								//defaultChecked={completed}
+								//onChange={event => this.setState(
+								//	{
+								//		completed: !event.target.value
+								//	})}
 								value={completed}
-								checked={completed}
-								onChange={event => this.setState({ completed: event.target.value })}
-							//checked
+								//checked={completed}
 							/>
+							
 						</td>
 					</tr>
 					<tr>
@@ -135,7 +160,7 @@ class BucketListItem extends React.Component {
 								longitude,
 								databaseId,
 								userName,
-							)} id="hvJsAddSubmitBtn">Add</Button>
+							)} id="hvJsAddSubmitBtn">{this.props.databaseId ? 'Edit' : 'Add'}</Button>
 							<Button onPress={() => this.formCancel()} id="hvJsAddCancellBtn">Cancel</Button>
 						</td>
 					</tr>

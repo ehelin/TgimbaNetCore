@@ -49,65 +49,47 @@ export const actionCreators = {
 export const reducer = (state, action) => {
 	state = state || initialState;
 
-	if (action.type == ACTION_TYPE_EDIT_TO_SERVER) {
-		//alert('edit reducer action');
-		//var constants = Object.create(constantsRef.Constants);
-		//var session = Object.create(sessionRef.Session);			  
+	if (action.type == ACTION_TYPE_EDIT_TO_SERVER) {  
+		var constants = Object.create(constantsRef.Constants);
+		var session = Object.create(sessionRef.Session);			  
 
-		//var utils = Object.create(utilsRef.Utilities);
-		//var host = utils.GetHost();
+		var utils = Object.create(utilsRef.Utilities);
+		var host = utils.GetHost();
 
-		//var userName = session.SessionGet(constants.SESSION_USERNAME);		
-		//var completed = action.completed == 'on' ? 'true' : 'false';
+		var userName = session.SessionGet(constants.SESSION_USERNAME);		
+		var completed = action.completed == 'on' ? 'true' : 'false';
 
-		//const url = host + '/BucketListItem/AddBucketListItem'
-		//	+ '?Name=' + action.name
-		//	+ '&DateCreated=' + action.dateCreated
-		//	+ '&BucketListItemType=' + action.bucketListItemType
-		//	+ '&Completed=' + completed
-		//	+ '&Latitude=' + action.latitude
-		//	+ '&Longitude=' + action.longitude
-		//	+ '&DatabaseId=' + ''
-		//	+ '&UserName=' + userName
-		//	+ '&encodedUser=' + btoa(userName)
-		//	+ '&encodedToken=' + btoa(session.SessionGet(constants.SESSION_TOKEN));
+		const url = host + '/BucketListItem/EditBucketListItem'
+			+ '?Name=' + action.name
+			+ '&DateCreated=' + action.dateCreated
+			+ '&BucketListItemType=' + action.bucketListItemType
+			+ '&Completed=' + completed
+			+ '&Latitude=' + action.latitude
+			+ '&Longitude=' + action.longitude
+			+ '&DatabaseId=' + action.databaseId
+			+ '&UserName=' + userName
+			+ '&encodedUser=' + btoa(userName)
+			+ '&encodedToken=' + btoa(session.SessionGet(constants.SESSION_TOKEN));
 
-		//const xhr = new XMLHttpRequest();
-		//xhr.open('post', url, true);
-		//xhr.onload = (data) => {
-		//	if (data && data.currentTarget
-		//		&& data.currentTarget && data.currentTarget.response
-		//		&& data.currentTarget.response.length > 0
-		//		&& data.currentTarget.response === 'true') {   
-		//		window.location = host + '/main';
-		//	} else {
-		//		alert('Add failed');
-		//	}
-		//};
-		//xhr.send();
+		const xhr = new XMLHttpRequest();
+		xhr.open('post', url, true);
+		xhr.onload = (data) => {
+			if (data && data.currentTarget
+				&& data.currentTarget && data.currentTarget.response
+				&& data.currentTarget.response.length > 0
+				&& data.currentTarget.response === 'true') {   
+				window.location = host + '/main';
+			} else {
+				alert('Add failed');
+			}
+		};
+		xhr.send();
 	}
 	else if (action.type === ACTION_TYPE_CANCEL) {
 		var utils = Object.create(utilsRef.Utilities);
 		var host = utils.GetHost();
 		window.location = host + '/login';
 	}											   
-	//else if (action.type === ACTION_TYPE_EDIT) {
-	//	return {
-	//		...state,
-	//		name: action.name,
-	//		dateCreated: action.dateCreated,
-	//		bucketListItemType: action.bucketListItemType,
-	//		completed: action.completed,
-	//		latitude: action.latitude,									
-	//		longitude: action.longitude, 
-	//		databaseId: action.databaseId, 
-	//		userName: action.userName 
-	//	};
-	//}
-		//var utils = Object.create(utilsRef.Utilities);
-		//var host = utils.GetHost();
-		//window.location = host + '/edit';
-	//}
 
 	return state;
 };
