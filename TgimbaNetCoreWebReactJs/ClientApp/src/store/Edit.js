@@ -57,7 +57,7 @@ export const reducer = (state, action) => {
 		var host = utils.GetHost();
 
 		var userName = session.SessionGet(constants.SESSION_USERNAME);		
-		var completed = action.completed == 'on' ? 'true' : 'false';
+		var completed = action.completed === true ? 'true' : 'false';
 
 		const url = host + '/BucketListItem/EditBucketListItem'
 			+ '?Name=' + action.name

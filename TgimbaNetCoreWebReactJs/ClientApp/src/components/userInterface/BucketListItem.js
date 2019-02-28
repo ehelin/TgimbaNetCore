@@ -18,8 +18,10 @@ class BucketListItem extends React.Component {
 			bucketListItemType: this.setCategory(props.bucketListItemType),
 			completed: props.completed
 				&& (props.completed === 'true' || props.completed === true)
-					? 'on' : null,
-			//completed: null,
+					? 'on' : null,		   \
+			checked: props.completed
+				&& (props.completed === 'true' || props.completed === true)
+				? true : false,
 			latitude: props.latitude ? props.latitude : '',
 			longitude: props.longitude ? props.longitude : '',
 			databaseId: props.databaseId ? props.databaseId : '',
@@ -45,29 +47,12 @@ class BucketListItem extends React.Component {
 		this.parentFormAddEdit.formCancel();
 	}
 
-	//handleChangeChk() {
-	//	this.setState({
-	//		completed: !this.state.checked
-	//	});
-	//}
-
 	render() {						
 		let { name, dateCreated, bucketListItemType, completed, latitude,
-			longitude, databaseId, userName, onPress, onChange, onCancel } = this.state;
+			longitude, databaseId, userName, onPress, onChange, onCancel, checked } = this.state;
 	
 		var utils = Object.create(utilsRef.Utilities);
-		var tableStyle = utils.GetDefaultTableStyle();
-
-		const toggleComplete = _ => {
-			if (completed === 'on') {
-				completed = null;
-			} else {
-				completed = 'on';
-			}
-			//this.props.toggle(completed);
-			//this.state.completed = completed;
-			//this.props.login(username, password);
-		}
+		var tableStyle = utils.GetDefaultTableStyle();		 
 
 		return (
 			<div>
@@ -114,15 +99,14 @@ class BucketListItem extends React.Component {
 						<td>
 							<label>Completed:</label>
 							<input type="checkbox"
-								id="USER_CONTROL_ADD_COMPLETED"
-								onChange={toggleComplete}
-								//defaultChecked={completed}
-								//onChange={event => this.setState(
-								//	{
-								//		completed: !event.target.value
-								//	})}
+								id="USER_CONTROL_ADD_COMPLETED"		  
+								onChange={event => this.setState(
+									{
+										completed: !completed,
+										checked: !checked,
+									})}
 								value={completed}
-								//checked={completed}
+								checked={checked}
 							/>
 							
 						</td>
