@@ -63,8 +63,8 @@ class BucketListItem extends React.Component {
 					<tr>
 						<td>
 							<label>Item Name:</label>
-							<input
-								id="USER_CONTROL_ADD_ITEM_NAME"
+							<input								  
+								id={this.props.databaseId ? 'USER_CONTROL_EDIT_ITEM_NAME' : 'USER_CONTROL_ADD_ITEM_NAME'}
 								type="text"
 								value={name}
 								onChange={event => this.setState({ name: event.target.value })}
@@ -74,8 +74,8 @@ class BucketListItem extends React.Component {
 					<tr>
 						<td>
 							<label>Date Created:</label>
-							<input
-								id="USER_CONTROL_ADD_DATE_CREATED"
+							<input									
+								id={this.props.databaseId ? 'USER_CONTROL_EDIT_DATE_CREATED' : 'USER_CONTROL_ADD_DATE_CREATED'}
 								type="text"
 								value={dateCreated}
 								//onChange={event => this.setState({ dateCreated: event.target.value })}
@@ -86,7 +86,8 @@ class BucketListItem extends React.Component {
 					<tr>
 						<td>
 							<label>Category:</label>
-							<select id="USER_CONTROL_ADD_ITEM_CATEGORY"
+							<select									  
+								id={this.props.databaseId ? 'USER_CONTROL_EDIT_ITEM_CATEGORY' : 'USER_CONTROL_ADD_ITEM_CATEGORY'}
 								value={bucketListItemType}
 								onChange={event => this.setState({ bucketListItemType: event.target.value })}							>
 								<option value="Hot">Hot</option>
@@ -98,8 +99,8 @@ class BucketListItem extends React.Component {
 					<tr>
 						<td>
 							<label>Completed:</label>
-							<input type="checkbox"
-								id="USER_CONTROL_ADD_COMPLETED"		  
+							<input type="checkbox"				  
+								id={this.props.databaseId ? 'USER_CONTROL_EDIT_COMPLETED' : 'USER_CONTROL_ADD_COMPLETED'}
 								onChange={event => this.setState(
 									{
 										completed: !completed,
@@ -114,8 +115,8 @@ class BucketListItem extends React.Component {
 					<tr>
 						<td>
 							<label>Latitude:</label>
-							<input
-								id="USER_CONTROL_ADD_LATITUDE"
+							<input								   
+								id={this.props.databaseId ? 'USER_CONTROL_EDIT_LATITUDE' : 'USER_CONTROL_ADD_LATITUDE'}
 								type="text"
 								value={latitude}
 								onChange={event => this.setState({ latitude: event.target.value })}
@@ -125,8 +126,8 @@ class BucketListItem extends React.Component {
 					<tr>
 						<td>
 							<label>Longitude:</label>
-							<input
-								id="USER_CONTROL_ADD_LONGITUDE"
+							<input									 
+								id={this.props.databaseId ? 'USER_CONTROL_EDIT_LONGITUDE' : 'USER_CONTROL_ADD_LONGITUDE'}
 								type="text"
 								value={longitude}
 								onChange={event => this.setState({ longitude: event.target.value })}
@@ -135,17 +136,20 @@ class BucketListItem extends React.Component {
 					</tr>
 					<tr>
 						<td>
-							<Button onPress={() => this.formSubmit(
-								name,
-								dateCreated,
-								bucketListItemType,
-								completed,
-								latitude,
-								longitude,
-								databaseId,
-								userName,
-							)} id="hvJsAddSubmitBtn">{this.props.databaseId ? 'Edit' : 'Add'}</Button>
-							<Button onPress={() => this.formCancel()} id="hvJsAddCancellBtn">Cancel</Button>
+							<Button
+								onPress={() => this.formSubmit(
+									name,
+									dateCreated,
+									bucketListItemType,
+									completed,
+									latitude,
+									longitude,
+									databaseId,
+									userName,
+								)}
+								id={this.props.databaseId ? 'hvJsEditSubmitBtn' : 'hvJsAddSubmitBtn'}>{this.props.databaseId ? 'Edit' : 'Add'}</Button>
+							<Button onPress={() => this.formCancel()}
+									id={this.props.databaseId ? 'hvJsEditCancellBtn' : 'hvJsAddCancellBtn'}>Cancel</Button>
 						</td>
 					</tr>
 				</table>
