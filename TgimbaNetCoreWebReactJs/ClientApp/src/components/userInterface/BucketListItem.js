@@ -18,7 +18,7 @@ class BucketListItem extends React.Component {
 			bucketListItemType: this.setCategory(props.bucketListItemType),
 			completed: props.completed
 				&& (props.completed === 'true' || props.completed === true)
-					? 'on' : null,		   \
+					? 'on' : null,		 
 			checked: props.completed
 				&& (props.completed === 'true' || props.completed === true)
 				? true : false,

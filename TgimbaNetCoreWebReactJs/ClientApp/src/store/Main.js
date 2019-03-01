@@ -15,16 +15,13 @@ export const actionCreators = {
 	main: () => async (dispatch, getState) => {		 
 		dispatch({ type: ACTION_TYPE_MAIN_MENU });
 	},
-	delete: (id) => async (dispatch, getState) => {
-		// TODO - call redux handler, delete selected item and redisplay main form
-		alert('main redux formDelete: ' + id);
-		dispatch({ type: ACTION_TYPE_DELETE });
+	delete: (id) => async (dispatch, getState) =>
+	{	 
+		dispatch({ type: ACTION_TYPE_DELETE, id });
 	}, 	
 	edit: (name, dateCreated, bucketListItemType, completed,
 		latitude, longitude, databaseId, userName) => async (dispatch, getState) =>
-		{
-		// TODO - call redux handler, delete selected item and redisplay main form
-		//alert('main redux formDelete: ' + id);
+	{											
 		dispatch({
 			type: ACTION_TYPE_EDIT, name, dateCreated,
 			bucketListItemType, completed, latitude, longitude, databaseId, userName
@@ -41,7 +38,7 @@ export const actionCreators = {
 			+ '?encodedUserName=' + btoa(userName)
 			+ '&encoderedSortString=' + btoa('')
 			+ '&encodedToken=' + btoa(token);
-		const response = await fetch(url);
+		const response = await fetch(url);		 
 		const bucketListItems = await response.json();
 
 		for (let i = 0; i < bucketListItems.length; i++) {
@@ -63,6 +60,34 @@ export const reducer = (state, action) => {
 			...state,
 			bucketListItems: action.bucketListItems
 		};
+	}
+	else if (action.type == ACTION_TYPE_DELETE) {
+		var constants = Object.create(constantsRef.Constants);
+		var session = Object.create(sessionRef.Session);
+
+		var utils = Object.create(utilsRef.Utilities);
+		var host = utils.GetHost();
+
+		var userName = session.SessionGet(constants.SESSION_USERNAME);	
+
+		const url = host + '/BucketListItem/DeleteBucketListItem'
+			+ '?dbId=' + action.id				
+			+ '&encodedUser=' + btoa(userName)
+			+ '&encodedToken=' + btoa(session.SessionGet(constants.SESSION_TOKEN));
+
+		const xhr = new XMLHttpRequest();
+		xhr.open('delete', url, true);
+		xhr.onload = (data) => {
+			if (data && data.currentTarget
+				&& data.currentTarget && data.currentTarget.response
+				&& data.currentTarget.response.length > 0
+				&& data.currentTarget.response === 'true') {
+				//window.location = host + '/main';
+			} else {
+				alert('delete failed');
+			}
+		};
+		xhr.send();
 	}
 	else if (action.type == ACTION_TYPE_MAIN_MENU) {
 		window.location = host + '/mainmenu';
