@@ -20,7 +20,7 @@ MainController.Edit_ParameterNames = [
 	"EDIT_USERNAME"
 ];
 	 
-MainController.Index = function (bucketListItems) {
+MainController.Index = function () {
 	var params = [];
 	
 	params.push(SessionGetUsername(SESSION_USERNAME));

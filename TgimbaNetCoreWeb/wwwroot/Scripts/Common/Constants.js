@@ -17,7 +17,8 @@ var VIEW_MAIN_ADD = '/Markup/HtmlVanillaJs/Views/Main/Add.html';
 var VIEW_MAIN_EDIT = '/Markup/HtmlVanillaJs/Views/Main/Edit.html';
 var VIEW_LOGIN = '/Markup/HtmlVanillaJs/Views/Login/Index.html';
 var VIEW_REGISTRATION = '/Markup/HtmlVanillaJs/Views/Registration/Index.html';
-var VIEW_MENU =	'/Markup/HtmlVanillaJs/Views/Menu/Index.html'
+var VIEW_MENU = '/Markup/HtmlVanillaJs/Views/Menu/Index.html'
+var VIEW_SORT = '/Markup/HtmlVanillaJs/Views/Menu/Sort.html'
 var VIEW_WELCOME = '/Welcome/Index';
 
 var LOGIN_PROCESS_USER = '/Login/Login';	

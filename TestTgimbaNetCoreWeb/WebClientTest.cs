@@ -92,8 +92,8 @@ namespace TestTgimbaNetCoreWeb
 			var bucketItemList = GetWebClient().GetBucketListItems("", "", "");
 	   
 			Assert.IsNull(bucketItemList); 									   
-		}			  
-		  				
+		}		
+		
 		private IWebClient GetWebClient() {
 			IWebClient webClient = new WebClient(this.mockITgimbaService.Object);
 
