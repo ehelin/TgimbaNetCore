@@ -60,8 +60,9 @@ namespace TestTgimbaNetCoreWeb
 												
 		[TestMethod]
 		public void TestSharedBucketListController_GetBucketListItems_GoodParameters()
-		{													  
-			var bucketListItems =  GetController().GetBucketListItems("base64EncodedGoodUser", 
+		{		
+			var user = Shared.misc.Utilities.EncodeClientBase64String("base64EncodedGoodUser");											  
+			var bucketListItems =  GetController().GetBucketListItems(user, 
 																	  "base64EncodedGoodSortString", 
 																      "base64EncodedGoodToken");
 

@@ -45,7 +45,7 @@ namespace TestTgimbaNetCoreWeb
 			var bucketListItems = new List<SharedBucketListModel>();
 			bucketListItems.Add(bucketListItem);
 			mockWebClient.Setup(x => x.GetBucketListItems(						 
-														"base64EncodedGoodUser", 
+														"YmFzZTY0RW5jb2RlZEdvb2RVc2Vy",//"base64EncodedGoodUser", 
 														"base64EncodedGoodSortString", 
 														"base64EncodedGoodToken"
 														)).Returns(bucketListItems);  		
@@ -93,7 +93,7 @@ namespace TestTgimbaNetCoreWeb
 			var bucketListItemSingleLine = TestUtilities.GetBucketListItemSingleString("base64EncodedGoodUser","newBucketListItem", "dbId", true);
 			string[] bucketLIstitems = new string[] { bucketListItemSingleLine };											
 			mockITgimbaService.Setup(x => x.GetBucketListItemsV2(						 
-																"base64EncodedGoodUser", 
+																"YmFzZTY0RW5jb2RlZEdvb2RVc2Vy", 
 																"base64EncodedGoodSortString", 
 																"base64EncodedGoodToken"
 																)).Returns(bucketLIstitems);  	

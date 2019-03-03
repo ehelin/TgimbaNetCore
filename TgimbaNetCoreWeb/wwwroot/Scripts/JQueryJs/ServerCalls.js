@@ -5,12 +5,13 @@ ServerCalls.GetView = function(viewUrl, contentDiv, htmlContent) {
 	Display.SetView(viewUrl, contentDiv, loadedView, htmlContent);
 };
 
-ServerCalls.GetBucketListItems = function(url, params) {
+ServerCalls.GetBucketListItems = function (url, params, sortColumn) {
 	var formData = new FormData();
 	var userName = params[0];	 
 	var token = params[1];
+	var sortColumn = sortColumn && sortColumn.length > 0 ? sortColumn : '';
 
-	var queryUrl = BUCKET_LIST_PROCESS_GET + "?encodedUserName=" + btoa(userName) + "&encoderedSortString=" + btoa("") + "&encodedToken=" + btoa(token);
+	var queryUrl = BUCKET_LIST_PROCESS_GET + "?encodedUserName=" + btoa(userName) + "&encoderedSortString=" + btoa(sortColumn) + "&encodedToken=" + btoa(token);
 	
 	var response = CallService(queryUrl, 'get');
 

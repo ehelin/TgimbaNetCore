@@ -79,24 +79,16 @@ namespace DAL.providers
             try
             {
                 conn = new SqlConnection(connectionString);
-                cmd = conn.CreateCommand();
-
-                if (!string.IsNullOrEmpty(sortString))
-                {
-                    //HACK - Update in a later version
-                    if (sortString.Equals(" order by Category"))
-                        cmd.CommandText = BucketListSqlV2.GET_BUCKET_LIST + "order by CategorySortOrder";
-                    else if (sortString.Equals(" order by Category desc"))
-                        cmd.CommandText = BucketListSqlV2.GET_BUCKET_LIST + "order by CategorySortOrder desc";
-                    else
-                        cmd.CommandText = BucketListSqlV2.GET_BUCKET_LIST + sortString;
-                }
-                else
-                    cmd.CommandText = BucketListSqlV2.GET_BUCKET_LIST;
-
-                cmd.CommandType = System.Data.CommandType.Text;
-
+                cmd = conn.CreateCommand();			 
+                cmd.CommandText = BucketListSqlV2.GET_BUCKET_LIST;
+		
                 cmd.Parameters.Add(new SqlParameter("@userName", userName));
+
+				// TODO - make parameter
+                if (!string.IsNullOrEmpty(sortString))
+                {											   
+                    cmd.CommandText += sortString;  								  
+                }	
 
                 cmd.Connection.Open();
 

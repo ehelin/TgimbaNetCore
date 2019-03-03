@@ -8,10 +8,6 @@ MenuController.AddBucketListItem = function () {
 	Display.LoadView(VIEW_MAIN_ADD, null);
 };
 
-MenuController.SortBucketListItem = function () {
-	Display.LoadView(VIEW_SORT, null);	
-};
-
 MenuController.RunAlgorithm = function () {
 	alert('RunAlgorithm() clicked');
 };
@@ -23,6 +19,10 @@ MenuController.LogOut = function () {
 
 MenuController.Cancel = function () {
 	ApplicationFlow.SetView();
+};
+
+MenuController.SortBucketListItem = function () {
+	Display.LoadView(VIEW_SORT, null);
 };
 
 MenuController.Sort = function (sortColumnParam) {

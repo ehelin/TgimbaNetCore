@@ -80,7 +80,8 @@ namespace TestTgimbaNetCoreWeb
 		[TestMethod]
 		public void Test_GoodGetBucketListItems()
 		{
-			var bucketListItem = GetWebClient().GetBucketListItems("base64EncodedGoodUser", "base64EncodedGoodSortString", "base64EncodedGoodToken");
+			var user = Shared.misc.Utilities.EncodeClientBase64String("base64EncodedGoodUser");
+			var bucketListItem = GetWebClient().GetBucketListItems(user, "base64EncodedGoodSortString", "base64EncodedGoodToken");
 	   
 			Assert.IsNotNull(bucketListItem); 			
 			Assert.AreEqual("newBucketListItem", bucketListItem[0].Name);

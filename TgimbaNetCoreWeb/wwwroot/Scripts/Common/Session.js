@@ -14,9 +14,14 @@ function SessionGetUsername(key) {
     var val = sessionStorage.getItem(key);
     return val;
 }
-
-
+													 
 //misc --------------------------------------------------------
 function SessionClearStorage() {
-    sessionStorage.clear();
+	var sessionClient = SessionGetToken(SESSION_CLIENT);
+
+	sessionStorage.clear();
+
+	//preserve client type once set
+	sessionStorage.setItem(SESSION_CLIENT, sessionClient);
+	
 }
