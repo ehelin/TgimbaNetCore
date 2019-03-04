@@ -14,6 +14,8 @@ import { UtilitiesComponent } from './components/common/utilities.component';
 import { AddComponent } from './components/add/add.component';
 import { EditService } from './components/edit/edit.service';
 import { EditComponent } from './components/edit/edit.component';
+import { SortComponent } from './components/sort/sort.component';
+import { SortService } from './components/sort/sort.service';
 
 const routes: Routes = [
 	{ path: 'login',  component: LoginComponent },
@@ -21,7 +23,8 @@ const routes: Routes = [
 	{ path: 'main', component: MainComponent },
 	{ path: 'menu', component: MenuComponent },
 	{ path: 'add', component: AddComponent },
-	{ path: 'edit', component: EditComponent }
+	{ path: 'edit', component: EditComponent },	
+	{ path: 'sort', component: SortComponent }
 ];
 
 @NgModule({
@@ -35,8 +38,8 @@ const routes: Routes = [
 		ConstantsComponent,
 		UtilitiesComponent,
 		AddComponent,
-		EditComponent
-		//ApplicationFlowComponent
+		EditComponent, 
+		SortComponent			  
 	],
 	imports: [
 		BrowserModule,
@@ -45,7 +48,8 @@ const routes: Routes = [
 		RouterModule.forRoot(routes),
 	],		
 	providers: [
-		EditService
+		EditService,
+		SortService
 	],
 	bootstrap: [AppComponent],
 	exports: [RouterModule]

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SessionComponent } from '../common/session.component';
 import { ConstantsComponent } from '../common/constants.component';
 import { EditService } from '../edit/edit.service';
+import { SortService } from '../sort/sort.service';
 	 
 @Component({
 	selector: 'app-root',
@@ -20,7 +21,8 @@ export class MainComponent {
 	constructor(
 		private http: HttpClient,
 		private router: Router,
-		private editService: EditService
+		private editService: EditService,
+		private sortService: SortService
 	) {
 		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 		this.LoadBucketListItems();
@@ -64,7 +66,7 @@ export class MainComponent {
 	private LoadBucketListItems() {
 		let encodedUserName = btoa(SessionComponent.SessionGetValue(ConstantsComponent.SESSION_USERNAME));
 		let encodedToken = btoa(SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN));
-		let encodedSortString = btoa(''); // TODO implement sort
+		let encodedSortString = btoa(this.sortService.getSort());
 
 		const url = this.baseUrl + '/BucketListItem/GetBucketListItems?'
 			+ 'encodedUserName=' + encodedUserName

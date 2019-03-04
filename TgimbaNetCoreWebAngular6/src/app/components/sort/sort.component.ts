@@ -4,42 +4,41 @@ import { Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { SessionComponent } from '../common/session.component';
 import { UtilitiesComponent } from '../common/utilities.component';
+import { SortService } from './sort.service';
 
 @Component({
 	selector: 'app-root',
-	templateUrl: './menu.component.html',
-	styleUrls: ['./menu.component.css']
+	templateUrl: './sort.component.html',
+	styleUrls: ['./sort.component.css']
 })
 
 @Injectable()
-export class MenuComponent {		
-	private baseUrl: string;	 
+export class SortComponent {		
+	private baseUrl: string;	
+	public descOrder: boolean;
 
 	constructor(
 		private http: HttpClient,
-		private router: Router
+		private router: Router,
+		private sortService: SortService
 	) {
 		this.baseUrl = UtilitiesComponent.GetBaseUrl(); 
 	}
 
-	public AddBucketListItem() {
-		this.router.navigate(['/add']);
-	};
+	public Sort(sortColumn) { 
+		let sort = 'order by ' + sortColumn;
 
-	public SortBucketListItem() {
-		this.router.navigate(['/sort']);
-	};
+		if (this.descOrder === true) {
+			sort += ' desc';
+		}
 
-	public RunAlgorithm() {
-		alert('RunAlgorithm() clicked');
+		this.sortService.setSort(sort);
+		this.router.navigate(['/main']);
 	};
-
-	public LogOut() {
-		SessionComponent.SessionClearStorage();
-		this.router.navigate(['/login']);
-	};
-
+						 
 	public Cancel() {
+		this.sortService.setSort('');
+
 		if (LoginComponent.IsLoggedIn() === true) {
 			this.router.navigate(['/main']);
 		}
