@@ -108,8 +108,7 @@ class BucketListItem extends React.Component {
 									})}
 								value={completed}
 								checked={checked}
-							/>
-							
+							/>								
 						</td>
 					</tr>
 					<tr>

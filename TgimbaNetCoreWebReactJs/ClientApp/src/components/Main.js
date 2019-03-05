@@ -4,11 +4,17 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../store/Main';
 import Button from './userInterface/Button';
 import Table from './userInterface/Table';
-var utilsRef = require('../common/Utilities');
+var utilsRef = require('../common/Utilities'); 
+const queryString = require('query-string');
 
 class Main extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props);				
+		const parsed = queryString.parse(this.props.location.search);
+		if (parsed && parsed.sort) {
+			alert('TODO - put into reducer -> Component-Main.js -> sort: ' + parsed.sort);
+		}
+
 		this.state = { bucketListItems: null };
 	}	  
 

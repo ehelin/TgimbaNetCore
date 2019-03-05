@@ -7,7 +7,8 @@ import * as Registration from './Registration';
 import * as Main from './Main';
 import * as WeatherForecasts from './WeatherForecasts';	
 import * as Button from './userInterface/Button';	  
-import * as MainMenu from './MainMenu';
+import * as MainMenu from './MainMenu';			  
+import * as SortMenu from './SortMenu';
 import * as Add from './Add';
 import * as Edit from './Edit';
 import * as Table from './userInterface/Table';
@@ -20,7 +21,8 @@ export default function configureStore(history, initialState) {
 	  counter: Counter.reducer,
 	  login: Login.reducer,
 	  main: Main.reducer,
-	  mainmenu: MainMenu.reducer,
+	  mainmenu: MainMenu.reducer,  
+	  sortmenu: SortMenu.reducer,
 	  register: Registration.reducer,	
 	  table: Table.reducer,
 	  bucketListItem: BucketListItem.reducer,

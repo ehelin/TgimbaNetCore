@@ -8,7 +8,8 @@ import FetchData from './components/FetchData';
 import Home from './components/Home';
 import Login from './components/Login';
 import Main from './components/Main';
-import MainMenu from './components/MainMenu';
+import MainMenu from './components/MainMenu'; 
+import SortMenu from './components/SortMenu';
 import Registration from './components/Registration';
 import Edit from './components/Edit';
 
@@ -21,7 +22,8 @@ export default () => (
 	<Route exact path='/home' component={Home} />
     <Route exact path='/login' component={Login} />	  	
 	<Route exact path='/main' component={Main} />
-	<Route exact path='/mainmenu' component={MainMenu} />		 
+	<Route exact path='/mainmenu' component={MainMenu} />
+	<Route exact path='/sortmenu' component={SortMenu} />		 
     <Route exact path='/register' component={Registration} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
   </Layout>

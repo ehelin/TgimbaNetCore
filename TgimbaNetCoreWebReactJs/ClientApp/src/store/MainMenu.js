@@ -36,8 +36,8 @@ export const reducer = (state, action) => {
 	if (action.type === ACTION_TYPE_ADD) {
 		window.location = host + '/add';
 	}
-	else if (action.type === ACTION_TYPE_SORT) {
-		//alert('Sort was clicked!');
+	else if (action.type === ACTION_TYPE_SORT) {  
+		window.location = host + '/sortmenu';
 	}
 	else if (action.type === ACTION_TYPE_RUN_ALGORITHM) {
 		//alert('Run Algorithm was clicked!');
