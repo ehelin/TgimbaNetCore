@@ -8,22 +8,24 @@ var utilsRef = require('../common/Utilities');
 const queryString = require('query-string');
 
 class Main extends React.Component {
+	sort = ''; 
+
 	constructor(props) {
 		super(props);				
 		const parsed = queryString.parse(this.props.location.search);
 		if (parsed && parsed.sort) {
-			alert('TODO - put into reducer -> Component-Main.js -> sort: ' + parsed.sort);
+			this.sort = parsed.sort;//alert('TODO - put into reducer -> Component-Main.js -> sort: ' + parsed.sort);
 		}
 
 		this.state = { bucketListItems: null };
 	}	  
 
 	componentDidMount() {
-		this.props.load();							 
+		this.props.load(this.sort);							 
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.props.load();
+		this.props.load(this.sort);
 	}
 
 	formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {

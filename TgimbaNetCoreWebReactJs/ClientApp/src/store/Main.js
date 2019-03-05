@@ -27,7 +27,7 @@ export const actionCreators = {
 			bucketListItemType, completed, latitude, longitude, databaseId, userName
 		});
 	}, 	
-	load: () => async (dispatch, getState) => {
+	load: (sort) => async (dispatch, getState) => {
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);
 
@@ -36,7 +36,7 @@ export const actionCreators = {
 
 		const url = 'BucketListItem/GetBucketListItems'
 			+ '?encodedUserName=' + btoa(userName)
-			+ '&encoderedSortString=' + btoa('')
+			+ '&encoderedSortString=' + btoa(sort)
 			+ '&encodedToken=' + btoa(token);
 		const response = await fetch(url);		 
 		const bucketListItems = await response.json();
