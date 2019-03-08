@@ -9,7 +9,7 @@ namespace DAL.providers
 {
     public partial class BucketListData : IBucketListData
     {
-        public string[] GetBucketListV2(string userName, string sortString)
+        public string[] GetBucketListV2(string userName, string sortString, string srchTerm = "")
         {
             IList<BucketListItem> listItems = GetListItemsV2(userName, sortString);
             string[] items = null;
@@ -68,28 +68,43 @@ namespace DAL.providers
             return goodDbAction;
         }
 
-        private IList<BucketListItem> GetListItemsV2(string userName, string sortString)
+		private SqlCommand GetBucketListCmd(string userName, string srchTerm, string sortString) 
+		{
+			SqlConnection conn = null;
+            SqlCommand cmd = null;		   
+			string sql = BucketListSqlV2.GET_BUCKET_LIST;
+
+            conn = new SqlConnection(connectionString);
+            cmd = conn.CreateCommand();
+            cmd.CommandText = sql;	
+
+
+			if (!string.IsNullOrEmpty(srchTerm)) {
+				sql += " and bli.ListItemName = @srchTerm  ";
+			}
+		
+            cmd.Parameters.Add(new SqlParameter("@userName", userName));  
+            cmd.Parameters.Add(new SqlParameter("@srchTerm", srchTerm));
+
+			// TODO - make parameter
+            if (!string.IsNullOrEmpty(sortString))
+            {											   
+                cmd.CommandText += sortString;  								  
+            }	 
+
+			return cmd;
+		}		
+
+        private IList<BucketListItem> GetListItemsV2(string userName, string sortString, string srchTerm = "")
         {
             IList<BucketListItem> listItems = new List<BucketListItem>();
-            BucketListItem bli = null;
-            SqlConnection conn = null;
-            SqlCommand cmd = null;
-            SqlDataReader rdr = null;
+            BucketListItem bli = null;	 
+            SqlDataReader rdr = null;		   
+            SqlCommand cmd = null;		
 
             try
-            {
-                conn = new SqlConnection(connectionString);
-                cmd = conn.CreateCommand();			 
-                cmd.CommandText = BucketListSqlV2.GET_BUCKET_LIST;
-		
-                cmd.Parameters.Add(new SqlParameter("@userName", userName));
-
-				// TODO - make parameter
-                if (!string.IsNullOrEmpty(sortString))
-                {											   
-                    cmd.CommandText += sortString;  								  
-                }	
-
+            {		 
+				cmd = GetBucketListCmd(userName, srchTerm, sortString);
                 cmd.Connection.Open();
 
                 rdr = cmd.ExecuteReader();
@@ -115,7 +130,25 @@ namespace DAL.providers
             }
             finally
             {
-                CloseDbObjects(conn, cmd, null);
+				if (cmd != null && cmd.Connection != null)
+				{
+					cmd.Connection.Close();
+					cmd.Connection.Dispose();
+					cmd.Connection = null;
+				}
+
+				if (cmd != null)
+				{
+					cmd.Dispose();
+					cmd = null;
+				}
+
+				if (rdr != null)
+				{
+					rdr.Close();
+					rdr.Dispose();
+					rdr = null;
+				}
             }
 
             return listItems;

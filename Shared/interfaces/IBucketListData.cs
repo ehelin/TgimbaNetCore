@@ -8,7 +8,7 @@
         void LogMsg(string msg);
         string[] GetDashboard();
 
-        string[] GetBucketListV2(string userName, string sortString);
+        string[] GetBucketListV2(string userName, string sortString, string srchTerm = "");
         bool UpsertBucketListItemV2(string[] bucketListItems);
     }
 }

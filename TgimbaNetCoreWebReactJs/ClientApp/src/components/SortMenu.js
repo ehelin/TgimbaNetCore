@@ -67,7 +67,7 @@ class SortMenu extends React.Component {
 							<Button 	  
 							onPress={() => this.sort('Achieved', descending)}  
 							id="hvJsSortAchievedBtn">Achieved</Button> 					 
-						</td>
+						</td>						 
 					</tr>
 					<tr>
 						<label>Descending Order:</label>
