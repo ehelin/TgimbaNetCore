@@ -11,7 +11,7 @@ namespace DAL.providers
     {
         public string[] GetBucketListV2(string userName, string sortString, string srchTerm = "")
         {
-            IList<BucketListItem> listItems = GetListItemsV2(userName, sortString);
+            IList<BucketListItem> listItems = GetListItemsV2(userName, sortString, srchTerm);
             string[] items = null;
             int ctr = 0;
             int ctrDisplay = 1;
@@ -75,16 +75,15 @@ namespace DAL.providers
 			string sql = BucketListSqlV2.GET_BUCKET_LIST;
 
             conn = new SqlConnection(connectionString);
-            cmd = conn.CreateCommand();
-            cmd.CommandText = sql;	
-
-
+            cmd = conn.CreateCommand();	
+																				
 			if (!string.IsNullOrEmpty(srchTerm)) {
-				sql += " and bli.ListItemName = @srchTerm  ";
+				sql += " and bli.ListItemName like @srchTerm";	  
+				cmd.Parameters.AddWithValue("@srchTerm","%" + srchTerm + "%");	
 			}
 		
-            cmd.Parameters.Add(new SqlParameter("@userName", userName));  
-            cmd.Parameters.Add(new SqlParameter("@srchTerm", srchTerm));
+            cmd.Parameters.Add(new SqlParameter("@userName", userName)); 
+            cmd.CommandText = sql;	
 
 			// TODO - make parameter
             if (!string.IsNullOrEmpty(sortString))

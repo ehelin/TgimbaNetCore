@@ -24,7 +24,8 @@ namespace TestJavaScriptV2
             script = null;
         }
 
-        [TestMethod]
+        [TestMethod]		   
+		[Ignore]
         public void Test_Session_SessionClearStorage()
         {
             var script = SetUpScript();
