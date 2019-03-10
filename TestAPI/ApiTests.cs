@@ -19,10 +19,10 @@ namespace TestsAPIIntegration
         {
             service = new TgimbaService();
         }				
-
+				  
 		[TestMethod]	
 		public void SearchTest()
-		{								
+		{								 							   
             DeleteUser(user, email, password);
 
             ProcessUserRegistrationTest();                          
@@ -32,17 +32,17 @@ namespace TestsAPIIntegration
 			var firstSearchTerm = "bi 1";		
 			var secondSearchTerm = "2";	
 			var notPresentSrchTerm = "blah";					 								  
-			var currentBucketListItems =  this.GetBucketListItems(user, "", firstSearchTerm); 	   
+			var currentBucketListItems =  this.GetBucketListItems(token, "", firstSearchTerm); 	   
 			Assert.IsTrue(currentBucketListItems[0].IndexOf(firstSearchTerm) != -1);
 
-			currentBucketListItems =  this.GetBucketListItems(user, "", secondSearchTerm); 	   
+			currentBucketListItems =  this.GetBucketListItems(token, "", secondSearchTerm); 	   
 			Assert.IsTrue(currentBucketListItems[0].IndexOf(secondSearchTerm) != -1);		
 
-			currentBucketListItems =  this.GetBucketListItems(user, "", notPresentSrchTerm); 	   
+			currentBucketListItems =  this.GetBucketListItems(token, "", notPresentSrchTerm); 	   
 			Assert.IsTrue(currentBucketListItems[0].IndexOf(secondSearchTerm) == -1);	   	   
 			Assert.AreEqual(currentBucketListItems[0],"No Items");	 																								
 			
-			CleanUpSortSearchTests(token, currentBucketListItems);
+			CleanUpSortSearchTests(token);
 		}  
 				  
         [TestMethod]
@@ -72,7 +72,7 @@ namespace TestsAPIIntegration
 			Assert.IsTrue(currentBucketListItems[3].IndexOf("bi 2") != -1);
 			Assert.IsTrue(currentBucketListItems[4].IndexOf("bi 1") != -1);																										
 			
-			CleanUpSortSearchTests(token, currentBucketListItems);
+			CleanUpSortSearchTests(token);
         }		
 		
 		private void InsertSortSearchTestData(string token) 
@@ -84,15 +84,16 @@ namespace TestsAPIIntegration
             UpsertBucketListItemTest(token, "bi 5");       
 		}		
 
-		private void CleanUpSortSearchTests(string token, string[] currentBucketListItems) {
-		  		
+		private void CleanUpSortSearchTests(string token) 
+		{		  													
+			var currentBucketListItems =  this.GetBucketListItems(token, ""); 
             foreach (string bucketListItem in currentBucketListItems)
 			{
 				int pos = bucketListItem.LastIndexOf(',');
 				string dbIdStr = bucketListItem.Substring(pos + 1, bucketListItem.Length - (pos + 1));
 				int dbId = Int32.Parse(dbIdStr);
 												  
-				DeleteBucketListItemTest(token, dbIdStr);
+				DeleteBucketListItem(token, dbIdStr);
 			}
 
             DeleteUser(user, email, password);	
@@ -134,15 +135,18 @@ namespace TestsAPIIntegration
 
         private void ProcessUserRegistrationTest()
         {
-            bool result = service.ProcessUserRegistration
+			bool result = ProcessUserRegistration(); 
+            Assert.IsTrue(result);
+        }
+		private bool ProcessUserRegistration() 
+		{
+			return service.ProcessUserRegistration
             (
                 Utilities.EncodeClientBase64String(user),
                 Utilities.EncodeClientBase64String(email),
                 Utilities.EncodeClientBase64String(password)
             );
-
-            Assert.IsTrue(result);
-        }
+		}
         private string ProcessUserTest()
         {
             string token = service.ProcessUser
@@ -218,15 +222,18 @@ namespace TestsAPIIntegration
                 Utilities.EncodeClientBase64String(srchTerm)
             );
 		}	
-        private void DeleteBucketListItemTest(string token, string dbId)
-        {
-            var result = service.DeleteBucketListItem
+		private string[] DeleteBucketListItem(string token, string dbId)
+		{
+			return service.DeleteBucketListItem
              (
                  Convert.ToInt32(dbId),
                  Utilities.EncodeClientBase64String(user),
                  Utilities.EncodeClientBase64String(token)
              );
-
+		}
+        private void DeleteBucketListItemTest(string token, string dbId)
+        {
+            var result = DeleteBucketListItem(token, dbId);
             Assert.IsNotNull(result);
             Assert.IsTrue(result[0] == "TokenValid");
         }
