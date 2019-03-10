@@ -24,11 +24,11 @@ namespace TestJavaScriptV2
             script = null;
         }
 
-        [TestMethod]		   
-		[Ignore]
+        [TestMethod]	
         public void Test_Session_SessionClearStorage()
         {
-            var script = SetUpScript();
+            var script = SetUpScript();	  
+            script.AppendFile(@"..\..\..\..\TgimbaNetCoreWeb\wwwroot\Scripts\Common\Constants.js");
             string test = @"
                             SessionSetToken('key', 'value');
                             SessionClearStorage();
