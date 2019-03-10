@@ -95,7 +95,8 @@ namespace TestTgimbaNetCoreWeb
 			mockITgimbaService.Setup(x => x.GetBucketListItemsV2(						 
 																"YmFzZTY0RW5jb2RlZEdvb2RVc2Vy", 
 																"base64EncodedGoodSortString", 
-																"base64EncodedGoodToken"
+																"base64EncodedGoodToken",
+																""
 																)).Returns(bucketLIstitems);  	
 		}
 		private void SetUpTgimbaServiceDeleteBucketListItem() {						 				  

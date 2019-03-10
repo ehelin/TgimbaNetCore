@@ -135,7 +135,8 @@ namespace API
 
             return result;
         }
-        public string[] GetBucketListItemsV2(string encodedUserName, string encodedSortString, string encodedToken)
+        public string[] GetBucketListItemsV2(string encodedUserName, string encodedSortString, 
+												string encodedToken, string encodedSrchString = "")
         {
             IBucketListData bld = null;
             string[] result = null;
@@ -146,10 +147,11 @@ namespace API
 
                 string decodedUserName = Utilities.DecodeClientBase64String(encodedUserName);
                 string decodedSortString = Utilities.DecodeClientBase64String(encodedSortString);
-                string decodedToken = Utilities.DecodeClientBase64String(encodedToken);
+                string decodedToken = Utilities.DecodeClientBase64String(encodedToken);	   
+                string decodedSrchTerm = Utilities.DecodeClientBase64String(encodedSrchString);
 
                 if (ProcessToken(decodedUserName, decodedToken))
-                    result = bld.GetBucketListV2(decodedUserName, decodedSortString);
+                    result = bld.GetBucketListV2(decodedUserName, decodedSortString, decodedSrchTerm);
                 else
                 {
                     result = Utilities.GetInValidTokenResponse();
