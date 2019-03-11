@@ -20,11 +20,15 @@ MainController.Edit_ParameterNames = [
 	"EDIT_USERNAME"
 ];
 	 
-MainController.Index = function () {
+MainController.Index = function (srchTerm) {
 	var params = [];
 	
 	params.push(SessionGetUsername(SESSION_USERNAME));
-	params.push(SessionGetToken(SESSION_TOKEN));	  
+	params.push(SessionGetToken(SESSION_TOKEN));
+
+	if (srchTerm && srchTerm.length > 0) {
+		params.push(srchTerm);
+	}
 
 	ServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params);
 };
@@ -38,6 +42,17 @@ MainController.SetAddViewDate = function () {
 	var today = new Date();
 	addViewDateInput.value = today.toLocaleDateString('en-US');
 };
+
+MainController.Search = function ()
+{
+	var srchTerm = GetElementValue('USER_CONTROL_SEARCH_TEXT_BOX');	// Utilities.js
+
+	if (srchTerm) {
+		return MainController.Index(srchTerm);
+	}
+
+	alert('No search term entered');
+}
 
 MainController.FormEditClick = function (itemName, dateCreated, bucketListItemType,
 										completed, latitude, longitude,

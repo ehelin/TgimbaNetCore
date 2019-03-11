@@ -64,7 +64,8 @@ namespace TestTgimbaNetCoreWeb
 			var user = Shared.misc.Utilities.EncodeClientBase64String("base64EncodedGoodUser");											  
 			var bucketListItems =  GetController().GetBucketListItems(user, 
 																	  "base64EncodedGoodSortString", 
-																      "base64EncodedGoodToken");
+																      "base64EncodedGoodToken",
+																	  "base64EncodedGoodSrchTerm");
 
 			Assert.IsNotNull(bucketListItems);
 			Assert.AreEqual(1, bucketListItems.Count);
@@ -75,7 +76,8 @@ namespace TestTgimbaNetCoreWeb
 		{													  
 			var bucketListItems =  GetController().GetBucketListItems("base64EncodedBadUser", 
 																	  "base64EncodedBadSortString", 
-																      "base64EncodedBadToken");
+																      "base64EncodedBadToken",
+																	  "base64EncodedGoodSrchTerm");
 
 			Assert.IsNull(bucketListItems);				
 		}

@@ -64,9 +64,15 @@ namespace TgimbaNetCoreWeb.Controllers
 		}
 
 		[HttpGet]
-        public List<SharedBucketListModel> GetBucketListItems(string encodedUserName, string encoderedSortString, string encodedToken)
+        public List<SharedBucketListModel> GetBucketListItems
+		(
+			string encodedUserName, 
+			string encoderedSortString, 
+			string encodedToken,
+			string encodedSrchTerm = ""
+		)
         {
-            var result = sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken);
+            var result = sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken, encodedSrchTerm);
 			return result;
         }	 
 

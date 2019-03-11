@@ -2,6 +2,17 @@
 	<label id="lbMainTitleDiv"></label>
 </div>
 <div style="text-align:center; width: 100%" >   
-	<input type="button" value="Menu" id="btnMainMenu" onclick="MainController.ShowMenu()" /> 
+	<table>
+		<tr>
+			<td> 				
+				<input type="button" value="Menu" id="btnMainMenu" onclick="MainController.ShowMenu()" /> 
+			</td>
+			<td>
+				<input type="text" id="USER_CONTROL_SEARCH_TEXT_BOX" />
+				<input type="button" id="USER_CONTROL_SEARCH_BUTTON" onclick="MainController.Search()" value="Search" />
+			</td>
+		</tr>
+
+	</table>
 	<div id="bucketListItems" />
 </div>

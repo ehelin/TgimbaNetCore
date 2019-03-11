@@ -18,8 +18,13 @@ ServerCalls.GetBucketListItems = function(url, params, sortColumn) {
 	var userName = params[0];	 
 	var token = params[1];
 	var sortColumn = sortColumn && sortColumn.length > 0 ? sortColumn : '';
-
-	var queryUrl = BUCKET_LIST_PROCESS_GET + "?encodedUserName=" + btoa(userName) + "&encoderedSortString=" + btoa(sortColumn) + "&encodedToken=" + btoa(token);
+	var srchTerm = params[2] && params[2].length > 0 ? params[2] : '';
+										
+	var queryUrl = BUCKET_LIST_PROCESS_GET
+				+ "?encodedUserName=" + btoa(userName)
+						+ "&encoderedSortString=" + btoa(sortColumn)
+							+ "&encodedToken=" + btoa(token)
+								+ "&encodedSrchTerm=" + btoa(srchTerm);
 
 	return ServerCall.Get(queryUrl)
 			.then(

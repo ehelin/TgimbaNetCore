@@ -29,7 +29,8 @@ namespace TgimbaNetCoreWebShared
 		(
 			string encodedUserName, 
 			string encodedSortString, 
-			string encodedToken
+			string encodedToken,
+			string encodedSrchTerm = ""
 		);		
 	}
 }
