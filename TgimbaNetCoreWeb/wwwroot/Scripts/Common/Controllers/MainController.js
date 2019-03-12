@@ -28,6 +28,10 @@ MainController.Index = function (srchTerm) {
 
 	if (srchTerm && srchTerm.length > 0) {
 		params.push(srchTerm);
+		SessionSetIsSearch(SESSION_IS_SRCH_VIEW, true);
+	}
+	else {
+		SessionSetIsSearch(SESSION_IS_SRCH_VIEW, undefined);
 	}
 
 	ServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params);

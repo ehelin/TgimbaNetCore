@@ -10,9 +10,12 @@
 			<td>
 				<input type="text" id="USER_CONTROL_SEARCH_TEXT_BOX" />
 				<input type="button" id="USER_CONTROL_SEARCH_BUTTON" onclick="MainController.Search()" value="Search" />
+				<div id="cancelSrchResults" style="display:none">
+					<p>Viewing Search Results</p>
+					<input type="button" id="USER_CONTROL_CANCEL_BUTTON" onclick="MainController.Index()" value="Cancel" />	
+				</div>
 			</td>
-		</tr>
-
+		</tr>		
 	</table>
 	<div id="bucketListItems" />
 </div>

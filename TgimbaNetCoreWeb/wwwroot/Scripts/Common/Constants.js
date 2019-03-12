@@ -1,5 +1,6 @@
 ﻿var SESSION_TOKEN = 'SessionToken';		
-var SESSION_USERNAME = 'SessionUsername';	
+var SESSION_USERNAME = 'SessionUsername';
+var SESSION_IS_SRCH_VIEW = 'SessionSearchView';
 var SESSION_CLIENT = 'SessionClient';
 var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';

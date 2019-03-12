@@ -2,7 +2,7 @@
 
 Display.HtmlContent = {};
 
-Display.SetView = function (view, contentDiv, loadedView, htmlContent) {	
+Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView) {	
 	contentDiv.innerHTML = loadedView;
 	Display.SetTitleLogic(view);	
 
@@ -11,9 +11,20 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent) {
 			Display.BindEditView(htmlContent);
 		}
 		// load bucket list item view
-		else {
+		else
+		{
 			Display.HtmlContent = htmlContent;
 			LoadMainPage();
+
+			// srch results	cancel			
+			var cancelSrchResultsContainer = document.getElementById('cancelSrchResults');
+			isNullUndefined(cancelSrchResultsContainer, 'Display.js', 'cancelSrchResults does not exist');
+			var isSearch = SessionGetIsSearch(SESSION_IS_SRCH_VIEW);
+			if (isSearch && isSearch === 'true') {
+				cancelSrchResultsContainer.style.display = "block";
+			} else {
+				cancelSrchResultsContainer.style.display = "none";
+			}
 		}
 	}
 };

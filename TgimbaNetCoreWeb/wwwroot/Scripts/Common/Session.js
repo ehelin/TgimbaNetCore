@@ -7,6 +7,15 @@ function SessionGetToken(key) {
     return val;
 }
 
+function SessionSetIsSearch(key, value) {
+	sessionStorage.setItem(key, value);
+}
+function SessionGetIsSearch(key) {
+	var val = sessionStorage.getItem(key);
+	return val;
+}
+
+
 function SessionSetUsername(key, value) {
     sessionStorage.setItem(key, value);
 }
