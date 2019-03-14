@@ -16,7 +16,8 @@ import { SortService } from '../sort/sort.service';
 @Injectable()
 export class MainComponent {		
 	private baseUrl: string;
-	public htmlTableWData: any;				   
+	public htmlTableWData: any;	
+	public searchTerm: string;
 
 	constructor(
 		private http: HttpClient,
@@ -25,7 +26,8 @@ export class MainComponent {
 		private sortService: SortService
 	) {
 		this.baseUrl = UtilitiesComponent.GetBaseUrl();
-		this.LoadBucketListItems();
+		this.LoadBucketListItems("");
+		this.searchTerm = '';
 	}
 
 	public FormEdit(bucketListItem) {
@@ -46,7 +48,7 @@ export class MainComponent {
 			.subscribe(
 			data => {
 				if (data && data === true) {
-					this.LoadBucketListItems();
+					this.LoadBucketListItems("");
 				} else {
 					// TODO - handle error
 					alert('Delete failed');
@@ -61,17 +63,30 @@ export class MainComponent {
 
 	public ShowMainMenu() {
 		this.router.navigate(['/menu']);
-	}					
+	}	
 
-	private LoadBucketListItems() {
+	public Search() {	  
+		this.LoadBucketListItems(this.searchTerm);
+	}
+
+	public Cancel() {
+		this.searchTerm = '';
+		this.LoadBucketListItems('');			 
+	}
+
+	private LoadBucketListItems(searchTerm) {
 		let encodedUserName = btoa(SessionComponent.SessionGetValue(ConstantsComponent.SESSION_USERNAME));
 		let encodedToken = btoa(SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN));
 		let encodedSortString = btoa(this.sortService.getSort());
 
-		const url = this.baseUrl + '/BucketListItem/GetBucketListItems?'
+		let url = this.baseUrl + '/BucketListItem/GetBucketListItems?'
 			+ 'encodedUserName=' + encodedUserName
 			+ '&encoderedSortString=' + encodedSortString
 			+ '&encodedToken=' + encodedToken;
+
+		if (searchTerm && searchTerm.length > 0) {
+			url += '&encodedSrchTerm=' + btoa(this.searchTerm);
+		}
 
 		const headers = new HttpHeaders()
 			.set('Content-Type', 'application/json')
@@ -81,6 +96,14 @@ export class MainComponent {
 			bucketListItems => {
 				bucketListItems = this.AddNumberColumn(bucketListItems);
 				this.htmlTableWData = bucketListItems;
+
+				// srch results	cancel			
+				var cancelSrchResultsContainer = document.getElementById('cancelSrchResults');
+				if (searchTerm && searchTerm.length > 0) {
+					cancelSrchResultsContainer.style.display = "block";
+				} else {
+					cancelSrchResultsContainer.style.display = "none";
+				}
 			}  
 		);	   
 	}

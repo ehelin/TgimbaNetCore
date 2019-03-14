@@ -52,9 +52,15 @@ namespace TgimbaNetCoreWeb.Controllers
         }
 		   
         [HttpGet]
-        public List<SharedBucketListModel> GetBucketListItems(string encodedUserName, string encoderedSortString, string encodedToken)
+        public List<SharedBucketListModel> GetBucketListItems
+		(
+			string encodedUserName, 
+			string encoderedSortString, 
+			string encodedToken,
+			string encodedSrchTerm = ""
+		)
         {
-            return sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken);
+            return sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken, encodedSrchTerm);
         }	 
 
 		// TODO - temp solution - figure out why Vanilla javascript model has null values

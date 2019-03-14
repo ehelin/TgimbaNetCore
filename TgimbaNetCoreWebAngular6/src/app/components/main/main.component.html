@@ -1,6 +1,20 @@
 ﻿<h1>Angular 6 Type Script - Main</h1>
-<div style="text-align:center; width: 100%">	 	
-	<button (click)="ShowMainMenu()" id="btnMainMenu">Menu</button>
+<div style="text-align:center; width: 100%">
+	<table>
+		<tr>
+			<td> 					
+				<button (click)="ShowMainMenu()" id="btnMainMenu">Menu</button>
+			</td>								   
+			<td>
+				<input type="text" [(ngModel)]="searchTerm" id="USER_CONTROL_SEARCH_TEXT_BOX" />
+				<button (click)="Search()" id="USER_CONTROL_SEARCH_BUTTON">Search</button>
+				<div id="cancelSrchResults" style="display:none">
+					<p>Viewing Search Results</p>
+					<button (click)="Cancel()" id="USER_CONTROL_CANCEL_BUTTON">Cancel</button>
+				</div>
+			</td>
+		</tr>		
+	</table>
 	<div *ngFor="let bucketListItem of htmlTableWData" id="bucketListItems">
 		<table border="1">
 			<tr>					  
