@@ -8,7 +8,9 @@ const ACTION_TYPE_DELETE = 'Delete';
 const ACTION_TYPE_EDIT = 'Edit';
 						 
 const initialState = {
-	bucketListItems: null
+	bucketListItems: null,
+	searchTerm: null, 
+	showSearchResults: false
 };
 
 export const actionCreators = {
@@ -27,17 +29,25 @@ export const actionCreators = {
 			bucketListItemType, completed, latitude, longitude, databaseId, userName
 		});
 	}, 	
-	load: (sort) => async (dispatch, getState) => {
+	load: (sort, searchTerm) => async (dispatch, getState) => {
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);
 
 		var token = session.SessionGet(constants.SESSION_TOKEN);
 		var userName = session.SessionGet(constants.SESSION_USERNAME);	   
 
-		const url = 'BucketListItem/GetBucketListItems'
+		let url = 'BucketListItem/GetBucketListItems'
 			+ '?encodedUserName=' + btoa(userName)
 			+ '&encoderedSortString=' + btoa(sort)
 			+ '&encodedToken=' + btoa(token);
+
+		let showSearchResults = false; 
+		if (searchTerm && searchTerm.length > 0)
+		{
+			url += '&encodedSrchTerm=' + btoa(searchTerm);
+			showSearchResults = true;
+		}
+
 		const response = await fetch(url);		 
 		const bucketListItems = await response.json();
 
@@ -45,7 +55,8 @@ export const actionCreators = {
 			bucketListItems[i].number = i + 1;
 		}
 
-		dispatch({ type: ACTION_TYPE_LOAD, bucketListItems });
+		dispatch({ type: ACTION_TYPE_LOAD, bucketListItems, 
+					showSearchResults, searchTerm });
 	}
 };
 
@@ -58,7 +69,9 @@ export const reducer = (state, action) => {
 	if (action.type === ACTION_TYPE_LOAD) {
 		return {
 			...state,
-			bucketListItems: action.bucketListItems
+			bucketListItems: action.bucketListItems,
+			showSearchResults: action.showSearchResults,	
+			searchTerm: action.searchTerm
 		};
 	}
 	else if (action.type == ACTION_TYPE_DELETE) {

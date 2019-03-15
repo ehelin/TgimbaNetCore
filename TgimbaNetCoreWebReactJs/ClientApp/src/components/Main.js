@@ -14,19 +14,23 @@ class Main extends React.Component {
 		super(props);				
 		const parsed = queryString.parse(this.props.location.search);
 		if (parsed && parsed.sort) {
-			this.sort = parsed.sort;//alert('TODO - put into reducer -> Component-Main.js -> sort: ' + parsed.sort);
+			this.sort = parsed.sort;
 		}
 
-		this.state = { bucketListItems: null };
+		this.state = { 
+			bucketListItems: null, 
+			searchTerm: null, 
+			showSearchResults: false 
+		};
 	}	  
 
 	componentDidMount() {
-		this.props.load(this.sort);							 
+		this.props.load(this.sort, '');							 
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.props.load(this.sort);
-	}
+	//componentWillReceiveProps(nextProps) {
+	//	this.props.load(this.sort, '');
+	//}
 
 	formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
 		this.props.edit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName);
@@ -37,10 +41,19 @@ class Main extends React.Component {
 	}
 
 	render() {
-		let { bucketListItems } = this.state;
+		let { bucketListItems, searchTerm, showSearchResults } = this.state;
 		const showMainMenu = _ => {		   
 			this.props.main();
 		}	
+
+		const cancel = _ => {	
+			this.setState({ searchTerm: '' });
+			this.props.load(this.sort, searchTerm);
+		}
+
+		const search = _ => {		
+			this.props.load(this.sort, searchTerm);
+		}
 	
 		var panelStyle = {
 			"width": "100%",
@@ -48,14 +61,39 @@ class Main extends React.Component {
 			"vertical-align": " middle"
 		};
 
+		var searchResultsPanelStyle = { "display":"none" };
+
+		if (this.props.showSearchResults && this.props.showSearchResults === true)
+		{
+			searchResultsPanelStyle = { "display":"block" };
+		}  
+
 		return (
 			this.props.bucketListItems ?
 				<div style={panelStyle}>
 					<h1>React JS - Main Panel</h1>
-					<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
-					<Table bucketListItems={this.props.bucketListItems} main={this}></Table>
-				</div> :
-				<div> Loading ... </div>
+					<table>
+					<tr>
+						<td> 																							 
+						<Button onPress={showMainMenu} id="btnMainMenu">Menu</Button>
+						</td>
+						<td>
+							<input	type="text" 
+									id="USER_CONTROL_SEARCH_TEXT_BOX" 
+									value={searchTerm}
+									onChange={event => this.setState({ searchTerm: event.target.value })}
+							/>							 
+							<Button onPress={search} id="USER_CONTROL_SEARCH_BUTTON">Search</Button>
+							<div id="cancelSrchResults" style={searchResultsPanelStyle}>
+								<p>Viewing Search Results</p>																			 									
+								<Button onPress={cancel} id="USER_CONTROL_CANCEL_BUTTON">Cancel</Button>
+							</div>
+						</td>
+					</tr>		
+				</table>
+				<Table bucketListItems={this.props.bucketListItems} main={this}></Table>
+			</div> :
+			<div> Loading ... </div>
 		);			
 	};
 }
