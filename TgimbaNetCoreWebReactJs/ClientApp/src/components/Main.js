@@ -9,6 +9,8 @@ const queryString = require('query-string');
 
 class Main extends React.Component {
 	sort = ''; 
+	searchTerm = '';
+	firstLoad = false;
 
 	constructor(props) {
 		super(props);				
@@ -16,16 +18,21 @@ class Main extends React.Component {
 		if (parsed && parsed.sort) {
 			this.sort = parsed.sort;
 		}
+		   	
+		if (parsed && parsed.search) {
+			this.searchTerm = parsed.search;
+		} else {		
+			this.searchTerm = '';
+		}
 
 		this.state = { 
 			bucketListItems: null, 
-			searchTerm: null, 
-			showSearchResults: false 
+			searchTerm: this.searchTerm
 		};
 	}	  
 
 	componentDidMount() {
-		this.props.load(this.sort, '');							 
+		this.props.load(this.sort, this.searchTerm);							 
 	}
 
 	//componentWillReceiveProps(nextProps) {
@@ -40,19 +47,22 @@ class Main extends React.Component {
 		this.props.delete(id);
 	}
 
-	render() {
-		let { bucketListItems, searchTerm, showSearchResults } = this.state;
+	render() {			   
+		let { searchTerm } = this.firstLoad === false ? this.searchTerm : this.state;
+		if (this.firstLoad === false) {
+			this.firstLoad = true;	  
+		} 
+
 		const showMainMenu = _ => {		   
 			this.props.main();
 		}	
 
 		const cancel = _ => {	
-			this.setState({ searchTerm: '' });
-			this.props.load(this.sort, searchTerm);
+			this.props.cancel();
 		}
 
 		const search = _ => {		
-			this.props.load(this.sort, searchTerm);
+			this.props.search(searchTerm);
 		}
 	
 		var panelStyle = {
@@ -63,7 +73,7 @@ class Main extends React.Component {
 
 		var searchResultsPanelStyle = { "display":"none" };
 
-		if (this.props.showSearchResults && this.props.showSearchResults === true)
+		if (this.searchTerm && this.searchTerm.length > 0)
 		{
 			searchResultsPanelStyle = { "display":"block" };
 		}  

@@ -5,7 +5,9 @@ var sessionRef = require('../common/Session');
 const ACTION_TYPE_MAIN_MENU = 'MainMenu';
 const ACTION_TYPE_LOAD = 'Load';
 const ACTION_TYPE_DELETE = 'Delete';
-const ACTION_TYPE_EDIT = 'Edit';
+const ACTION_TYPE_EDIT = 'Edit';	
+const ACTION_TYPE_SEARCH = 'Search';
+const ACTION_TYPE_CANCEL = 'Cancel';
 						 
 const initialState = {
 	bucketListItems: null,
@@ -14,6 +16,12 @@ const initialState = {
 };
 
 export const actionCreators = {
+	cancel: () => async (dispatch, getState) => {		 
+		dispatch({ type: ACTION_TYPE_CANCEL });
+	},
+	search: (searchTerm) => async (dispatch, getState) => {		 
+		dispatch({ type: ACTION_TYPE_SEARCH, searchTerm });
+	},
 	main: () => async (dispatch, getState) => {		 
 		dispatch({ type: ACTION_TYPE_MAIN_MENU });
 	},
@@ -55,8 +63,7 @@ export const actionCreators = {
 			bucketListItems[i].number = i + 1;
 		}
 
-		dispatch({ type: ACTION_TYPE_LOAD, bucketListItems, 
-					showSearchResults, searchTerm });
+		dispatch({ type: ACTION_TYPE_LOAD, bucketListItems });
 	}
 };
 
@@ -66,14 +73,21 @@ export const reducer = (state, action) => {
 	var utils = Object.create(utilsRef.Utilities);
 	var host = utils.GetHost();
 
-	if (action.type === ACTION_TYPE_LOAD) {
+	if (action.type === ACTION_TYPE_LOAD) {	
 		return {
 			...state,
-			bucketListItems: action.bucketListItems,
-			showSearchResults: action.showSearchResults,	
-			searchTerm: action.searchTerm
+			bucketListItems: action.bucketListItems
 		};
 	}
+	else if (action.type == ACTION_TYPE_CANCEL) {	 
+		// NOTE: Hack to get page to reload without search results			   
+		window.location = host + '/main';
+	}
+	else if (action.type == ACTION_TYPE_SEARCH) {
+		// NOTE: Hack to get page to reload with search results...		 
+		var queryString = '?search=' + action.searchTerm;  					   
+		window.location = host + '/main' + queryString;
+	}	  	
 	else if (action.type == ACTION_TYPE_DELETE) {
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);
