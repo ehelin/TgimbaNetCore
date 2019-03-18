@@ -97,7 +97,7 @@ namespace TestTgimbaNetCoreWeb
 																"YmFzZTY0RW5jb2RlZEdvb2RVc2Vy", 
 																"base64EncodedGoodSortString", 
 																"base64EncodedGoodToken",
-																""
+																"base64EncodedGoodSrchTerm"
 																)).Returns(bucketLIstitems);  	
 		}
 		private void SetUpTgimbaServiceDeleteBucketListItem() {						 				  
