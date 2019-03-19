@@ -1,4 +1,5 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component } from 'react';						  	
+import withRouter from 'react-router-dom';	
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Main';
@@ -6,7 +7,7 @@ import Button from './userInterface/Button';
 import Table from './userInterface/Table';
 var utilsRef = require('../common/Utilities'); 
 const queryString = require('query-string');
-
+								   
 class Main extends React.Component {
 	sort = ''; 
 	searchTerm = '';
@@ -35,10 +36,6 @@ class Main extends React.Component {
 		this.props.load(this.sort, this.searchTerm);							 
 	}
 
-	//componentWillReceiveProps(nextProps) {
-	//	this.props.load(this.sort, '');
-	//}
-
 	formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
 		this.props.edit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName);
 	}
@@ -53,12 +50,12 @@ class Main extends React.Component {
 			this.firstLoad = true;	  
 		} 
 
-		const showMainMenu = _ => {		   
-			this.props.main();
+		const showMainMenu = _ => {		
+			this.props.history.push('/mainmenu');
 		}	
 
 		const cancel = _ => {	
-			this.props.cancel();
+			this.props.cancel();   		
 		}
 
 		const search = _ => {		

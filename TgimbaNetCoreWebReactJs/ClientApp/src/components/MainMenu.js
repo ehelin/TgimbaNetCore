@@ -1,3 +1,4 @@
+import withRouter from 'react-router-dom';	
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -13,24 +14,24 @@ class MainMenu extends React.Component {
 	render() {
 		const {} = this.props;  
 
-		const AddBucketListItem = _ => {
-			this.props.add();
+		const AddBucketListItem = _ => {	   		
+			this.props.history.push('/add'); 
 		}
 
-		const SortBucketListItem = _ => {
-			this.props.sort();
+		const SortBucketListItem = _ => {		
+			this.props.history.push('/sortmenu'); 
 		}
 
-		const RunAlgorithm = _ => {
-			this.props.runAlgorithm();
+		const RunAlgorithm = _ => {		
+			//alert('Run Algorithm was clicked!');
 		}
 
 		const LogOut = _ => {
 			this.props.logout();
 		}
 
-		const Cancel = _ => {
-			this.props.cancel();
+		const Cancel = _ => {	  
+			this.props.history.push('/login'); 
 		}
 
 		var tableStyle = {

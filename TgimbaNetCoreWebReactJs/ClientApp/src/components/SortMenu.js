@@ -1,3 +1,4 @@
+import withRouter from 'react-router-dom';	
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -25,8 +26,8 @@ class SortMenu extends React.Component {
 		this.props.sort(sort);
 	}
 	
-	cancel() {								 
-		this.props.cancel();
+	cancel() {					    		
+		this.props.history.push('/login'); 
 	}
 
 	render() {	

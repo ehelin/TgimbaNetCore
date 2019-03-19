@@ -3,7 +3,6 @@ var constantsRef = require('../common/Constants');
 var sessionRef = require('../common/Session');
 
 const ACTION_TYPE_ADD_TO_SERVER = 'AddToServer';
-const ACTION_TYPE_CANCEL = 'Cancel';
 
 const initialState = {
 	name: null,
@@ -15,9 +14,6 @@ const initialState = {
 };
 
 export const actionCreators = {
-	cancel: () => async (dispatch, getState) => {
-		dispatch({ type: ACTION_TYPE_CANCEL });
-	},
 	add: (
 		name,
 		dateCreated,
@@ -71,17 +67,12 @@ export const reducer = (state, action) => {
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
 				&& data.currentTarget.response === 'true') {   
-				window.location = host + '/main';
+				window.location = host + '/main';	
 			} else {
 				alert('Add failed');
 			}
 		};
 		xhr.send();
-	}
-	else if (action.type === ACTION_TYPE_CANCEL) {
-		var utils = Object.create(utilsRef.Utilities);
-		var host = utils.GetHost();
-		window.location = host + '/login';
 	}
 
 	return state;

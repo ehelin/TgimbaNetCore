@@ -2,8 +2,9 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Add';
-import BucketListItem from './userInterface/BucketListItem';  
-   
+import BucketListItem from './userInterface/BucketListItem'; 
+import withRouter from 'react-router-dom';	
+
 class Add extends React.Component {
 	constructor(props) {
 		super(props);	 
@@ -14,7 +15,7 @@ class Add extends React.Component {
 	}
 
 	formCancel() {
-		this.props.cancel();
+		this.props.history.push('/login'); 
 	}				 
 
 	render() {		

@@ -1,8 +1,7 @@
 ﻿var utilsRef = require('../common/Utilities');
 var constantsRef = require('../common/Constants');
 var sessionRef = require('../common/Session');
-
-const ACTION_TYPE_MAIN_MENU = 'MainMenu';
+		   
 const ACTION_TYPE_LOAD = 'Load';
 const ACTION_TYPE_DELETE = 'Delete';
 const ACTION_TYPE_EDIT = 'Edit';	
@@ -21,10 +20,7 @@ export const actionCreators = {
 	},
 	search: (searchTerm) => async (dispatch, getState) => {		 
 		dispatch({ type: ACTION_TYPE_SEARCH, searchTerm });
-	},
-	main: () => async (dispatch, getState) => {		 
-		dispatch({ type: ACTION_TYPE_MAIN_MENU });
-	},
+	},	 
 	delete: (id) => async (dispatch, getState) =>
 	{	 
 		dispatch({ type: ACTION_TYPE_DELETE, id });
@@ -81,7 +77,7 @@ export const reducer = (state, action) => {
 	}
 	else if (action.type == ACTION_TYPE_CANCEL) {	 
 		// NOTE: Hack to get page to reload without search results			   
-		window.location = host + '/main';
+		window.location = host + '/main';		
 	}
 	else if (action.type == ACTION_TYPE_SEARCH) {
 		// NOTE: Hack to get page to reload with search results...		 
@@ -109,16 +105,13 @@ export const reducer = (state, action) => {
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
 				&& data.currentTarget.response === 'true') {
-				//window.location = host + '/main';
+				window.location = host + '/main';
 			} else {
 				alert('delete failed');
 			}
 		};
 		xhr.send();
-	}
-	else if (action.type == ACTION_TYPE_MAIN_MENU) {
-		window.location = host + '/mainmenu';
-	}
+	}	
 	else if (action.type === ACTION_TYPE_EDIT) {
 		var queryString = '?name=' + action.name
 			+ '&dateCreated=' + action.dateCreated

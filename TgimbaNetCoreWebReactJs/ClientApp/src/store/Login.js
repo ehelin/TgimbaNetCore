@@ -39,7 +39,7 @@ export const reducer = (state, action) => {
 				session.SessionSet(constants.SESSION_TOKEN, token);
 				session.SessionSet(constants.SESSION_USERNAME, action.username);
 				 
-				window.location = host + '/main';
+				window.location = host + '/main'; 		
 			} else {
 				alert('User is not logged in!');
 			}

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Registration';
 import Button from './userInterface/Button';
+import withRouter from 'react-router-dom';		 
 
 class Registration extends React.Component {
 	constructor(props) {
@@ -31,10 +32,7 @@ class Registration extends React.Component {
 		}  
 
 		const processCancel = _ => {
-			// TODO - move to utility function
-			var host = window.location.protocol + "//"
-				+ window.location.hostname + ':' + window.location.port;
-			window.location = host + '/login';
+			this.props.history.push('/login');
 		}
 
 		var tableStyle = {

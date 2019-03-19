@@ -1,7 +1,7 @@
 ﻿var utilsRef = require('../common/Utilities');
 
 const ACTION_TYPE_REGISTRATION = 'REGISTRATION';
-const ACTION_TYPE_CANCEL = 'CANCEL';
+
 const initialState = {
 	username: null,
 	email: null,
@@ -12,8 +12,7 @@ const initialState = {
 export const actionCreators = {
 	register: (username, email, password, confirmPassword) => async (dispatch, getState) => {
 		dispatch({ type: ACTION_TYPE_REGISTRATION, username, email, password, confirmPassword });
-	},
-	cancel: () => ({ type: ACTION_TYPE_CANCEL })
+	}
 };
 
 export const reducer = (state, action) => {
@@ -42,10 +41,6 @@ export const reducer = (state, action) => {
 			}
 		};
 		xhr.send();
-	}
-
-	if (action.type === ACTION_TYPE_CANCEL) {							
-		window.location = host + '/login';
 	}
 
 	return state;

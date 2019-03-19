@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Edit'; 
 import Button from './userInterface/Button';
-import BucketListItem from './userInterface/BucketListItem';
+import BucketListItem from './userInterface/BucketListItem';		
+import withRouter from 'react-router-dom';	
 var utilsRef = require('../common/Utilities');
 const queryString = require('query-string');
    
@@ -28,8 +29,8 @@ class Edit extends React.Component {
 		this.props.edit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName);
 	}
 
-	formCancel() {
-		this.props.cancel();
+	formCancel() {			  	
+		this.props.history.push('/login'); 
 	}				 
 
 	render() {
