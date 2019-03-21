@@ -10,8 +10,8 @@ const initialState = {
 };
 
 export const actionCreators = {
-	register: (username, email, password, confirmPassword) => async (dispatch, getState) => {
-		dispatch({ type: ACTION_TYPE_REGISTRATION, username, email, password, confirmPassword });
+	register: (username, email, password, confirmPassword, history) => async (dispatch, getState) => {
+		dispatch({ type: ACTION_TYPE_REGISTRATION, username, email, password, confirmPassword, history });
 	}
 };
 
@@ -35,7 +35,8 @@ export const reducer = (state, action) => {
 				&& data.currentTarget.response.length > 0
 				&& data.currentTarget.respose !== false
 			) {									   
-				window.location = host + '/login';				
+                //window.location = host + '/login';
+                action.history.push('/login');				
 			} else {
 				alert('Registration failed!');
 			}

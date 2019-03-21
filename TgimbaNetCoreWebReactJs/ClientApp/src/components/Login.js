@@ -19,17 +19,11 @@ class Login extends React.Component {
 	}
 
 	render() {
-		//var utils = Object.create(utilsRef.Utilities);
-		//if (utils.IsLoggedIn()) {
-		//	//var host = utils.GetHost();
-		//	//window.location = host + '/main';	
-		//	this.props.history.push('/main');
-		//}
-		//else {
 		let { username, password } = this.state;
 
 		const processLogin = _ => {
-			this.props.login(username, password);
+            this.props.login(username, password,
+                this.props.history);
 		}
 
 		const navigateRegistration = _ => {

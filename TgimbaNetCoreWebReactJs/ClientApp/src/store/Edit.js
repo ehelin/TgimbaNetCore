@@ -25,7 +25,8 @@ export const actionCreators = {
 		latitude,
 		longitude,
 		databaseId,
-		userName
+        userName, 
+        history
 	) => async (dispatch, getState) => {
 		dispatch
 			({
@@ -37,7 +38,8 @@ export const actionCreators = {
 				latitude,
 				longitude,
 				databaseId,
-				userName
+                userName, 
+                history
 			});
 	}
 };
@@ -73,8 +75,8 @@ export const reducer = (state, action) => {
 			if (data && data.currentTarget
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
-				&& data.currentTarget.response === 'true') {   
-				window.location = host + '/main';	  	
+                && data.currentTarget.response === 'true') {
+                action.history.push('/main');
 			} else {
 				alert('Add failed');
 			}

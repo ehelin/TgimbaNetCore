@@ -20,7 +20,8 @@ export const actionCreators = {
 		bucketListItemType,
 		completed,
 		latitude,
-		longitude
+        longitude, 
+        history
 	) => async (dispatch, getState) => {
 		dispatch
 			({
@@ -30,7 +31,8 @@ export const actionCreators = {
 				bucketListItemType,
 				completed,
 				latitude,
-				longitude
+                longitude,
+                history
 			});
 	}
 };
@@ -66,8 +68,8 @@ export const reducer = (state, action) => {
 			if (data && data.currentTarget
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
-				&& data.currentTarget.response === 'true') {   
-				window.location = host + '/main';	
+                && data.currentTarget.response === 'true') {  
+                action.history.push('/main');
 			} else {
 				alert('Add failed');
 			}

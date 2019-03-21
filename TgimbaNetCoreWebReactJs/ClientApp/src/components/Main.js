@@ -41,7 +41,7 @@ class Main extends React.Component {
 	}
 
 	formDelete(id) {
-		this.props.delete(id);
+        this.props.delete(id, this.props.history);
 	}
 
 	render() {			   
@@ -55,7 +55,7 @@ class Main extends React.Component {
 		}	
 
 		const cancel = _ => {	
-			this.props.cancel();   		
+            this.props.cancel();  		
 		}
 
 		const search = _ => {		

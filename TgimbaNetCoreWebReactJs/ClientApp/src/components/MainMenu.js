@@ -27,7 +27,7 @@ class MainMenu extends React.Component {
 		}
 
 		const LogOut = _ => {
-			this.props.logout();
+            this.props.logout(this.props.history);
 		}
 
 		const Cancel = _ => {	  

@@ -28,7 +28,8 @@ class Registration extends React.Component {
 				username,
 				email,
 				password,
-				confirmPassword);
+                confirmPassword,
+                this.props.history);
 		}  
 
 		const processCancel = _ => {

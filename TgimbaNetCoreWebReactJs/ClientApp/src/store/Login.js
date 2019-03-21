@@ -10,8 +10,8 @@ const initialState = {
 };
 							 
 export const actionCreators = {						   
-	login: (username, password) => async (dispatch, getState) => {  
-		dispatch({ type: ACTION_TYPE_LOGIN, username, password }); 
+    login: (username, password, history) => async (dispatch, getState) => {  
+		dispatch({ type: ACTION_TYPE_LOGIN, username, password, history }); 
 	}
 };
 
@@ -38,8 +38,8 @@ export const reducer = (state, action) => {
 													  
 				session.SessionSet(constants.SESSION_TOKEN, token);
 				session.SessionSet(constants.SESSION_USERNAME, action.username);
-				 
-				window.location = host + '/main'; 		
+
+                action.history.push('/main'); 		
 			} else {
 				alert('User is not logged in!');
 			}

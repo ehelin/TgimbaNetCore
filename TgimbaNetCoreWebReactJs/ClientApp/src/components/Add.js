@@ -11,7 +11,9 @@ class Add extends React.Component {
 	}
 
 	formSubmit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
-		this.props.add(name, dateCreated, bucketListItemType, completed, latitude, longitude);
+        this.props.add(name, dateCreated, bucketListItemType, completed,
+            latitude, longitude,
+            this.props.history);
 	}
 
 	formCancel() {

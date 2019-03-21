@@ -15,15 +15,15 @@ const initialState = {
 };
 
 export const actionCreators = {
-	cancel: () => async (dispatch, getState) => {		 
-		dispatch({ type: ACTION_TYPE_CANCEL });
+	cancel: (history) => async (dispatch, getState) => {		 
+		dispatch({ type: ACTION_TYPE_CANCEL, history });
 	},
 	search: (searchTerm) => async (dispatch, getState) => {		 
 		dispatch({ type: ACTION_TYPE_SEARCH, searchTerm });
 	},	 
-	delete: (id) => async (dispatch, getState) =>
+	delete: (id, history) => async (dispatch, getState) =>
 	{	 
-		dispatch({ type: ACTION_TYPE_DELETE, id });
+		dispatch({ type: ACTION_TYPE_DELETE, id, history });
 	}, 	
 	edit: (name, dateCreated, bucketListItemType, completed,
 		latitude, longitude, databaseId, userName) => async (dispatch, getState) =>
@@ -76,8 +76,10 @@ export const reducer = (state, action) => {
 		};
 	}
 	else if (action.type == ACTION_TYPE_CANCEL) {	 
-		// NOTE: Hack to get page to reload without search results			   
-		window.location = host + '/main';		
+        // NOTE: Hack to get page to reload without search results	
+        // TODO - fix so state updates and component reloads
+        window.location = host + '/main';
+        //action.history.push('/main');	
 	}
 	else if (action.type == ACTION_TYPE_SEARCH) {
 		// NOTE: Hack to get page to reload with search results...		 
@@ -105,7 +107,9 @@ export const reducer = (state, action) => {
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
 				&& data.currentTarget.response === 'true') {
-				window.location = host + '/main';
+                window.location = host + '/main';
+                // TODO - fix so state is updated and component reloads
+                //action.history.push('/main');
 			} else {
 				alert('delete failed');
 			}

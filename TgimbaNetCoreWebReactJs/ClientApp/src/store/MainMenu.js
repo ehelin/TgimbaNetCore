@@ -6,8 +6,8 @@ const ACTION_TYPE_LOGOUT = 'LogOut';
 const initialState = {};
 							 
 export const actionCreators = {						   
-	logout: () => async (dispatch, getState) => {
-		dispatch({ type: ACTION_TYPE_LOGOUT });
+	logout: (history) => async (dispatch, getState) => {
+		dispatch({ type: ACTION_TYPE_LOGOUT, history });
 	}
 };
 
@@ -21,7 +21,8 @@ export const reducer = (state, action) => {
 		var session = Object.create(sessionRef.Session);
 		session.SessionClearStorage();	  
 												 
-		window.location = host + '/login';		
+        //window.location = host + '/login';
+        action.history.push('/login');	
 	}
 
 	return state;
