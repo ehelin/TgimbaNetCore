@@ -43,12 +43,20 @@ class Main extends React.Component {
 	formDelete(id) {
         this.props.delete(id, this.props.history);
 	}
-
+			
+	// TODO - refactor to simplify
 	render() {			   
 		let { searchTerm } = this.firstLoad === false ? this.searchTerm : this.state;
 		if (this.firstLoad === false) {
 			this.firstLoad = true;	  
 		} 
+			
+		if (this.props.deleteSuccessful === true || this.props.cancel === true) {	
+			this.props.history.push('/main');
+		}  
+		if (this.props.search === true || this.props.edit === true) {	
+			this.props.history.push(this.props.queryString);
+		}  
 
 		const showMainMenu = _ => {		
 			this.props.history.push('/mainmenu');

@@ -33,6 +33,10 @@ class SortMenu extends React.Component {
 	render() {	
 		let { descending, checked } = this.state;
 
+		if (this.props.sortNavigation === true) {	
+			this.props.history.push(this.props.sortRoute);
+		}
+
 		var tableStyle = {
 			"width": "100%",
 			"text-align": "center",

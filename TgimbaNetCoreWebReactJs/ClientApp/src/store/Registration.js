@@ -6,26 +6,19 @@ const initialState = {
 	username: null,
 	email: null,
 	password: null,
-	confirmPassword: null
+	confirmPassword: null,
+	isRegistered: false
 };
 
 export const actionCreators = {
-	register: (username, email, password, confirmPassword, history) => async (dispatch, getState) => {
-		dispatch({ type: ACTION_TYPE_REGISTRATION, username, email, password, confirmPassword, history });
-	}
-};
+	register: (username, email, password, confirmPassword, history) => async (dispatch, getState) => {			
+		var utils = Object.create(utilsRef.Utilities);
+		var host = utils.GetHost();
 
-export const reducer = (state, action) => {
-	state = state || initialState;				
-
-	var utils = Object.create(utilsRef.Utilities);
-	var host = utils.GetHost();
-
-	if (action.type === ACTION_TYPE_REGISTRATION) {
 		const url = host + '/Registration/Registration?'
-			+ 'encodedUser=' + btoa(action.username)
-			+ '&encodedPass=' + btoa(action.password)
-			+ '&encodedEmail=' + btoa(action.email);
+			+ 'encodedUser=' + btoa(username)
+			+ '&encodedPass=' + btoa(password)
+			+ '&encodedEmail=' + btoa(email);
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('post', url, true);
@@ -33,15 +26,25 @@ export const reducer = (state, action) => {
 			if (data && data.currentTarget
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
-				&& data.currentTarget.respose !== false
-			) {									   
-                //window.location = host + '/login';
-                action.history.push('/login');				
+				&& data.currentTarget.response !== false
+			) {	
+				dispatch({ type: ACTION_TYPE_REGISTRATION });		
 			} else {
 				alert('Registration failed!');
 			}
 		};
 		xhr.send();
+	}
+};
+
+export const reducer = (state, action) => {
+	state = state || initialState;		
+
+	if (action.type === ACTION_TYPE_REGISTRATION) {
+		return {
+			...state,
+			isRegistered: true
+		}
 	}
 
 	return state;

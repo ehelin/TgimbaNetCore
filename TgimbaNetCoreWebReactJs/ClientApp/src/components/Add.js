@@ -2,7 +2,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Add';
-import BucketListItem from './userInterface/BucketListItem'; 
+import BucketListItem from './userInterface/BucketListItem';   
+import Button from './userInterface/Button';   
 import withRouter from 'react-router-dom';	
 
 class Add extends React.Component {
@@ -12,17 +13,16 @@ class Add extends React.Component {
 
 	formSubmit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
         this.props.add(name, dateCreated, bucketListItemType, completed,
-            latitude, longitude,
-            this.props.history);
+            latitude, longitude);
 	}
 
 	formCancel() {
 		this.props.history.push('/login'); 
 	}				 
 
-	render() {		
+	render() {	
 		return (
-			<div>
+			<div> 		
 				<BucketListItem parent={this}></BucketListItem>
 			</div>
 		);						   

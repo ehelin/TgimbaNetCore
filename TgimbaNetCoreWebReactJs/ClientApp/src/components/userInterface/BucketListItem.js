@@ -13,6 +13,7 @@ class BucketListItem extends React.Component {
 		super(props);
 		this.parentFormAddEdit = props.parent;
 		this.state = {
+			displayBucketList: props.parent.props.displayBucketList,
 			name: props.name ? props.name : '',
 			dateCreated: props.dateCreated ? props.dateCreated : new Date().toLocaleDateString('en-US'),
 			bucketListItemType: this.setCategory(props.bucketListItemType),
@@ -27,6 +28,22 @@ class BucketListItem extends React.Component {
 			databaseId: props.databaseId ? props.databaseId : '',
 			userName: props.userName ? props.userName : ''
 		};
+	}
+
+	componentWillMount() {
+		let test = 1;
+	}
+
+	componentDidUpdate(nextProps) {
+		if (nextProps.displayBucketList === true) {  
+			this.props.history.push('/main'); 
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.displayBucketList === true) {  
+			this.props.history.push('/main'); 
+		}
 	}
 
 	setCategory(bucketListItemType) {
@@ -49,7 +66,8 @@ class BucketListItem extends React.Component {
 
 	render() {						
 		let { name, dateCreated, bucketListItemType, completed, latitude,
-			longitude, databaseId, userName, onPress, onChange, onCancel, checked } = this.state;
+			longitude, databaseId, userName, onPress, 
+			onChange, onCancel, checked, displayBucketList } = this.state;
 	
 		var utils = Object.create(utilsRef.Utilities);
 		var tableStyle = utils.GetDefaultTableStyle();		 

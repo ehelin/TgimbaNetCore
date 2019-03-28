@@ -10,7 +10,8 @@ const initialState = {
 	bucketListItemType: null,
 	completed: null,
 	latitude: null,
-	longitude: null
+	longitude: null,
+	displayBucketList: false
 };
 
 export const actionCreators = {
@@ -20,27 +21,8 @@ export const actionCreators = {
 		bucketListItemType,
 		completed,
 		latitude,
-        longitude, 
-        history
+        longitude
 	) => async (dispatch, getState) => {
-		dispatch
-			({
-				type: ACTION_TYPE_ADD_TO_SERVER,
-				name,
-				dateCreated,
-				bucketListItemType,
-				completed,
-				latitude,
-                longitude,
-                history
-			});
-	}
-};
-
-export const reducer = (state, action) => {
-	state = state || initialState;
-
-	if (action.type == ACTION_TYPE_ADD_TO_SERVER) {		   
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);			  
 
@@ -48,15 +30,15 @@ export const reducer = (state, action) => {
 		var host = utils.GetHost();
 
 		var userName = session.SessionGet(constants.SESSION_USERNAME);
-		var completed = action.completed === true ? 'true' : 'false';
+		var completed = completed === true ? 'true' : 'false';
 
 		const url = host + '/BucketListItem/AddBucketListItem'
-			+ '?Name=' + action.name
-			+ '&DateCreated=' + action.dateCreated
-			+ '&BucketListItemType=' + action.bucketListItemType
+			+ '?Name=' + name
+			+ '&DateCreated=' + dateCreated
+			+ '&BucketListItemType=' + bucketListItemType
 			+ '&Completed=' + completed
-			+ '&Latitude=' + action.latitude
-			+ '&Longitude=' + action.longitude
+			+ '&Latitude=' + latitude
+			+ '&Longitude=' + longitude
 			+ '&DatabaseId=' + ''
 			+ '&UserName=' + userName
 			+ '&encodedUser=' + btoa(userName)
@@ -69,12 +51,25 @@ export const reducer = (state, action) => {
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
                 && data.currentTarget.response === 'true') {  
-                action.history.push('/main');
+				dispatch
+				({
+					type: ACTION_TYPE_ADD_TO_SERVER
+				});
 			} else {
 				alert('Add failed');
 			}
 		};
 		xhr.send();
+	}
+};
+
+export const reducer = (state, action) => {
+	state = state || initialState;
+
+	if (action.type == ACTION_TYPE_ADD_TO_SERVER) {		   
+		var utils = Object.create(utilsRef.Utilities);
+		var host = utils.GetHost();  		
+		window.location = host + '/main';	
 	}
 
 	return state;

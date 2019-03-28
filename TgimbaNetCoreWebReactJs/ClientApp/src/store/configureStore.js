@@ -1,11 +1,9 @@
 ﻿import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
-import * as Counter from './Counter';
 import * as Login from './Login';
 import * as Registration from './Registration';
 import * as Main from './Main';
-import * as WeatherForecasts from './WeatherForecasts';	
 import * as Button from './userInterface/Button';	  
 import * as MainMenu from './MainMenu';			  
 import * as SortMenu from './SortMenu';
@@ -18,7 +16,6 @@ export default function configureStore(history, initialState) {
   const reducers = {
 	  add: Add.reducer,
 	  button: Button.reducer,
-	  counter: Counter.reducer,
 	  login: Login.reducer,
 	  main: Main.reducer,
 	  mainmenu: MainMenu.reducer,  
@@ -26,8 +23,7 @@ export default function configureStore(history, initialState) {
 	  register: Registration.reducer,	
 	  table: Table.reducer,
 	  bucketListItem: BucketListItem.reducer,
-	  edit: Edit.reducer,
-	  weatherForecasts: WeatherForecasts.reducer
+	  edit: Edit.reducer
   };
 
   const middleware = [

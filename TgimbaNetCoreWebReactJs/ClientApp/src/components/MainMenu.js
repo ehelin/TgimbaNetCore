@@ -8,11 +8,14 @@ import Button from './userInterface/Button';
 class MainMenu extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
 	}
 
 	render() {
 		const {} = this.props;  
+				
+		if (this.props.isLoggedOut === true) {	
+			this.props.history.push('/login');
+		}
 
 		const AddBucketListItem = _ => {	   		
 			this.props.history.push('/add'); 
@@ -23,7 +26,7 @@ class MainMenu extends React.Component {
 		}
 
 		const RunAlgorithm = _ => {		
-			//alert('Run Algorithm was clicked!');
+			alert('Run Algorithm was clicked!');
 		}
 
 		const LogOut = _ => {

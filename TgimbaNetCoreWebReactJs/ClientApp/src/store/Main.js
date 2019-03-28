@@ -11,29 +11,71 @@ const ACTION_TYPE_CANCEL = 'Cancel';
 const initialState = {
 	bucketListItems: null,
 	searchTerm: null, 
-	showSearchResults: false
+	showSearchResults: false,
+	deleteSuccessful: false,
+	search: false,
+	queryString: null,
+	cancel: false ,
+	edit: false
 };
 
 export const actionCreators = {
 	cancel: (history) => async (dispatch, getState) => {		 
 		dispatch({ type: ACTION_TYPE_CANCEL, history });
 	},
-	search: (searchTerm) => async (dispatch, getState) => {		 
-		dispatch({ type: ACTION_TYPE_SEARCH, searchTerm });
+	search: (searchTerm) => async (dispatch, getState) => {		 		
+		// NOTE: Hack to get page to reload with search results...		 
+		var queryString = '/main?search=' + searchTerm;  
+
+		dispatch({ type: ACTION_TYPE_SEARCH, queryString });
 	},	 
 	delete: (id, history) => async (dispatch, getState) =>
 	{	 
-		dispatch({ type: ACTION_TYPE_DELETE, id, history });
+		// TODO - refactor to simplify
+		var constants = Object.create(constantsRef.Constants);
+		var session = Object.create(sessionRef.Session);
+
+		var utils = Object.create(utilsRef.Utilities);
+		var host = utils.GetHost();
+
+		var userName = session.SessionGet(constants.SESSION_USERNAME);	
+
+		const url = host + '/BucketListItem/DeleteBucketListItem'
+			+ '?dbId=' + id				
+			+ '&encodedUser=' + btoa(userName)
+			+ '&encodedToken=' + btoa(session.SessionGet(constants.SESSION_TOKEN));
+
+		const xhr = new XMLHttpRequest();
+		xhr.open('delete', url, true);
+		xhr.onload = (data) => {
+			if (data && data.currentTarget
+				&& data.currentTarget && data.currentTarget.response
+				&& data.currentTarget.response.length > 0
+				&& data.currentTarget.response === 'true') {
+				window.location = host + '/main';
+				dispatch({ type: ACTION_TYPE_DELETE });
+			} else {
+				alert('delete failed');
+			}
+		};
+		xhr.send();
 	}, 	
 	edit: (name, dateCreated, bucketListItemType, completed,
-		latitude, longitude, databaseId, userName) => async (dispatch, getState) =>
-	{											
-		dispatch({
-			type: ACTION_TYPE_EDIT, name, dateCreated,
-			bucketListItemType, completed, latitude, longitude, databaseId, userName
-		});
+			latitude, longitude, databaseId, userName) => async (dispatch, getState) =>
+	{	
+		var queryString = '/edit?name=' + name
+			+ '&dateCreated=' + dateCreated
+			+ '&bucketListItemType=' + bucketListItemType
+			+ '&completed=' + completed
+			+ '&latitude=' + latitude
+			+ '&longitude=' + longitude
+			+ '&databaseId=' + databaseId
+			+ '&userName=' + userName;
+					   
+		dispatch({ type: ACTION_TYPE_EDIT, queryString });
 	}, 	
-	load: (sort, searchTerm) => async (dispatch, getState) => {
+	load: (sort, searchTerm) => async (dispatch, getState) => {		  
+		// TODO - refactor to simplify
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);
 
@@ -76,58 +118,31 @@ export const reducer = (state, action) => {
 		};
 	}
 	else if (action.type == ACTION_TYPE_CANCEL) {	 
-        // NOTE: Hack to get page to reload without search results	
-        // TODO - fix so state updates and component reloads
-        window.location = host + '/main';
-        //action.history.push('/main');	
+		return {
+			...state,
+			cancel: true
+		}; 
 	}
 	else if (action.type == ACTION_TYPE_SEARCH) {
-		// NOTE: Hack to get page to reload with search results...		 
-		var queryString = '?search=' + action.searchTerm;  					   
-		window.location = host + '/main' + queryString;
+		return {
+			...state,
+			search: true,
+			queryString: action.queryString
+		};
 	}	  	
 	else if (action.type == ACTION_TYPE_DELETE) {
-		var constants = Object.create(constantsRef.Constants);
-		var session = Object.create(sessionRef.Session);
-
-		var utils = Object.create(utilsRef.Utilities);
-		var host = utils.GetHost();
-
-		var userName = session.SessionGet(constants.SESSION_USERNAME);	
-
-		const url = host + '/BucketListItem/DeleteBucketListItem'
-			+ '?dbId=' + action.id				
-			+ '&encodedUser=' + btoa(userName)
-			+ '&encodedToken=' + btoa(session.SessionGet(constants.SESSION_TOKEN));
-
-		const xhr = new XMLHttpRequest();
-		xhr.open('delete', url, true);
-		xhr.onload = (data) => {
-			if (data && data.currentTarget
-				&& data.currentTarget && data.currentTarget.response
-				&& data.currentTarget.response.length > 0
-				&& data.currentTarget.response === 'true') {
-                window.location = host + '/main';
-                // TODO - fix so state is updated and component reloads
-                //action.history.push('/main');
-			} else {
-				alert('delete failed');
-			}
-		};
-		xhr.send();
+		return {
+			...state,
+			deleteSuccessful: true
+		}; 
 	}	
 	else if (action.type === ACTION_TYPE_EDIT) {
-		var queryString = '?name=' + action.name
-			+ '&dateCreated=' + action.dateCreated
-			+ '&bucketListItemType=' + action.bucketListItemType
-			+ '&completed=' + action.completed
-			+ '&latitude=' + action.latitude
-			+ '&longitude=' + action.longitude
-			+ '&databaseId=' + action.databaseId
-			+ '&userName=' + action.userName;
-					   
-		window.location = host + '/edit' + queryString;
-	}											  
+		return {
+			...state,
+			edit: true,
+			queryString: action.queryString
+		};
+	}										  
 
 	return state;
 };

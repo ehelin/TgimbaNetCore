@@ -27,8 +27,7 @@ class Edit extends React.Component {
 
 	formSubmit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
         this.props.edit(name, dateCreated, bucketListItemType, completed,
-                        latitude, longitude, databaseId, userName,
-                        this.props.history);
+                        latitude, longitude, databaseId, userName);
 	}
 
 	formCancel() {			  	

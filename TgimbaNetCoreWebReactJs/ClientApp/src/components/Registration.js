@@ -22,6 +22,10 @@ class Registration extends React.Component {
 			email,
 			password,
 			confirmPassword } = this.state;
+			
+		if (this.props.isRegistered === true) {	
+			this.props.history.push('/login');
+		}
 
 		const processRegistration = _ => {
 			this.props.register(

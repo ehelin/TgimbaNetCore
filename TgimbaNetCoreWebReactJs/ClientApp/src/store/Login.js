@@ -6,24 +6,17 @@ const ACTION_TYPE_LOGIN = 'LOGIN';
 
 const initialState = {
 	username: null,
-	password: null
+	password: null,
+	loggedIn: false
 };
 							 
 export const actionCreators = {						   
-    login: (username, password, history) => async (dispatch, getState) => {  
-		dispatch({ type: ACTION_TYPE_LOGIN, username, password, history }); 
-	}
-};
-
-export const reducer = (state, action) => {
-	state = state || initialState;
-
-	if (action.type === ACTION_TYPE_LOGIN) {	   							  
+	login: (username, password, history) => async (dispatch, getState) => {  
 		var utils = Object.create(utilsRef.Utilities); 
 		var host = utils.GetHost();
 								
-		const url = host + '/Login/Login?encodedUser=' + btoa(action.username)
-					+ '&encodedPass=' + btoa(action.password);
+		const url = host + '/Login/Login?encodedUser=' + btoa(username)
+					+ '&encodedPass=' + btoa(password);
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('post', url, true);
@@ -37,14 +30,26 @@ export const reducer = (state, action) => {
 				var session = Object.create(sessionRef.Session); 
 													  
 				session.SessionSet(constants.SESSION_TOKEN, token);
-				session.SessionSet(constants.SESSION_USERNAME, action.username);
-
-                action.history.push('/main'); 		
+				session.SessionSet(constants.SESSION_USERNAME, username);
+															
+				dispatch({ type: ACTION_TYPE_LOGIN }); 	
 			} else {
 				alert('User is not logged in!');
 			}
 		};
 		xhr.send();
+	}
+};
+
+export const reducer = (state, action) => {
+	state = state || initialState;
+
+	if (action.type === ACTION_TYPE_LOGIN) {	
+		return {
+            ...state,
+			loggedIn: true
+		};   							  
+
 	}	   
 
 	return state;
