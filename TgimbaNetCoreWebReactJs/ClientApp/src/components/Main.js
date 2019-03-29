@@ -8,32 +8,29 @@ import Table from './userInterface/Table';
 var utilsRef = require('../common/Utilities'); 
 const queryString = require('query-string');
 								   
-class Main extends React.Component {
+class Main extends React.Component { 
 	sort = ''; 
-	searchTerm = '';
-	firstLoad = false;
 
 	constructor(props) {
-		super(props);				
+		super(props);		
 		const parsed = queryString.parse(this.props.location.search);
 		if (parsed && parsed.sort) {
 			this.sort = parsed.sort;
-		}
-		   	
-		if (parsed && parsed.search) {
-			this.searchTerm = parsed.search;
-		} else {		
-			this.searchTerm = '';
-		}
+		}	
+					 
+		var utils = Object.create(utilsRef.Utilities);	
+		if (utils.IsLoggedIn() !== true) {		 
+			this.props.history.push('/login');
+		}  		
 
 		this.state = { 
 			bucketListItems: null, 
-			searchTerm: this.searchTerm
+			searchTerm: null
 		};
-	}	  
+	}
 
 	componentDidMount() {
-		this.props.load(this.sort, this.searchTerm);							 
+		this.props.load(this.sort, '');							 
 	}
 
 	formEdit(name, dateCreated, bucketListItemType, completed, latitude, longitude, databaseId, userName) {
@@ -44,19 +41,8 @@ class Main extends React.Component {
         this.props.delete(id, this.props.history);
 	}
 			
-	// TODO - refactor to simplify
 	render() {			   
-		let { searchTerm } = this.firstLoad === false ? this.searchTerm : this.state;
-		if (this.firstLoad === false) {
-			this.firstLoad = true;	  
-		} 
-			
-		if (this.props.deleteSuccessful === true || this.props.cancel === true) {	
-			this.props.history.push('/main');
-		}  
-		if (this.props.search === true || this.props.edit === true) {	
-			this.props.history.push(this.props.queryString);
-		}  
+		let { searchTerm } = this.state;
 
 		const showMainMenu = _ => {		
 			this.props.history.push('/mainmenu');
@@ -77,8 +63,7 @@ class Main extends React.Component {
 		};
 
 		var searchResultsPanelStyle = { "display":"none" };
-
-		if (this.searchTerm && this.searchTerm.length > 0)
+		if (this.props.showSearchResults === true)
 		{
 			searchResultsPanelStyle = { "display":"block" };
 		}  

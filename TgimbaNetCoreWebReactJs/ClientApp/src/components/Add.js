@@ -17,7 +17,7 @@ class Add extends React.Component {
 	}
 
 	formCancel() {
-		this.props.history.push('/login'); 
+		this.props.history.push('/main'); 
 	}				 
 
 	render() {	

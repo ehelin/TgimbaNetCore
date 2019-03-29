@@ -10,24 +10,56 @@ const ACTION_TYPE_CANCEL = 'Cancel';
 						 
 const initialState = {
 	bucketListItems: null,
-	searchTerm: null, 
-	showSearchResults: false,
-	deleteSuccessful: false,
-	search: false,
-	queryString: null,
-	cancel: false ,
-	edit: false
+	showSearchResults: false
 };
 
-export const actionCreators = {
-	cancel: (history) => async (dispatch, getState) => {		 
-		dispatch({ type: ACTION_TYPE_CANCEL, history });
-	},
-	search: (searchTerm) => async (dispatch, getState) => {		 		
-		// NOTE: Hack to get page to reload with search results...		 
-		var queryString = '/main?search=' + searchTerm;  
+function setBucketListCounter(bucketListItems){	  
+	for (let i = 0; i < bucketListItems.length; i++) {
+		bucketListItems[i].number = i + 1;
+	}
 
-		dispatch({ type: ACTION_TYPE_SEARCH, queryString });
+	return bucketListItems;
+};
+
+function getLoadCallUrl(sort, searchTerm) {
+	var constants = Object.create(constantsRef.Constants);
+	var session = Object.create(sessionRef.Session);
+
+	var token = session.SessionGet(constants.SESSION_TOKEN);
+	var userName = session.SessionGet(constants.SESSION_USERNAME);	   
+
+	let url = 'BucketListItem/GetBucketListItems'
+		+ '?encodedUserName=' + btoa(userName)
+		+ '&encoderedSortString=' + btoa(sort)
+		+ '&encodedToken=' + btoa(token);
+
+	if (searchTerm && searchTerm.length > 0)
+	{
+		url += '&encodedSrchTerm=' + btoa(searchTerm);
+	}
+
+	return url;
+};
+
+
+export const actionCreators = {
+	cancel: () => async (dispatch, getState) => {	  		 
+		let url = getLoadCallUrl('', '');
+
+		const response = await fetch(url);		 
+		let bucketListItems = await response.json();
+		bucketListItems = setBucketListCounter(bucketListItems);
+
+		dispatch({ type: ACTION_TYPE_CANCEL, bucketListItems });
+	},
+	search: (searchTerm) => async (dispatch, getState) => {		  		 
+		let url = getLoadCallUrl('', searchTerm);
+
+		const response = await fetch(url);		 
+		let bucketListItems = await response.json();
+		bucketListItems = setBucketListCounter(bucketListItems);
+
+		dispatch({ type: ACTION_TYPE_SEARCH, bucketListItems });
 	},	 
 	delete: (id, history) => async (dispatch, getState) =>
 	{	 
@@ -75,33 +107,13 @@ export const actionCreators = {
 		dispatch({ type: ACTION_TYPE_EDIT, queryString });
 	}, 	
 	load: (sort, searchTerm) => async (dispatch, getState) => {		  
-		// TODO - refactor to simplify
-		var constants = Object.create(constantsRef.Constants);
-		var session = Object.create(sessionRef.Session);
-
-		var token = session.SessionGet(constants.SESSION_TOKEN);
-		var userName = session.SessionGet(constants.SESSION_USERNAME);	   
-
-		let url = 'BucketListItem/GetBucketListItems'
-			+ '?encodedUserName=' + btoa(userName)
-			+ '&encoderedSortString=' + btoa(sort)
-			+ '&encodedToken=' + btoa(token);
-
-		let showSearchResults = false; 
-		if (searchTerm && searchTerm.length > 0)
-		{
-			url += '&encodedSrchTerm=' + btoa(searchTerm);
-			showSearchResults = true;
-		}
+		let url = getLoadCallUrl(sort, searchTerm);
 
 		const response = await fetch(url);		 
-		const bucketListItems = await response.json();
+		let bucketListItems = await response.json();
+		bucketListItems = setBucketListCounter(bucketListItems);
 
-		for (let i = 0; i < bucketListItems.length; i++) {
-			bucketListItems[i].number = i + 1;
-		}
-
-		dispatch({ type: ACTION_TYPE_LOAD, bucketListItems });
+		dispatch({ type: ACTION_TYPE_LOAD,  bucketListItems});
 	}
 };
 
@@ -111,23 +123,18 @@ export const reducer = (state, action) => {
 	var utils = Object.create(utilsRef.Utilities);
 	var host = utils.GetHost();
 
-	if (action.type === ACTION_TYPE_LOAD) {	
+	if (action.type === ACTION_TYPE_LOAD || action.type == ACTION_TYPE_CANCEL) {	
 		return {
-			...state,
+			...state,					   
+			showSearchResults: false,
 			bucketListItems: action.bucketListItems
 		};
-	}
-	else if (action.type == ACTION_TYPE_CANCEL) {	 
-		return {
-			...state,
-			cancel: true
-		}; 
 	}
 	else if (action.type == ACTION_TYPE_SEARCH) {
 		return {
 			...state,
-			search: true,
-			queryString: action.queryString
+			showSearchResults: true,
+			bucketListItems: action.bucketListItems
 		};
 	}	  	
 	else if (action.type == ACTION_TYPE_DELETE) {

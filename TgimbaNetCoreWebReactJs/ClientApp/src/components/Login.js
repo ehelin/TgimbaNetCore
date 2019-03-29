@@ -9,13 +9,7 @@ var utilsRef = require('../common/Utilities');
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { username: null, password: null };	
-
-		var utils = Object.create(utilsRef.Utilities);	
-		if (utils.IsLoggedIn()) {
-			var host = utils.GetHost();
-			window.location = host + '/main';	
-		}  			
+		this.state = { username: null, password: null };		
 	}
 
 	render() {

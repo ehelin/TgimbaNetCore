@@ -30,11 +30,11 @@ class MainMenu extends React.Component {
 		}
 
 		const LogOut = _ => {
-            this.props.logout(this.props.history);
+            this.props.logout();
 		}
 
 		const Cancel = _ => {	  
-			this.props.history.push('/login'); 
+			this.props.history.push('/main'); 
 		}
 
 		var tableStyle = {

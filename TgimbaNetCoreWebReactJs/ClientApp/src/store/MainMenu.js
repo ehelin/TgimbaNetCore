@@ -7,7 +7,7 @@ const initialState = {
 };
 							 
 export const actionCreators = {						   
-	logout: (history) => async (dispatch, getState) => {   		
+	logout: () => async (dispatch, getState) => {   		
 		var session = Object.create(sessionRef.Session);
 		session.SessionClearStorage();	  
 
