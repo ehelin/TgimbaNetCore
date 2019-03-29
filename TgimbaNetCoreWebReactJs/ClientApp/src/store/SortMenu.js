@@ -1,10 +1,8 @@
-﻿const ACTION_TYPE_SET_SORT = 'SetSort';
+﻿var utilsRef = require('../common/Utilities');
 
-const initialState = {
-	sortNavigation: false,
-	sortRoute: null
-};
-							 
+const ACTION_TYPE_SET_SORT = 'SetSort';
+const initialState = {};
+
 export const actionCreators = {						   
 	sort: (sort) => async (dispatch, getState) => {
 		var queryString = '/main?sort=' + sort;  
@@ -16,12 +14,10 @@ export const actionCreators = {
 export const reducer = (state, action) => {
 	state = state || initialState;	
 
-	if (action.type === ACTION_TYPE_SET_SORT) {	
-		return {
-			...state,
-			sortNavigation: true,
-			sortRoute: action.queryString
-		}
+	if (action.type === ACTION_TYPE_SET_SORT) {	  								    
+		var utils = Object.create(utilsRef.Utilities);
+		var host = utils.GetHost();	
+		window.location = host + action.queryString;	
 	}
 
 	return state;
