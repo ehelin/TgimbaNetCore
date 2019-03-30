@@ -52,6 +52,10 @@ class Main extends React.Component {
             this.props.cancel();  		
 		}
 
+		if (this.props.edit === true) {	
+			this.props.history.push(this.props.queryString);
+		}  
+
 		const search = _ => {		
 			this.props.search(searchTerm);
 		}

@@ -143,12 +143,10 @@ export const reducer = (state, action) => {
 			deleteSuccessful: true
 		}; 
 	}	
-	else if (action.type === ACTION_TYPE_EDIT) {
-		return {
-			...state,
-			edit: true,
-			queryString: action.queryString
-		};
+	else if (action.type === ACTION_TYPE_EDIT) {   		  
+		var utils = Object.create(utilsRef.Utilities);
+		var host = utils.GetHost();  		
+		window.location = host + action.queryString;	
 	}										  
 
 	return state;

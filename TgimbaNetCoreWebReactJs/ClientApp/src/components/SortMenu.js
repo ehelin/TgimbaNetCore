@@ -27,7 +27,7 @@ class SortMenu extends React.Component {
 	}
 	
 	cancel() {					    		
-		this.props.history.push('/main'); 
+		this.props.sort('');
 	}
 
 	render() {	

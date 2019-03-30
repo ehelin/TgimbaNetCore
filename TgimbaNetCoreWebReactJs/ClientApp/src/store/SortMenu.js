@@ -5,7 +5,10 @@ const initialState = {};
 
 export const actionCreators = {						   
 	sort: (sort) => async (dispatch, getState) => {
-		var queryString = '/main?sort=' + sort;  
+		var queryString = '/main';
+		if (sort && sort.length > 0) {
+			queryString += '?sort=' + sort;  
+		}
 
 		dispatch({ type: ACTION_TYPE_SET_SORT, queryString });
 	}
