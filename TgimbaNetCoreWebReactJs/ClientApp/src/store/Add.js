@@ -15,14 +15,13 @@ const initialState = {
 };
 
 export const actionCreators = {
-	add: (
-		name,
-		dateCreated,
-		bucketListItemType,
-		completed,
-		latitude,
-        longitude
-	) => async (dispatch, getState) => {
+	add: (name, dateCreated, bucketListItemType, completed, latitude, longitude) => ({ type: ACTION_TYPE_ADD_TO_SERVER, name, dateCreated, bucketListItemType, completed, latitude, longitude }),
+};
+
+export const reducer = (state, action) => {
+	state = state || initialState;
+
+	if (action.type == ACTION_TYPE_ADD_TO_SERVER) {	   
 		var constants = Object.create(constantsRef.Constants);
 		var session = Object.create(sessionRef.Session);			  
 
@@ -30,15 +29,15 @@ export const actionCreators = {
 		var host = utils.GetHost();
 
 		var userName = session.SessionGet(constants.SESSION_USERNAME);
-		var completed = completed === true ? 'true' : 'false';
+		var completed = action.completed === true ? 'true' : 'false';
 
 		const url = host + '/BucketListItem/AddBucketListItem'
-			+ '?Name=' + name
-			+ '&DateCreated=' + dateCreated
-			+ '&BucketListItemType=' + bucketListItemType
+			+ '?Name=' + action.name
+			+ '&DateCreated=' + action.dateCreated
+			+ '&BucketListItemType=' + action.bucketListItemType
 			+ '&Completed=' + completed
-			+ '&Latitude=' + latitude
-			+ '&Longitude=' + longitude
+			+ '&Latitude=' + action.latitude
+			+ '&Longitude=' + action.longitude
 			+ '&DatabaseId=' + ''
 			+ '&UserName=' + userName
 			+ '&encodedUser=' + btoa(userName)
@@ -50,26 +49,16 @@ export const actionCreators = {
 			if (data && data.currentTarget
 				&& data.currentTarget && data.currentTarget.response
 				&& data.currentTarget.response.length > 0
-                && data.currentTarget.response === 'true') {  
-				dispatch
-				({
-					type: ACTION_TYPE_ADD_TO_SERVER
-				});
+                && data.currentTarget.response === 'true') 
+			{  										   			
+				var utils = Object.create(utilsRef.Utilities);
+				var host = utils.GetHost();  		
+				window.location = host + '/main';	
 			} else {
 				alert('Add failed');
 			}
 		};
 		xhr.send();
-	}
-};
-
-export const reducer = (state, action) => {
-	state = state || initialState;
-
-	if (action.type == ACTION_TYPE_ADD_TO_SERVER) {		   
-		var utils = Object.create(utilsRef.Utilities);
-		var host = utils.GetHost();  		
-		window.location = host + '/main';	
 	}
 
 	return state;

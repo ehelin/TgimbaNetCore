@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../../store/userInterface/BucketListItem'; // TODO -> add
+import { actionCreators } from '../../store/userInterface/BucketListItem'; 
 import Button from './Button';
 var utilsRef = require('../../common/Utilities');
    
