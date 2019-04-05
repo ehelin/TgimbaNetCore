@@ -8,7 +8,19 @@ namespace TestTgimbaNetCoreWeb
 {
     [TestClass]
     public class UtilitiesTest : BaseTest
-    {			 																				   
+    {			 					
+		[TestMethod]
+		public void Test_IsMobileTrue() 
+		{
+			Assert.IsTrue(SharedWeb.Utilities.IsMobile("Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; SCH-I535 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"));
+		}
+
+		[TestMethod]
+		public void Test_IsMobileFalse() 
+		{
+			Assert.IsFalse(SharedWeb.Utilities.IsMobile("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"));
+		}
+																	   
 		[TestMethod]
 		public void Test_ConvertModelToStringArray()
 		{					 
