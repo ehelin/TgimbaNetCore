@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestJavaScriptV2-Unit", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaNetCoreWebShared", "TgimbaNetCoreWebShared\TgimbaNetCoreWebShared.csproj", "{81334608-BA69-427E-BB7B-99861B473211}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms", "Algorithms\Algorithms.csproj", "{31A3A397-94C8-47A6-B686-8C8AF3487470}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{81334608-BA69-427E-BB7B-99861B473211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81334608-BA69-427E-BB7B-99861B473211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81334608-BA69-427E-BB7B-99861B473211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A3A397-94C8-47A6-B686-8C8AF3487470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A3A397-94C8-47A6-B686-8C8AF3487470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A3A397-94C8-47A6-B686-8C8AF3487470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A3A397-94C8-47A6-B686-8C8AF3487470}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

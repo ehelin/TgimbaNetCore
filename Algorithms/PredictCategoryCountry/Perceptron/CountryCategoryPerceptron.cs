@@ -1,15 +1,13 @@
 ﻿using Algorithms.PredictCategoryCountry.Perceptron;
 using System;
-
-using Algorithms.PredictCategoryCountry.Perceptron.Data;
-
+														  
 namespace Algorithms.PredictCategoryCountry.Perceptron
 {
     public class CountryCategoryPerceptron
     {
-        public CountryCategoryTrainingSet Train(CountryCategoryTrainingSet trainingSet)
-        {
-            throw new NotImplementedException();
+        //public CountryCategoryTrainingSet Train(CountryCategoryTrainingSet trainingSet)
+        //{
+           // throw new NotImplementedException();
             //var learningRate = 1;
             //var totalError = 1;
             //var ctr = 1;
@@ -41,7 +39,7 @@ namespace Algorithms.PredictCategoryCountry.Perceptron
             //}
 
             //return weights;
-        }
+        //}
     }
 }
 
