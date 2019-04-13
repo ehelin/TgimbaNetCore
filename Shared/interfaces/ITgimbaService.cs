@@ -17,5 +17,6 @@ namespace Shared.interfaces
         string LoginDemoUser();
 
         void Log(string msg, Enums.LogLevel level);
+        string GetReport();
     }
 }

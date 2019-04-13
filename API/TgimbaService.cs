@@ -15,6 +15,24 @@ namespace API
         private static Enums.LogLevel level = Enums.LogLevel.Info;
         private ILogger logger = new Logger(new BucketListData(Utilities.GetDbSetting()), level);
 
+        public string GetReport()
+        {
+            IBucketListData bld = null;
+            string results = null;
+
+            try
+            {
+                bld = new BucketListData(Utilities.GetDbSetting());
+                results = bld.GetReport();
+            }
+            catch (Exception e)
+            {
+                bld.LogMsg("Error: " + e.Message + ", trace: " + e.StackTrace.ToString());
+            }
+
+            return results;
+        }
+
         public string GetTestResult()
         {
             return "Test Service Response";

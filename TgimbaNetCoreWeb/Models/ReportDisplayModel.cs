@@ -2,6 +2,6 @@
 {
     public class ReportDisplayModel
     {
-        public string TestMessage { get; set; }
+        public string Report { get; set; }
     }
 }

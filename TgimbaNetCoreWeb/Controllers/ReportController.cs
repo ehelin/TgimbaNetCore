@@ -1,11 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;	  			
 using TgimbaNetCoreWeb.Models;
+using Shared.interfaces;
 
 namespace TgimbaNetCoreWeb.Controllers
 {			 
 	//[RequireHttpsAttribute]
     public class ReportController : Controller
-    {				
+    {
+        private ITgimbaService service = null;
+
+        public ReportController(ITgimbaService service)
+        {
+            this.service = service;
+        }
         public IActionResult Index()
         {
             return View();
@@ -36,7 +43,7 @@ namespace TgimbaNetCoreWeb.Controllers
         {
             var model = new ReportDisplayModel();
 
-            model.TestMessage = "a test message";
+            model.Report = this.service.GetReport();
 
             return View(model);
         }

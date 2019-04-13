@@ -14,6 +14,42 @@ namespace DAL.providers
             connectionString = pConnectionString;
         }
 
+        public string GetReport()
+        {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader rdr = null;
+            string result = null;
+
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "bucket.getreport";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                conn.Open();
+
+                rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    result = GetSafeString(rdr[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                CloseDbObjects(conn, cmd, null);
+            }
+
+            return result;
+        }
+
         public string[] GetDashboard()
         {
             IDictionary<string, string> dashboardItems = GetDashboardItems();
