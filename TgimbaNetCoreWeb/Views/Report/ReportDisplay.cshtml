@@ -1,0 +1,11 @@
+﻿@model TgimbaNetCoreWeb.Models.ReportDisplayModel
+
+@if (!string.IsNullOrEmpty(Model.TestMessage))
+{
+    <p>@Model.TestMessage</p>
+}
+else
+{
+    <p>Model is not set!</p>
+}
+
