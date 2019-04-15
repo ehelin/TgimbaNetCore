@@ -2,6 +2,10 @@
 
 @using (Html.BeginForm("Login", "Report", FormMethod.Post))
 {
+    @if (!string.IsNullOrEmpty(Model.Error))
+    {
+        <h4>@Model.Error</h4>
+    }
     <table align="center">
         <tr>
             <td>
@@ -24,7 +28,7 @@
                 <input type="submit" value="Login" />
             </td>
         </tr>
-    </table>   
+    </table>
 }
 
 

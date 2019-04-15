@@ -26,6 +26,9 @@ namespace TgimbaNetCoreWeb
 			services.AddSingleton<IWebClient>(new WebClient(service));
 
             services.AddMvc();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +43,10 @@ namespace TgimbaNetCoreWeb
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();	   
-			//app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            //app.UseHttpsRedirection();
+            
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

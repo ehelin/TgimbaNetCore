@@ -2,7 +2,12 @@
 
 @if (!string.IsNullOrEmpty(Model.Report))
 {
-    <p>@Model.Report</p>
+    <div>
+        <input type="button" value="Refresh" onclick="location.reload();"
+    </div>
+    <div>
+        @Html.Raw(@Model.Report)
+    </div>
 }
 else
 {
