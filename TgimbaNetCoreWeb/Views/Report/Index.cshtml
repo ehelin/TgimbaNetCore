@@ -2,7 +2,7 @@
 
 @using (Html.BeginForm("Login", "Report", FormMethod.Post))
 {
-    @if (!string.IsNullOrEmpty(Model.Error))
+    @if (Model != null && !string.IsNullOrEmpty(Model.Error))
     {
         <h4>@Model.Error</h4>
     }
