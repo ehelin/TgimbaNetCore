@@ -15,9 +15,15 @@ namespace TgimbaNetCoreWeb.Controllers
         public BucketListItemController(ITgimbaService service, IWebClient webClient)
         {
 			sharedBucketListController = new SharedBucketListController(service, webClient);
-		}	  
-			
-		[HttpPost]
+		}
+
+        [HttpGet]
+        public bool IsMobile(string userAgent)
+        {
+            return Utilities.IsMobile(userAgent);
+        }
+
+        [HttpPost]
         public bool AddBucketListItemJQuery([FromBody] SharedBucketListModel model)
         {
 			return sharedBucketListController.AddBucketListItem(model, model.encodedUser, model.encodedToken);

@@ -1,5 +1,17 @@
 ﻿var ServerCalls = {};
 
+ServerCalls.IsMobile = function (userAgent) {
+    try {
+        return ServerCall.Get(BUCKET_LIST_ISMOBILE + userAgent)
+                .then(
+                function (response) {
+                    return response;
+                });
+    } catch (ex) {
+        return Error_Handler('ServerCalls.IsMobile(arg) - Error: ' + ex);
+    }
+};
+
 ServerCalls.GetView = function(viewUrl, contentDiv, htmlContent) {
     try {
         return ServerCall.Get(viewUrl)
@@ -9,7 +21,7 @@ ServerCalls.GetView = function(viewUrl, contentDiv, htmlContent) {
             });
     }
     catch (ex) {
-        return Error_Handler('LoadView(view) - ' + view + ' - Error: ' + ex);
+        return Error_Handler('ServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
     }
 };
 	  
