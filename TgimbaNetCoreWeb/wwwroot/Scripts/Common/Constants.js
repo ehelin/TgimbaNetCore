@@ -23,6 +23,9 @@ var VIEW_MENU = '/Markup/HtmlVanillaJs/Views/Menu/Index.html'
 var VIEW_SORT = '/Markup/HtmlVanillaJs/Views/Menu/Sort.html'
 var VIEW_WELCOME = '/Welcome/Index';
 
+var CSS_FILE_MOBILE = 'Content/Mobile.css';
+var CSS_FILE_DESKTOP = 'Content/Desktop.css';
+
 var LOGIN_PROCESS_USER = '/Login/Login';	
 var REGISTRATION_PROCESS_REGISTRATION = '/Registration/Registration';
 var BUCKET_LIST_PROCESS_GET = '/BucketListItem/GetBucketListItems';

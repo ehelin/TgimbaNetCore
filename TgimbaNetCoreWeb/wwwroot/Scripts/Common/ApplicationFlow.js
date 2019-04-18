@@ -18,15 +18,22 @@ ApplicationFlow.SetLayout = function () {
     return ServerCalls.IsMobile(window.navigator.userAgent)
         .then(
             function (response) {
+                var cssFileName = null;
                 isNullUndefined(response);
 
                 if (response === true) {
                     SessionSetIsMobile(SESSION_CLIENT_IS_MOBILE, true);
-                    // TODO - set mobile css
+                    cssFileName = CSS_FILE_MOBILE;
                 } else {
                     SessionSetIsMobile(SESSION_CLIENT_IS_MOBILE, false);
-                    // TODO - set desktop css
+                    cssFileName = CSS_FILE_DESKTOP;
                 }
+
+                var fileref = document.createElement("link");
+                fileref.rel = "stylesheet";
+                fileref.type = "text/css";
+                fileref.href = cssFileName;
+                document.getElementsByTagName("head")[0].appendChild(fileref)
             }
         );
 };
