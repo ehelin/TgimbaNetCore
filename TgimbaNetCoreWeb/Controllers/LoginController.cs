@@ -20,12 +20,6 @@ namespace TgimbaNetCoreWeb.Controllers
         public string Login(string user, string pass)
         {
             return sharedLoginController.Login(user, pass);
-        }
-		   
-        [HttpPost]
-        public string JQueryLogin([FromBody] SharedLoginModel login)
-        {												   
-            return sharedLoginController.JQueryLogin(login);	 
-        }	  
+        } 
     }
 }

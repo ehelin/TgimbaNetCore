@@ -23,8 +23,8 @@ namespace Shared.misc
 
             if (string.IsNullOrEmpty(dbConn))
             {
-                dbConn = Credentials.GetDbConnection();
-				//dbConn = Credentials.GetDbConnectionTest();
+                //dbConn = Credentials.GetDbConnection();
+				dbConn = Credentials.GetDbConnectionTest();
             }
            
             return dbConn;

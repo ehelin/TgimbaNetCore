@@ -21,9 +21,5 @@ RegistrationController.Register = function() {
 									"RegistrationController.js"
 								);
 
-	if (IsJQueryClient()) {				 
-		ServerCalls.JQueryRegistration(params);
-	} else {
-		ServerCalls.ProcessRegistration(REGISTRATION_PROCESS_REGISTRATION, params);
-	}   
+	ServerCalls.ProcessRegistration(REGISTRATION_PROCESS_REGISTRATION, params);
 };

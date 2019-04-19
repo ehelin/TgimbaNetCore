@@ -74,14 +74,3 @@ function GetHost() {
 
     return host;
 }
-
-// TODO - add unit test for this method
-function IsJQueryClient() {
-	var sessionClient = SessionGetToken(SESSION_CLIENT);
-
-	if (sessionClient && sessionClient === SESSION_CLIENT_JQUERY) {
-		return true;
-	}
-	
-	return false;
-}

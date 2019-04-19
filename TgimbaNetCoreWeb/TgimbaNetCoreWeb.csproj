@@ -18,10 +18,4 @@
     <ProjectReference Include="..\TgimbaNetCoreWebShared\TgimbaNetCoreWebShared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Views\Home\HtmlJQueryIndex.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-  </ItemGroup>
-
 </Project>

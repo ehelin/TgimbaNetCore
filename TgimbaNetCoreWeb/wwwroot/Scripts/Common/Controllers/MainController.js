@@ -78,11 +78,7 @@ MainController.FormEditClick = function (itemName, dateCreated, bucketListItemTy
 };
 
 MainController.FormDeleteClick = function (dbId) {							   
-	if (IsJQueryClient()) {
-		ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
-	} else {
-		ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
-	}
+	ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
 };
 
 MainController.Edit = function () {
@@ -91,11 +87,7 @@ MainController.Edit = function () {
 		"MainController.js"
 	);
 
-	if (IsJQueryClient()) {
-		ServerCalls.EditBucketListItem(BUCKET_LIST_PROCESS_EDIT, params);
-	} else {
-		ServerCalls.EditBucketListItem(BUCKET_LIST_PROCESS_EDIT, params);
-	}
+	ServerCalls.EditBucketListItem(BUCKET_LIST_PROCESS_EDIT, params);
 };
 
 MainController.Add = function () {
@@ -104,9 +96,5 @@ MainController.Add = function () {
 		"MainController.js"
 	);
 
-	if (IsJQueryClient()) {			
-		ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
-	} else {
-		ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
-	}  
+	ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
 };

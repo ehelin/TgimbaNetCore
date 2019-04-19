@@ -4,7 +4,10 @@ Display.HtmlContent = {};
 
 Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView) {	
 	contentDiv.innerHTML = loadedView;
-	Display.SetTitleLogic(view);	
+	
+    if (view === VIEW_MAIN_ADD) {
+	    MainController.SetAddViewDate();
+	}
 
 	if (htmlContent) {
 		if (view === VIEW_MAIN_EDIT) {
@@ -44,31 +47,6 @@ Display.LoadView = function(view, htmlContent) {
     var contentDiv = Display.GetContentDiv();  
     ServerCalls.GetView(view, contentDiv, htmlContent);
 };
-
-Display.SetTitleLogic = function(view) {			   
-	if (view === VIEW_LOGIN) {
-		Display.SetTitle(LOGIN_VIEW_DIV, VANILLA_JAVASCRIPT_LOGIN_TITLE);
-	}
-	else if (view === VIEW_REGISTRATION) {
-		Display.SetTitle(REGISTRATION_VIEW_DIV, VANILLA_JAVASCRIPT_REGISTRATION_TITLE);
-	}
-	else if (view === VIEW_MENU) {
-		Display.SetTitle(MENU_VIEW_DIV, VANILLA_JAVASCRIPT_MENU_TITLE);		
-	}
-	else if (view === VIEW_MAIN) {
-		Display.SetTitle(MAIN_VIEW_DIV, VANILLA_JAVASCRIPT_MAIN_TITLE);
-	}
-	else if (view === VIEW_MAIN_ADD) {
-		Display.SetTitle(ADD_VIEW_DIV, VANILLA_JAVASCRIPT_MAIN_ADD_TITLE);
-		MainController.SetAddViewDate();
-	}
-	else if (view === VIEW_MAIN_EDIT) {
-		Display.SetTitle(EDIT_VIEW_DIV, VANILLA_JAVASCRIPT_MAIN_EDIT_TITLE);	
-	} 
-	else {
-		Error('Unknown view');
-	}
-}
 
 Display.SetTitle = function(divName, title) {	
 	var titleHolder = document.getElementById(divName);

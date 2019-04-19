@@ -24,11 +24,5 @@ namespace TgimbaNetCoreWeb.Controllers
 		) {					
             return sharedRegistrationController.Registration(user, email, pass);
 		} 
-		   	     	   
-        [HttpPost]
-        public bool JQueryRegistration([FromBody] SharedRegistrationModel registration)
-        {								  
-            return sharedRegistrationController.JQueryRegistration(registration);	
-        }
     }
 }

@@ -9,11 +9,6 @@ namespace TgimbaNetCoreWeb.Controllers
         {
             return View();
         }
- 
-        public IActionResult HtmlJQueryIndex()
-        {
-            return View();
-        }
 	
 		public IActionResult Index() 
 		{

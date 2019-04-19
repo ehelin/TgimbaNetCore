@@ -7,12 +7,6 @@ var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';
 var SESSION_CLIENT_IS_MOBILE = 'SessionIsMobile';
 
 var CONTENT_DIV = 'csHtmlContentDiv';	
-var LOGIN_VIEW_DIV = 'lbLoginTitleDiv';
-var REGISTRATION_VIEW_DIV = 'lbRegistrationTitleDiv';
-var MENU_VIEW_DIV = 'menuTitleDiv';
-var MAIN_VIEW_DIV = 'lbMainTitleDiv';
-var ADD_VIEW_DIV = 'lbAddTitleDiv';
-var EDIT_VIEW_DIV = 'lbEditTitleDiv';
 
 var VIEW_MAIN = '/Markup/HtmlVanillaJs/Views/Main/Index.html';
 var VIEW_MAIN_ADD = '/Markup/HtmlVanillaJs/Views/Main/Add.html';
