@@ -21,7 +21,7 @@ ApplicationFlow.SetLayout = function () {
                 var cssFileName = null;
                 isNullUndefined(response);
 
-                if (response === true) {
+                if (response === true || response === "true") {
                     SessionSetIsMobile(SESSION_CLIENT_IS_MOBILE, true);
                     cssFileName = CSS_FILE_MOBILE;
                 } else {
