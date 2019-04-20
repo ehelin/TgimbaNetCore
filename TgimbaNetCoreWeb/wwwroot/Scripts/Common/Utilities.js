@@ -7,6 +7,16 @@
         Error(expectedObj + ' is null  at ' + location);
     }                     
 }
+
+function booleanIsTrue(booleanValue) {
+    if (booleanValue 
+        && (booleanValue === "true" || booleanValue === true || booleanValue === "True"))
+    {
+        return true;
+    }
+
+    return false;
+}
           
 function HasValue(ctrlId, type, file) {
     var ctrl = document.getElementById(ctrlId);

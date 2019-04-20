@@ -1,35 +1,34 @@
-﻿<div>
-	<label id="lbRegistrationTitleDiv"></label>
+﻿<div class="tgimbaComponent">
+    <table width="100%">
+        <tr>
+            <td style="text-align:center; font-weight:100">
+                <label>User Name:</label>
+                <input type="text" id="USER_CONTROL_REGISTRATION_USERNAME" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center; font-weight:100">
+                <label>Email:</label>
+                <input type="text" id="USER_CONTROL_REGISTRATION_EMAIL" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center; font-weight:100">
+                <label>Password:</label>
+                <input type="password" id="USER_CONTROL_REGISTRATION_PASSWORD" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center; font-weight:100">
+                <label>Confirm Password:</label>
+                <input type="password" id="USER_CONTROL_REGISTRATION_CONFIRM_PASSWORD" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                <input type="button" id="hvJsRegisterBtn" value="Register" onclick="RegistrationController.Register()" />
+                <input type="button" id="hvJsRegisterCancelBtn" value="Cancel" onclick="RegistrationController.Cancel()" />
+            </td>
+        </tr>
+    </table>
 </div>
-<table width="100%">
-	<tr> 
-		<td style="text-align:center; font-weight:100">
-			<label>User Name:</label>
-			<input type="text" id="USER_CONTROL_REGISTRATION_USERNAME" />
-		</td>
-	</tr>
-	<tr> 
-		<td  style="text-align:center; font-weight:100">
-			<label>Email:</label>
-			<input type="text" id="USER_CONTROL_REGISTRATION_EMAIL" />
-		</td>
-	</tr> 
-	<tr> 
-		<td  style="text-align:center; font-weight:100">
-			<label>Password:</label>
-			<input type="password" id="USER_CONTROL_REGISTRATION_PASSWORD" />
-		</td>
-	</tr>
-	<tr> 
-		<td style="text-align:center; font-weight:100">
-			<label>Confirm Password:</label>
-			<input type="password" id="USER_CONTROL_REGISTRATION_CONFIRM_PASSWORD" />
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:center">
-			<input type="button" id="hvJsRegisterBtn" value="Register" onclick="RegistrationController.Register()" />
-			<input type="button" id="hvJsRegisterCancelBtn" value="Cancel" onclick="RegistrationController.Cancel()" />
-		</td>
-	</tr>
-</table>

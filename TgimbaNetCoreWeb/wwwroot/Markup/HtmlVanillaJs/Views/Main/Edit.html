@@ -1,55 +1,53 @@
-﻿<div>
-	<label id="lbEditTitleDiv"></label>
+﻿<div class="tgimbaComponent">
+    <table width="100%">
+        <tr>
+            <td style="text-align:center">
+                <label>Item Name:</label>
+                <input type="text" id="USER_CONTROL_EDIT_ITEM_NAME" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center; font-weight:100">
+                <label>Date Created:</label>
+                <input type="text" id="USER_CONTROL_EDIT_DATE_CREATED" readonly />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                <label>Category:</label>
+                <select id="USER_CONTROL_EDIT_ITEM_CATEGORY">
+                    <option value="Hot">Hot</option>
+                    <option value="Warm" selected="selected">Warm</option>
+                    <option value="Cool">Cool</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center; font-weight:100">
+                <label>Completed:</label>
+                <input type="checkbox" id="USER_CONTROL_EDIT_COMPLETED" value="Completed" checked>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                <label>Latitude:</label>
+                <input type="text" id="USER_CONTROL_EDIT_LATITUDE" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center; font-weight:100">
+                <label>Longitude:</label>
+                <input type="text" id="USER_CONTROL_EDIT_LONGITUDE" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                <input type="button" id="hvJsEditSubmitBtn" value="Edit" onclick="MainController.Edit()" />
+                <input type="button" id="hvJsEditCancellBtn" value="Cancel" onclick="MainController.Index()" />
+            </td>
+        </tr>
+    </table>
+
+    <input type="hidden" id="USER_CONTROL_EDIT_DBID" value="">
+    <input type="hidden" id="USER_CONTROL_EDIT_USERNAME" value="">
 </div>
-<table width="100%">
-    <tr>                   
-         <td style="text-align:center">         
-            <label>Item Name:</label>
-            <input type="text" id="USER_CONTROL_EDIT_ITEM_NAME" />
-        </td>
-    </tr>
-    <tr>      
-        <td style="text-align:center; font-weight:100">
-            <label>Date Created:</label>
-            <input type="text" id="USER_CONTROL_EDIT_DATE_CREATED" readonly />
-        </td>
-    </tr>		   
-	<tr>                   
-         <td style="text-align:center">         
-            <label>Category:</label>
-			 <select id="USER_CONTROL_EDIT_ITEM_CATEGORY">
-			  <option value="Hot">Hot</option>
-			  <option value="Warm" selected="selected">Warm</option>
-			  <option value="Cool">Cool</option>
-			</select>
-        </td>
-    </tr>
-    <tr>      
-        <td style="text-align:center; font-weight:100">
-            <label>Completed:</label>
-			<input type="checkbox" id="USER_CONTROL_EDIT_COMPLETED" value="Completed" checked>
-        </td>
-    </tr>  	 
-	<tr>                   
-         <td style="text-align:center">         
-            <label>Latitude:</label>
-            <input type="text" id="USER_CONTROL_EDIT_LATITUDE" />
-        </td>
-    </tr>
-    <tr>      
-        <td style="text-align:center; font-weight:100">
-            <label>Longitude:</label>
-            <input type="text" id="USER_CONTROL_EDIT_LONGITUDE" />
-        </td>
-    </tr>  
-    <tr>
-        <td style="text-align:center">
-            <input type="button" id="hvJsEditSubmitBtn" value="Edit" onclick="MainController.Edit()"/>
-			<input type="button" id="hvJsEditCancellBtn" value="Cancel" onclick="MainController.Index()" />
-        </td>
-    </tr>
-</table>								   
-
-<input type="hidden" id="USER_CONTROL_EDIT_DBID" value="">
-<input type="hidden" id="USER_CONTROL_EDIT_USERNAME" value="">
-

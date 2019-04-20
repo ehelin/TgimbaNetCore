@@ -1,3 +1,31 @@
 ﻿.tgimbaBody {
     background-color: #F4E4C1;
 }
+
+.tgimbaComponent {
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+.tgimbaMain {
+    align-content: center;
+}
+
+.tgimbaMain div table {
+    width: 100%;
+}
+
+.tgimbaMain.header {
+    display: block;
+    height:30px;
+}
+
+.tgimbaMain.header.left {
+    float: left;
+}
+
+.tgimbaMain.header.right {
+    float: right;
+}
+
+

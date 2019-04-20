@@ -33,27 +33,30 @@
 		}
 	}
 	function CreateBucketListTable(bucketListData) {
-		// NOTE: style just temporary until css is added	  
-		var bucketListHtmlTable = '<table style="width:100%;border: solid 1px black;">';
+	    var isMobile = SessionGetIsMobile(SESSION_CLIENT_IS_MOBILE);
+		var bucketListHtmlTable = '<table>';
 
 		for (var i = 0; i < bucketListData.length; i++) {
 			var curBucketListItem = bucketListData[i];
 			bucketListHtmlTable += '<tr>';		   
 			var arrayCtr = i + 1;
 
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + arrayCtr.toString() + '</td>'; 
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.name + '</td>';
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.dateCreated + '</td>';
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.bucketListItemType + '</td>';
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.completed + '</td>';
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.latitude + '</td>';
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.longitude + '</td>';	
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.databaseId + '</td>';
-			bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.userName + '</td>';	
+			bucketListHtmlTable += '<td>' + arrayCtr.toString() + '</td>';
+			bucketListHtmlTable += '<td>' + curBucketListItem.name + '</td>';
+
+			if (!booleanIsTrue(isMobile)) {
+			    bucketListHtmlTable += '<td>' + curBucketListItem.dateCreated + '</td>';
+			    bucketListHtmlTable += '<td>' + curBucketListItem.bucketListItemType + '</td>';
+			    bucketListHtmlTable += '<td>' + curBucketListItem.completed + '</td>';
+			    bucketListHtmlTable += '<td>' + curBucketListItem.latitude + '</td>';
+			    bucketListHtmlTable += '<td>' + curBucketListItem.longitude + '</td>';
+			    //bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.databaseId + '</td>';
+			    //bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.userName + '</td>';
+			}
 
 			bucketListHtmlTable += AddEditButton(curBucketListItem);
 
-			bucketListHtmlTable += '<td style="border: solid 1px black;">'								  
+			bucketListHtmlTable += '<td>'
 				+ '<input type="button" value="Delete" id="hvJsFormDeleteBtn" onclick="MainController.FormDeleteClick('
 							+ curBucketListItem.databaseId + ')" ></input>'
 				+ '</td >';			   
@@ -67,7 +70,7 @@
 	}			
 
 	function AddEditButton(curBucketListItem) {
-		var editButton = '<td style="border: solid 1px black;">'
+		var editButton = '<td>'
 			+ '<input type="button" value="Edit" id="hvJsFormEditBtn" onclick="MainController.FormEditClick('	   
 				+ '\'' + curBucketListItem.name + '\', '
 				+ '\'' + curBucketListItem.dateCreated + '\', '
