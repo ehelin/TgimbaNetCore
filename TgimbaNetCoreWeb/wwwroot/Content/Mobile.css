@@ -15,17 +15,48 @@
     width: 100%;
 }
 
-.tgimbaMain.header {
+.tgimbaMainheader {
     display: block;
     height:30px;
+    width: 100%;
+}
+
+.tgimbaMainheaderSearch {
+    display: block;
+    height: 100px;
+}
+
+.tgimbaMainheaderSearchVisible {
+    display: block;
+}
+.tgimbaMainheaderSearchHidden {
+    display: none;
 }
 
 .tgimbaMain.header.left {
     float: left;
+    width: 10%;
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+.tgimbaMainheadercenterhidden {
+    display: none;
+}
+
+.tgimbaMainheadercenterdisplay {
+    display: inline-block; 
+    text-align: center;
+    /*width: 52%;*/
+    border-style: solid;
+    border-color: #080FB5;
 }
 
 .tgimbaMain.header.right {
     float: right;
+    /*width: 25%;*/
+    border-style: solid;
+    border-color: #080FB5;
 }
 
 

@@ -23,10 +23,17 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
 			var cancelSrchResultsContainer = document.getElementById('cancelSrchResults');
 			isNullUndefined(cancelSrchResultsContainer, 'Display.js', 'cancelSrchResults does not exist');
 			var isSearch = SessionGetIsSearch(SESSION_IS_SRCH_VIEW);
+			var mainHeaderDiv = document.getElementById("tgimbaMainHeader");
 			if (isSearch && isSearch === 'true') {
-				cancelSrchResultsContainer.style.display = "block";
+			    cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterdisplay');
+			    cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterhidden');
+			    mainHeaderDiv.classList.add('tgimbaMainheaderSearch');
+			    mainHeaderDiv.classList.remove('tgimbaMainheader');
 			} else {
-				cancelSrchResultsContainer.style.display = "none";
+			    cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterhidden');
+			    cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterdisplay');
+			    mainHeaderDiv.classList.add('tgimbaMainheader');
+			    mainHeaderDiv.classList.remove('tgimbaMainheaderSearch');
 			}
 		}
 	}

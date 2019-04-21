@@ -1,19 +1,20 @@
 ﻿<div class="tgimbaMain">
-    <div class="tgimbaMain header">
+    <div class="tgimbaMainheader" id="tgimbaMainHeader">
         <div class="tgimbaMain header left">
             <input type="button" value="Menu" id="btnMainMenu" onclick="MainController.ShowMenu()" />
         </div>
+
+        <div id="cancelSrchResults" class="tgimbaMainheadercenterhidden">
+            <div style="text-align: center">
+                <p>Viewing Search Results</p>
+                <input type="button" id="USER_CONTROL_CANCEL_BUTTON" onclick="MainController.Index()" value="Cancel" />
+            </div>
+        </div>
+
         <div class="tgimbaMain header right">
             <input type="text" id="USER_CONTROL_SEARCH_TEXT_BOX" />
             <input type="button" id="USER_CONTROL_SEARCH_BUTTON" onclick="MainController.Search()" value="Search" />
         </div>
-
-        <!-- todo format the cancel/search results display-->
-        <div id="cancelSrchResults" style="display:none">
-            <p>Viewing Search Results</p>
-            <input type="button" id="USER_CONTROL_CANCEL_BUTTON" onclick="MainController.Index()" value="Cancel" />
-        </div>
-
     </div>
     <div id="bucketListItems" />
 </div>
