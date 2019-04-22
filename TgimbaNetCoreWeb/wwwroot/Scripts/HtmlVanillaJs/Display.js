@@ -27,13 +27,9 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
 			if (isSearch && isSearch === 'true') {
 			    cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterdisplay');
 			    cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterhidden');
-			    mainHeaderDiv.classList.add('tgimbaMainheaderSearch');
-			    mainHeaderDiv.classList.remove('tgimbaMainheader');
 			} else {
 			    cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterhidden');
 			    cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterdisplay');
-			    mainHeaderDiv.classList.add('tgimbaMainheader');
-			    mainHeaderDiv.classList.remove('tgimbaMainheaderSearch');
 			}
 		}
 	}

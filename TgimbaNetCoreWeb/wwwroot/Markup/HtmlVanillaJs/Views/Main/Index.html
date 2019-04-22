@@ -4,17 +4,20 @@
             <input type="button" value="Menu" id="btnMainMenu" onclick="MainController.ShowMenu()" />
         </div>
 
-        <div id="cancelSrchResults" class="tgimbaMainheadercenterhidden">
-            <div style="text-align: center">
-                <p>Viewing Search Results</p>
-                <input type="button" id="USER_CONTROL_CANCEL_BUTTON" onclick="MainController.Index()" value="Cancel" />
-            </div>
-        </div>
-
         <div class="tgimbaMain header right">
             <input type="text" id="USER_CONTROL_SEARCH_TEXT_BOX" />
             <input type="button" id="USER_CONTROL_SEARCH_BUTTON" onclick="MainController.Search()" value="Search" />
         </div>
     </div>
+       
+    <div id="cancelSrchResults" class="tgimbaMainheadercenterhidden">
+        <div>
+            <p>Viewing Search Results</p>
+            <input type="button" 
+                   id="USER_CONTROL_CANCEL_BUTTON" 
+                   onclick="MainController.Index()" value="Cancel" />
+        </div>
+    </div>
+
     <div id="bucketListItems" />
 </div>
