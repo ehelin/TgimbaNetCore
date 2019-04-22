@@ -1,5 +1,44 @@
 ﻿.tgimbaBody {
     background-color: #F4E4C1;
+    font-family: Arial;
+    font-size: 16pt;
+    color: #080FB5;
+}
+
+.tgimbaBody input[type=button] {    
+    font-family: Arial;
+    font-size: 16pt;
+    background-color: #e6d5bf;
+    color: #080FB5;
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+.tgimbaBody input[type=text]  {    
+    font-family: Arial;
+    font-size: 16pt;
+    background-color: #F4E4C1;
+    color: #080FB5;
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+.tgimbaBody input[type=password]  {    
+    font-family: Arial;
+    font-size: 16pt;
+    background-color: #F4E4C1;
+    color: #080FB5;
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+.tgimbaBody select {    
+    font-family: Arial;
+    font-size: 16pt;
+    background-color: #F4E4C1;
+    color: #080FB5;
+    border-style: solid;
+    border-color: #080FB5;
 }
 
 .tgimbaComponent {
@@ -25,6 +64,12 @@
 .tgimbaMain.header.right {
     float: right;
 }
+/* main page-seach results */
+.tgimbaMain.title {
+    text-align: center;
+    height:30px;
+    width: 100%;
+}
 
 /* main page-seach results */
 .tgimbaMainheadercenterhidden {
@@ -39,6 +84,18 @@
 .tgimbaMain div table {
     width: 100%;
 }
-
-
+.tgimbaMain div table td:nth-child(1) {
+    width: 5%;
+}
+.tgimbaMain div table td:nth-child(2) {
+    width: 79%;
+}
+.tgimbaMain div table td:nth-child(3) {
+    width: 8%;
+    text-align: right;
+}
+.tgimbaMain div table td:nth-child(4) {
+    width: 8%;
+    text-align: left;
+}
 
