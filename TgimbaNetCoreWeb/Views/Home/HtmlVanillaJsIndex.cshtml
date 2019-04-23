@@ -57,7 +57,7 @@
 			bucketListHtmlTable += AddEditButton(curBucketListItem);
 
 			bucketListHtmlTable += '<td>'
-				+ '<input type="button" value="Delete" id="hvJsFormDeleteBtn" onclick="MainController.FormDeleteClick('
+				+ '<input type="button" class="button" value="Delete" id="hvJsFormDeleteBtn" onclick="MainController.FormDeleteClick('
 							+ curBucketListItem.databaseId + ')" ></input>'
 				+ '</td >';			   
 				
@@ -71,7 +71,7 @@
 
 	function AddEditButton(curBucketListItem) {
 		var editButton = '<td>'
-			+ '<input type="button" value="Edit" id="hvJsFormEditBtn" onclick="MainController.FormEditClick('	   
+			+ '<input type="button" class="button" value="Edit" id="hvJsFormEditBtn" onclick="MainController.FormEditClick('
 				+ '\'' + curBucketListItem.name + '\', '
 				+ '\'' + curBucketListItem.dateCreated + '\', '
 				+ '\'' + curBucketListItem.bucketListItemType + '\', '

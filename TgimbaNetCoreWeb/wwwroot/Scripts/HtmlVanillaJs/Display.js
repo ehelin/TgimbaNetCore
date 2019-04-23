@@ -24,6 +24,7 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
 			isNullUndefined(cancelSrchResultsContainer, 'Display.js', 'cancelSrchResults does not exist');
 			var isSearch = SessionGetIsSearch(SESSION_IS_SRCH_VIEW);
 			var mainHeaderDiv = document.getElementById("tgimbaMainHeader");
+
 			if (isSearch && isSearch === 'true') {
 			    cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterdisplay');
 			    cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterhidden');
