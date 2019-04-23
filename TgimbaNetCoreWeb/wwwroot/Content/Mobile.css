@@ -42,11 +42,26 @@
 }
 
 .tgimbaComponent {
+    width: 100%;
     border-style: solid;
     border-color: #080FB5;
 }
 
-/* main page */
+.tgimbaForm table {
+    width: 100%;
+ }
+.tgimbaForm table tr {
+    width: 100%;
+ }
+.tgimbaForm.leftLabel {
+    width: 50%; 
+    text-align: right;
+}
+.tgimbaForm.rightLabel {
+    text-align: left;
+}
+
+/* main page =============================================== */
 .tgimbaMain {
     align-content: center;
 }
