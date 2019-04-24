@@ -20,7 +20,7 @@ namespace TgimbaNetCoreWeb.Controllers
         [HttpGet]
         public bool IsMobile(string userAgent)
         {
-            return true;//Utilities.IsMobile(userAgent);
+            return Utilities.IsMobile(userAgent);
         }
 
         [HttpPost]

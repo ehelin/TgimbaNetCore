@@ -1,3 +1,131 @@
 ﻿.tgimbaBody {
     background-color: #F4E4C1;
+    font-family: Arial;
+    font-size: 12pt;
+    color: #080FB5;
+}
+
+.tgimbaBody input[type=button] {    
+    font-family: Arial;
+    font-size: 12pt;
+    background-color: #e6d5bf;
+    color: #080FB5;
+}
+
+.tgimbaBody input[type=text]  {    
+    font-family: Arial;
+    font-size: 12pt;
+    background-color: #F4E4C1;
+    color: #080FB5;
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+.tgimbaBody input[type=password]  {    
+    font-family: Arial;
+    font-size: 12pt;
+    background-color: #F4E4C1;
+    color: #080FB5;
+    border-style: groove;
+    border-color: #080FB5;
+}
+
+.tgimbaComponent {
+    width: 100%;
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+.tgimbaForm table {
+    width: 100%;
+ }
+.tgimbaForm table tr {
+    width: 100%;
+    border: solid;
+ }
+.tgimbaForm.leftLabel {
+    width: 50%; 
+    text-align: right;
+}
+.tgimbaForm.centerLabel {
+    text-align: center;
+}
+.tgimbaForm.centerLabel td {
+    text-align: center;
+}
+.tgimbaForm.rightLabel {
+    text-align: left;
+}
+
+.button {    
+    border-style: solid;
+    border-color: #080FB5;
+}
+
+/* menu */
+.menu {
+    background-image: url("../Images/MenuDesktop.png");
+    width: 250px;
+    height: 40px;
+    border: none;
+    background-repeat: no-repeat;
+}
+
+/* main page =============================================== */
+.tgimbaMain {
+    align-content: center;
+}
+
+/* main page-header */
+.tgimbaMainheader {
+    display: block;
+    height:50px;
+    width: 100%;
+}
+.tgimbaMain.header.left {
+    float: left;
+    width: 10%;
+}
+.tgimbaMain.header.right {
+    float: right;
+}
+/* main page-seach results */
+.tgimbaMain.title {
+    text-align: right;
+    border-bottom: solid;
+    font-size: 20pt;
+    height:30px;
+    width: 100%;
+}
+
+/* main page-seach results */
+.tgimbaMainheadercenterhidden {
+    display: none;
+}
+.tgimbaMainheadercenterdisplay {
+    display: block; 
+    text-align: center;
+}
+
+/* main page-bucket list items*/
+.tgimbaMain div table {
+    width: 100%;
+}
+.tgimbaMain div table td:nth-child(1) {
+    width: 5%;
+    border-right: solid;
+}
+.tgimbaMain div table td:nth-child(2) {
+    width: 79%;
+    border-right: solid;
+}
+.tgimbaMain div table td:nth-child(3) {
+    width: 8%;
+    text-align: right;
+    border-right: solid;
+}
+.tgimbaMain div table td:nth-child(4) {
+    width: 8%;
+    text-align: left;
+    border-right: solid;
 }
