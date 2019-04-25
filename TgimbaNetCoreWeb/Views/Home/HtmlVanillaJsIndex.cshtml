@@ -34,24 +34,33 @@
 	}
 	function CreateBucketListTable(bucketListData) {
 	    var isMobile = SessionGetIsMobile(SESSION_CLIENT_IS_MOBILE);
-		var bucketListHtmlTable = '<table>';
+	    var bucketListHtmlTable = '<table>';
+
+	    if (!booleanIsTrue(isMobile)) {
+	        bucketListHtmlTable = DesktopHeader(bucketListHtmlTable);
+	    }
 
 		for (var i = 0; i < bucketListData.length; i++) {
 			var curBucketListItem = bucketListData[i];
-			bucketListHtmlTable += '<tr>';		   
 			var arrayCtr = i + 1;
 
+			bucketListHtmlTable += '<tr>';
 			bucketListHtmlTable += '<td>' + arrayCtr.toString() + '</td>';
 			bucketListHtmlTable += '<td>' + curBucketListItem.name + '</td>';
 
 			if (!booleanIsTrue(isMobile)) {
 			    bucketListHtmlTable += '<td>' + curBucketListItem.dateCreated + '</td>';
-			    bucketListHtmlTable += '<td>' + curBucketListItem.bucketListItemType + '</td>';
-			    bucketListHtmlTable += '<td>' + curBucketListItem.completed + '</td>';
-			    bucketListHtmlTable += '<td>' + curBucketListItem.latitude + '</td>';
-			    bucketListHtmlTable += '<td>' + curBucketListItem.longitude + '</td>';
-			    //bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.databaseId + '</td>';
-			    //bucketListHtmlTable += '<td style="border: solid 1px black;">' + curBucketListItem.userName + '</td>';
+
+			    bucketListHtmlTable += '<td>'
+                                        + SetCategory(curBucketListItem.bucketListItemType)
+                                          + '</td>';
+                
+			    bucketListHtmlTable += '<td>' 
+                                        + RenderCompletedCheckBox(curBucketListItem.completed)
+                                            + '</td>';       
+
+			    bucketListHtmlTable += '<td>' + parseFloat(curBucketListItem.latitude).toFixed(2) + '</td>';
+			    bucketListHtmlTable += '<td>' + parseFloat(curBucketListItem.longitude).toFixed(2) + '</td>';
 			}
 
 			bucketListHtmlTable += AddEditButton(curBucketListItem);
@@ -67,7 +76,21 @@
 		bucketListHtmlTable += '</table>';	
 
 		return bucketListHtmlTable;
-	}			
+	}
+
+	function DesktopHeader(bucketListHtmlTable) {
+	    bucketListHtmlTable += '<tr>'
+                + '<td></td>'
+                + '<td>Name</td>'
+                + '<td>Created</td>'
+                + '<td>Category</td>'
+                + '<td>Completed</td>'
+                + '<td>Latitude</td>'
+                + '<td>Longitude</td>'
+                + '</tr>'
+
+	    return bucketListHtmlTable;
+	}
 
 	function AddEditButton(curBucketListItem) {
 		var editButton = '<td>'

@@ -32,6 +32,25 @@ function HasValue(ctrlId, type, file) {
     return true;
 }
 
+function SetCategory(id) {
+    //3 hot, 2 warm, 1 cold, 0 cool
+    if (id === 3) {
+        return 'Hot';           		//hot
+    } else if (id === 2) {
+        return 'Warm';          		//warm
+    } else {
+        return 'Cool'; 	                //cool/cold
+    }
+}
+
+function RenderCompletedCheckBox(isCompleted) {
+    if (isCompleted && isCompleted === true) {
+        return '<input type="checkbox" checked disabled="disabled" >';
+    }
+
+    return '<input type="checkbox" disabled="disabled" >';
+}
+
 function SetElementValue(ctrlName, value) {
 	ctrlObj = document.getElementById(ctrlName);
 

@@ -30,6 +30,15 @@
     border-color: #080FB5;
 }
 
+.tgimbaBody select {    
+    font-family: Arial;
+    font-size: 12pt;
+    background-color: #F4E4C1;
+    color: #080FB5;
+    border-style: solid;
+    border-color: #080FB5;
+}
+
 .tgimbaComponent {
     width: 100%;
     border-style: solid;
@@ -121,11 +130,20 @@
 }
 .tgimbaMain div table td:nth-child(3) {
     width: 8%;
-    text-align: right;
+    text-align: center;
     border-right: solid;
 }
 .tgimbaMain div table td:nth-child(4) {
     width: 8%;
-    text-align: left;
+    text-align: center;
     border-right: solid;
+}
+.tgimbaMain div table td:nth-child(5) {
+    text-align: center;
+}
+.tgimbaMain div table td:nth-child(6) {
+    text-align: center;
+}
+.tgimbaMain div table td:nth-child(7) {
+    text-align: center;
 }
