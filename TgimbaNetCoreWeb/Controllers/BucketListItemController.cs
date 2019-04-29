@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace TgimbaNetCoreWeb.Controllers
 {				 
-	//[RequireHttpsAttribute]
+	[RequireHttpsAttribute]
     public class BucketListItemController : Controller
     {
 		private SharedBucketListController sharedBucketListController = null;

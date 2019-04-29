@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TgimbaNetCoreWeb.Controllers
 {				 
-	//[RequireHttpsAttribute]
+	[RequireHttpsAttribute]
     public class HomeController : Controller
     {                    
         public IActionResult HtmlVanillaJsIndex()

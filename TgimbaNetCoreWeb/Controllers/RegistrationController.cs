@@ -6,7 +6,7 @@ using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
 {				 
-	//[RequireHttpsAttribute]
+	[RequireHttpsAttribute]
     public class RegistrationController	: Controller
     {
 		private SharedRegistrationController sharedRegistrationController = null;
