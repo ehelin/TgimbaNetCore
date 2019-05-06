@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		tgimbaNetCoreBuild.bat = tgimbaNetCoreBuild.bat
 		Todo.txt = Todo.txt
 		unzip.php = unzip.php
+		webConfigPipeline.txt = webConfigPipeline.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{7E8FA25C-A969-4229-BC9F-36BA4BD71187}"

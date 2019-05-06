@@ -1,0 +1,6 @@
+echo add directory browsing off to web.config
+cd d:\a\1\s\TgimbaNetCoreWeb\obj\Release\netcoreapp2.1\PubTmp\Out
+dir
+del web.config
+copy NUL web.config
+echo ^<?xml version="1.0" encoding="utf-8"?^>^<configuration^>^<location path="." inheritInChildApplications="false"^>^<system.webServer^>^<directoryBrowse enabled="false" /^>^<handlers^>^<add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModule" resourceType="Unspecified" /^>^</handlers^>^<aspNetCore processPath="dotnet" arguments=".\TgimbaNetCoreWeb.dll" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" /^>^</system.webServer^>^</location^>^</configuration^> > web.config
