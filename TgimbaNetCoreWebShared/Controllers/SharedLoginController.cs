@@ -16,13 +16,5 @@ namespace TgimbaNetCoreWebShared.Controllers
 
             return token;
         }
-   
-        [HttpPost]
-        public string JQueryLogin([FromBody] SharedLoginModel login)
-        {
-            string token = this.webClient.Login(login.Username, login.Password);
-
-            return token;
-        }
     }
 }

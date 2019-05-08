@@ -19,13 +19,5 @@ namespace TgimbaNetCoreWebShared.Controllers
 
             return registered;
 		} 
-		   	   
-        [HttpPost]
-        public bool JQueryRegistration([FromBody] SharedRegistrationModel registration)
-        {
-            bool goodRegistration = this.webClient.Registration(registration.Username, registration.Email, registration.Password);
-
-            return goodRegistration;
-        }
     }
 }

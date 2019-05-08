@@ -5,7 +5,7 @@
     color: #080FB5;
 }
 
-.tgimbaBody input[type=button] {    
+.button {    
     font-family: Arial;
     font-size: 16pt;
     background-color: #e6d5bf;
@@ -46,10 +46,10 @@
 }
 
 .tgimbaForm table {
-    width: 100%;
+    /*width: 100%;*/
  }
 .tgimbaForm table tr {
-    width: 100%;
+    /*width: 100%;*/
  }
 .tgimbaForm.leftLabel {
     width: 50%; 
@@ -68,6 +68,39 @@
 .button {    
     border-style: solid;
     border-color: #080FB5;
+}
+
+.buttonSearch {    
+    width: 31px;  
+    height: 31px;
+    vertical-align: middle;
+    /*text-align: center;*/
+    background-image: url("../Images/SearchFileCabinet.png");
+    background-repeat: no-repeat;
+    border: none;
+    /*border: solid 1px;*/
+}
+
+.buttonDelete {    
+    width: 31px;  
+    height: 31px;
+    vertical-align: middle;
+    /*text-align: center;*/
+    background-image: url("../Images/Delete.png");
+    background-repeat: no-repeat;
+    border: none;
+    /*border: solid 1px;*/
+}
+
+.buttonEdit {    
+    width: 31px;  
+    height: 31px;
+    vertical-align: middle;
+    /*text-align: center;*/
+    background-image: url("../Images/Edit.png");
+    background-repeat: no-repeat;
+    border: none;
+    /*border: solid 1px;*/
 }
 
 /* menu */
@@ -96,12 +129,18 @@
 }
 .tgimbaMain.header.right {
     float: right;
+    vertical-align: middle;
 }
+
+.tgimbaMain.header.right input[type=text] {
+    width: 100px;
+}
+
 /* main page-seach results */
 .tgimbaMain.title {
     text-align: center;
     height:30px;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 /* main page-seach results */
