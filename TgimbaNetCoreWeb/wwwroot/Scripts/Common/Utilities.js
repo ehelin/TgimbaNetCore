@@ -17,6 +17,17 @@ function booleanIsTrue(booleanValue) {
 
     return false;
 }
+
+function setSearchButtonClass() {
+    var isMobile = SessionGetIsMobile(SESSION_CLIENT_IS_MOBILE);
+    
+    if (!booleanIsTrue(isMobile)) {
+        document.getElementById("USER_CONTROL_SEARCH_BUTTON").classList.add('button');
+        document.getElementById("USER_CONTROL_SEARCH_BUTTON").value = "Search";
+    } else {
+        document.getElementById("USER_CONTROL_SEARCH_BUTTON").classList.add('buttonSearch');
+    }
+}
           
 function HasValue(ctrlId, type, file) {
     var ctrl = document.getElementById(ctrlId);

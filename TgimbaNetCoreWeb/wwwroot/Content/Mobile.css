@@ -71,8 +71,8 @@
 }
 
 .buttonSearch {    
-    width: 31px;  
-    height: 31px;
+    width: 30px;  
+    height: 30px;
     vertical-align: middle;
     /*text-align: center;*/
     background-image: url("../Images/SearchFileCabinet.png");
@@ -82,8 +82,8 @@
 }
 
 .buttonDelete {    
-    width: 31px;  
-    height: 31px;
+    width: 30px;  
+    height: 30px;
     vertical-align: middle;
     /*text-align: center;*/
     background-image: url("../Images/Delete.png");
@@ -93,8 +93,8 @@
 }
 
 .buttonEdit {    
-    width: 31px;  
-    height: 31px;
+    width: 30px;  
+    height: 30px;
     vertical-align: middle;
     /*text-align: center;*/
     background-image: url("../Images/Edit.png");

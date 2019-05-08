@@ -31,6 +31,8 @@
 																			 
 			htmlDiv.innerHTML = bucketListHtmlTable;
 		}
+
+		setSearchButtonClass();
 	}
 	function CreateBucketListTable(bucketListData) {
 	    var isMobile = SessionGetIsMobile(SESSION_CLIENT_IS_MOBILE);
@@ -63,11 +65,15 @@
 			    bucketListHtmlTable += '<td>' + parseFloat(curBucketListItem.longitude).toFixed(2) + '</td>';
 			}
 
-			bucketListHtmlTable += AddEditButton(curBucketListItem);
+			bucketListHtmlTable += AddEditButton(curBucketListItem, isMobile);
+
+			var secondLine = booleanIsTrue(isMobile) === true
+                       ? '<input type="button" class="buttonDelete" id="hvJsFormDeleteBtn" onclick="MainController.FormDeleteClick('
+                            : '<input type="button" class="button" id="hvJsFormDeleteBtn" value="Delete" onclick="MainController.FormDeleteClick(';
 
 			bucketListHtmlTable += '<td>'
-				+ '<input type="button" class="buttonDelete" id="hvJsFormDeleteBtn" onclick="MainController.FormDeleteClick('
-							+ curBucketListItem.databaseId + ')" ></input>'
+				                    + secondLine
+							            + curBucketListItem.databaseId + ')" ></input>'
 				+ '</td >';			   
 				
 			bucketListHtmlTable += '</tr>';	  
@@ -92,9 +98,12 @@
 	    return bucketListHtmlTable;
 	}
 
-	function AddEditButton(curBucketListItem) {
+	function AddEditButton(curBucketListItem, isMobile) {
+	    var secondLine = booleanIsTrue(isMobile) === true 
+                           ? '<input type="button" class="buttonEdit" id="hvJsFormEditBtn" onclick="MainController.FormEditClick('
+	                            : '<input type="button" class="button" id="hvJsFormEditBtn" value="Edit" onclick="MainController.FormEditClick(';
 		var editButton = '<td>'
-			+ '<input type="button" class="buttonEdit" id="hvJsFormEditBtn" onclick="MainController.FormEditClick('
+			+ secondLine
 				+ '\'' + curBucketListItem.name + '\', '
 				+ '\'' + curBucketListItem.dateCreated + '\', '
 				+ '\'' + curBucketListItem.bucketListItemType + '\', '
