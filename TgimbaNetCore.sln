@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		clean.ps1 = clean.ps1
 		CreateSpanishAppTablesData.sql = CreateSpanishAppTablesData.sql
 		FolderProfile.pubxml = FolderProfile.pubxml
+		insertBuildStatistics.ps1 = insertBuildStatistics.ps1
 		JSTest.dll = JSTest.dll
 		tgimbaNetCoreBuild.bat = tgimbaNetCoreBuild.bat
 		Todo.txt = Todo.txt
