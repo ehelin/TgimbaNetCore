@@ -270,3 +270,5 @@ __pycache__/
 /Shared/misc/Credentials.cs
 /Untitled3.ps1
 /Untitled4.ps1
+/TgimbaAzureFunctionPing/TgimbaPingAzureFunction.csproj
+/TgimbaAzureFunctionPing/AzureFunction.cs
