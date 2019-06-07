@@ -272,3 +272,5 @@ __pycache__/
 /Untitled4.ps1
 /TgimbaAzureFunctionPing/TgimbaPingAzureFunction.csproj
 /TgimbaAzureFunctionPing/AzureFunction.cs
+/TgimbaPingAzureFunction/Properties/PublishProfiles/TgimbaPingAzureFunction20190606094939 - Zip Deploy.pubxml
+/TgimbaPingAzureFunction/Properties/PublishProfiles/TgimbaPingAzureFunction20190606095955 - Zip Deploy.pubxml
