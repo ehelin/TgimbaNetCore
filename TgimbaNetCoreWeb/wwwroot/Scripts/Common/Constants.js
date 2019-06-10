@@ -6,7 +6,8 @@ var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';
 var SESSION_CLIENT_IS_MOBILE = 'SessionIsMobile';
 
-var CONTENT_DIV = 'csHtmlContentDiv';	
+var CONTENT_DIV = 'csHtmlContentDiv';
+var WELCOME_CONTENT_DIV = 'csWelcomeHtmlContentDiv';
 
 var VIEW_MAIN = '/Markup/HtmlVanillaJs/Views/Main/Index.html';
 var VIEW_MAIN_ADD = '/Markup/HtmlVanillaJs/Views/Main/Add.html';
@@ -15,7 +16,7 @@ var VIEW_LOGIN = '/Markup/HtmlVanillaJs/Views/Login/Index.html';
 var VIEW_REGISTRATION = '/Markup/HtmlVanillaJs/Views/Registration/Index.html';
 var VIEW_MENU = '/Markup/HtmlVanillaJs/Views/Menu/Index.html'
 var VIEW_SORT = '/Markup/HtmlVanillaJs/Views/Menu/Sort.html'
-var VIEW_WELCOME = '/Welcome/Index';
+var VIEW_WELCOME = '/Markup/Welcome/Views/Main/Index.html'
 
 var CSS_FILE_MOBILE = 'Content/Mobile.css';
 var CSS_FILE_DESKTOP = 'Content/Desktop.css';

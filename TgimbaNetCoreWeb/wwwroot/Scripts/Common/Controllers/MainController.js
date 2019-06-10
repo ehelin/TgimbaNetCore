@@ -74,7 +74,7 @@ MainController.FormEditClick = function (itemName, dateCreated, bucketListItemTy
 
 	var contentDiv = Display.GetContentDiv();  
 
-	ServerCalls.GetView(VIEW_MAIN_EDIT, contentDiv, editFormValues)
+	CommonServerCalls.GetView(VIEW_MAIN_EDIT, contentDiv, editFormValues)
 };
 
 MainController.FormDeleteClick = function (dbId) {							   

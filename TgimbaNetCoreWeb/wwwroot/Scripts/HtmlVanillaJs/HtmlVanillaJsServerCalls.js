@@ -11,19 +11,6 @@ ServerCalls.IsMobile = function (userAgent) {
         return Error_Handler('ServerCalls.IsMobile(arg) - Error: ' + ex);
     }
 };
-
-ServerCalls.GetView = function(viewUrl, contentDiv, htmlContent) {
-    try {
-        return ServerCall.Get(viewUrl)
-            .then(
-            function (response) {
-				Display.SetView(viewUrl, contentDiv, response, htmlContent);
-            });
-    }
-    catch (ex) {
-        return Error_Handler('ServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
-    }
-};
 	  
 ServerCalls.GetBucketListItems = function(url, params, sortColumn) {
 	var formData = new FormData();
