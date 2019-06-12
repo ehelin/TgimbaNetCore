@@ -1,6 +1,6 @@
-﻿var CommonServerCalls = {};
+﻿var ServerCalls = {};
 
-CommonServerCalls.GetView = function (viewUrl, contentDiv, htmlContent) {
+ServerCalls.GetView = function (viewUrl, contentDiv, htmlContent) {
     try {
         return ServerCall.Get(viewUrl)
             .then(
@@ -9,7 +9,19 @@ CommonServerCalls.GetView = function (viewUrl, contentDiv, htmlContent) {
             });
     }
     catch (ex) {
-        return Error_Handler('CommonServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
+        return Error_Handler('ServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
     }
 };
 	 
+ServerCalls.GetAjaxView = function (viewUrl, contentDiv, htmlContent) {
+    try {
+        return ServerCall.Get(viewUrl)
+            .then(
+            function (response) {
+                Display.SetAjaxView(viewUrl, contentDiv, response, htmlContent);
+            });
+    }
+    catch (ex) {
+        return Error_Handler('ServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
+    }
+};

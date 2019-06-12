@@ -38,5 +38,5 @@ MenuController.Sort = function (sortColumnParam) {
 		sortColumn = sortColumn + ' DESC';
 	}
 
-	ServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params, sortColumn);
+	HtmlVanillaJsServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params, sortColumn);
 };

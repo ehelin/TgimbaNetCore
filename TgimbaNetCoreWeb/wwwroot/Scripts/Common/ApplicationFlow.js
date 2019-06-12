@@ -15,7 +15,7 @@ ApplicationFlow.SetView = function(view) {
 };
 
 ApplicationFlow.SetLayout = function () {
-    return ServerCalls.IsMobile(window.navigator.userAgent)
+    return HtmlVanillaJsServerCalls.IsMobile(window.navigator.userAgent)
         .then(
             function (response) {
                 var cssFileName = null;

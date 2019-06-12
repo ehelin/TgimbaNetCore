@@ -34,7 +34,7 @@ MainController.Index = function (srchTerm) {
 		SessionSetIsSearch(SESSION_IS_SRCH_VIEW, undefined);
 	}
 
-	ServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params);
+	HtmlVanillaJsServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params);
 };
 
 MainController.ShowMenu = function () {
@@ -74,7 +74,7 @@ MainController.FormEditClick = function (itemName, dateCreated, bucketListItemTy
 
 	var contentDiv = Display.GetContentDiv();  
 
-	CommonServerCalls.GetView(VIEW_MAIN_EDIT, contentDiv, editFormValues)
+	ServerCalls.GetView(VIEW_MAIN_EDIT, contentDiv, editFormValues)
 };
 
 MainController.FormDeleteClick = function (dbId) {							   
@@ -87,7 +87,7 @@ MainController.Edit = function () {
 		"MainController.js"
 	);
 
-	ServerCalls.EditBucketListItem(BUCKET_LIST_PROCESS_EDIT, params);
+	HtmlVanillaJsServerCalls.EditBucketListItem(BUCKET_LIST_PROCESS_EDIT, params);
 };
 
 MainController.Add = function () {
@@ -96,5 +96,5 @@ MainController.Add = function () {
 		"MainController.js"
 	);
 
-	ServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
+	HtmlVanillaJsServerCalls.AddBucketListItem(BUCKET_LIST_PROCESS_ADD, params);
 };

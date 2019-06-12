@@ -21,5 +21,5 @@ RegistrationController.Register = function() {
 									"RegistrationController.js"
 								);
 
-	ServerCalls.ProcessRegistration(REGISTRATION_PROCESS_REGISTRATION, params);
+	HtmlVanillaJsServerCalls.ProcessRegistration(REGISTRATION_PROCESS_REGISTRATION, params);
 };

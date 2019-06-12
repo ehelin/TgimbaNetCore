@@ -1,14 +1,13 @@
 ﻿<div id="body" style="width: 100%; text-align: center">
     <div id="loginOptions">
-        <p>Put login options here</p>
+        <input type="button" id="htmlVanillaJsLogin" onclick="WelcomeController.VanillaJSLogin();" value="Vanilla JS Client Login" />
+        <br />
+        <input type="button" id="angularTypeScriptLogin" onclick="WelcomeController.AngularTypeScript();" value="Angular TypeScript Client Login" /
+        ><br />
+        <input type="button" id="reactReduxJsLogin" onclick="WelcomeController.ReactReduxJSLogin();" value="React Redux JS Client Login" />
     </div>
     <div id="welcomeTitle">
         <h2>Welcome to The Globe In My BucketList Application (TGIMBA)</h2>
     </div>
-    <div id="systemStatus">
-        <p>Put status here (async load)</p>
-    </div>
-    <div id="buildStatistics">
-        <p>Put build statistics here (async load)</p>
-    </div>
+    <div id="systemStatistics" />
 </div>

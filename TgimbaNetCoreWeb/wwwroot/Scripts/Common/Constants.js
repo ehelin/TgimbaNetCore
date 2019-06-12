@@ -17,10 +17,12 @@ var VIEW_REGISTRATION = '/Markup/HtmlVanillaJs/Views/Registration/Index.html';
 var VIEW_MENU = '/Markup/HtmlVanillaJs/Views/Menu/Index.html'
 var VIEW_SORT = '/Markup/HtmlVanillaJs/Views/Menu/Sort.html'
 var VIEW_WELCOME = '/Markup/Welcome/Views/Main/Index.html'
+var VIEW_PARTIAL_SYSTEM_STATISTICS = '/Markup/Welcome/Views/Main/Partial_SystemStatus.html'
 
 var CSS_FILE_MOBILE = 'Content/Mobile.css';
 var CSS_FILE_DESKTOP = 'Content/Desktop.css';
 
+var VANILLA_JS_LOGIN = '/home/HtmlVanillaJsIndex';
 var LOGIN_PROCESS_USER = '/Login/Login';	
 var REGISTRATION_PROCESS_REGISTRATION = '/Registration/Registration';
 var BUCKET_LIST_PROCESS_GET = '/BucketListItem/GetBucketListItems';

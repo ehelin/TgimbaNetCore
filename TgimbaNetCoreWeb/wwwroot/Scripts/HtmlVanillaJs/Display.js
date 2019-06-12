@@ -49,7 +49,7 @@ Display.BindEditView = function (htmlContent) {
 		
 Display.LoadView = function(view, htmlContent) { 
     var contentDiv = Display.GetContentDiv();  
-    CommonServerCalls.GetView(view, contentDiv, htmlContent);
+    ServerCalls.GetView(view, contentDiv, htmlContent);
 };
 
 Display.SetTitle = function(divName, title) {	

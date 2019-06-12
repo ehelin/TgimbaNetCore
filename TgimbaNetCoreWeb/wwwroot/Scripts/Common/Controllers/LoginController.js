@@ -15,7 +15,7 @@ LoginController.Login = function() {
 									"LoginController.js"
 								);
 	
-	ServerCalls.ProcessLogin(LOGIN_PROCESS_USER, params);
+  	HtmlVanillaJsServerCalls.ProcessLogin(LOGIN_PROCESS_USER, params);
 };
 
 LoginController.IsLoggedIn = function() {	

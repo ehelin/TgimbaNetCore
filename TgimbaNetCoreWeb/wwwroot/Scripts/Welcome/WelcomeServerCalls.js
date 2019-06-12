@@ -1,6 +1,6 @@
-﻿var ServerCalls = {};
+﻿var WelcomeServerCalls = {};
 
-ServerCalls.LoadWelcomePage = function () {
+WelcomeServerCalls.LoadWelcomePage = function () {
     var htmlContent = null; // TODO implement
     return Display.LoadView(VIEW_WELCOME, null);
 };

@@ -1,6 +1,6 @@
-﻿var ServerCalls = {};
+﻿var HtmlVanillaJsServerCalls = {};
 
-ServerCalls.IsMobile = function (userAgent) {
+HtmlVanillaJsServerCalls.IsMobile = function (userAgent) {
     try {
         return ServerCall.Get(BUCKET_LIST_ISMOBILE + userAgent)
                 .then(
@@ -8,11 +8,11 @@ ServerCalls.IsMobile = function (userAgent) {
                     return response;
                 });
     } catch (ex) {
-        return Error_Handler('ServerCalls.IsMobile(arg) - Error: ' + ex);
+        return Error_Handler('HtmlVanillaJsServerCalls.IsMobile(arg) - Error: ' + ex);
     }
 };
 	  
-ServerCalls.GetBucketListItems = function(url, params, sortColumn) {
+HtmlVanillaJsServerCalls.GetBucketListItems = function (url, params, sortColumn) {
 	var formData = new FormData();
 	var userName = params[0];	 
 	var token = params[1];
@@ -35,7 +35,7 @@ ServerCalls.GetBucketListItems = function(url, params, sortColumn) {
 				});
 };
 
-ServerCalls.EditBucketListItem = function (url, params) {
+HtmlVanillaJsServerCalls.EditBucketListItem = function (url, params) {
 	var formData = new FormData();
 	var user = SessionGetUsername(SESSION_USERNAME);
 
@@ -63,7 +63,7 @@ ServerCalls.EditBucketListItem = function (url, params) {
 			});
 };
 
-ServerCalls.AddBucketListItem = function (url, params) {
+HtmlVanillaJsServerCalls.AddBucketListItem = function (url, params) {
 	var formData = new FormData();	 
 	var user = SessionGetUsername(SESSION_USERNAME);
 
@@ -91,7 +91,7 @@ ServerCalls.AddBucketListItem = function (url, params) {
 			});
 };
 
-ServerCalls.DeleteBucketListItem = function (url, dbId) {
+HtmlVanillaJsServerCalls.DeleteBucketListItem = function (url, dbId) {
 	var formData = new FormData();
 	var user = SessionGetUsername(SESSION_USERNAME);
 													 
@@ -112,7 +112,7 @@ ServerCalls.DeleteBucketListItem = function (url, dbId) {
 			});
 };
 
-ServerCalls.ProcessLogin = function(view, params) {
+HtmlVanillaJsServerCalls.ProcessLogin = function (view, params) {
 	var formData = new FormData();
 	var userName = params[0];	 
 	var passWord = params[1];
@@ -134,7 +134,7 @@ ServerCalls.ProcessLogin = function(view, params) {
         });
 };
 						  
-ServerCalls.ProcessRegistration = function (view, params) {
+HtmlVanillaJsServerCalls.ProcessRegistration = function (view, params) {
 	var formData = new FormData();
 
 	formData.append("user", btoa(params[0]));

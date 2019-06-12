@@ -1,13 +1,43 @@
-﻿.DashboardSpan {
+﻿.statisticsPanel {    
+	background: yellow;
+    height: 50%;
     width: 100%;
-    height: 30%;
-    margin: auto;
-    font-family: Arial;
+    /*text-align: center;*/
+}
+.systemStatistics {
+    height: 50%;
+    width: 50%;
+    margin: 0 auto;
+	position: relative;
+	background: orange;
+    text-align: center;
+}
+.systemStatistics table {
+	background: pink;
+    text-align: center;
+    width: 100%;
+}
+.horizontalLineOn {
+    text-align: right;
+    background-color: forestgreen;
+}
+.horizontalLineOff {
+    text-align: right;
+    background-color: gray;
+}
+.verticalLineOn {
+    text-align: left;
+    background-color: forestgreen;
+}
+.verticalLineOff {
+    text-align: left;
+    background-color: gray;
 }
 
-.DashboardPartSpan {
-    width: 30%;
-    height: 30%;
-    margin: auto;
-    font-family: Arial;
+.buildStatistics {
+    height: 50%;
+    width: 50%;
+    margin: 0 auto;
+	position: relative;
+	background: green;
 }
