@@ -5,8 +5,10 @@ using TgimbaNetCoreWebShared.Models;
 using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
-{				 
-	[RequireHttpsAttribute]
+{
+    #if !DEBUG
+    [RequireHttpsAttribute]
+    #endif
     public class LoginController : Controller
     {
 		private SharedLoginController sharedLoginController = null;

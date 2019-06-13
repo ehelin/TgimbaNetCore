@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;									 
 
 namespace TgimbaNetCoreWeb.Controllers
-{ 
-	[RequireHttpsAttribute]
+{
+    #if !DEBUG
+    [RequireHttpsAttribute]
+    #endif
     public class SpanishController : Controller
     {			
         public SpanishController() {}

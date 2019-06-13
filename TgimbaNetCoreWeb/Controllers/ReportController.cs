@@ -4,8 +4,10 @@ using Shared.interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace TgimbaNetCoreWeb.Controllers
-{			 
-	[RequireHttpsAttribute]
+{
+    #if !DEBUG
+    [RequireHttpsAttribute]
+    #endif
     public class ReportController : Controller
     {
         private ITgimbaService service = null;

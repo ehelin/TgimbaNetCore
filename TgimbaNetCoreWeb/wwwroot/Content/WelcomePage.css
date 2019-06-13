@@ -15,7 +15,7 @@
 .systemStatistics table {
 	background: pink;
     text-align: center;
-    width: 100%;
+    width: 100px;
 }
 .horizontalLineOn {
     text-align: right;
@@ -24,6 +24,7 @@
 .horizontalLineOff {
     text-align: right;
     background-color: gray;
+    border: none;
 }
 .verticalLineOn {
     text-align: left;

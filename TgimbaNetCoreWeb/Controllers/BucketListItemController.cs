@@ -6,8 +6,10 @@ using TgimbaNetCoreWebShared.Models;
 using System.Collections.Generic;   
 
 namespace TgimbaNetCoreWeb.Controllers
-{				 
-	[RequireHttpsAttribute]
+{
+    #if !DEBUG
+    [RequireHttpsAttribute]
+    #endif
     public class BucketListItemController : Controller
     {
 		private SharedBucketListController sharedBucketListController = null;

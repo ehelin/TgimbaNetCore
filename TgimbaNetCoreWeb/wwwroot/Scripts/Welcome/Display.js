@@ -14,7 +14,7 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent) {
 
 Display.SetAjaxView = function (view, contentDiv, loadedView, htmlContent) {
     contentDiv.innerHTML = loadedView;
-    setTimeout(Display.Refresh, 1000);
+    //setTimeout(Display.Refresh, 1000);
 };
 
 Display.Refresh = function () {
