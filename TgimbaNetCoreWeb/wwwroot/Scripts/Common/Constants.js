@@ -9,6 +9,11 @@ var SESSION_CLIENT_IS_MOBILE = 'SessionIsMobile';
 var CONTENT_DIV = 'csHtmlContentDiv';
 var WELCOME_CONTENT_DIV = 'csWelcomeHtmlContentDiv';
 
+var WELCOME_STATUS_LINE_GREEN_ANGLE = 'stroke: rgb(34, 139, 34); stroke-width: 2;';
+var WELCOME_STATUS_LINE_BLACK_ANGLE = 'stroke: rgb(0, 0, 0); stroke-width: 2;';
+var WELCOME_STATUS_LINE_GREEN_HORIZ = 'stroke: rgb(34, 139, 34); stroke-width: 4;';
+var WELCOME_STATUS_LINE_BLACK_HORIZ = 'stroke: rgb(0, 0, 0); stroke-width: 4;';
+
 var VIEW_MAIN = '/Markup/HtmlVanillaJs/Views/Main/Index.html';
 var VIEW_MAIN_ADD = '/Markup/HtmlVanillaJs/Views/Main/Add.html';
 var VIEW_MAIN_EDIT = '/Markup/HtmlVanillaJs/Views/Main/Edit.html';

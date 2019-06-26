@@ -5,17 +5,16 @@
     /*text-align: center;*/
 }
 .systemStatistics {
-    height: 50%;
-    width: 50%;
-    margin: 0 auto;
-	position: relative;
-	background: orange;
+    position: fixed;
+    top: 175px; 
+    left: 0;
+    right: 0;
+    height: 0;
     text-align: center;
 }
 .systemStatistics table {
-	background: pink;
-    text-align: center;
-    width: 100px;
+    display: inline-block;
+    text-align: left;
 }
 .horizontalLineOn {
     text-align: right;

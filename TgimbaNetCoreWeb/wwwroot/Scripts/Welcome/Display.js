@@ -14,29 +14,26 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent) {
 
 Display.SetAjaxView = function (view, contentDiv, loadedView, htmlContent) {
     contentDiv.innerHTML = loadedView;
-    //setTimeout(Display.Refresh, 1000);
+    setTimeout(Display.Refresh, 1000);
 };
 
 Display.Refresh = function () {
-    var horizontalCells = document.getElementsByClassName('horizontalLineOff');
-    var verticalCells = document.getElementsByClassName('verticalLineOff');
-    var verticalCellCssClassName = 'verticalLineOn';
-    var horizontalCellCssClassName = 'horizontalLineOn';
+    var line1 = document.getElementById("statusLine1");
+    var line2 = document.getElementById("statusLine2");
+    var line3 = document.getElementById("statusLine3");
 
-    if (horizontalCells.length === 0) {
-        horizontalCells = document.getElementsByClassName('horizontalLineOn');
-        verticalCells = document.getElementsByClassName('verticalLineOn');
-
-        verticalCellCssClassName = 'verticalLineOff';
-        horizontalCellCssClassName = 'horizontalLineOff';
-    }
-
-    while (horizontalCells.length > 0) {
-        horizontalCells[0].className = horizontalCellCssClassName;
-    }
-
-    while (verticalCells.length > 0) {
-        verticalCells[0].className = verticalCellCssClassName;
+    if (line1 && line2 && line3)
+    {
+        if (line1.style.cssText === WELCOME_STATUS_LINE_GREEN_ANGLE)
+        {
+            line1.style.cssText = WELCOME_STATUS_LINE_BLACK_ANGLE;
+            line2.style.cssText = WELCOME_STATUS_LINE_BLACK_ANGLE;
+            line3.style.cssText = WELCOME_STATUS_LINE_BLACK_HORIZ;
+        } else {
+            line1.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
+            line2.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
+            line3.style.cssText = WELCOME_STATUS_LINE_GREEN_HORIZ;
+        }
     }
     
     setTimeout(Display.Refresh, 1000);
