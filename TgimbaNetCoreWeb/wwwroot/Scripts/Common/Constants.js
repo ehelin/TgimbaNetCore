@@ -35,6 +35,7 @@ var BUCKET_LIST_PROCESS_ADD = '/BucketListItem/AddBucketListItem';
 var BUCKET_LIST_PROCESS_EDIT = '/BucketListItem/EditBucketListItem';
 var BUCKET_LIST_PROCESS_DELETE = '/BucketListItem/DeleteBucketListItem';
 var BUCKET_LIST_ISMOBILE = '/BucketListItem/IsMobile?userAgent=';
+var WELCOME_GET_SYSTEM_STATISTICS = '/Welcome/GetSystemStatistics';
 
 var VALUE_TYPE_LOGIN_USERNAME = 'loginUsernameValue';
 var VALUE_TYPE_LOGIN_PASSWORD = 'loginPasswordValue';

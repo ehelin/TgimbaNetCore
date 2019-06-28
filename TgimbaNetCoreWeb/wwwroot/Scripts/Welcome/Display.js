@@ -15,7 +15,42 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent) {
 Display.SetAjaxView = function (view, contentDiv, loadedView, htmlContent) {
     contentDiv.innerHTML = loadedView;
     setTimeout(Display.Refresh, 1000);
+    WelcomeServerCalls.GetSystemStatistics();
 };
+
+Display.SetSystemStatistics = function (systemStatistics) {
+    var systemStatisticData = document.getElementById('systemStatisticsData');
+
+    if (systemStatisticData) {
+        var tbl = Display.BuildTableHeader();
+        for (var i = 0; i < systemStatistics.length; i++) {
+            tbl += '<tr>';
+
+            tbl += '<td>' + systemStatistics[i].webSiteIsUp + '</td>';
+            tbl += '<td>' + systemStatistics[i].databaseIsUp + '</td>';
+            tbl += '<td>' + systemStatistics[i].azureFunctionIsUp + '</td>';
+            tbl += '<td>' + systemStatistics[i].created + '</td>';
+
+            tbl += '</tr>';
+        }
+        tbl += '</table>';
+
+        systemStatisticData.innerHTML = tbl;
+    }
+}
+
+Display.BuildTableHeader = function () {
+    var tblHdr = '<table><tr>';
+
+    tblHdr += '<td>Site Is Up</td>';
+    tblHdr += '<td>Db Is Up</td>';
+    tblHdr += '<td>Azure Func Is Up</td>';
+    tblHdr += '<td>Created</td>';
+
+    tblHdr += '</tr>';
+
+    return tblHdr;
+}
 
 Display.Refresh = function () {
     var line1 = document.getElementById("statusLine1");

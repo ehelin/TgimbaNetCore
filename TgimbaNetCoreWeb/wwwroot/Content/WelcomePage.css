@@ -1,5 +1,5 @@
 ﻿.statisticsPanel {    
-	background: yellow;
+	//background: yellow;
     height: 50%;
     width: 100%;
     /*text-align: center;*/
@@ -13,6 +13,18 @@
     text-align: center;
 }
 .systemStatistics table {
+    display: inline-block;
+    text-align: left;
+}
+.systemStatisticsDataCss {
+    position: fixed;
+    top: 300px; 
+    left: 0;
+    right: 0;
+    height: 0;
+    text-align: center;
+}
+.systemStatisticsDataCss table {
     display: inline-block;
     text-align: left;
 }

@@ -1,4 +1,7 @@
-﻿namespace Shared.interfaces
+﻿using System.Collections.Generic;
+using Shared.dto;
+
+namespace Shared.interfaces
 {
     public interface IBucketListData
     {
@@ -11,5 +14,6 @@
         string[] GetBucketListV2(string userName, string sortString, string srchTerm = "");
         bool UpsertBucketListItemV2(string[] bucketListItems);
         string GetReport();
+        List<SystemStatistic> GetSystemStatistics();
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using TgimbaNetCoreWebShared.Models;
 using System.Collections.Generic;
+using Shared.dto;
 
 namespace TgimbaNetCoreWebShared
 {
@@ -12,6 +13,13 @@ namespace TgimbaNetCoreWebShared
         public WebClient(ITgimbaService service)
         {
             this.service = service;
+        }
+
+        public List<SystemStatistic> GetSystemStatistics()
+        {
+            var results = this.service.GetSystemStatistics();
+
+            return results;
         }
 
 		public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken) 

@@ -1,4 +1,6 @@
 ﻿using Shared.misc;
+using System.Collections.Generic;
+using Shared.dto;
 
 namespace Shared.interfaces
 {
@@ -15,6 +17,7 @@ namespace Shared.interfaces
         string[] DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
         string[] GetDashboard();
         string LoginDemoUser();
+        List<SystemStatistic> GetSystemStatistics();
 
         void Log(string msg, Enums.LogLevel level);
         string GetReport();

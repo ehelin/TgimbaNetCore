@@ -3,6 +3,8 @@ using Shared.interfaces;
 using TgimbaNetCoreWebShared;  	 					  
 using TgimbaNetCoreWebShared.Models;
 using TgimbaNetCoreWebShared.Controllers;
+using Shared.dto;
+using System.Collections.Generic;
 
 namespace TgimbaNetCoreWeb.Controllers
 {
@@ -24,6 +26,13 @@ namespace TgimbaNetCoreWeb.Controllers
         {
             var model = new SharedWelcomeModel(this.service);
             return View(model);
+        }
+       
+        [HttpGet]
+        public List<SystemStatistic> GetSystemStatistics()
+        {
+            var result = this.service.GetSystemStatistics();
+            return result;
         }
     }
 }

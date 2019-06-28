@@ -9,6 +9,65 @@ namespace DAL.providers
 {
     public partial class BucketListData : IBucketListData
     {
+        public List<SystemStatistic> GetSystemStatistics()
+        {
+            var systemStatistics = new List<SystemStatistic>();
+            SqlDataReader rdr = null;
+            SqlCommand cmd = null;
+
+            try
+            {
+                var conn = new SqlConnection(connectionString);
+                cmd = conn.CreateCommand();
+                cmd.CommandText = BucketListSqlV2.GET_SYSTEM_STATISTICS;
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Connection.Open();
+
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    var ss = new SystemStatistic();
+
+                    ss.WebSiteIsUp = GetSafeBool(rdr[0]);
+                    ss.DatabaseIsUp = GetSafeBool(rdr[1]);
+                    ss.AzureFunctionIsUp = GetSafeBool(rdr[2]);
+                    ss.Created = GetSafeDateTime(rdr[3]);
+
+                    systemStatistics.Add(ss);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMsg(ex.Message);
+            }
+            finally
+            {
+                if (cmd != null && cmd.Connection != null)
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    cmd.Connection = null;
+                }
+
+                if (cmd != null)
+                {
+                    cmd.Dispose();
+                    cmd = null;
+                }
+
+                if (rdr != null)
+                {
+                    rdr.Close();
+                    rdr.Dispose();
+                    rdr = null;
+                }
+            }
+
+            return systemStatistics;
+        }
+
         public string[] GetBucketListV2(string userName, string sortString, string srchTerm = "")
         {
             IList<BucketListItem> listItems = GetListItemsV2(userName, sortString, srchTerm);

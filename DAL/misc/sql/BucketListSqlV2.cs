@@ -12,8 +12,14 @@
                                                 + " from Bucket.BucketListItem bli "
                                                 + " inner join Bucket.BucketListUser blu on bli.BucketListItemId = blu.BucketListItemId "
                                                 + " inner join [Bucket].[User] u on blu.UserId = u.UserId "
-                                                + " where u.UserName = @userName  ";	
-		
+                                                + " where u.UserName = @userName  ";
+
+        public const string GET_SYSTEM_STATISTICS = "SELECT top 4	[WebsiteIsUp], "
+                                                    + "             [DatabaseIsUp], "
+                                                    + "             [AzureFunctionIsUp], "
+                                                    + "             [Created] "
+                                                    + "from[Bucket].[SystemStatistics] ss "
+                                                    + "order by ss.id desc";
 
         public const string DELETE_BUCKET_LIST_ITEM = "delete from Bucket.BucketListUser "
                                                     + " where BucketListItemId = @BucketListItemId "
