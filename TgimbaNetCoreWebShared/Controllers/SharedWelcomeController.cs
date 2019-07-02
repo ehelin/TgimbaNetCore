@@ -11,8 +11,8 @@ namespace TgimbaNetCoreWebShared.Controllers
 
         public IActionResult Index()
         {
-            SharedWelcomeModel model = new SharedWelcomeModel(this.service);
-            return View(model);
+            //SharedWelcomeModel model = new SharedWelcomeModel(this.service);
+            return View();
         }
     }
 }

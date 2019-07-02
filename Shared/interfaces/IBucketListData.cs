@@ -15,5 +15,6 @@ namespace Shared.interfaces
         bool UpsertBucketListItemV2(string[] bucketListItems);
         string GetReport();
         List<SystemStatistic> GetSystemStatistics();
+        List<SystemBuildStatistic> GetSystemBuildStatistics();
     }
 }

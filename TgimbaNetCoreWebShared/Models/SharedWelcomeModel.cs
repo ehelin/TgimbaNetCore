@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 namespace TgimbaNetCoreWebShared.Models
 {
-    public class SharedWelcomeModel : BaseModel
+    public class SharedWelcomeModel// : BaseModel
     {
-        //public string[] DashboardData { get; set; }
-        public List<SystemStatistic> SystemStatistics = null; 
+        //public List<SystemStatistic> SystemStatistics = null;
+        //public List<SystemBuildStatistics> SystemBuildStatistics = null;
 
-        public SharedWelcomeModel(ITgimbaService service) : base(service)
-        {
-            this.SystemStatistics = this.service.GetSystemStatistics();
-        }
+        //public SharedWelcomeModel(ITgimbaService service) : base(service)
+        //{
+        //    this.SystemStatistics = this.service.GetSystemStatistics();
+        //    this.SystemBuildStatistics = this.service.GetSystemBuildStatistics();
+        //}
     }
 }

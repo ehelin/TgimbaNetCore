@@ -22,7 +22,14 @@ namespace TgimbaNetCoreWebShared
             return results;
         }
 
-		public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken) 
+        public List<SystemBuildStatistic> GetSystemBuildStatistics()
+        {
+            var results = this.service.GetSystemBuildStatistics();
+
+            return results;
+        }
+        
+        public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken) 
 		{
 			var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
 			var bucketListItemArrayBase64 = Shared.misc.Utilities.EncodeClientBase64String(bucketListItemArray);

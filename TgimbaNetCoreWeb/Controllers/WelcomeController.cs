@@ -21,18 +21,21 @@ namespace TgimbaNetCoreWeb.Controllers
 			sharedWelcomeController = new SharedWelcomeController(service, webClient);
 			this.service = service;
 		}
-				
+
         public IActionResult Index()
         {
-            var model = new SharedWelcomeModel(this.service);
-            return View(model);
+            return View();
         }
        
         [HttpGet]
-        public List<SystemStatistic> GetSystemStatistics()
+        public SystemStatistics GetSystemStatistics()
         {
-            var result = this.service.GetSystemStatistics();
-            return result;
+            var systemStatistics = new SystemStatistics();
+
+            systemStatistics.SystemStats = this.service.GetSystemStatistics();
+            systemStatistics.SystemBuildStats = this.service.GetSystemBuildStatistics();
+
+            return systemStatistics;
         }
     }
 }

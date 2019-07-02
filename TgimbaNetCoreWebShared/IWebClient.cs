@@ -1,5 +1,6 @@
 ﻿using TgimbaNetCoreWebShared.Models;
 using System.Collections.Generic;
+using Shared.dto;
 
 namespace TgimbaNetCoreWebShared
 {
@@ -31,6 +32,9 @@ namespace TgimbaNetCoreWebShared
 			string encodedSortString, 
 			string encodedToken,
 			string encodedSrchTerm = ""
-		);		
-	}
+		);
+        List<SystemStatistic> GetSystemStatistics();
+        List<SystemBuildStatistic> GetSystemBuildStatistics();
+
+    }
 }

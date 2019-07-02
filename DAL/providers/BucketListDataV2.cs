@@ -9,6 +9,66 @@ namespace DAL.providers
 {
     public partial class BucketListData : IBucketListData
     {
+        public List<SystemBuildStatistic> GetSystemBuildStatistics()
+        {
+            var systemBuildStatistics = new List<SystemBuildStatistic>();
+            SqlDataReader rdr = null;
+            SqlCommand cmd = null;
+
+            try
+            {
+                var conn = new SqlConnection(connectionString);
+                cmd = conn.CreateCommand();
+                cmd.CommandText = BucketListSqlV2.GET_SYSTEM_BUILD_STATISTICS;
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Connection.Open();
+
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    var sbs = new SystemBuildStatistic();
+
+                    sbs.Start = GetSafeDateTime(rdr[0]);
+                    sbs.End = GetSafeDateTime(rdr[1]);
+                    sbs.BuildNumber = GetSafeString(rdr[2]);
+                    sbs.Status = GetSafeString(rdr[3]);
+                    sbs.BuildSource = GetSafeString(rdr[4]);
+
+                    systemBuildStatistics.Add(sbs);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMsg(ex.Message);
+            }
+            finally
+            {
+                if (cmd != null && cmd.Connection != null)
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    cmd.Connection = null;
+                }
+
+                if (cmd != null)
+                {
+                    cmd.Dispose();
+                    cmd = null;
+                }
+
+                if (rdr != null)
+                {
+                    rdr.Close();
+                    rdr.Dispose();
+                    rdr = null;
+                }
+            }
+
+            return systemBuildStatistics;
+        }
+
         public List<SystemStatistic> GetSystemStatistics()
         {
             var systemStatistics = new List<SystemStatistic>();

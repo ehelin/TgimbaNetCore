@@ -15,8 +15,7 @@ namespace API
         // TODO - DI logger
         private static Enums.LogLevel level = Enums.LogLevel.Info;
         private ILogger logger = new Logger(new BucketListData(Utilities.GetDbSetting()), level);
-
-
+        
         public List<SystemStatistic> GetSystemStatistics()
         {
             IBucketListData bld = null;
@@ -26,6 +25,24 @@ namespace API
             {
                 bld = new BucketListData(Utilities.GetDbSetting());
                 results = bld.GetSystemStatistics();
+            }
+            catch (Exception e)
+            {
+                bld.LogMsg("Error: " + e.Message + ", trace: " + e.StackTrace.ToString());
+            }
+
+            return results;
+        }
+
+        public List<SystemBuildStatistic> GetSystemBuildStatistics()
+        {
+            IBucketListData bld = null;
+            List<SystemBuildStatistic> results = null;
+
+            try
+            {
+                bld = new BucketListData(Utilities.GetDbSetting());
+                results = bld.GetSystemBuildStatistics();
             }
             catch (Exception e)
             {

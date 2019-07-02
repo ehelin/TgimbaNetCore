@@ -19,10 +19,52 @@ Display.SetAjaxView = function (view, contentDiv, loadedView, htmlContent) {
 };
 
 Display.SetSystemStatistics = function (systemStatistics) {
+    Display.SetSystemStats(systemStatistics.systemStats);
+    Display.SetSystemBuildStats(systemStatistics.systemBuildStats);
+}
+
+Display.SetSystemBuildStats = function (systemBuildStatistics) {
+    var systemBuildStatisticData = document.getElementById('systemBuildStatisticsData');
+
+    if (systemBuildStatisticData) {
+        var tbl = Display.BuildSystemBuildStatsTableHeader();
+        for (var i = 0; i < systemBuildStatistics.length; i++) {
+            tbl += '<tr>';
+
+            tbl += '<td>' + systemBuildStatistics[i].start + '</td>';
+            tbl += '<td>' + systemBuildStatistics[i].end + '</td>';
+            tbl += '<td>' + systemBuildStatistics[i].buildNumber + '</td>';
+            tbl += '<td>' + systemBuildStatistics[i].status + '</td>';
+            tbl += '<td>' + systemBuildStatistics[i].buildSource + '</td>';
+
+            tbl += '</tr>';
+        }
+        tbl += '</table>';
+
+        systemBuildStatisticData.innerHTML = tbl;
+    }
+}
+
+Display.BuildSystemBuildStatsTableHeader = function () {
+    var tblHdr = '<table><tr>';
+
+    tblHdr += '<td>Start</td>';
+    tblHdr += '<td>End</td>';
+    tblHdr += '<td>Build Number</td>';
+    tblHdr += '<td>Status</td>';
+    tblHdr += '<td>Build Source</td>';
+
+    tblHdr += '</tr>';
+
+    return tblHdr;
+}
+
+
+Display.SetSystemStats = function (systemStatistics) {
     var systemStatisticData = document.getElementById('systemStatisticsData');
 
     if (systemStatisticData) {
-        var tbl = Display.BuildTableHeader();
+        var tbl = Display.BuildSystemStatsTableHeader();
         for (var i = 0; i < systemStatistics.length; i++) {
             tbl += '<tr>';
 
@@ -39,7 +81,7 @@ Display.SetSystemStatistics = function (systemStatistics) {
     }
 }
 
-Display.BuildTableHeader = function () {
+Display.BuildSystemStatsTableHeader = function () {
     var tblHdr = '<table><tr>';
 
     tblHdr += '<td>Site Is Up</td>';

@@ -1,7 +1,6 @@
 ﻿var WelcomeServerCalls = {};
 
 WelcomeServerCalls.LoadWelcomePage = function () {
-    var htmlContent = null; // TODO implement
     return Display.LoadView(VIEW_WELCOME, null);
 };
 
@@ -11,8 +10,8 @@ WelcomeServerCalls.GetSystemStatistics = function (contentDiv) {
     return ServerCall.Get(url)
 			.then(
 				function (response) {
-				    isNullUndefined(response); 
+				    isNullUndefined(response);
 				    var systemStatistics = JSON.parse(response);
 				    Display.SetSystemStatistics(systemStatistics);
 				});
-}
+};

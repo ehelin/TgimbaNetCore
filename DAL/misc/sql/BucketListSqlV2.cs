@@ -14,12 +14,20 @@
                                                 + " inner join [Bucket].[User] u on blu.UserId = u.UserId "
                                                 + " where u.UserName = @userName  ";
 
-        public const string GET_SYSTEM_STATISTICS = "SELECT top 4	[WebsiteIsUp], "
+        public const string GET_SYSTEM_STATISTICS = "SELECT top 2	[WebsiteIsUp], "
                                                     + "             [DatabaseIsUp], "
                                                     + "             [AzureFunctionIsUp], "
                                                     + "             [Created] "
                                                     + "from[Bucket].[SystemStatistics] ss "
                                                     + "order by ss.id desc";
+
+        public const string GET_SYSTEM_BUILD_STATISTICS = "SELECT TOP 2	[Start], "
+                                                        + " 			[End], "
+                                                        + " 			[BuildNumber], "
+                                                        + " 			[Status], "
+                                                        + " 			[Type] "
+                                                        + " FROM [Bucket].[BuildStatistics] "
+                                                        + " order by id desc ";
 
         public const string DELETE_BUCKET_LIST_ITEM = "delete from Bucket.BucketListUser "
                                                     + " where BucketListItemId = @BucketListItemId "
