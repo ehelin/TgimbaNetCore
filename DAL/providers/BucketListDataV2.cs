@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DAL.misc.sql;
 using Shared.interfaces;
+using System.Globalization;
 using Shared.dto;
 
 namespace DAL.providers
@@ -29,9 +30,9 @@ namespace DAL.providers
                 while (rdr.Read())
                 {
                     var sbs = new SystemBuildStatistic();
-
-                    sbs.Start = GetSafeDateTime(rdr[0]);
-                    sbs.End = GetSafeDateTime(rdr[1]);
+                    
+                    sbs.Start = GetSafeDateTime(rdr[0]).ToString("MM/dd/yyyy HH:MM tt");
+                    sbs.End = GetSafeDateTime(rdr[1]).ToString("MM/dd/yyyy HH:MM tt");
                     sbs.BuildNumber = GetSafeString(rdr[2]);
                     sbs.Status = GetSafeString(rdr[3]);
                     sbs.BuildSource = GetSafeString(rdr[4]);
@@ -93,8 +94,8 @@ namespace DAL.providers
                     ss.WebSiteIsUp = GetSafeBool(rdr[0]);
                     ss.DatabaseIsUp = GetSafeBool(rdr[1]);
                     ss.AzureFunctionIsUp = GetSafeBool(rdr[2]);
-                    ss.Created = GetSafeDateTime(rdr[3]);
-
+                    ss.Created = GetSafeDateTime(rdr[3]).ToString("MM/dd/yyyy HH:MM tt");
+                  
                     systemStatistics.Add(ss);
                 }
             }

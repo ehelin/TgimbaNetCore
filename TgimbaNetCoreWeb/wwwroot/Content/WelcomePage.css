@@ -1,12 +1,36 @@
-﻿.statisticsPanel {    
-	//background: yellow;
+﻿/*main welcome page*/
+/*duplicate code from mobile.css...refactor?*/
+.tgimbaBody {
+    background-color: #F4E4C1;
+    font-family: Arial;
+    font-size: 16pt;
+    overflow-y: scroll;
+    color: #080FB5;
+}
+
+.welcomeBody {
+    width: 100%;
+    border-style: solid;
+    border-color: #080FB5;
+    text-align: center;
+    background-color: #F4E4C1;
+}
+
+.button {    
+    font-family: Arial;
+    font-size: 16pt;
+    background-color: #e6d5bf;
+    color: #080FB5;
+}
+
+/*sub panels*/
+.statisticsPanel {    
     height: 50%;
     width: 100%;
-    /*text-align: center;*/
 }
 .systemStatistics {
     position: fixed;
-    top: 175px; 
+    top: 275px; 
     left: 0;
     right: 0;
     height: 0;
@@ -14,11 +38,11 @@
 }
 .systemStatistics table {
     display: inline-block;
-    text-align: left;
+    text-align: center;
 }
 .systemStatisticsDataCss {
     position: fixed;
-    top: 300px; 
+    top: 375px; 
     left: 0;
     right: 0;
     height: 0;
@@ -26,11 +50,16 @@
 }
 .systemStatisticsDataCss table {
     display: inline-block;
-    text-align: left;
+    text-align: center;
+    border-style: solid;
 }
+.systemStatisticsDataCss table .hdrCol {
+    text-decoration: underline;
+}
+
 .systemBuildStatisticsDataCss {
     position: fixed;
-    top: 450px; 
+    top: 500px; 
     left: 0;
     right: 0;
     height: 0;
@@ -38,7 +67,11 @@
 }
 .systemBuildStatisticsDataCss table {
     display: inline-block;
-    text-align: left;
+    text-align: center;
+    border-style: solid;
+}
+.systemStatisticsDataCss table .hdrCol {
+    text-decoration: underline;
 }
 .horizontalLineOn {
     text-align: right;

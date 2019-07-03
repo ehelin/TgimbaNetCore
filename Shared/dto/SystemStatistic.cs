@@ -7,6 +7,6 @@ namespace Shared.dto
         public bool WebSiteIsUp { get; set; }
         public bool DatabaseIsUp { get; set; }
         public bool AzureFunctionIsUp { get; set; }
-        public DateTime Created { get; set;}
+        public string Created { get; set;}
     }
 }

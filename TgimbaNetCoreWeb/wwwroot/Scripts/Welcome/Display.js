@@ -46,13 +46,13 @@ Display.SetSystemBuildStats = function (systemBuildStatistics) {
 }
 
 Display.BuildSystemBuildStatsTableHeader = function () {
-    var tblHdr = '<table><tr>';
+    var tblHdr = '<table><tr><td colspan="5">System Builds</td></tr><tr>';
 
-    tblHdr += '<td>Start</td>';
-    tblHdr += '<td>End</td>';
-    tblHdr += '<td>Build Number</td>';
-    tblHdr += '<td>Status</td>';
-    tblHdr += '<td>Build Source</td>';
+    tblHdr += '<td class="hdrCol">Start</td>';
+    tblHdr += '<td class="hdrCol">End</td>';
+    tblHdr += '<td class="hdrCol">Build Number</td>';
+    tblHdr += '<td class="hdrCol">Status</td>';
+    tblHdr += '<td class="hdrCol">Build Source</td>';
 
     tblHdr += '</tr>';
 
@@ -82,12 +82,12 @@ Display.SetSystemStats = function (systemStatistics) {
 }
 
 Display.BuildSystemStatsTableHeader = function () {
-    var tblHdr = '<table><tr>';
+    var tblHdr = '<table><tr><td colspan="4">System Status Checks</td></tr><tr>';
 
-    tblHdr += '<td>Site Is Up</td>';
-    tblHdr += '<td>Db Is Up</td>';
-    tblHdr += '<td>Azure Func Is Up</td>';
-    tblHdr += '<td>Created</td>';
+    tblHdr += '<td class="hdrCol">Site</td>';
+    tblHdr += '<td class="hdrCol">Db</td>';
+    tblHdr += '<td class="hdrCol">Azure</td>';
+    tblHdr += '<td class="hdrCol">Check Time</td>';
 
     tblHdr += '</tr>';
 
