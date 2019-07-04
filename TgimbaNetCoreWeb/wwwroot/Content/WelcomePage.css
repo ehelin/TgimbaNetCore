@@ -3,9 +3,22 @@
 .tgimbaBody {
     background-color: #F4E4C1;
     font-family: Arial;
-    font-size: 16pt;
+    font-size: 12pt;
     overflow-y: scroll;
     color: #080FB5;
+    height: 485px;
+}
+
+.circleGreen:before {
+  content: ' \25CF';
+  font-size: 15px;
+  color: green;
+}
+
+.circleRed:before {
+  content: ' \25CF';
+  font-size: 15px;
+  color: red;
 }
 
 .welcomeBody {
@@ -18,7 +31,7 @@
 
 .button {    
     font-family: Arial;
-    font-size: 16pt;
+    font-size: 12pt;
     background-color: #e6d5bf;
     color: #080FB5;
 }
@@ -30,7 +43,7 @@
 }
 .systemStatistics {
     position: fixed;
-    top: 275px; 
+    top: 200px; 
     left: 0;
     right: 0;
     height: 0;
@@ -42,11 +55,12 @@
 }
 .systemStatisticsDataCss {
     position: fixed;
-    top: 375px; 
+    top: 300px; 
     left: 0;
     right: 0;
     height: 0;
     text-align: center;
+    font-size: small;
 }
 .systemStatisticsDataCss table {
     display: inline-block;
@@ -56,21 +70,21 @@
 .systemStatisticsDataCss table .hdrCol {
     text-decoration: underline;
 }
-
 .systemBuildStatisticsDataCss {
     position: fixed;
-    top: 500px; 
+    top: 400px; 
     left: 0;
     right: 0;
     height: 0;
     text-align: center;
+    font-size: small;
 }
 .systemBuildStatisticsDataCss table {
     display: inline-block;
     text-align: center;
     border-style: solid;
 }
-.systemStatisticsDataCss table .hdrCol {
+.systemBuildStatisticsDataCss table .hdrCol {
     text-decoration: underline;
 }
 .horizontalLineOn {

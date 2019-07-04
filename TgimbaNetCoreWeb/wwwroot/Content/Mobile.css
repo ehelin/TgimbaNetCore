@@ -1,20 +1,20 @@
 ﻿.tgimbaBody {
     background-color: #F4E4C1;
     font-family: Arial;
-    font-size: 16pt;
+    font-size: 12pt;
     color: #080FB5;
 }
 
 .button {    
     font-family: Arial;
-    font-size: 16pt;
+    font-size: 12pt;
     background-color: #e6d5bf;
     color: #080FB5;
 }
 
 .tgimbaBody input[type=text]  {    
     font-family: Arial;
-    font-size: 16pt;
+    font-size: 12pt;
     background-color: #F4E4C1;
     color: #080FB5;
     border-style: solid;
@@ -23,7 +23,7 @@
 
 .tgimbaBody input[type=password]  {    
     font-family: Arial;
-    font-size: 16pt;
+    font-size: 12pt;
     background-color: #F4E4C1;
     color: #080FB5;
     border-style: solid;
@@ -32,7 +32,7 @@
 
 .tgimbaBody select {    
     font-family: Arial;
-    font-size: 16pt;
+    font-size: 12pt;
     background-color: #F4E4C1;
     color: #080FB5;
     border-style: solid;
@@ -46,10 +46,10 @@
 }
 
 .tgimbaForm table {
-    /*width: 100%;*/
+    width: 100%;
  }
 .tgimbaForm table tr {
-    /*width: 100%;*/
+    width: 100%;
  }
 .tgimbaForm.leftLabel {
     width: 50%; 

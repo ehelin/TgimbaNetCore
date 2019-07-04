@@ -14,13 +14,14 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent) {
 
 Display.SetAjaxView = function (view, contentDiv, loadedView, htmlContent) {
     contentDiv.innerHTML = loadedView;
-    setTimeout(Display.Refresh, 1000);
     WelcomeServerCalls.GetSystemStatistics();
 };
 
 Display.SetSystemStatistics = function (systemStatistics) {
     Display.SetSystemStats(systemStatistics.systemStats);
+    Display.SetDiagramConnectionLines(systemStatistics.systemStats);
     Display.SetSystemBuildStats(systemStatistics.systemBuildStats);
+    setTimeout(Display.Refresh, 1000);
 }
 
 Display.SetSystemBuildStats = function (systemBuildStatistics) {
@@ -35,7 +36,6 @@ Display.SetSystemBuildStats = function (systemBuildStatistics) {
             tbl += '<td>' + systemBuildStatistics[i].end + '</td>';
             tbl += '<td>' + systemBuildStatistics[i].buildNumber + '</td>';
             tbl += '<td>' + systemBuildStatistics[i].status + '</td>';
-            tbl += '<td>' + systemBuildStatistics[i].buildSource + '</td>';
 
             tbl += '</tr>';
         }
@@ -46,19 +46,48 @@ Display.SetSystemBuildStats = function (systemBuildStatistics) {
 }
 
 Display.BuildSystemBuildStatsTableHeader = function () {
-    var tblHdr = '<table><tr><td colspan="5">System Builds</td></tr><tr>';
+    var tblHdr = '<table><tr><td colspan="4">System Builds</td></tr><tr>';
 
     tblHdr += '<td class="hdrCol">Start</td>';
     tblHdr += '<td class="hdrCol">End</td>';
-    tblHdr += '<td class="hdrCol">Build Number</td>';
+    tblHdr += '<td class="hdrCol">Build</td>';
     tblHdr += '<td class="hdrCol">Status</td>';
-    tblHdr += '<td class="hdrCol">Build Source</td>';
 
     tblHdr += '</tr>';
 
     return tblHdr;
 }
 
+// TODO - collapsed this and the display refresh message
+Display.SetDiagramConnectionLines = function (systemStatistics) {
+    var line1 = document.getElementById("statusLine1");
+    var line2 = document.getElementById("statusLine2");
+    var line3 = document.getElementById("statusLine3");
+
+    if (line1 && line2 && line3)
+    {
+        if (systemStatistics[0].webSiteIsUp === true
+             && systemStatistics[0].azureFunctionIsUp === true) {
+            line1.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
+        } else {
+            line1.style.cssText = WELCOME_STATUS_LINE_RED_ANGLE;
+        }
+
+        if (systemStatistics[0].databaseIsUp === true
+            && systemStatistics[0].azureFunctionIsUp === true) {
+            line2.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
+        } else {
+            line2.style.cssText = WELCOME_STATUS_LINE_RED_ANGLE;
+        }
+
+        if (systemStatistics[0].webSiteIsUp === true
+                && systemStatistics[0].databaseIsUp === true) {
+            line3.style.cssText = WELCOME_STATUS_LINE_GREEN_HORIZ;
+        } else {
+            line3.style.cssText = WELCOME_STATUS_LINE_RED_HORIZ;
+        }
+    }
+}
 
 Display.SetSystemStats = function (systemStatistics) {
     var systemStatisticData = document.getElementById('systemStatisticsData');
@@ -68,9 +97,23 @@ Display.SetSystemStats = function (systemStatistics) {
         for (var i = 0; i < systemStatistics.length; i++) {
             tbl += '<tr>';
 
-            tbl += '<td>' + systemStatistics[i].webSiteIsUp + '</td>';
-            tbl += '<td>' + systemStatistics[i].databaseIsUp + '</td>';
-            tbl += '<td>' + systemStatistics[i].azureFunctionIsUp + '</td>';
+            if (systemStatistics[i].webSiteIsUp === true) {
+                tbl += '<td class="circleGreen"></td>';
+            } else {
+                tbl += '<td class="circleRed"></td>';
+            }
+
+            if (systemStatistics[i].databaseIsUp === true) {
+                tbl += '<td class="circleGreen"></td>';
+            } else {
+                tbl += '<td class="circleRed"></td>';
+            }
+
+            if (systemStatistics[i].azureFunctionIsUp === true) {
+                tbl += '<td class="circleGreen"></td>';
+            } else {
+                tbl += '<td class="circleRed"></td>';
+            }
             tbl += '<td>' + systemStatistics[i].created + '</td>';
 
             tbl += '</tr>';
@@ -94,6 +137,7 @@ Display.BuildSystemStatsTableHeader = function () {
     return tblHdr;
 }
 
+// TODO - fix refresh to accurately show failed or up state
 Display.Refresh = function () {
     var line1 = document.getElementById("statusLine1");
     var line2 = document.getElementById("statusLine2");

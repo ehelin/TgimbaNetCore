@@ -31,11 +31,10 @@ namespace DAL.providers
                 {
                     var sbs = new SystemBuildStatistic();
                     
-                    sbs.Start = GetSafeDateTime(rdr[0]).ToString("MM/dd/yyyy HH:MM tt");
-                    sbs.End = GetSafeDateTime(rdr[1]).ToString("MM/dd/yyyy HH:MM tt");
+                    sbs.Start = GetSafeDateTime(rdr[0]).ToString("MM/dd/yyyy HH:mm:ss tt");
+                    sbs.End = GetSafeDateTime(rdr[1]).ToString("MM/dd/yyyy HH:mm:ss tt");
                     sbs.BuildNumber = GetSafeString(rdr[2]);
                     sbs.Status = GetSafeString(rdr[3]);
-                    sbs.BuildSource = GetSafeString(rdr[4]);
 
                     systemBuildStatistics.Add(sbs);
                 }
