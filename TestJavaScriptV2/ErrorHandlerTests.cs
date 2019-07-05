@@ -10,6 +10,7 @@ namespace TestJavaScriptV2
     public class ErrorHandlerTests : BaseTest
     {
         [TestMethod]
+        [Ignore]
         public void Test_ErrorHandler_ThrowsError()
         {
             var script = CreateJsTestScript(@"..\..\..\..\TgimbaNetCoreWeb\wwwroot\Scripts\HtmlVanillaJs\ErrorHandler.js");

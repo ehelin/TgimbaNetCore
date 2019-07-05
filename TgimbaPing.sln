@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{721BC3CB-1A0A-4AE0-8F5A-24ED79AACEBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaSupport", "TgimbaPing\TgimbaSupport.csproj", "{816D7519-9EAB-4484-9C12-C07B7B6AEF90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaPingAzureFunction", "TgimbaPingAzureFunction\TgimbaPingAzureFunction.csproj", "{741A8B79-F65F-4185-8112-1203481E5703}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaSupportDriver", "TgimbaPingDriver\TgimbaSupportDriver.csproj", "{3739DFAB-C954-4536-97D2-21A65AB7D0E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{721BC3CB-1A0A-4AE0-8F5A-24ED79AACEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721BC3CB-1A0A-4AE0-8F5A-24ED79AACEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721BC3CB-1A0A-4AE0-8F5A-24ED79AACEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721BC3CB-1A0A-4AE0-8F5A-24ED79AACEBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{816D7519-9EAB-4484-9C12-C07B7B6AEF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{816D7519-9EAB-4484-9C12-C07B7B6AEF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{816D7519-9EAB-4484-9C12-C07B7B6AEF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{816D7519-9EAB-4484-9C12-C07B7B6AEF90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{741A8B79-F65F-4185-8112-1203481E5703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{741A8B79-F65F-4185-8112-1203481E5703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{741A8B79-F65F-4185-8112-1203481E5703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{741A8B79-F65F-4185-8112-1203481E5703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3739DFAB-C954-4536-97D2-21A65AB7D0E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3739DFAB-C954-4536-97D2-21A65AB7D0E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3739DFAB-C954-4536-97D2-21A65AB7D0E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3739DFAB-C954-4536-97D2-21A65AB7D0E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E051EE8-D422-416A-A4FB-4B54AD226D38}
+	EndGlobalSection
+EndGlobal
