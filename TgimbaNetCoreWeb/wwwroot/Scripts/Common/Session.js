@@ -1,5 +1,4 @@
-﻿//token -------------------------------------------------------
-function SessionSetToken(key, value) {
+﻿function SessionSetToken(key, value) {
     sessionStorage.setItem(key, value);
 }
 function SessionGetToken(key) {			  
@@ -11,6 +10,30 @@ function SessionSetIsMobile(key, value) {
     sessionStorage.setItem(key, value);
 }
 function SessionGetIsMobile(key) {
+    var val = sessionStorage.getItem(key);
+    return val;
+}
+
+function SessionSetSystemWebSiteAzureFunctionIsUp(key, value) {
+    sessionStorage.setItem(key, value);
+}
+function SessionGetSystemWebSiteAzureFunctionIsUp(key) {
+    var val = sessionStorage.getItem(key);
+    return val;
+}
+
+function SessionSetSystemDbAzureFunctionIsUp(key, value) {
+    sessionStorage.setItem(key, value);
+}
+function SessionGetSystemDbAzureFunctionIsUp(key) {
+    var val = sessionStorage.getItem(key);
+    return val;
+}
+
+function SessionSetSystemDbWebsiteIsUp(key, value) {
+    sessionStorage.setItem(key, value);
+}
+function SessionGetSystemDbWebsiteIsUp(key) {
     var val = sessionStorage.getItem(key);
     return val;
 }

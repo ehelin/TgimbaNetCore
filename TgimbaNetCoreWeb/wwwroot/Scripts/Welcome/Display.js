@@ -68,22 +68,28 @@ Display.SetDiagramConnectionLines = function (systemStatistics) {
     {
         if (systemStatistics[0].webSiteIsUp === true
              && systemStatistics[0].azureFunctionIsUp === true) {
+            SessionSetSystemWebSiteAzureFunctionIsUp(SESSION_CLIENT_WEB_AZURE_IS_UP, true);
             line1.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
         } else {
+            SessionSetSystemWebSiteAzureFunctionIsUp(SESSION_CLIENT_WEB_AZURE_IS_UP, false);
             line1.style.cssText = WELCOME_STATUS_LINE_RED_ANGLE;
         }
 
         if (systemStatistics[0].databaseIsUp === true
             && systemStatistics[0].azureFunctionIsUp === true) {
+            SessionSetSystemDbAzureFunctionIsUp(SESSION_CLIENT_DB_AZURE_IS_UP, true);
             line2.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
         } else {
+            SessionSetSystemDbAzureFunctionIsUp(SESSION_CLIENT_DB_AZURE_IS_UP, false);
             line2.style.cssText = WELCOME_STATUS_LINE_RED_ANGLE;
         }
 
         if (systemStatistics[0].webSiteIsUp === true
                 && systemStatistics[0].databaseIsUp === true) {
+            SessionSetSystemDbWebsiteIsUp(SESSION_CLIENT_DB_WEB_IS_UP, true);
             line3.style.cssText = WELCOME_STATUS_LINE_GREEN_HORIZ;
         } else {
+            SessionSetSystemDbWebsiteIsUp(SESSION_CLIENT_DB_WEB_IS_UP, false);
             line3.style.cssText = WELCOME_STATUS_LINE_RED_HORIZ;
         }
     }
@@ -142,18 +148,36 @@ Display.Refresh = function () {
     var line1 = document.getElementById("statusLine1");
     var line2 = document.getElementById("statusLine2");
     var line3 = document.getElementById("statusLine3");
+    var webAzureFuncIsUp = SessionGetSystemWebSiteAzureFunctionIsUp(SESSION_CLIENT_WEB_AZURE_IS_UP);
+    var dbAzureFuncIsUp = SessionGetSystemDbAzureFunctionIsUp(SESSION_CLIENT_DB_AZURE_IS_UP);
+    var dbWebIsUp = SessionGetSystemDbWebsiteIsUp(SESSION_CLIENT_DB_WEB_IS_UP);
 
     if (line1 && line2 && line3)
     {
-        if (line1.style.cssText === WELCOME_STATUS_LINE_GREEN_ANGLE)
+        if (line1.style.cssText === WELCOME_STATUS_LINE_GREEN_ANGLE 
+            || line1.style.cssText === WELCOME_STATUS_LINE_RED_ANGLE)
         {
             line1.style.cssText = WELCOME_STATUS_LINE_BLACK_ANGLE;
             line2.style.cssText = WELCOME_STATUS_LINE_BLACK_ANGLE;
             line3.style.cssText = WELCOME_STATUS_LINE_BLACK_HORIZ;
         } else {
-            line1.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
-            line2.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
-            line3.style.cssText = WELCOME_STATUS_LINE_GREEN_HORIZ;
+            if (webAzureFuncIsUp && JSON.parse(webAzureFuncIsUp) === true) {
+                line1.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
+            } else {
+                line1.style.cssText = WELCOME_STATUS_LINE_RED_ANGLE;
+            }
+
+            if (dbAzureFuncIsUp && JSON.parse(dbAzureFuncIsUp) === true) {
+                line2.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
+            } else {
+                line2.style.cssText = WELCOME_STATUS_LINE_RED_ANGLE;
+            }
+
+            if (dbWebIsUp && JSON.parse(dbWebIsUp) === true) {
+                line3.style.cssText = WELCOME_STATUS_LINE_GREEN_ANGLE;
+            } else {
+                line3.style.cssText = WELCOME_STATUS_LINE_RED_ANGLE;
+            }
         }
     }
     

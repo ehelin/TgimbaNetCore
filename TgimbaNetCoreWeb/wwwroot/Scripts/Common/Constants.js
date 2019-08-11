@@ -6,11 +6,17 @@ var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';
 var SESSION_CLIENT_IS_MOBILE = 'SessionIsMobile';
 
+var SESSION_CLIENT_WEB_AZURE_IS_UP = 'SystemWebSiteAzureFunctionIsUp';
+var SESSION_CLIENT_DB_AZURE_IS_UP = 'SystemDbAzureFunctionIsUp';
+var SESSION_CLIENT_DB_WEB_IS_UP = 'SystemDbWebsiteIsUp';
+
 var CONTENT_DIV = 'csHtmlContentDiv';
 var WELCOME_CONTENT_DIV = 'csWelcomeHtmlContentDiv';
 
 var WELCOME_STATUS_LINE_GREEN_ANGLE = 'stroke: rgb(34, 139, 34); stroke-width: 2;';
+var WELCOME_STATUS_LINE_RED_ANGLE = 'stroke: rgb(255, 0, 0); stroke-width: 2;';
 var WELCOME_STATUS_LINE_BLACK_ANGLE = 'stroke: rgb(0, 0, 0); stroke-width: 2;';
+var WELCOME_STATUS_LINE_RED_HORIZ = 'stroke: rgb(255, 0, 0); stroke-width: 4;';
 var WELCOME_STATUS_LINE_GREEN_HORIZ = 'stroke: rgb(34, 139, 34); stroke-width: 4;';
 var WELCOME_STATUS_LINE_BLACK_HORIZ = 'stroke: rgb(0, 0, 0); stroke-width: 4;';
 
