@@ -1,4 +1,7 @@
-﻿namespace DALNetCore.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace DALNetCore.Models
 {
     public partial class BrowserLog
     {
