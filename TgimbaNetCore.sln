@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{58BDC7AA-EA00-4C14-B9B7-46CEE1521691}"
 EndProject
@@ -38,7 +38,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaNetCoreWebShared", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms", "Algorithms\Algorithms.csproj", "{31A3A397-94C8-47A6-B686-8C8AF3487470}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DALNetCore", "DALNetCore\DALNetCore.csproj", "{63A3BCDF-6F33-46A4-A20E-A8048C4BDD87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALNetCore", "DALNetCore\DALNetCore.csproj", "{63A3BCDF-6F33-46A4-A20E-A8048C4BDD87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDALNetCore-Integration", "TestDALNetCore-Integration\TestDALNetCore-Integration.csproj", "{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +96,10 @@ Global
 		{63A3BCDF-6F33-46A4-A20E-A8048C4BDD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63A3BCDF-6F33-46A4-A20E-A8048C4BDD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63A3BCDF-6F33-46A4-A20E-A8048C4BDD87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

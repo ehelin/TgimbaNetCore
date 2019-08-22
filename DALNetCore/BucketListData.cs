@@ -2,39 +2,52 @@
 using System.Collections.Generic;
 using Shared.dto;
 using Shared.interfaces;
-
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using DALNetCore.Models;
+using models = DALNetCore.Models;
+using System.Linq;
 using Shared.misc;
 
 namespace DALNetCore
 {
     public class BucketListData : IBucketListData
     {
-        private DbContext context = null;
+        private BucketListContext context = null;
 
-        public BucketListData(DbContext context) {
+        public BucketListData(BucketListContext context) {
             this.context = context;
         }
 
         public void AddToken(string userName, string token)
         {
-            throw new NotImplementedException();
+            // TODO - switch to id
+            var user = this.context.User
+                                    .Where(x => x.UserName == userName)
+                                    .FirstOrDefault();
+            user.Token = token;
+            this.context.Update(user);
+            this.context.SaveChanges();
         }
 
-        public bool AddUser(string userName, string email, string passWord, string salt)
+        public void AddUser(string userName, string email, string passWord, string salt)
+        {
+            var user = new models.User
+            {
+                UserName = userName,
+                Email = email,
+                PassWord = passWord,
+                Salt = salt
+            };
+            this.context.User.Add(user);
+            this.context.SaveChanges();
+        }
+
+        public void DeleteBucketListItem(int bucketListItemDbId)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteBucketListItem(int bucketListItemDbId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteUser(string userName, string passWord, string email)
+        public void DeleteUser(string userName, string passWord, string email)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +77,7 @@ namespace DALNetCore
             throw new NotImplementedException();
         }
 
-        public bool UpsertBucketListItem(Shared.dto.BucketListItem bucketListItems)
+        public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItems)
         {
             throw new NotImplementedException();
         }
