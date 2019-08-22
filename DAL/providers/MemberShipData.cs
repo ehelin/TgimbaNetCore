@@ -6,7 +6,7 @@ using Shared.dto;
 
 namespace DAL.providers
 {
-    public class MemberShipData : IMemberShipData
+    public class MemberShipData : IMemberShipData_Old
     {
         private string connectionString = string.Empty;
 

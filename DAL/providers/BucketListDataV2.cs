@@ -8,7 +8,7 @@ using Shared.dto;
 
 namespace DAL.providers
 {
-    public partial class BucketListData : IBucketListData
+    public partial class BucketListData : IBucketListData_Old
     {
         public List<SystemBuildStatistic> GetSystemBuildStatistics()
         {

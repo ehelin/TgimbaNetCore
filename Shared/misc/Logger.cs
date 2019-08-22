@@ -8,10 +8,10 @@ namespace Shared.misc
 {
     public class Logger : ILogger
     {
-        private IBucketListData db = null;
+        private IBucketListData_Old db = null;
         private Enums.LogLevel level;
 
-        public Logger(IBucketListData db, Enums.LogLevel level)
+        public Logger(IBucketListData_Old db, Enums.LogLevel level)
         {
             this.db = db;
             this.level = level;

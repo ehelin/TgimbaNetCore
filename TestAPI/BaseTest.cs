@@ -7,8 +7,8 @@ namespace TestsAPIIntegration
 {
     public class BaseTest
     {
-        protected IBucketListData bdb;
-        protected IMemberShipData mdb;
+        protected IBucketListData_Old bdb;
+        protected IMemberShipData_Old mdb;
 
         public BaseTest()
         {

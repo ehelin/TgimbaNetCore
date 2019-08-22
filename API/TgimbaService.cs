@@ -18,7 +18,7 @@ namespace API
         
         public List<SystemStatistic> GetSystemStatistics()
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             List<SystemStatistic> results = null;
 
             try
@@ -36,7 +36,7 @@ namespace API
 
         public List<SystemBuildStatistic> GetSystemBuildStatistics()
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             List<SystemBuildStatistic> results = null;
 
             try
@@ -54,7 +54,7 @@ namespace API
 
         public string GetReport()
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             string results = null;
 
             try
@@ -81,7 +81,7 @@ namespace API
         public string LoginDemoUser()
         {
             string token = string.Empty;
-            IMemberShipData msd = null;
+            IMemberShipData_Old msd = null;
 
             try
             {
@@ -100,7 +100,7 @@ namespace API
         }
         public string[] GetDashboard()
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             string[] results = null;
 
             try
@@ -117,7 +117,7 @@ namespace API
         }
         public string ProcessUser(string encodedUser, string encodedPass)
         {
-            IMemberShipData msd = null;
+            IMemberShipData_Old msd = null;
             string token = string.Empty;
 
             try
@@ -139,7 +139,7 @@ namespace API
         }
         public bool ProcessUserRegistration(string encodedUser, string encodedEmail, string encodedPass)
         {
-            IMemberShipData msd = null;
+            IMemberShipData_Old msd = null;
             bool userAdded = false;
 
             try
@@ -165,7 +165,7 @@ namespace API
         }
         public string[] GetBucketListItems(string encodedUserName, string encodedSortString, string encodedToken)
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             string[] result = null;
 
             try
@@ -193,7 +193,7 @@ namespace API
         public string[] GetBucketListItemsV2(string encodedUserName, string encodedSortString, 
 												string encodedToken, string encodedSrchString = "")
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             string[] result = null;
 
             try
@@ -221,7 +221,7 @@ namespace API
         }
         public string[] UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken)
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             string[] result = null;
 
             try
@@ -261,7 +261,7 @@ namespace API
         }
         public string[] UpsertBucketListItemV2(string encodedBucketListItems, string encodedUser, string encodedToken)
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             string[] result = null;
 
             try
@@ -303,7 +303,7 @@ namespace API
         }
         public string[] DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken)
         {
-            IBucketListData bld = null;
+            IBucketListData_Old bld = null;
             string[] result = null;
 
             try
@@ -339,7 +339,7 @@ namespace API
 
         #region Private Methods
 
-        private string VerifyUser(string userName, string password, IMemberShipData msd)
+        private string VerifyUser(string userName, string password, IMemberShipData_Old msd)
         {
             string token = string.Empty;
             User u = msd.GetUser(userName);
@@ -359,7 +359,7 @@ namespace API
         private bool ProcessToken(string userName, string token)
         {
             bool goodToken = false;
-            IMemberShipData msd = new MemberShipData(Utilities.GetDbSetting());
+            IMemberShipData_Old msd = new MemberShipData(Utilities.GetDbSetting());
             User u = msd.GetUser(userName);
 
             //HACK for android

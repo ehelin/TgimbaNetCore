@@ -2,7 +2,7 @@
 
 namespace Shared.interfaces
 {
-    public interface IMemberShipData
+    public interface IMemberShipData_Old
     {
         User GetUser(string userName);
         bool AddUser(string userName, string email, string passWord, string salt);

@@ -7,7 +7,7 @@ using Shared.dto;
 
 namespace DAL.providers
 {
-    public partial class BucketListData : BaseBucketListData, IBucketListData
+    public partial class BucketListData : BaseBucketListData, IBucketListData_Old
     {
         public BucketListData(string pConnectionString)
         {

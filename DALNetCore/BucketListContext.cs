@@ -6,13 +6,13 @@ using Shared.misc;
 
 namespace DALNetCore
 {
-    public partial class BuckeLlistContext : DbContext
+    public partial class BucketListContext : DbContext
     {
-        public BuckeLlistContext()
+        public BucketListContext()
         {
         }
 
-        public BuckeLlistContext(DbContextOptions<BuckeLlistContext> options)
+        public BucketListContext(DbContextOptions<BucketListContext> options)
             : base(options)
         {
         }
