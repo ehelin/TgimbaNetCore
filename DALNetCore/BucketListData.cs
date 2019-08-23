@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using models = DALNetCore.Models;
 using System.Linq;
-using Shared.misc;
+//using Shared.misc;
 
 namespace DALNetCore
 {
@@ -18,36 +18,63 @@ namespace DALNetCore
             this.context = context;
         }
 
-        public void AddToken(string userName, string token)
+        public void AddToken(int userId, string token)
         {
-            // TODO - switch to id
-            var user = this.context.User
-                                    .Where(x => x.UserName == userName)
-                                    .FirstOrDefault();
-            user.Token = token;
-            this.context.Update(user);
+            var dbUser = this.context.User
+                                   .Where(x => x.UserId == userId)
+                                   .FirstOrDefault();
+            dbUser.Token = token;
+
+            this.context.Update(dbUser);
             this.context.SaveChanges();
         }
 
-        public void AddUser(string userName, string email, string passWord, string salt)
+        public User GetUser(int id)
         {
-            var user = new models.User
+            var dbUser = this.context.User
+                                   .Where(x => x.UserId == id)
+                                   .FirstOrDefault();
+            var user = new User()
             {
-                UserName = userName,
-                Email = email,
-                PassWord = passWord,
-                Salt = salt
+                UserId = dbUser.UserId,
+                UserName = dbUser.UserName,
+                Salt = dbUser.Salt,
+                Password = dbUser.PassWord,
+                Email = dbUser.Email,
+                Token = dbUser.Token
             };
-            this.context.User.Add(user);
+
+            return user;
+        }
+
+        public int AddUser(User user)
+        {
+            var dbUser = new models.User
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                PassWord = user.Password,
+                Salt = user.Salt
+            };
+            this.context.User.Add(dbUser);
+            this.context.SaveChanges();
+
+            return dbUser.UserId;
+        }
+
+        public void DeleteUser(int userId)
+        {
+            var dbUser = this.context.User
+                                   .Where(x => x.UserId == userId)
+                                   .FirstOrDefault();
+
+            this.context.Remove(dbUser);
             this.context.SaveChanges();
         }
+
+
 
         public void DeleteBucketListItem(int bucketListItemDbId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteUser(string userName, string passWord, string email)
         {
             throw new NotImplementedException();
         }
@@ -67,10 +94,6 @@ namespace DALNetCore
             throw new NotImplementedException();
         }
 
-        public Shared.dto.User GetUser(string userName)
-        {
-            throw new NotImplementedException();
-        }
 
         public void LogMsg(string msg)
         {

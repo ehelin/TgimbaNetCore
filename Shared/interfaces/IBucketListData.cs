@@ -12,9 +12,9 @@ namespace Shared.interfaces
         IList<SystemStatistic> GetSystemStatistics();
         IList<SystemBuildStatistic> GetSystemBuildStatistics();
 
-        User GetUser(string userName);
-        void AddUser(string userName, string email, string passWord, string salt);
-        void DeleteUser(string userName, string passWord, string email);
-        void AddToken(string userName, string token);
+        void AddToken(int userId, string token);
+        User GetUser(int id);
+        int AddUser(User user);
+        void DeleteUser(int userId);
     }
 }
