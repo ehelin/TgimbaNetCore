@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
 using DALNetCore;
-//using DALNetCore.Models;
+using DALNetCore.Models;
 using System.Linq;
 using dto = Shared.dto;
 
@@ -38,6 +38,21 @@ namespace TestDALNetCore_Integration
             Assert.AreEqual(token, savedUser.Token);
 
             bd.DeleteUser(savedUser.UserId);
+        }
+
+        public void GetSystemBuildStatisticsTest()
+        {
+            var dbContext = new BucketListContext();
+            IBucketListData bd = new BucketListData(dbContext);
+
+            // TODO - complete test
+        }
+        public void GetSystemSystemStatisticsTest()
+        {
+            var dbContext = new BucketListContext();
+            IBucketListData bd = new BucketListData(dbContext);
+
+            // TODO - complete test
         }
     }
 }

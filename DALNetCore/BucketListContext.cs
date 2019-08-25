@@ -23,6 +23,8 @@ namespace DALNetCore
         public virtual DbSet<BucketListUser> BucketListUser { get; set; }
         public virtual DbSet<Log> Log { get; set; }
         public virtual DbSet<User> User { get; set; }
+        //public virtual DbSet<SystemStatistics> SystemStatistics { get; set; }
+        //public virtual DbSet<BuildStatistics> BuildStatistics { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

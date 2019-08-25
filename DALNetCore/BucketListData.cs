@@ -49,7 +49,7 @@ namespace DALNetCore
 
         public int AddUser(User user)
         {
-            var dbUser = new models.User
+            var dbUser = new models.
             {
                 UserName = user.UserName,
                 Email = user.Email,
@@ -71,7 +71,6 @@ namespace DALNetCore
             this.context.Remove(dbUser);
             this.context.SaveChanges();
         }
-
 
 
         public void DeleteBucketListItem(int bucketListItemDbId)
