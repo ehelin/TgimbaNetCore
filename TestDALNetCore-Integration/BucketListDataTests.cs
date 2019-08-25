@@ -42,7 +42,7 @@ namespace TestDALNetCore_Integration
         }
 
         [TestMethod]
-        public void GetSystemBuildStatisticsTest()
+        public void GetSystemBuildStatisticsHappyPath_Test()
         {
             //set up ------------------------------------------------------
             var dbContext = new BucketListContext();
@@ -64,7 +64,7 @@ namespace TestDALNetCore_Integration
 
             Assert.IsNotNull(buildStatistics);
             var buildStatistic = buildStatistics
-                                    .OrderByDescending(x => x.Start)
+                                    .OrderByDescending(x => Convert.ToDateTime(x.Start))
                                     .FirstOrDefault();
             Assert.AreEqual(buildStatistic.Start, buildStatisticsToSave.Start.ToString());
             Assert.AreEqual(buildStatistic.End, buildStatisticsToSave.End.ToString());
@@ -77,12 +77,37 @@ namespace TestDALNetCore_Integration
         }
 
         [TestMethod]
-        public void GetSystemSystemStatisticsTest()
-        {
+        public void GetSystemSystemStatisticsGetSystemBuildStatisticsHappyPath_Test()
+        {        
+            //set up ------------------------------------------------------
             var dbContext = new BucketListContext();
-            IBucketListData bd = new BucketListData(dbContext);
+            var now = DateTime.Now;
+            var systemStatisticsToSave = new SystemStatistics
+            {
+                WebsiteIsUp = true,
+                DatabaseIsUp = true,
+                AzureFunctionIsUp = true,
+                Created = now
+            };
+            dbContext.SystemStatistics.Add(systemStatisticsToSave);
+            dbContext.SaveChanges();
 
-            // TODO - complete test
+            //test ---------------------------------------------------------
+            IBucketListData bd = new BucketListData(dbContext);
+            var systemStatistics = bd.GetSystemStatistics();
+
+            Assert.IsNotNull(systemStatistics);
+            var systemStatistic = systemStatistics
+                                    .OrderByDescending(x => Convert.ToDateTime(x.Created))
+                                    .FirstOrDefault();
+            Assert.AreEqual(systemStatistic.WebSiteIsUp, systemStatisticsToSave.WebsiteIsUp);
+            Assert.AreEqual(systemStatistic.DatabaseIsUp, systemStatisticsToSave.DatabaseIsUp);
+            Assert.AreEqual(systemStatistic.AzureFunctionIsUp, systemStatisticsToSave.AzureFunctionIsUp);
+            Assert.AreEqual(systemStatistic.Created, systemStatisticsToSave.Created.ToString());
+
+            //clean up ------------------------------------------------------
+            dbContext.Remove(systemStatisticsToSave);
+            dbContext.SaveChanges();
         }
     }
 }

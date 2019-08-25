@@ -92,9 +92,24 @@ namespace DALNetCore
 
         public IList<SystemStatistic> GetSystemStatistics()
         {
-            throw new NotImplementedException();
-        }
+            var systemStatistics = this.context.SystemStatistics.ToList();
+            var systemSystemStatics = new List<SystemStatistic>();
 
+            foreach (var systemStatistic in systemStatistics)
+            {
+                var systemSystemStatistic = new SystemStatistic
+                {
+                    WebSiteIsUp = systemStatistic.WebsiteIsUp,
+                    DatabaseIsUp = systemStatistic.DatabaseIsUp,
+                    AzureFunctionIsUp = systemStatistic.AzureFunctionIsUp,
+                    Created = systemStatistic.Created.ToString()
+                };
+
+                systemSystemStatics.Add(systemSystemStatistic);
+            }
+
+            return systemSystemStatics;
+        }
 
         public void DeleteBucketListItem(int bucketListItemDbId)
         {
