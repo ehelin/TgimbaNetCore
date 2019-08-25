@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace DALNetCore.models
+namespace DALNetCore.Models
 {
     public class BuildStatistics
     {
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public string BuildNumber { get; set; }

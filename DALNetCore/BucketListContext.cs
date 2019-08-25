@@ -23,14 +23,13 @@ namespace DALNetCore
         public virtual DbSet<BucketListUser> BucketListUser { get; set; }
         public virtual DbSet<Log> Log { get; set; }
         public virtual DbSet<User> User { get; set; }
-        //public virtual DbSet<SystemStatistics> SystemStatistics { get; set; }
-        //public virtual DbSet<BuildStatistics> BuildStatistics { get; set; }
+        public virtual DbSet<SystemStatistics> SystemStatistics { get; set; }
+        public virtual DbSet<BuildStatistics> BuildStatistics { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer(Utilities.GetDbSetting());
             }
         }
@@ -147,13 +146,9 @@ namespace DALNetCore
                     .IsUnicode(false);
 
                 entity.Property(e => e.RequiresDbcscharacter).HasColumnName("RequiresDBCSCharacter");
-
                 entity.Property(e => e.SupportsImodeSymbols).HasColumnName("SupportsIModeSymbols");
-
                 entity.Property(e => e.SupportsInputIstyle).HasColumnName("SupportsInputIStyle");
-
                 entity.Property(e => e.SupportsJphoneMultiMediaAttribute).HasColumnName("SupportsJPhoneMultiMediaAttribute");
-
                 entity.Property(e => e.SupportsJphoneSymbols).HasColumnName("SupportsJPhoneSymbols");
 
                 entity.Property(e => e.Type)
@@ -183,10 +178,42 @@ namespace DALNetCore
                     .IsUnicode(false);
 
                 entity.Property(e => e.Created).HasColumnType("datetime");
-
                 entity.Property(e => e.Latitude).HasColumnType("decimal(18, 10)");
-
                 entity.Property(e => e.Longitude).HasColumnType("decimal(18, 10)");
+            });
+
+            modelBuilder.Entity<SystemStatistics>(entity =>
+            {
+                entity.ToTable("SystemStatistics", "Bucket");
+
+                entity.Property(e => e.WebsiteIsUp).HasColumnType("bit");
+                entity.Property(e => e.DatabaseIsUp).HasColumnType("bit");
+                entity.Property(e => e.AzureFunctionIsUp).HasColumnType("bit");
+                entity.Property(e => e.Created).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("User", "Bucket");
+
+                entity.Property(e => e.Created).HasColumnType("datetime");
+                entity.Property(e => e.CreatedBy).HasMaxLength(255);
+                entity.Property(e => e.Email).HasMaxLength(255);
+                entity.Property(e => e.Modified).HasColumnType("datetime");
+                entity.Property(e => e.ModifiedBy).HasMaxLength(255);
+                entity.Property(e => e.Token).HasMaxLength(1000);
+                entity.Property(e => e.UserName).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<BuildStatistics>(entity =>
+            {
+                entity.ToTable("BuildStatistics", "Bucket");
+
+                entity.Property(e => e.Start).HasColumnType("datetime");
+                entity.Property(e => e.End).HasColumnType("datetime");
+                entity.Property(e => e.BuildNumber).HasMaxLength(500);
+                entity.Property(e => e.Status).HasMaxLength(500);
+                entity.Property(e => e.Type).HasMaxLength(50);
             });
 
             modelBuilder.Entity<BucketListUser>(entity =>

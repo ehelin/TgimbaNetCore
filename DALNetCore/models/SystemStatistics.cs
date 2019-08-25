@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace DALNetCore.models
+namespace DALNetCore.Models
 {
     public class SystemStatistics
     {
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         public bool WebsiteIsUp { get; set; }
         public bool DatabaseIsUp { get; set; }
         public bool AzureFunctionIsUp { get; set; }

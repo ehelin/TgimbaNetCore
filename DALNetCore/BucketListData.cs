@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using Shared.dto;
 using Shared.interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using models = DALNetCore.Models;
 using System.Linq;
-//using Shared.misc;
 
 namespace DALNetCore
 {
@@ -49,7 +46,7 @@ namespace DALNetCore
 
         public int AddUser(User user)
         {
-            var dbUser = new models.
+            var dbUser = new models.User
             {
                 UserName = user.UserName,
                 Email = user.Email,
@@ -72,6 +69,32 @@ namespace DALNetCore
             this.context.SaveChanges();
         }
 
+        public IList<SystemBuildStatistic> GetSystemBuildStatistics()
+        {
+            var buildStatistics = this.context.BuildStatistics.ToList();
+            var systemBuildStatics = new List<SystemBuildStatistic>();
+
+            foreach (var buildStatistic in buildStatistics) 
+            {
+                var systemBuildStatistic = new SystemBuildStatistic
+                {
+                    Start = buildStatistic.Start.ToString(),
+                    End = buildStatistic.End.ToString(),
+                    BuildNumber = buildStatistic.BuildNumber,
+                    Status = buildStatistic.Status
+                };
+
+                systemBuildStatics.Add(systemBuildStatistic);
+            }
+
+            return systemBuildStatics;
+        }
+
+        public IList<SystemStatistic> GetSystemStatistics()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public void DeleteBucketListItem(int bucketListItemDbId)
         {
@@ -82,17 +105,6 @@ namespace DALNetCore
         {
             throw new NotImplementedException();
         }
-
-        public IList<SystemBuildStatistic> GetSystemBuildStatistics()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<SystemStatistic> GetSystemStatistics()
-        {
-            throw new NotImplementedException();
-        }
-
 
         public void LogMsg(string msg)
         {
