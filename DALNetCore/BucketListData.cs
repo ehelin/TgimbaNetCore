@@ -25,6 +25,17 @@ namespace DALNetCore
             this.context.Update(dbUser);
             this.context.SaveChanges();
         }
+        
+        public void LogMsg(string msg)
+        {
+            var logModel = new models.Log
+            {
+                LogMessage = msg,
+                Created = DateTime.UtcNow
+            };
+            this.context.Log.Add(logModel);
+            this.context.SaveChanges();
+        }
 
         public User GetUser(int id)
         {
@@ -121,10 +132,6 @@ namespace DALNetCore
             throw new NotImplementedException();
         }
 
-        public void LogMsg(string msg)
-        {
-            throw new NotImplementedException();
-        }
 
         public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItems)
         {

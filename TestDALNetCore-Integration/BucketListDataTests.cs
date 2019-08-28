@@ -109,5 +109,27 @@ namespace TestDALNetCore_Integration
             dbContext.Remove(systemStatisticsToSave);
             dbContext.SaveChanges();
         }
+
+        [TestMethod]
+        public void LogMsgHappyPath_Test()
+        {
+            var dbContext = new BucketListContext();
+            IBucketListData bd = new BucketListData(dbContext);
+
+            //test ----------------------------
+            var msg = "I am a log message";
+            bd.LogMsg(msg);
+
+            var logModel = dbContext.Log
+                                    .Where(x => x.LogMessage == msg)
+                                    .FirstOrDefault();
+
+            Assert.IsNotNull(logModel);
+            Assert.AreEqual(msg, logModel.LogMessage);
+
+            //clean up ------------------------------------------------------
+            dbContext.Remove(logModel);
+            dbContext.SaveChanges();
+        }
     }
 }
