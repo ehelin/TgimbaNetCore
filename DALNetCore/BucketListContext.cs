@@ -173,9 +173,9 @@ namespace DALNetCore
 
                 entity.Property(e => e.Category).HasMaxLength(255);
 
-                entity.Property(e => e.Country)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                //entity.Property(e => e.Country)
+                //    .HasMaxLength(500)
+                //    .IsUnicode(false);
 
                 entity.Property(e => e.Created).HasColumnType("datetime");
                 entity.Property(e => e.Latitude).HasColumnType("decimal(18, 10)");

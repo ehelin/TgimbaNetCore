@@ -121,19 +121,41 @@ namespace DALNetCore
 
             return systemSystemStatics;
         }
-
-        public void DeleteBucketListItem(int bucketListItemDbId)
+        
+        public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
         {
-            throw new NotImplementedException();
+            var bucketListItemToSave = new models.BucketListItem
+            {
+                ListItemName = bucketListItem.Name,
+                Created = bucketListItem.Created,
+                Category = bucketListItem.Category,
+                Achieved = bucketListItem.Achieved,
+                Latitude = bucketListItem.Latitude,
+                Longitude = bucketListItem.Longitude
+            };
+
+            this.context.BucketListItem.Add(bucketListItemToSave);
+            this.context.SaveChanges();
+
+            var user = this.context.User
+                                .Where(x => x.UserName == userName)
+                                .FirstOrDefault();
+            var bucketListItemUser = new models.BucketListUser
+            {
+                BucketListItemId = bucketListItemToSave.BucketListItemId,
+                UserId = user.UserId
+            };
+
+            this.context.BucketListUser.Add(bucketListItemUser);
+            this.context.SaveChanges();
         }
 
         public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortString, string srchTerm = "")
         {
             throw new NotImplementedException();
         }
-
-
-        public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItems)
+        
+        public void DeleteBucketListItem(int bucketListItemDbId)
         {
             throw new NotImplementedException();
         }

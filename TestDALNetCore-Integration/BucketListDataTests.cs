@@ -2,8 +2,9 @@ using DALNetCore;
 using DALNetCore.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
-using System.Linq;
+using Shared.misc;
 using System;
+using System.Linq;
 using dto = Shared.dto;
 
 namespace TestDALNetCore_Integration
@@ -15,14 +16,7 @@ namespace TestDALNetCore_Integration
         public void UserHappyPath_Test()
         {
             var token = "token";
-            var user = new dto.User()
-            {
-                UserName = "user",
-                Salt = "salt",
-                Password = "password",
-                Email = "user@email.com",
-                Token = token
-            };
+            var user = GetUser(token);
 
             var dbContext = new BucketListContext();
             IBucketListData bd = new BucketListData(dbContext);
@@ -130,6 +124,51 @@ namespace TestDALNetCore_Integration
             //clean up ------------------------------------------------------
             dbContext.Remove(logModel);
             dbContext.SaveChanges();
+        }
+
+        [TestMethod]
+        public void BucketListItemHappyPath_Test()
+        {
+            // set up
+            var user = GetUser("token");
+            var dbContext = new BucketListContext();
+            IBucketListData bd = new BucketListData(dbContext);
+            var bucketListItemToSave = GetBucketListItem();
+
+            // test
+            var userId = bd.AddUser(user);
+            bd.UpsertBucketListItem(bucketListItemToSave, user.UserName);
+
+            //TODO - complete assert, get update, and delete steps
+        }
+
+        private dto.BucketListItem GetBucketListItem()
+        {
+            var bucketListItem = new dto.BucketListItem
+            {
+                Name = "I am a bucket list item",
+                Created = DateTime.UtcNow,
+                Category = Enums.BucketListItemTypes.Hot.ToString(),
+                Achieved = false,
+                Latitude = (decimal)81.12,
+                Longitude = (decimal)41.34
+            };
+
+            return bucketListItem;
+        }
+
+        private dto.User GetUser(string token) 
+        {
+            var user = new dto.User()
+            {
+                UserName = "user",
+                Salt = "salt",
+                Password = "password",
+                Email = "user@email.com",
+                Token = token
+            };
+
+            return user;
         }
     }
 }
