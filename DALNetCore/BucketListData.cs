@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Shared.dto;
 using Shared.interfaces;
 using models = DALNetCore.Models;
-using System.Linq;
 
 namespace DALNetCore
 {
@@ -127,7 +127,7 @@ namespace DALNetCore
             var bucketListItemToSave = new models.BucketListItem
             {
                 ListItemName = bucketListItem.Name,
-                Created = bucketListItem.Created,
+                Created = bucketListItem.Created.ToUniversalTime(),
                 Category = bucketListItem.Category,
                 Achieved = bucketListItem.Achieved,
                 Latitude = bucketListItem.Latitude,
@@ -152,12 +152,44 @@ namespace DALNetCore
 
         public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortString, string srchTerm = "")
         {
-            throw new NotImplementedException();
+            var dbBucketListItems = from bli in this.context.BucketListItem
+                                    join blu in this.context.BucketListUser on bli.BucketListItemId equals blu.BucketListItemId
+                                    join u in this.context.User on blu.UserId equals u.UserId
+                                    where u.UserName == userName
+                                    select bli;                                    
+            var bucketListItems = new List<Shared.dto.BucketListItem>();
+
+            foreach (var dbBucketListItem in dbBucketListItems)
+            {
+                var bucketListItem = new Shared.dto.BucketListItem
+                {
+                    Name = dbBucketListItem.ListItemName,
+                    Created = dbBucketListItem.Created.Value.ToLocalTime(),
+                    Category = dbBucketListItem.Category,
+                    Achieved = dbBucketListItem.Achieved.HasValue 
+                                    ? dbBucketListItem.Achieved.Value : false,
+                    Id = dbBucketListItem.BucketListItemId,
+                    Latitude = (decimal) dbBucketListItem.Latitude,
+                    Longitude = (decimal) dbBucketListItem.Longitude
+                };
+
+                bucketListItems.Add(bucketListItem);
+            }
+
+            return bucketListItems;
         }
         
         public void DeleteBucketListItem(int bucketListItemDbId)
         {
-            throw new NotImplementedException();
+            var bucketListItemToDelete = this.context.BucketListItem
+                                                        .Where(x => x.BucketListItemId == bucketListItemDbId)
+                                                        .FirstOrDefault();
+            var bucketListItemUserToDelete = this.context.BucketListUser
+                                                        .Where(x => x.BucketListItemId == bucketListItemDbId)
+                                                        .FirstOrDefault();
+
+            this.context.BucketListUser.Remove(bucketListItemUserToDelete);
+            this.context.BucketListItem.Remove(bucketListItemToDelete);
         }
     }
 }

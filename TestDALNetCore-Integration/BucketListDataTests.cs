@@ -129,17 +129,37 @@ namespace TestDALNetCore_Integration
         [TestMethod]
         public void BucketListItemHappyPath_Test()
         {
-            // set up
+            // set up ------------------------------------------------------
             var user = GetUser("token");
             var dbContext = new BucketListContext();
             IBucketListData bd = new BucketListData(dbContext);
             var bucketListItemToSave = GetBucketListItem();
 
-            // test
+            // test ---------------------------------------------------------
             var userId = bd.AddUser(user);
             bd.UpsertBucketListItem(bucketListItemToSave, user.UserName);
+            var savedBucketListItem = bd.GetBucketList(user.UserName, "", "").FirstOrDefault();
+            
+            // we have a saved object that object matches our created object
+            Assert.IsNotNull(savedBucketListItem);
+            Assert.AreEqual(bucketListItemToSave.Name, savedBucketListItem.Name);
+            Assert.AreEqual(bucketListItemToSave.Created, savedBucketListItem.Created);
+            Assert.AreEqual(bucketListItemToSave.Category, savedBucketListItem.Category);
+            Assert.AreEqual(bucketListItemToSave.Achieved, savedBucketListItem.Achieved);
+            Assert.AreEqual(bucketListItemToSave.Latitude, savedBucketListItem.Latitude);
+            Assert.AreEqual(bucketListItemToSave.Longitude, savedBucketListItem.Longitude);
 
-            //TODO - complete assert, get update, and delete steps
+            // we can update that object and save it
+            // TODO - upsert update part not working...fix
+            savedBucketListItem.Name = savedBucketListItem.Name + " modified";
+            bd.UpsertBucketListItem(savedBucketListItem, user.UserName);
+            var savedBucketListItemUpdated = bd.GetBucketList(user.UserName, "", "").FirstOrDefault();
+            Assert.AreEqual(savedBucketListItem.Name, savedBucketListItemUpdated.Name);
+
+            // we can delete the bucket list item
+            bd.DeleteBucketListItem(savedBucketListItemUpdated.Id);
+            var deletedBucketListItem = bd.GetBucketList(user.UserName, "", "").FirstOrDefault();
+            Assert.IsNotNull(savedBucketListItem);
         }
 
         private dto.BucketListItem GetBucketListItem()
@@ -147,7 +167,7 @@ namespace TestDALNetCore_Integration
             var bucketListItem = new dto.BucketListItem
             {
                 Name = "I am a bucket list item",
-                Created = DateTime.UtcNow,
+                Created = DateTime.Now,
                 Category = Enums.BucketListItemTypes.Hot.ToString(),
                 Achieved = false,
                 Latitude = (decimal)81.12,
