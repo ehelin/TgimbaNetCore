@@ -160,6 +160,9 @@ namespace TestDALNetCore_Integration
             bd.DeleteBucketListItem(savedBucketListItemUpdated.Id);
             var deletedBucketListItem = bd.GetBucketList(user.UserName, "", "").FirstOrDefault();
             Assert.IsNotNull(savedBucketListItem);
+
+            //clean up user
+            bd.DeleteUser(userId);
         }
 
         private dto.BucketListItem GetBucketListItem()

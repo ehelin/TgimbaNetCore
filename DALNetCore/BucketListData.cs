@@ -122,7 +122,24 @@ namespace DALNetCore
             return systemSystemStatics;
         }
         
-        public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
+        private void UpdateBucketListItem
+        (
+            models.BucketListItem existingBucketListItem, 
+            Shared.dto.BucketListItem bucketListItem
+        )
+        {
+            existingBucketListItem.ListItemName = bucketListItem.Name;
+            existingBucketListItem.Created = bucketListItem.Created.ToUniversalTime();
+            existingBucketListItem.Category = bucketListItem.Category;
+            existingBucketListItem.Achieved = bucketListItem.Achieved;
+            existingBucketListItem.Latitude = bucketListItem.Latitude;
+            existingBucketListItem.Longitude = bucketListItem.Longitude;
+
+            this.context.Update(existingBucketListItem);
+            this.context.SaveChanges();            
+        }
+
+        private void InsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
         {
             var bucketListItemToSave = new models.BucketListItem
             {
@@ -148,6 +165,22 @@ namespace DALNetCore
 
             this.context.BucketListUser.Add(bucketListItemUser);
             this.context.SaveChanges();
+        }
+
+        public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
+        {
+            var existingBucketListItem = this.context.BucketListItem
+                                                            .Where(x => x.BucketListItemId == bucketListItem.Id)
+                                                            .FirstOrDefault();
+
+            if (existingBucketListItem != null)
+            {
+                UpdateBucketListItem(existingBucketListItem, bucketListItem);
+            } 
+            else 
+            {
+                InsertBucketListItem(bucketListItem, userName);
+            }
         }
 
         public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortString, string srchTerm = "")
@@ -190,6 +223,7 @@ namespace DALNetCore
 
             this.context.BucketListUser.Remove(bucketListItemUserToDelete);
             this.context.BucketListItem.Remove(bucketListItemToDelete);
+            this.context.SaveChanges();
         }
     }
 }
