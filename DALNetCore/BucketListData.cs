@@ -122,51 +122,6 @@ namespace DALNetCore
             return systemSystemStatics;
         }
         
-        private void UpdateBucketListItem
-        (
-            models.BucketListItem existingBucketListItem, 
-            Shared.dto.BucketListItem bucketListItem
-        )
-        {
-            existingBucketListItem.ListItemName = bucketListItem.Name;
-            existingBucketListItem.Created = bucketListItem.Created.ToUniversalTime();
-            existingBucketListItem.Category = bucketListItem.Category;
-            existingBucketListItem.Achieved = bucketListItem.Achieved;
-            existingBucketListItem.Latitude = bucketListItem.Latitude;
-            existingBucketListItem.Longitude = bucketListItem.Longitude;
-
-            this.context.Update(existingBucketListItem);
-            this.context.SaveChanges();            
-        }
-
-        private void InsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
-        {
-            var bucketListItemToSave = new models.BucketListItem
-            {
-                ListItemName = bucketListItem.Name,
-                Created = bucketListItem.Created.ToUniversalTime(),
-                Category = bucketListItem.Category,
-                Achieved = bucketListItem.Achieved,
-                Latitude = bucketListItem.Latitude,
-                Longitude = bucketListItem.Longitude
-            };
-
-            this.context.BucketListItem.Add(bucketListItemToSave);
-            this.context.SaveChanges();
-
-            var user = this.context.User
-                                .Where(x => x.UserName == userName)
-                                .FirstOrDefault();
-            var bucketListItemUser = new models.BucketListUser
-            {
-                BucketListItemId = bucketListItemToSave.BucketListItemId,
-                UserId = user.UserId
-            };
-
-            this.context.BucketListUser.Add(bucketListItemUser);
-            this.context.SaveChanges();
-        }
-
         public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
         {
             var existingBucketListItem = this.context.BucketListItem
@@ -183,15 +138,36 @@ namespace DALNetCore
             }
         }
 
-        public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortString, string srchTerm = "")
+        private IQueryable<models.BucketListItem> Sort(IQueryable<models.BucketListItem> bucketListItems, string sortColumn, bool isAsc) 
+        {
+            IQueryable<models.BucketListItem> sortedBucketListItems = null;
+
+            if (isAsc) 
+            {
+                sortedBucketListItems = bucketListItems.OrderBy(x => x.ListItemName);
+            } 
+            else
+            {
+                sortedBucketListItems = bucketListItems.OrderByDescending(x => x.ListItemName);
+            }
+
+            return sortedBucketListItems;
+        }
+
+        public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortColumn, bool isAsc, string srchTerm = "")
         {
             var dbBucketListItems = from bli in this.context.BucketListItem
                                     join blu in this.context.BucketListUser on bli.BucketListItemId equals blu.BucketListItemId
                                     join u in this.context.User on blu.UserId equals u.UserId
                                     where u.UserName == userName
-                                    select bli;                                    
-            var bucketListItems = new List<Shared.dto.BucketListItem>();
+                                    select bli;
+            
+            if (!string.IsNullOrEmpty(sortColumn)) 
+            {
+                dbBucketListItems = Sort(dbBucketListItems, sortColumn, isAsc);
+            }
 
+            var bucketListItems = new List<Shared.dto.BucketListItem>();
             foreach (var dbBucketListItem in dbBucketListItems)
             {
                 var bucketListItem = new Shared.dto.BucketListItem
@@ -225,5 +201,54 @@ namespace DALNetCore
             this.context.BucketListItem.Remove(bucketListItemToDelete);
             this.context.SaveChanges();
         }
+
+        #region Private Methods
+
+        private void UpdateBucketListItem
+        (
+            models.BucketListItem existingBucketListItem,
+            Shared.dto.BucketListItem bucketListItem
+        )
+        {
+            existingBucketListItem.ListItemName = bucketListItem.Name;
+            existingBucketListItem.Created = bucketListItem.Created.ToUniversalTime();
+            existingBucketListItem.Category = bucketListItem.Category;
+            existingBucketListItem.Achieved = bucketListItem.Achieved;
+            existingBucketListItem.Latitude = bucketListItem.Latitude;
+            existingBucketListItem.Longitude = bucketListItem.Longitude;
+
+            this.context.Update(existingBucketListItem);
+            this.context.SaveChanges();
+        }
+
+        private void InsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
+        {
+            var bucketListItemToSave = new models.BucketListItem
+            {
+                ListItemName = bucketListItem.Name,
+                Created = bucketListItem.Created.ToUniversalTime(),
+                Category = bucketListItem.Category,
+                Achieved = bucketListItem.Achieved,
+                Latitude = bucketListItem.Latitude,
+                Longitude = bucketListItem.Longitude
+            };
+
+            this.context.BucketListItem.Add(bucketListItemToSave);
+            this.context.SaveChanges();
+
+            var user = this.context.User
+                                .Where(x => x.UserName == userName)
+                                .FirstOrDefault();
+            var bucketListItemUser = new models.BucketListUser
+            {
+                BucketListItemId = bucketListItemToSave.BucketListItemId,
+                UserId = user.UserId
+            };
+
+            this.context.BucketListUser.Add(bucketListItemUser);
+            this.context.SaveChanges();
+        }
+
+        #endregion
     }
 }

@@ -10,7 +10,7 @@ using dto = Shared.dto;
 namespace TestDALNetCore_Integration
 {
     [TestClass]
-    public class TokenTests
+    public class HappyPathTests
     {
         [TestMethod]
         public void UserHappyPath_Test()
@@ -138,7 +138,7 @@ namespace TestDALNetCore_Integration
             // test ---------------------------------------------------------
             var userId = bd.AddUser(user);
             bd.UpsertBucketListItem(bucketListItemToSave, user.UserName);
-            var savedBucketListItem = bd.GetBucketList(user.UserName, "", "").FirstOrDefault();
+            var savedBucketListItem = bd.GetBucketList(user.UserName, "").FirstOrDefault();
             
             // we have a saved object that object matches our created object
             Assert.IsNotNull(savedBucketListItem);
@@ -153,23 +153,65 @@ namespace TestDALNetCore_Integration
             // TODO - upsert update part not working...fix
             savedBucketListItem.Name = savedBucketListItem.Name + " modified";
             bd.UpsertBucketListItem(savedBucketListItem, user.UserName);
-            var savedBucketListItemUpdated = bd.GetBucketList(user.UserName, "", "").FirstOrDefault();
+            var savedBucketListItemUpdated = bd.GetBucketList(user.UserName, "").FirstOrDefault();
             Assert.AreEqual(savedBucketListItem.Name, savedBucketListItemUpdated.Name);
 
             // we can delete the bucket list item
             bd.DeleteBucketListItem(savedBucketListItemUpdated.Id);
-            var deletedBucketListItem = bd.GetBucketList(user.UserName, "", "").FirstOrDefault();
+            var deletedBucketListItem = bd.GetBucketList(user.UserName, "").FirstOrDefault();
             Assert.IsNotNull(savedBucketListItem);
 
             //clean up user
             bd.DeleteUser(userId);
         }
 
-        private dto.BucketListItem GetBucketListItem()
+        [TestMethod]
+        public void BucketListItemSortHappyPath_Test()
+        {
+            // TODO - complete a way to specify specific columns EF 6 will understand
+
+            // set up ------------------------------------------------------
+            var user = GetUser("token");
+            var dbContext = new BucketListContext();
+            IBucketListData bd = new BucketListData(dbContext);
+
+            var userId = bd.AddUser(user);
+            bd.UpsertBucketListItem(GetBucketListItem("Bucket List Item 1"), user.UserName);
+            bd.UpsertBucketListItem(GetBucketListItem("Bucket List Item 2"), user.UserName);
+            bd.UpsertBucketListItem(GetBucketListItem("Bucket List Item 3"), user.UserName);
+
+            // test ---------------------------------------------------------
+            //asc 
+            var savedBucketListItems = bd.GetBucketList(user.UserName, "Name", true, "");
+            Assert.IsNotNull(savedBucketListItems);
+            Assert.AreEqual(savedBucketListItems.FirstOrDefault().Name, "Bucket List Item 1");
+
+            if (savedBucketListItems != null && savedBucketListItems.Count > 0 );
+            {
+                savedBucketListItems.Clear();
+                savedBucketListItems = null;
+            }
+
+            //desc 
+            savedBucketListItems = bd.GetBucketList(user.UserName, "Name", false, "");
+            Assert.IsNotNull(savedBucketListItems);
+            Assert.AreEqual(savedBucketListItems.FirstOrDefault().Name, "Bucket List Item 3");
+
+            //clean up
+            foreach(var savedBucketListItem in savedBucketListItems) 
+            {
+                bd.DeleteBucketListItem(savedBucketListItem.Id);
+            }
+            bd.DeleteUser(userId);
+        }
+
+        #region Private Methods
+
+        private dto.BucketListItem GetBucketListItem(string name = "I am a bucket list item")
         {
             var bucketListItem = new dto.BucketListItem
             {
-                Name = "I am a bucket list item",
+                Name = name,
                 Created = DateTime.Now,
                 Category = Enums.BucketListItemTypes.Hot.ToString(),
                 Achieved = false,
@@ -193,5 +235,7 @@ namespace TestDALNetCore_Integration
 
             return user;
         }
+
+        #endregion
     }
 }

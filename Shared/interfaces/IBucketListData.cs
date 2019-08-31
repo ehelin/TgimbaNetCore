@@ -5,7 +5,7 @@ namespace Shared.interfaces
 {
     public interface IBucketListData
     {
-        IList<BucketListItem> GetBucketList(string userName, string sortString, string srchTerm = "");
+        IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortColumn, bool isAsc = true, string srchTerm = "");
         void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName);
         void DeleteBucketListItem(int bucketListItemDbId);
         void LogMsg(string msg);
