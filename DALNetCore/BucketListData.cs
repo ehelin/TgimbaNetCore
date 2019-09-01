@@ -141,14 +141,33 @@ namespace DALNetCore
         private IQueryable<models.BucketListItem> Sort(IQueryable<models.BucketListItem> bucketListItems, string sortColumn, bool isAsc) 
         {
             IQueryable<models.BucketListItem> sortedBucketListItems = null;
-
-            if (isAsc) 
-            {
-                sortedBucketListItems = bucketListItems.OrderBy(x => x.ListItemName);
-            } 
-            else
-            {
-                sortedBucketListItems = bucketListItems.OrderByDescending(x => x.ListItemName);
+           
+            if (sortColumn == "ListItemName") {
+                if (isAsc) {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.ListItemName);
+                } else {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.ListItemName);
+                }
+            } else if (sortColumn == "Created") {         
+                if (isAsc) {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Created);
+                } else {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Created);
+                }
+            } else if (sortColumn == "Category") {
+                if (isAsc) {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Category);
+                } else {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Category);
+                }
+            } else if (sortColumn == "Achieved") {
+                if (isAsc) {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Achieved);
+                } else  {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Achieved);
+                }
+            } else {
+                throw new Exception("Unknown sort column: " + sortColumn);
             }
 
             return sortedBucketListItems;

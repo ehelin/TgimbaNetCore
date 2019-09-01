@@ -13,6 +13,5 @@ namespace DALNetCore.Models
         public int? CategorySortOrder { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
-        //cpublic string Country { get; set; }
     }
 }

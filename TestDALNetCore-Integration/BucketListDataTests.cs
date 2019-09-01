@@ -168,8 +168,6 @@ namespace TestDALNetCore_Integration
         [TestMethod]
         public void BucketListItemSortHappyPath_Test()
         {
-            // TODO - complete a way to specify specific columns EF 6 will understand
-
             // set up ------------------------------------------------------
             var user = GetUser("token");
             var dbContext = new BucketListContext();
@@ -182,18 +180,18 @@ namespace TestDALNetCore_Integration
 
             // test ---------------------------------------------------------
             //asc 
-            var savedBucketListItems = bd.GetBucketList(user.UserName, "Name", true, "");
+            var savedBucketListItems = bd.GetBucketList(user.UserName, "ListItemName", true, "");
             Assert.IsNotNull(savedBucketListItems);
             Assert.AreEqual(savedBucketListItems.FirstOrDefault().Name, "Bucket List Item 1");
 
-            if (savedBucketListItems != null && savedBucketListItems.Count > 0 );
+            if (savedBucketListItems != null && savedBucketListItems.Count > 0 )
             {
                 savedBucketListItems.Clear();
                 savedBucketListItems = null;
             }
 
             //desc 
-            savedBucketListItems = bd.GetBucketList(user.UserName, "Name", false, "");
+            savedBucketListItems = bd.GetBucketList(user.UserName, "ListItemName", false, "");
             Assert.IsNotNull(savedBucketListItems);
             Assert.AreEqual(savedBucketListItems.FirstOrDefault().Name, "Bucket List Item 3");
 
