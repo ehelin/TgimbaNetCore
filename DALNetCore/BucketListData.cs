@@ -138,39 +138,12 @@ namespace DALNetCore
             }
         }
 
-        private IQueryable<models.BucketListItem> Sort(IQueryable<models.BucketListItem> bucketListItems, string sortColumn, bool isAsc) 
+        private IQueryable<models.BucketListItem> Search(IQueryable<models.BucketListItem> bucketListItems, string srchTerm)
         {
-            IQueryable<models.BucketListItem> sortedBucketListItems = null;
-           
-            if (sortColumn == "ListItemName") {
-                if (isAsc) {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.ListItemName);
-                } else {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.ListItemName);
-                }
-            } else if (sortColumn == "Created") {         
-                if (isAsc) {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Created);
-                } else {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Created);
-                }
-            } else if (sortColumn == "Category") {
-                if (isAsc) {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Category);
-                } else {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Category);
-                }
-            } else if (sortColumn == "Achieved") {
-                if (isAsc) {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Achieved);
-                } else  {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Achieved);
-                }
-            } else {
-                throw new Exception("Unknown sort column: " + sortColumn);
-            }
+            IQueryable<models.BucketListItem> searchedBucketListItems = bucketListItems
+                                                                              .Where(x => x.ListItemName.Contains(srchTerm));
 
-            return sortedBucketListItems;
+            return bucketListItems;
         }
 
         public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortColumn, bool isAsc, string srchTerm = "")
@@ -180,9 +153,12 @@ namespace DALNetCore
                                     join u in this.context.User on blu.UserId equals u.UserId
                                     where u.UserName == userName
                                     select bli;
+
+            if (!string.IsNullOrEmpty(srchTerm)) {
+                dbBucketListItems = Search(dbBucketListItems, srchTerm);
+            }
             
-            if (!string.IsNullOrEmpty(sortColumn)) 
-            {
+            if (!string.IsNullOrEmpty(sortColumn)) {
                 dbBucketListItems = Sort(dbBucketListItems, sortColumn, isAsc);
             }
 
@@ -266,6 +242,62 @@ namespace DALNetCore
 
             this.context.BucketListUser.Add(bucketListItemUser);
             this.context.SaveChanges();
+        }
+
+        private IQueryable<models.BucketListItem> Sort(IQueryable<models.BucketListItem> bucketListItems, string sortColumn, bool isAsc)
+        {
+            IQueryable<models.BucketListItem> sortedBucketListItems = null;
+
+            if (sortColumn == "ListItemName")
+            {
+                if (isAsc)
+                {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.ListItemName);
+                }
+                else
+                {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.ListItemName);
+                }
+            }
+            else if (sortColumn == "Created")
+            {
+                if (isAsc)
+                {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Created);
+                }
+                else
+                {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Created);
+                }
+            }
+            else if (sortColumn == "Category")
+            {
+                if (isAsc)
+                {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Category);
+                }
+                else
+                {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Category);
+                }
+            }
+            else if (sortColumn == "Achieved")
+            {
+                if (isAsc)
+                {
+                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Achieved);
+                }
+                else
+                {
+                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Achieved);
+                }
+            }
+            else
+            {
+                throw new Exception("Unknown sort column: " + sortColumn);
+            }
+
+            return sortedBucketListItems;
         }
 
         #endregion
