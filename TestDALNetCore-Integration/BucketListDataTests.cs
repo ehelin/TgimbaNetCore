@@ -8,6 +8,11 @@ namespace TestDALNetCore_Integration
     [TestClass]
     public class BucketListTests : BaseTest
     {
+        // TODO Error Tests to add
+        // - Unknown Sort Error
+        // - Bucket list Delete Item not found
+        // - Bucket list user Delete Item not found
+
         [TestMethod]
         public void BucketListItemHappyPath_Test()
         {

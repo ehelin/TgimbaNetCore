@@ -10,6 +10,10 @@ namespace TestDALNetCore_Integration
     [TestClass]
     public class MiscTests : BaseTest
     {
+        // TODO Error Tests to add
+        // - build statistics do not exist
+        // - system statistics do not exist
+
         [TestMethod]
         public void GetSystemBuildStatisticsHappyPath_Test()
         {

@@ -11,21 +11,11 @@ namespace DALNetCore
     {
         private BucketListContext context = null;
 
-        public BucketListData(BucketListContext context) {
+        public BucketListData(BucketListContext context)
+        {
             this.context = context;
         }
 
-        public void AddToken(int userId, string token)
-        {
-            var dbUser = this.context.User
-                                   .Where(x => x.UserId == userId)
-                                   .FirstOrDefault();
-            dbUser.Token = token;
-
-            this.context.Update(dbUser);
-            this.context.SaveChanges();
-        }
-        
         public void LogMsg(string msg)
         {
             var logModel = new models.Log
@@ -37,11 +27,34 @@ namespace DALNetCore
             this.context.SaveChanges();
         }
 
+        #region User 
+
+        public void AddToken(int userId, string token)
+        {
+            var dbUser = this.context.User
+                                   .Where(x => x.UserId == userId)
+                                   .FirstOrDefault();
+            if (dbUser == null)
+            {
+                throw new Exception("AddToken - User to have token added does not exist. userId - " + userId.ToString());
+            }
+
+            dbUser.Token = token;
+
+            this.context.Update(dbUser);
+            this.context.SaveChanges();
+        }
+
         public User GetUser(int id)
         {
             var dbUser = this.context.User
                                    .Where(x => x.UserId == id)
                                    .FirstOrDefault();
+            if (dbUser == null)
+            {
+                throw new Exception("GetUser - User does not exist. userId - " + id.ToString());
+            }
+
             var user = new User()
             {
                 UserId = dbUser.UserId,
@@ -74,18 +87,32 @@ namespace DALNetCore
         {
             var dbUser = this.context.User
                                    .Where(x => x.UserId == userId)
-                                   .FirstOrDefault();
+                                   .FirstOrDefault(); 
+            if (dbUser == null)
+            {
+                throw new Exception("DeleteUser - User to delete does not exist. userId - " + userId.ToString());
+            }
 
             this.context.Remove(dbUser);
             this.context.SaveChanges();
         }
 
+        #endregion
+
+        #region Misc
+
         public IList<SystemBuildStatistic> GetSystemBuildStatistics()
         {
             var buildStatistics = this.context.BuildStatistics.ToList();
+
+            if (buildStatistics == null)
+            {
+                throw new Exception("GetSystemBuildStatistics - statistics do not exist");
+            }
+
             var systemBuildStatics = new List<SystemBuildStatistic>();
 
-            foreach (var buildStatistic in buildStatistics) 
+            foreach (var buildStatistic in buildStatistics)
             {
                 var systemBuildStatistic = new SystemBuildStatistic
                 {
@@ -104,6 +131,12 @@ namespace DALNetCore
         public IList<SystemStatistic> GetSystemStatistics()
         {
             var systemStatistics = this.context.SystemStatistics.ToList();
+
+            if (systemStatistics == null)
+            {
+                throw new Exception("GetSystemStatistics - statistics do not exist");
+            }
+
             var systemSystemStatics = new List<SystemStatistic>();
 
             foreach (var systemStatistic in systemStatistics)
@@ -121,7 +154,11 @@ namespace DALNetCore
 
             return systemSystemStatics;
         }
-        
+
+        #endregion
+
+        #region BucketList
+
         public void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
         {
             var existingBucketListItem = this.context.BucketListItem
@@ -131,19 +168,11 @@ namespace DALNetCore
             if (existingBucketListItem != null)
             {
                 UpdateBucketListItem(existingBucketListItem, bucketListItem);
-            } 
-            else 
+            }
+            else
             {
                 InsertBucketListItem(bucketListItem, userName);
             }
-        }
-
-        private IQueryable<models.BucketListItem> Search(IQueryable<models.BucketListItem> bucketListItems, string srchTerm)
-        {
-            IQueryable<models.BucketListItem> searchedBucketListItems = bucketListItems
-                                                                              .Where(x => x.ListItemName.Contains(srchTerm));
-
-            return bucketListItems;
         }
 
         public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortColumn, bool isAsc, string srchTerm = "")
@@ -154,11 +183,13 @@ namespace DALNetCore
                                     where u.UserName == userName
                                     select bli;
 
-            if (!string.IsNullOrEmpty(srchTerm)) {
+            if (!string.IsNullOrEmpty(srchTerm))
+            {
                 dbBucketListItems = Search(dbBucketListItems, srchTerm);
             }
-            
-            if (!string.IsNullOrEmpty(sortColumn)) {
+
+            if (!string.IsNullOrEmpty(sortColumn))
+            {
                 dbBucketListItems = Sort(dbBucketListItems, sortColumn, isAsc);
             }
 
@@ -170,11 +201,11 @@ namespace DALNetCore
                     Name = dbBucketListItem.ListItemName,
                     Created = dbBucketListItem.Created.Value.ToLocalTime(),
                     Category = dbBucketListItem.Category,
-                    Achieved = dbBucketListItem.Achieved.HasValue 
+                    Achieved = dbBucketListItem.Achieved.HasValue
                                     ? dbBucketListItem.Achieved.Value : false,
                     Id = dbBucketListItem.BucketListItemId,
-                    Latitude = (decimal) dbBucketListItem.Latitude,
-                    Longitude = (decimal) dbBucketListItem.Longitude
+                    Latitude = (decimal)dbBucketListItem.Latitude,
+                    Longitude = (decimal)dbBucketListItem.Longitude
                 };
 
                 bucketListItems.Add(bucketListItem);
@@ -182,7 +213,7 @@ namespace DALNetCore
 
             return bucketListItems;
         }
-        
+
         public void DeleteBucketListItem(int bucketListItemDbId)
         {
             var bucketListItemToDelete = this.context.BucketListItem
@@ -192,10 +223,22 @@ namespace DALNetCore
                                                         .Where(x => x.BucketListItemId == bucketListItemDbId)
                                                         .FirstOrDefault();
 
+            if (bucketListItemToDelete == null)
+            {
+                throw new Exception("Bucket list item to be deleted does not exist - id: " + bucketListItemDbId.ToString());
+            }
+
+            if (bucketListItemUserToDelete == null)
+            {
+                throw new Exception("Bucket list item user entry to be deleted does not exist - id: " + bucketListItemDbId.ToString());
+            }
+
             this.context.BucketListUser.Remove(bucketListItemUserToDelete);
             this.context.BucketListItem.Remove(bucketListItemToDelete);
             this.context.SaveChanges();
         }
+
+        #endregion
 
         #region Private Methods
 
@@ -244,7 +287,12 @@ namespace DALNetCore
             this.context.SaveChanges();
         }
 
-        private IQueryable<models.BucketListItem> Sort(IQueryable<models.BucketListItem> bucketListItems, string sortColumn, bool isAsc)
+        private IQueryable<models.BucketListItem> Sort
+        (
+            IQueryable<models.BucketListItem> bucketListItems,
+            string sortColumn,
+            bool isAsc
+        )
         {
             IQueryable<models.BucketListItem> sortedBucketListItems = null;
 
@@ -298,6 +346,14 @@ namespace DALNetCore
             }
 
             return sortedBucketListItems;
+        }
+
+        private IQueryable<models.BucketListItem> Search(IQueryable<models.BucketListItem> bucketListItems, string srchTerm)
+        {
+            IQueryable<models.BucketListItem> searchedBucketListItems = bucketListItems
+                                                                              .Where(x => x.ListItemName.Contains(srchTerm));
+
+            return bucketListItems;
         }
 
         #endregion

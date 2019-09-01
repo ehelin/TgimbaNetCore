@@ -1,17 +1,17 @@
 using DALNetCore;
-using DALNetCore.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
-using Shared.misc;
-using System;
-using System.Linq;
-using dto = Shared.dto;
 
 namespace TestDALNetCore_Integration
 {
     [TestClass]
     public class UserTests : BaseTest
     {
+        // TODO Error Tests to add
+        // - User not found on add token
+        // - User does not exist on get user
+        // - User does not exist on delete user
+
         [TestMethod]
         public void UserHappyPath_Test()
         {
