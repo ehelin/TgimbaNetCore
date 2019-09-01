@@ -10,15 +10,11 @@ namespace TestDALNetCore_Integration
     [TestClass]
     public class MiscTests : BaseTest
     {
-        // TODO Error Tests to add
-        // - build statistics do not exist
-        // - system statistics do not exist
-
         [TestMethod]
         public void GetSystemBuildStatisticsHappyPath_Test()
         {
             //set up ------------------------------------------------------
-            var dbContext = new BucketListContext();
+            var dbContext = this.GetDbContext();
             var now = DateTime.Now;
             var buildStatisticsToSave = new BuildStatistics
             {
@@ -53,7 +49,7 @@ namespace TestDALNetCore_Integration
         public void GetSystemSystemStatisticsGetSystemBuildStatisticsHappyPath_Test()
         {        
             //set up ------------------------------------------------------
-            var dbContext = new BucketListContext();
+            var dbContext = this.GetDbContext();
             var now = DateTime.Now;
             var systemStatisticsToSave = new SystemStatistics
             {
@@ -86,7 +82,7 @@ namespace TestDALNetCore_Integration
         [TestMethod]
         public void LogMsgHappyPath_Test()
         {
-            var dbContext = new BucketListContext();
+            var dbContext = this.GetDbContext();
             IBucketListData bd = new BucketListData(dbContext);
 
             //test ----------------------------

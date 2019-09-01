@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Shared.dto;
+using Shared.misc;
 
 namespace Shared.interfaces
 {
     public interface IBucketListData
     {
-        IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortColumn, bool isAsc = true, string srchTerm = "");
+        IList<Shared.dto.BucketListItem> GetBucketList(string userName, Enums.SortColumns? sortColumn, bool isAsc = true, string srchTerm = "");
         void UpsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName);
         void DeleteBucketListItem(int bucketListItemDbId);
         void LogMsg(string msg);

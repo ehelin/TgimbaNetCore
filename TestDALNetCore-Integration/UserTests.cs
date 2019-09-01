@@ -1,25 +1,21 @@
 using DALNetCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
+using Shared.exceptions;
 
 namespace TestDALNetCore_Integration
 {
     [TestClass]
     public class UserTests : BaseTest
     {
-        // TODO Error Tests to add
-        // - User not found on add token
-        // - User does not exist on get user
-        // - User does not exist on delete user
-
         [TestMethod]
-        public void UserHappyPath_Test()
+        public void User_HappyPath_Test()
         {
+            RemoveTestUser();
+
             var token = "token";
             var user = GetUser(token);
-
-            var dbContext = new BucketListContext();
-            IBucketListData bd = new BucketListData(dbContext);
+            IBucketListData bd = new BucketListData(this.GetDbContext());
 
             var userId = bd.AddUser(user);
             bd.AddToken(userId, token);
@@ -33,6 +29,48 @@ namespace TestDALNetCore_Integration
             Assert.AreEqual(token, savedUser.Token);
 
             bd.DeleteUser(savedUser.UserId);
-        }      
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RecordDoesNotExistException))]
+        public void User_AddToken_UserDoesNotExist_Test()
+        {
+            RemoveTestUser();
+
+            var unknownUserId = -12521;
+            IBucketListData bd = new BucketListData(this.GetDbContext());
+
+            bd.AddToken(unknownUserId, this.Token);
+
+            // NOTE: RecordDoesNotExistException is expected
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RecordDoesNotExistException))]
+        public void User_GetUser_UserDoesNotExist_Test()
+        {
+            RemoveTestUser();
+
+            var unknownUserId = -12521;
+            IBucketListData bd = new BucketListData(this.GetDbContext());
+
+            bd.GetUser(unknownUserId);
+
+            // NOTE: RecordDoesNotExistException is expected
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RecordDoesNotExistException))]
+        public void User_DeleteUser_UserDoesNotExist_Test()
+        {
+            RemoveTestUser();
+
+            var unknownUserId = -12521;
+            IBucketListData bd = new BucketListData(this.GetDbContext());
+
+            bd.DeleteUser(unknownUserId);
+
+            // NOTE: RecordDoesNotExistException is expected
+        }
     }
 }

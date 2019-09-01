@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Shared.dto;
+using Shared.misc;
 using Shared.interfaces;
 using models = DALNetCore.Models;
+using Shared.exceptions;
 
 namespace DALNetCore
 {
@@ -16,17 +18,6 @@ namespace DALNetCore
             this.context = context;
         }
 
-        public void LogMsg(string msg)
-        {
-            var logModel = new models.Log
-            {
-                LogMessage = msg,
-                Created = DateTime.UtcNow
-            };
-            this.context.Log.Add(logModel);
-            this.context.SaveChanges();
-        }
-
         #region User 
 
         public void AddToken(int userId, string token)
@@ -36,7 +27,7 @@ namespace DALNetCore
                                    .FirstOrDefault();
             if (dbUser == null)
             {
-                throw new Exception("AddToken - User to have token added does not exist. userId - " + userId.ToString());
+                throw new RecordDoesNotExistException("AddToken - User to have token added does not exist. userId - " + userId.ToString());
             }
 
             dbUser.Token = token;
@@ -52,7 +43,7 @@ namespace DALNetCore
                                    .FirstOrDefault();
             if (dbUser == null)
             {
-                throw new Exception("GetUser - User does not exist. userId - " + id.ToString());
+                throw new RecordDoesNotExistException("GetUser - User does not exist. userId - " + id.ToString());
             }
 
             var user = new User()
@@ -90,7 +81,7 @@ namespace DALNetCore
                                    .FirstOrDefault(); 
             if (dbUser == null)
             {
-                throw new Exception("DeleteUser - User to delete does not exist. userId - " + userId.ToString());
+                throw new RecordDoesNotExistException("DeleteUser - User to delete does not exist. userId - " + userId.ToString());
             }
 
             this.context.Remove(dbUser);
@@ -101,28 +92,36 @@ namespace DALNetCore
 
         #region Misc
 
+        public void LogMsg(string msg)
+        {
+            var logModel = new models.Log
+            {
+                LogMessage = msg,
+                Created = DateTime.UtcNow
+            };
+            this.context.Log.Add(logModel);
+            this.context.SaveChanges();
+        }
+
         public IList<SystemBuildStatistic> GetSystemBuildStatistics()
         {
             var buildStatistics = this.context.BuildStatistics.ToList();
-
-            if (buildStatistics == null)
-            {
-                throw new Exception("GetSystemBuildStatistics - statistics do not exist");
-            }
-
             var systemBuildStatics = new List<SystemBuildStatistic>();
 
-            foreach (var buildStatistic in buildStatistics)
+            if (buildStatistics != null)
             {
-                var systemBuildStatistic = new SystemBuildStatistic
+                foreach (var buildStatistic in buildStatistics)
                 {
-                    Start = buildStatistic.Start.ToString(),
-                    End = buildStatistic.End.ToString(),
-                    BuildNumber = buildStatistic.BuildNumber,
-                    Status = buildStatistic.Status
-                };
+                    var systemBuildStatistic = new SystemBuildStatistic
+                    {
+                        Start = buildStatistic.Start.ToString(),
+                        End = buildStatistic.End.ToString(),
+                        BuildNumber = buildStatistic.BuildNumber,
+                        Status = buildStatistic.Status
+                    };
 
-                systemBuildStatics.Add(systemBuildStatistic);
+                    systemBuildStatics.Add(systemBuildStatistic);
+                }
             }
 
             return systemBuildStatics;
@@ -131,25 +130,22 @@ namespace DALNetCore
         public IList<SystemStatistic> GetSystemStatistics()
         {
             var systemStatistics = this.context.SystemStatistics.ToList();
-
-            if (systemStatistics == null)
-            {
-                throw new Exception("GetSystemStatistics - statistics do not exist");
-            }
-
             var systemSystemStatics = new List<SystemStatistic>();
 
-            foreach (var systemStatistic in systemStatistics)
+            if (systemStatistics != null)
             {
-                var systemSystemStatistic = new SystemStatistic
+                foreach (var systemStatistic in systemStatistics)
                 {
-                    WebSiteIsUp = systemStatistic.WebsiteIsUp,
-                    DatabaseIsUp = systemStatistic.DatabaseIsUp,
-                    AzureFunctionIsUp = systemStatistic.AzureFunctionIsUp,
-                    Created = systemStatistic.Created.ToString()
-                };
+                    var systemSystemStatistic = new SystemStatistic
+                    {
+                        WebSiteIsUp = systemStatistic.WebsiteIsUp,
+                        DatabaseIsUp = systemStatistic.DatabaseIsUp,
+                        AzureFunctionIsUp = systemStatistic.AzureFunctionIsUp,
+                        Created = systemStatistic.Created.ToString()
+                    };
 
-                systemSystemStatics.Add(systemSystemStatistic);
+                    systemSystemStatics.Add(systemSystemStatistic);
+                }
             }
 
             return systemSystemStatics;
@@ -175,7 +171,13 @@ namespace DALNetCore
             }
         }
 
-        public IList<Shared.dto.BucketListItem> GetBucketList(string userName, string sortColumn, bool isAsc, string srchTerm = "")
+        public IList<Shared.dto.BucketListItem> GetBucketList
+        (
+            string userName, 
+            Enums.SortColumns? sortColumn, 
+            bool isAsc, 
+            string srchTerm = ""
+        )
         {
             var dbBucketListItems = from bli in this.context.BucketListItem
                                     join blu in this.context.BucketListUser on bli.BucketListItemId equals blu.BucketListItemId
@@ -188,9 +190,9 @@ namespace DALNetCore
                 dbBucketListItems = Search(dbBucketListItems, srchTerm);
             }
 
-            if (!string.IsNullOrEmpty(sortColumn))
+            if (sortColumn != null)
             {
-                dbBucketListItems = Sort(dbBucketListItems, sortColumn, isAsc);
+                dbBucketListItems = Sort(dbBucketListItems, sortColumn.Value, isAsc);
             }
 
             var bucketListItems = new List<Shared.dto.BucketListItem>();
@@ -225,12 +227,7 @@ namespace DALNetCore
 
             if (bucketListItemToDelete == null)
             {
-                throw new Exception("Bucket list item to be deleted does not exist - id: " + bucketListItemDbId.ToString());
-            }
-
-            if (bucketListItemUserToDelete == null)
-            {
-                throw new Exception("Bucket list item user entry to be deleted does not exist - id: " + bucketListItemDbId.ToString());
+                throw new RecordDoesNotExistException("Bucket list item to be deleted does not exist - id: " + bucketListItemDbId.ToString());
             }
 
             this.context.BucketListUser.Remove(bucketListItemUserToDelete);
@@ -261,6 +258,15 @@ namespace DALNetCore
 
         private void InsertBucketListItem(Shared.dto.BucketListItem bucketListItem, string userName)
         {
+            var user = this.context.User
+                                .Where(x => x.UserName == userName)
+                                .FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new RecordDoesNotExistException("InsertBucketListItem - User does not exist. UserName: " + userName);
+            }
+
             var bucketListItemToSave = new models.BucketListItem
             {
                 ListItemName = bucketListItem.Name,
@@ -274,9 +280,6 @@ namespace DALNetCore
             this.context.BucketListItem.Add(bucketListItemToSave);
             this.context.SaveChanges();
 
-            var user = this.context.User
-                                .Where(x => x.UserName == userName)
-                                .FirstOrDefault();
             var bucketListItemUser = new models.BucketListUser
             {
                 BucketListItemId = bucketListItemToSave.BucketListItemId,
@@ -290,13 +293,14 @@ namespace DALNetCore
         private IQueryable<models.BucketListItem> Sort
         (
             IQueryable<models.BucketListItem> bucketListItems,
-            string sortColumn,
+            Enums.SortColumns sortColumn,
             bool isAsc
         )
         {
             IQueryable<models.BucketListItem> sortedBucketListItems = null;
 
-            if (sortColumn == "ListItemName")
+            // NOTE: Unknown sort column types handled at service level
+            if (sortColumn == Enums.SortColumns.ListItemName)
             {
                 if (isAsc)
                 {
@@ -307,7 +311,7 @@ namespace DALNetCore
                     sortedBucketListItems = bucketListItems.OrderByDescending(x => x.ListItemName);
                 }
             }
-            else if (sortColumn == "Created")
+            else if (sortColumn == Enums.SortColumns.Created)
             {
                 if (isAsc)
                 {
@@ -318,7 +322,7 @@ namespace DALNetCore
                     sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Created);
                 }
             }
-            else if (sortColumn == "Category")
+            else if (sortColumn == Enums.SortColumns.Category)
             {
                 if (isAsc)
                 {
@@ -329,7 +333,7 @@ namespace DALNetCore
                     sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Category);
                 }
             }
-            else if (sortColumn == "Achieved")
+            else if (sortColumn == Enums.SortColumns.Achieved)
             {
                 if (isAsc)
                 {
@@ -339,10 +343,6 @@ namespace DALNetCore
                 {
                     sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Achieved);
                 }
-            }
-            else
-            {
-                throw new Exception("Unknown sort column: " + sortColumn);
             }
 
             return sortedBucketListItems;

@@ -2,30 +2,28 @@ using System.Linq;
 using DALNetCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
+using Shared.misc;
+using Shared.exceptions;
 
 namespace TestDALNetCore_Integration
 {
     [TestClass]
     public class BucketListTests : BaseTest
     {
-        // TODO Error Tests to add
-        // - Unknown Sort Error
-        // - Bucket list Delete Item not found
-        // - Bucket list user Delete Item not found
-
         [TestMethod]
-        public void BucketListItemHappyPath_Test()
+        public void BucketListItem_HappyPath_Test()
         {
             // set up ------------------------------------------------------
+            RemoveTestUser();
+            
             var user = GetUser("token");
-            var dbContext = new BucketListContext();
-            IBucketListData bd = new BucketListData(dbContext);
+            IBucketListData bd = new BucketListData(this.GetDbContext());
             var bucketListItemToSave = GetBucketListItem();
 
             // test ---------------------------------------------------------
             var userId = bd.AddUser(user);
             bd.UpsertBucketListItem(bucketListItemToSave, user.UserName);
-            var savedBucketListItem = bd.GetBucketList(user.UserName, "").FirstOrDefault();
+            var savedBucketListItem = bd.GetBucketList(user.UserName, null).FirstOrDefault();
             
             // we have a saved object that object matches our created object
             Assert.IsNotNull(savedBucketListItem);
@@ -40,12 +38,12 @@ namespace TestDALNetCore_Integration
             // TODO - upsert update part not working...fix
             savedBucketListItem.Name = savedBucketListItem.Name + " modified";
             bd.UpsertBucketListItem(savedBucketListItem, user.UserName);
-            var savedBucketListItemUpdated = bd.GetBucketList(user.UserName, "").FirstOrDefault();
+            var savedBucketListItemUpdated = bd.GetBucketList(user.UserName, null).FirstOrDefault();
             Assert.AreEqual(savedBucketListItem.Name, savedBucketListItemUpdated.Name);
 
             // we can delete the bucket list item
             bd.DeleteBucketListItem(savedBucketListItemUpdated.Id);
-            var deletedBucketListItem = bd.GetBucketList(user.UserName, "").FirstOrDefault();
+            var deletedBucketListItem = bd.GetBucketList(user.UserName, null).FirstOrDefault();
             Assert.IsNotNull(savedBucketListItem);
 
             //clean up user
@@ -53,12 +51,13 @@ namespace TestDALNetCore_Integration
         }
 
         [TestMethod]
-        public void BucketListItemSortHappyPath_Test()
+        public void BucketListItem_Sort_HappyPath_Test()
         {
             // set up ------------------------------------------------------
+            RemoveTestUser();
+
             var user = GetUser("token");
-            var dbContext = new BucketListContext();
-            IBucketListData bd = new BucketListData(dbContext);
+            IBucketListData bd = new BucketListData(this.GetDbContext());
 
             var userId = bd.AddUser(user);
             bd.UpsertBucketListItem(GetBucketListItem("Bucket List Item 1"), user.UserName);
@@ -67,7 +66,7 @@ namespace TestDALNetCore_Integration
 
             // test ---------------------------------------------------------
             //asc 
-            var savedBucketListItems = bd.GetBucketList(user.UserName, "ListItemName", true, "");
+            var savedBucketListItems = bd.GetBucketList(user.UserName, Enums.SortColumns.ListItemName, true, "");
             Assert.IsNotNull(savedBucketListItems);
             Assert.AreEqual(savedBucketListItems.FirstOrDefault().Name, "Bucket List Item 1");
 
@@ -78,7 +77,7 @@ namespace TestDALNetCore_Integration
             }
 
             //desc 
-            savedBucketListItems = bd.GetBucketList(user.UserName, "ListItemName", false, "");
+            savedBucketListItems = bd.GetBucketList(user.UserName, Enums.SortColumns.ListItemName, false, "");
             Assert.IsNotNull(savedBucketListItems);
             Assert.AreEqual(savedBucketListItems.FirstOrDefault().Name, "Bucket List Item 3");
 
@@ -91,12 +90,13 @@ namespace TestDALNetCore_Integration
         }
         
         [TestMethod]
-        public void BucketListItemSearchHappyPath_Test()
+        public void BucketListItem_Search_HappyPath_Test()
         {
             // set up ------------------------------------------------------
+            RemoveTestUser();
+
             var user = GetUser("token");
-            var dbContext = new BucketListContext();
-            IBucketListData bd = new BucketListData(dbContext);
+            IBucketListData bd = new BucketListData(this.GetDbContext());
 
             var userId = bd.AddUser(user);
             bd.UpsertBucketListItem(GetBucketListItem("African Safari"), user.UserName);
@@ -105,7 +105,7 @@ namespace TestDALNetCore_Integration
 
             // test ---------------------------------------------------------
             //asc 
-            var savedBucketListItems = bd.GetBucketList(user.UserName, "", true, "Safari");
+            var savedBucketListItems = bd.GetBucketList(user.UserName, null, true, "Safari");
             Assert.IsNotNull(savedBucketListItems);
             Assert.IsNotNull(savedBucketListItems.Count == 1);
             Assert.AreEqual(savedBucketListItems.FirstOrDefault().Name, "African Safari");
@@ -116,6 +116,38 @@ namespace TestDALNetCore_Integration
                 bd.DeleteBucketListItem(savedBucketListItem.Id);
             }
             bd.DeleteUser(userId);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(RecordDoesNotExistException))]
+        public void BucketListItem_AddBucketListItem_UserDoesNotExist_Test()
+        {
+            // set up ------------------------------------------------------
+            RemoveTestUser();
+
+            IBucketListData bd = new BucketListData(this.GetDbContext());
+            var bucketListItemToSave = GetBucketListItem();
+
+            // test ---------------------------------------------------------
+            bd.UpsertBucketListItem(bucketListItemToSave, "NonExistantUser");
+           
+            // NOTE: RecordDoesNotExistException is expected
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RecordDoesNotExistException))]
+        public void BucketListItem_DeleteBucketListItem_UserDoesNotExist_Test()
+        {
+            // set up ------------------------------------------------------
+            RemoveTestUser();
+
+            IBucketListData bd = new BucketListData(this.GetDbContext());
+
+            // test ---------------------------------------------------------
+            var nonExistantBucketListItemId = -12412;
+            bd.DeleteBucketListItem(nonExistantBucketListItemId);
+
+            // NOTE: RecordDoesNotExistException is expected
         }
     }
 }
