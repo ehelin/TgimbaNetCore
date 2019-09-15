@@ -7,7 +7,7 @@ namespace TgimbaNetCoreWebShared.Controllers
 {
     public class SharedBucketListController : SharedBaseController
     {
-		public SharedBucketListController(ITgimbaService service, IWebClient webClient)
+		public SharedBucketListController(ITgimbaService_Old service, IWebClient webClient)
             : base(service, webClient) { }
 
 		[HttpPost]

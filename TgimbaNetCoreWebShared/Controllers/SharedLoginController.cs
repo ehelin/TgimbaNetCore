@@ -6,7 +6,7 @@ namespace TgimbaNetCoreWebShared.Controllers
 {
     public class SharedLoginController : SharedBaseController
     {
-       public SharedLoginController(ITgimbaService service, IWebClient webClient)
+       public SharedLoginController(ITgimbaService_Old service, IWebClient webClient)
             : base(service, webClient) { }
 
         [HttpPost]

@@ -9,7 +9,7 @@ namespace TestsAPIIntegration
     [TestClass]
     public class ApiTests : BaseTest
     {
-        private ITgimbaService service = null;
+        private ITgimbaService_Old service = null;
    
         private string user = "ApianAwesomeUser";
         private string password = "ApianAwesomeUserPass0rd1";

@@ -14,9 +14,9 @@ namespace TgimbaNetCoreWeb.Controllers
     public class WelcomeController : Controller
     {
 		private SharedWelcomeController sharedWelcomeController = null;
-		private ITgimbaService service = null;
+		private ITgimbaService_Old service = null;
 
-        public WelcomeController(ITgimbaService service, IWebClient webClient)
+        public WelcomeController(ITgimbaService_Old service, IWebClient webClient)
         {
 			sharedWelcomeController = new SharedWelcomeController(service, webClient);
 			this.service = service;

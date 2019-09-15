@@ -4,9 +4,9 @@ namespace TgimbaNetCoreWebShared.Models
 {
     public class BaseModel
     {
-        protected ITgimbaService service = null;
+        protected ITgimbaService_Old service = null;
 
-        public BaseModel(ITgimbaService service)
+        public BaseModel(ITgimbaService_Old service)
         {
             this.service = service;
         }

@@ -13,7 +13,7 @@ namespace TgimbaNetCoreWeb.Controllers
     {
 		private SharedRegistrationController sharedRegistrationController = null;
 
-        public RegistrationController(ITgimbaService service, IWebClient webClient)
+        public RegistrationController(ITgimbaService_Old service, IWebClient webClient)
         {
 			sharedRegistrationController = new SharedRegistrationController(service, webClient);
 		}	                   	

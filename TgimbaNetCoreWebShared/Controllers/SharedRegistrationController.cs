@@ -6,7 +6,7 @@ namespace TgimbaNetCoreWebShared.Controllers
 {
     public class SharedRegistrationController : SharedBaseController
     {
-		public SharedRegistrationController(ITgimbaService service, IWebClient webClient)
+		public SharedRegistrationController(ITgimbaService_Old service, IWebClient webClient)
             : base(service, webClient) { }
 											   
 		[HttpPost]

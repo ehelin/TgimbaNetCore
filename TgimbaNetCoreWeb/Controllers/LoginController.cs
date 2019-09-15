@@ -13,7 +13,7 @@ namespace TgimbaNetCoreWeb.Controllers
     {
 		private SharedLoginController sharedLoginController = null;
 
-        public LoginController(ITgimbaService service, IWebClient webClient)
+        public LoginController(ITgimbaService_Old service, IWebClient webClient)
         {
 			sharedLoginController = new SharedLoginController(service, webClient);
 		}		  

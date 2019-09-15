@@ -40,7 +40,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms", "Algorithms\Al
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALNetCore", "DALNetCore\DALNetCore.csproj", "{63A3BCDF-6F33-46A4-A20E-A8048C4BDD87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDALNetCore-Integration", "TestDALNetCore-Integration\TestDALNetCore-Integration.csproj", "{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDALNetCore-Integration", "TestDALNetCore-Integration\TestDALNetCore-Integration.csproj", "{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APINetCore", "APINetCore\APINetCore.csproj", "{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

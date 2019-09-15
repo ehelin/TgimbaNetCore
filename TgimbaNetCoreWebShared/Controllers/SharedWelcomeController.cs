@@ -6,7 +6,7 @@ namespace TgimbaNetCoreWebShared.Controllers
 {
     public class SharedWelcomeController : SharedBaseController
     {
-        public SharedWelcomeController(ITgimbaService service, IWebClient webClient)
+        public SharedWelcomeController(ITgimbaService_Old service, IWebClient webClient)
             : base(service, webClient) { }
 
         public IActionResult Index()

@@ -10,9 +10,9 @@ namespace TgimbaNetCoreWeb.Controllers
     #endif
     public class ReportController : Controller
     {
-        private ITgimbaService service = null;
+        private ITgimbaService_Old service = null;
 
-        public ReportController(ITgimbaService service)
+        public ReportController(ITgimbaService_Old service)
         {
             this.service = service;
         }

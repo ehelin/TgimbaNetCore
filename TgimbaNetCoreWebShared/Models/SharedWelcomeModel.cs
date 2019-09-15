@@ -9,7 +9,7 @@ namespace TgimbaNetCoreWebShared.Models
         //public List<SystemStatistic> SystemStatistics = null;
         //public List<SystemBuildStatistics> SystemBuildStatistics = null;
 
-        //public SharedWelcomeModel(ITgimbaService service) : base(service)
+        //public SharedWelcomeModel(ITgimbaService_Old service) : base(service)
         //{
         //    this.SystemStatistics = this.service.GetSystemStatistics();
         //    this.SystemBuildStatistics = this.service.GetSystemBuildStatistics();

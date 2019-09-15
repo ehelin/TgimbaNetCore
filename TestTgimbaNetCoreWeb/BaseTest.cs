@@ -10,12 +10,12 @@ namespace TestTgimbaNetCoreWeb
 {
     public class BaseTest
     {
-        protected Mock<ITgimbaService> mockITgimbaService { get; set; }
+        protected Mock<ITgimbaService_Old> mockITgimbaService { get; set; }
 		protected Mock<IWebClient> mockWebClient { get; set; }
 
         public BaseTest()
         {
-            mockITgimbaService = new Mock<ITgimbaService>();  
+            mockITgimbaService = new Mock<ITgimbaService_Old>();  
             mockWebClient = new Mock<IWebClient>();
 
             SetupGetDashboard();

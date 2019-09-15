@@ -14,7 +14,7 @@ namespace TgimbaNetCoreWeb.Controllers
     {
 		private SharedBucketListController sharedBucketListController = null;
 
-        public BucketListItemController(ITgimbaService service, IWebClient webClient)
+        public BucketListItemController(ITgimbaService_Old service, IWebClient webClient)
         {
 			sharedBucketListController = new SharedBucketListController(service, webClient);
 		}

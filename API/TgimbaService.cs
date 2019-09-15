@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace API
 {
     // TODO - DI databases
-    public class TgimbaService : ITgimbaService
+    public class TgimbaService : ITgimbaService_Old
     {
         // TODO - DI logger
         private static Enums.LogLevel level = Enums.LogLevel.Info;

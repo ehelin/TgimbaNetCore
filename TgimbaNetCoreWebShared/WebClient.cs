@@ -8,9 +8,9 @@ namespace TgimbaNetCoreWebShared
 {
     public class WebClient : IWebClient
     {
-        private ITgimbaService service = null;
+        private ITgimbaService_Old service = null;
 
-        public WebClient(ITgimbaService service)
+        public WebClient(ITgimbaService_Old service)
         {
             this.service = service;
         }
