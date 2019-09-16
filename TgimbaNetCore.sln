@@ -42,7 +42,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALNetCore", "DALNetCore\DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDALNetCore-Integration", "TestDALNetCore-Integration\TestDALNetCore-Integration.csproj", "{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APINetCore", "APINetCore\APINetCore.csproj", "{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APINetCore", "APINetCore\APINetCore.csproj", "{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAPINetCore-Unit", "TestAPINetCore-Unit\TestAPINetCore-Unit.csproj", "{072AB276-44D6-45F2-B576-12DBAD8E2C1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAPINETCore-Integration", "TestAPINETCore-Integration\TestAPINETCore-Integration.csproj", "{E0D88287-D578-4B33-95C3-B1AF553D3A92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +110,14 @@ Global
 		{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{072AB276-44D6-45F2-B576-12DBAD8E2C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{072AB276-44D6-45F2-B576-12DBAD8E2C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{072AB276-44D6-45F2-B576-12DBAD8E2C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{072AB276-44D6-45F2-B576-12DBAD8E2C1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0D88287-D578-4B33-95C3-B1AF553D3A92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D88287-D578-4B33-95C3-B1AF553D3A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D88287-D578-4B33-95C3-B1AF553D3A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0D88287-D578-4B33-95C3-B1AF553D3A92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

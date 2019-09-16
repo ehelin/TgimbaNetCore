@@ -8,50 +8,7 @@ namespace APINetCore
 {
     public class TgimbaService : ITgimbaService
     {
-        public string[] DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] GetBucketListItems(string encodedUserName, string encodedSortString, string encodedToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] GetBucketListItemsV2(string encodedUserName, string encodedSortString, string encodedToken, string encodedSrchString = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] GetDashboard()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetReport()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SystemBuildStatistic> GetSystemBuildStatistics()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SystemStatistic> GetSystemStatistics()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetTestResult()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Log(string msg, Enums.LogLevel level)
-        {
-            throw new NotImplementedException();
-        }
+        #region User 
 
         public string LoginDemoUser()
         {
@@ -68,14 +25,44 @@ namespace APINetCore
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region BucketList
+
+        public string[] DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetBucketListItems(string encodedUserName, string encodedSortString, string encodedToken, string encodedSrchString = "")
+        {
+            throw new NotImplementedException();
+        }
+
         public string[] UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken)
         {
             throw new NotImplementedException();
         }
 
-        public string[] UpsertBucketListItemV2(string encodedBucketListItems, string encodedUser, string encodedToken)
+        #endregion
+
+        #region Misc
+
+        public List<SystemBuildStatistic> GetSystemBuildStatistics()
         {
             throw new NotImplementedException();
         }
+
+        public List<SystemStatistic> GetSystemStatistics()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Log(string msg, Enums.LogLevel level)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
