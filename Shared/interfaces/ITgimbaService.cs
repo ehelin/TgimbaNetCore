@@ -16,7 +16,7 @@ namespace Shared.interfaces
  
         List<SystemStatistic> GetSystemStatistics();
         List<SystemBuildStatistic> GetSystemBuildStatistics();
-        void Log(string msg, Enums.LogLevel level);
+        void Log(string msg);
         string LoginDemoUser();
     }
 }

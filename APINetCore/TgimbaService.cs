@@ -8,6 +8,13 @@ namespace APINetCore
 {
     public class TgimbaService : ITgimbaService
     {
+        private IBucketListData bucketListData = null;
+
+        public TgimbaService(IBucketListData bucketListData)
+        {
+            this.bucketListData = bucketListData;
+        }
+
         #region User 
 
         public string LoginDemoUser()
@@ -58,9 +65,18 @@ namespace APINetCore
             throw new NotImplementedException();
         }
 
-        public void Log(string msg, Enums.LogLevel level)
+        private void test() {
+
+        }
+
+        public void Log(string msg)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(msg)) 
+            {
+                throw new ArgumentException();
+            }
+
+            this.bucketListData.LogMsg(msg);
         }
 
         #endregion
