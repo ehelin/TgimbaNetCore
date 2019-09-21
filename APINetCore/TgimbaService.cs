@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Shared.dto;
 using Shared.interfaces;
-using Shared.misc;
 
 namespace APINetCore
 {
@@ -55,18 +54,16 @@ namespace APINetCore
 
         #region Misc
 
-        public List<SystemBuildStatistic> GetSystemBuildStatistics()
+        public IList<SystemBuildStatistic> GetSystemBuildStatistics()
         {
-            throw new NotImplementedException();
+            var systemBuildStatistics = this.bucketListData.GetSystemBuildStatistics();
+            return systemBuildStatistics;
         }
 
-        public List<SystemStatistic> GetSystemStatistics()
+        public IList<SystemStatistic> GetSystemStatistics()
         {
-            throw new NotImplementedException();
-        }
-
-        private void test() {
-
+            var systemBuildStatistics = this.bucketListData.GetSystemStatistics();
+            return systemBuildStatistics;
         }
 
         public void Log(string msg)

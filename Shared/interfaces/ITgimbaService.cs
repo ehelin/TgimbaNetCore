@@ -14,8 +14,8 @@ namespace Shared.interfaces
         string[] UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken);
         string[] DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
  
-        List<SystemStatistic> GetSystemStatistics();
-        List<SystemBuildStatistic> GetSystemBuildStatistics();
+        IList<SystemStatistic> GetSystemStatistics();
+        IList<SystemBuildStatistic> GetSystemBuildStatistics();
         void Log(string msg);
         string LoginDemoUser();
     }
