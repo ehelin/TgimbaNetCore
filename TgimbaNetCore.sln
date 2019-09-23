@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		webConfigPipeline.txt = webConfigPipeline.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{7E8FA25C-A969-4229-BC9F-36BA4BD71187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "API\BLL.csproj", "{7E8FA25C-A969-4229-BC9F-36BA4BD71187}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsAPI-Integration", "TestAPI\TestsAPI-Integration.csproj", "{BA8F2896-10F0-41B8-B345-36C33983708B}"
 EndProject
@@ -42,11 +42,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALNetCore", "DALNetCore\DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDALNetCore-Integration", "TestDALNetCore-Integration\TestDALNetCore-Integration.csproj", "{79C7A0AA-0C07-4C4C-AD33-8BDD23630752}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APINetCore", "APINetCore\APINetCore.csproj", "{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLLNetCore", "APINetCore\BLLNetCore.csproj", "{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAPINetCore-Unit", "TestAPINetCore-Unit\TestAPINetCore-Unit.csproj", "{072AB276-44D6-45F2-B576-12DBAD8E2C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAPINetCore-Unit", "TestAPINetCore-Unit\TestAPINetCore-Unit.csproj", "{072AB276-44D6-45F2-B576-12DBAD8E2C1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAPINETCore-Integration", "TestAPINETCore-Integration\TestAPINETCore-Integration.csproj", "{E0D88287-D578-4B33-95C3-B1AF553D3A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAPINETCore-Integration", "TestAPINETCore-Integration\TestAPINETCore-Integration.csproj", "{E0D88287-D578-4B33-95C3-B1AF553D3A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpAPINetCore", "HttpAPINetCore\HttpAPINetCore.csproj", "{678F0B2C-6177-44F5-9000-5EAE4A99C82D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHttpAPINetCore-Unit", "TestHttpAPINetCore-Unit\TestHttpAPINetCore-Unit.csproj", "{D65CF7C1-8522-4093-BFFD-6AB4F5C26005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,6 +122,14 @@ Global
 		{E0D88287-D578-4B33-95C3-B1AF553D3A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0D88287-D578-4B33-95C3-B1AF553D3A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0D88287-D578-4B33-95C3-B1AF553D3A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{678F0B2C-6177-44F5-9000-5EAE4A99C82D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678F0B2C-6177-44F5-9000-5EAE4A99C82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678F0B2C-6177-44F5-9000-5EAE4A99C82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678F0B2C-6177-44F5-9000-5EAE4A99C82D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D65CF7C1-8522-4093-BFFD-6AB4F5C26005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D65CF7C1-8522-4093-BFFD-6AB4F5C26005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D65CF7C1-8522-4093-BFFD-6AB4F5C26005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D65CF7C1-8522-4093-BFFD-6AB4F5C26005}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

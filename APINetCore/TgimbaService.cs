@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Shared.dto;
 using Shared.interfaces;
+using System.Net;
 
 namespace APINetCore
 {
@@ -68,11 +69,6 @@ namespace APINetCore
 
         public void Log(string msg)
         {
-            if (string.IsNullOrEmpty(msg)) 
-            {
-                throw new ArgumentException();
-            }
-
             this.bucketListData.LogMsg(msg);
         }
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>TestAPINetCore_Unit</RootNamespace>
+    <RootNamespace>TestHttpAPINetCore_Unit</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -15,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APINetCore\BLLNetCore.csproj" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\HttpAPINetCore\HttpAPINetCore.csproj" />
   </ItemGroup>
 
 </Project>

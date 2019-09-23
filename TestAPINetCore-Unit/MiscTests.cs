@@ -18,22 +18,6 @@ namespace TestAPINetCore_Unit
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Log_NullMessageTest()
-        {
-            string msg = null;
-            this.service.Log(msg);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Log_EmptyMessageTest()
-        {
-            var msg = "";
-            this.service.Log(msg);
-        }
-
-        [TestMethod]
         public void GetSystemStatistics_HappyPathTest()
         {
             var systemStatisticToReturn = new SystemStatistic()
