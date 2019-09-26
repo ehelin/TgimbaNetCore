@@ -1,8 +1,8 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HttpAPINetCore.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using APINetCore;
-using System.Net.Http;
+using Shared.interfaces;
 
 namespace TestHttpAPINetCore_Unit
 {
@@ -10,25 +10,43 @@ namespace TestHttpAPINetCore_Unit
     public class MiscTests 
     {
         [TestMethod]
-        [Ignore]
-        public void Log_NullMessageTest()
+        public void Log_HappyPathTest()
         {
-            var tgimbaService = new Mock<TgimbaService>();
+            var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            string msg = null;
-            // TODO - test with httpclient to verify 400
-            //tgimbaApi.Log(msg);
+            string msg = "I am a message";
+            IActionResult result = tgimbaApi.Log(msg);
+            OkResult requestResult = (OkResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains(msg))), Times.Once);
         }
 
         [TestMethod]
-        [Ignore]
+        public void Log_NullMessageTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            string msg = null;
+            IActionResult result = tgimbaApi.Log(msg);
+            BadRequestResult requestResult = (BadRequestResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(400, requestResult.StatusCode);
+        }
+
+        [TestMethod]
         public void Log_EmptyMessageTest()
         {
-            var tgimbaService = new Mock<TgimbaService>();
+            var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
             string msg = "";
-            // TODO - test with httpclient to verify 400
-            //tgimbaApi.Log(msg);
+            IActionResult result = tgimbaApi.Log(msg);
+            BadRequestResult requestResult = (BadRequestResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(400, requestResult.StatusCode);
         }
     }
 }
