@@ -6,6 +6,7 @@ using System;
 using Shared.interfaces;
 using Shared.dto;
 using System.Collections.Generic;
+using Shared;
 
 namespace TestHttpAPINetCore_Unit
 {
@@ -227,6 +228,51 @@ namespace TestHttpAPINetCore_Unit
             Assert.IsNotNull(requestResult);
             Assert.AreEqual(500, requestResult.StatusCode);
         }
+
+        #endregion
+
+        #region Test Result
+        
+        [TestMethod]
+        public void GetTestResult_HappyPathTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            tgimbaService.Setup(x => x.GetTestResult())
+                            .Returns(Constants.API_TEST_RESULT);
+
+            IActionResult result = tgimbaApi.GetTestResult();
+            OkObjectResult requestResult = (OkObjectResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.GetTestResult(), Times.Once);
+            var testResult = (string)requestResult.Value;
+            Assert.AreEqual(Constants.API_TEST_RESULT, testResult);
+        }
+        
+        [TestMethod]
+        public void GetTestResult_GeneralErrorTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var exception = "I am an exception";
+            tgimbaService.Setup(x => x.GetTestResult())
+                            .Throws(new Exception(exception));
+           
+            IActionResult result = tgimbaApi.GetTestResult();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
+
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(500, requestResult.StatusCode);
+        }
+
+        #endregion
+
+        #region LoginDemoUser
+
+        // TODO - add login demo tests
 
         #endregion
     }

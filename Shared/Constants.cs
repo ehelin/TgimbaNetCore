@@ -19,6 +19,7 @@ namespace Shared
 
         public const int REGISTRATION_VALUE_LENGTH = 8;
         public const string EMAIL_AT_SIGN = "@";
+        public const string API_TEST_RESULT = "Test Service Response";
     }
 
     public class Error

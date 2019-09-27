@@ -18,5 +18,6 @@ namespace Shared.interfaces
         IList<SystemBuildStatistic> GetSystemBuildStatistics();
         void Log(string msg);
         string LoginDemoUser();
+        string GetTestResult();
     }
 }

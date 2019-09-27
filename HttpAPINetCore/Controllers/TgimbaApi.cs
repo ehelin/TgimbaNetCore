@@ -16,6 +16,20 @@ namespace HttpAPINetCore.Controllers
             this.service = service;
         }
 
+        #region User
+
+        // TODO - add user methods
+
+        #endregion
+
+        #region Bucket List Items
+
+        // TODO - add bucket list item methods
+
+        #endregion
+
+        #region Misc
+
         [HttpGet]
         public IActionResult GetSystemStatistics()
         {
@@ -76,5 +90,29 @@ namespace HttpAPINetCore.Controllers
                 return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
             }
         }
+        
+        [HttpGet]
+        public IActionResult GetTestResult()
+        {
+            try
+            {
+                var testResult = this.service.GetTestResult();
+                
+                return Ok(testResult); // 200
+            }
+            catch (Exception ex)
+            {
+                this.service.Log(ex.Message);
+                return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
+            }
+        }
+
+        [HttpPost]
+        public IActionResult LoginDemoUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

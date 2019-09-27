@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shared.dto;
+using Shared;
 
 namespace TestAPINetCore_Unit
 {
@@ -64,6 +65,22 @@ namespace TestAPINetCore_Unit
             Assert.AreEqual(systemBuildStatisticToReturn.BuildNumber, systemBuildStatistics[0].BuildNumber);
             Assert.AreEqual(systemBuildStatisticToReturn.Status, systemBuildStatistics[0].Status);
             this.mockBucketListData.Verify(x => x.GetSystemBuildStatistics(), Times.Once);
+        }
+
+        [TestMethod]
+        public void GetTestResult_HappyPathTest()
+        {
+            var testResult = this.service.GetTestResult();
+
+            Assert.IsNotNull(testResult);
+            Assert.AreEqual(Constants.API_TEST_RESULT, testResult);
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void LoginDemoUser_HappyPathTest()
+        {
+            throw new NotImplementedException();
         }
     }
 }

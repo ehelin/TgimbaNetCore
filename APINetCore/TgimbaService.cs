@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Shared.dto;
 using Shared.interfaces;
 using System.Net;
+using Shared;
 
 namespace APINetCore
 {
@@ -16,11 +17,6 @@ namespace APINetCore
         }
 
         #region User 
-
-        public string LoginDemoUser()
-        {
-            throw new NotImplementedException();
-        }
 
         public string ProcessUser(string encodedUser, string encodedPass)
         {
@@ -70,6 +66,16 @@ namespace APINetCore
         public void Log(string msg)
         {
             this.bucketListData.LogMsg(msg);
+        }
+
+        public string LoginDemoUser() 
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetTestResult()
+        {
+            return Constants.API_TEST_RESULT;
         }
 
         #endregion

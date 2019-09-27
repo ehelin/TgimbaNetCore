@@ -15,7 +15,9 @@ namespace API
         // TODO - DI logger
         private static Enums.LogLevel level = Enums.LogLevel.Info;
         private ILogger logger = new Logger(new BucketListData(Utilities.GetDbSetting()), level);
-        
+
+        #region Done in new api or not moving to new api
+
         public List<SystemStatistic> GetSystemStatistics()
         {
             IBucketListData_Old bld = null;
@@ -33,7 +35,6 @@ namespace API
 
             return results;
         }
-
         public List<SystemBuildStatistic> GetSystemBuildStatistics()
         {
             IBucketListData_Old bld = null;
@@ -51,7 +52,6 @@ namespace API
 
             return results;
         }
-
         public string GetReport()
         {
             IBucketListData_Old bld = null;
@@ -69,15 +69,34 @@ namespace API
 
             return results;
         }
-
-        public string GetTestResult()
-        {
-            return "Test Service Response";
-        }
         public void Log(string msg, Enums.LogLevel level)
         {
             this.logger.Log(msg, level);
         }
+        public string[] GetDashboard()
+        {
+            IBucketListData_Old bld = null;
+            string[] results = null;
+
+            try
+            {
+                bld = new BucketListData(Utilities.GetDbSetting());
+                results = bld.GetDashboard();
+            }
+            catch (Exception e)
+            {
+                bld.LogMsg("Error: " + e.Message + ", trace: " + e.StackTrace.ToString());
+            }
+
+            return results;
+        }
+        public string GetTestResult()
+        {
+            return "Test Service Response";
+        }
+
+        #endregion
+
         public string LoginDemoUser()
         {
             string token = string.Empty;
@@ -97,23 +116,6 @@ namespace API
             }
 
             return token;
-        }
-        public string[] GetDashboard()
-        {
-            IBucketListData_Old bld = null;
-            string[] results = null;
-
-            try
-            {
-                bld = new BucketListData(Utilities.GetDbSetting());
-                results = bld.GetDashboard();
-            }
-            catch (Exception e)
-            {
-                bld.LogMsg("Error: " + e.Message + ", trace: " + e.StackTrace.ToString());
-            }
-
-            return results;
         }
         public string ProcessUser(string encodedUser, string encodedPass)
         {
