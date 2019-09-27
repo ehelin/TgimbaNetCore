@@ -44,13 +44,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDALNetCore-Integration"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLLNetCore", "APINetCore\BLLNetCore.csproj", "{3607E0F1-9A9C-49FB-BB22-3BEA1F8CEF5C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAPINetCore-Unit", "TestAPINetCore-Unit\TestAPINetCore-Unit.csproj", "{072AB276-44D6-45F2-B576-12DBAD8E2C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBLLNetCore-Unit", "TestAPINetCore-Unit\TestBLLNetCore-Unit.csproj", "{072AB276-44D6-45F2-B576-12DBAD8E2C1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAPINETCore-Integration", "TestAPINETCore-Integration\TestAPINETCore-Integration.csproj", "{E0D88287-D578-4B33-95C3-B1AF553D3A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBLLNETCore-Integration", "TestAPINETCore-Integration\TestBLLNETCore-Integration.csproj", "{E0D88287-D578-4B33-95C3-B1AF553D3A92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpAPINetCore", "HttpAPINetCore\HttpAPINetCore.csproj", "{678F0B2C-6177-44F5-9000-5EAE4A99C82D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpAPINetCore", "HttpAPINetCore\HttpAPINetCore.csproj", "{678F0B2C-6177-44F5-9000-5EAE4A99C82D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHttpAPINetCore-Unit", "TestHttpAPINetCore-Unit\TestHttpAPINetCore-Unit.csproj", "{D65CF7C1-8522-4093-BFFD-6AB4F5C26005}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHttpAPINetCore-Unit", "TestHttpAPINetCore-Unit\TestHttpAPINetCore-Unit.csproj", "{D65CF7C1-8522-4093-BFFD-6AB4F5C26005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
