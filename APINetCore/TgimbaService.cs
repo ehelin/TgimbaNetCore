@@ -70,6 +70,13 @@ namespace APINetCore
 
         public string LoginDemoUser() 
         {
+            // sub test => VerifyUser(args)
+            // sub sub test => GetUser(userName)
+            // sub sub test => UserExists(user, password)
+            // sub sub sub test => ComparePasswords(user, supplied password)
+            // sub sub sub test => HashPassword(new password)
+            // sub sub test => GenerateToken()
+
             throw new NotImplementedException();
         }
 

@@ -110,7 +110,17 @@ namespace HttpAPINetCore.Controllers
         [HttpPost]
         public IActionResult LoginDemoUser()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var token = this.service.LoginDemoUser();
+
+                return Ok(token); // 200
+            }
+            catch (Exception ex)
+            {
+                this.service.Log(ex.Message);
+                return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
+            }
         }
 
         #endregion
