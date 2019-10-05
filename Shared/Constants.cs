@@ -20,6 +20,12 @@ namespace Shared
         public const int REGISTRATION_VALUE_LENGTH = 8;
         public const string EMAIL_AT_SIGN = "@";
         public const string API_TEST_RESULT = "Test Service Response";
+
+        public const int SALT_SIZE = 32;   //arbitrary value read in article
+
+        //Demo user
+        public const string DEMO_USER = "demouser";
+        public const string DEMO_USER_PASSWORD = "demouserPass123";
     }
 
     public class Error

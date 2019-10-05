@@ -15,6 +15,7 @@ namespace Shared.interfaces
 
         void AddToken(int userId, string token);
         User GetUser(int id);
+        User GetUser(string userName);
         int AddUser(User user);
         void DeleteUser(int userId);
     }

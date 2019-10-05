@@ -2,14 +2,19 @@
 using System.Linq;
 using DALNetCore;
 using Shared.misc;
+using DALNetCore.interfaces;
+using DALNetCore.helpers;
 using dto = Shared.dto;
+using models = DALNetCore.Models;
 
 namespace TestDALNetCore_Integration
 {
     public class BaseTest
     {
         protected string UserName = "user";
+        protected string Password = "password";
         protected string Token = "token";
+        protected IUserHelper userHelper = new UserHelper();
 
         protected void RemoveTestUser() 
         {
@@ -64,13 +69,27 @@ namespace TestDALNetCore_Integration
             return dbContext;
         }
 
+        protected models.User GetDbUser(string token)
+        {
+            var user = new models.User()
+            {
+                UserName = this.UserName,
+                Salt = "salt",
+                PassWord = this.Password,
+                Email = "user@email.com",
+                Token = token
+            };
+
+            return user;
+        }
+
         protected dto.User GetUser(string token)
         {
             var user = new dto.User()
             {
                 UserName = this.UserName,
                 Salt = "salt",
-                Password = this.Token,
+                Password = this.Password,
                 Email = "user@email.com",
                 Token = token
             };

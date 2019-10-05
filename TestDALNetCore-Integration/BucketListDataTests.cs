@@ -17,7 +17,7 @@ namespace TestDALNetCore_Integration
             RemoveTestUser();
             
             var user = GetUser("token");
-            IBucketListData bd = new BucketListData(this.GetDbContext());
+            IBucketListData bd = new BucketListData(this.GetDbContext(), this.userHelper);
             var bucketListItemToSave = GetBucketListItem();
 
             // test ---------------------------------------------------------
@@ -57,7 +57,7 @@ namespace TestDALNetCore_Integration
             RemoveTestUser();
 
             var user = GetUser("token");
-            IBucketListData bd = new BucketListData(this.GetDbContext());
+            IBucketListData bd = new BucketListData(this.GetDbContext(), this.userHelper);
 
             var userId = bd.AddUser(user);
             bd.UpsertBucketListItem(GetBucketListItem("Bucket List Item 1"), user.UserName);
@@ -96,7 +96,7 @@ namespace TestDALNetCore_Integration
             RemoveTestUser();
 
             var user = GetUser("token");
-            IBucketListData bd = new BucketListData(this.GetDbContext());
+            IBucketListData bd = new BucketListData(this.GetDbContext(), this.userHelper);
 
             var userId = bd.AddUser(user);
             bd.UpsertBucketListItem(GetBucketListItem("African Safari"), user.UserName);
@@ -125,7 +125,7 @@ namespace TestDALNetCore_Integration
             // set up ------------------------------------------------------
             RemoveTestUser();
 
-            IBucketListData bd = new BucketListData(this.GetDbContext());
+            IBucketListData bd = new BucketListData(this.GetDbContext(), this.userHelper);
             var bucketListItemToSave = GetBucketListItem();
 
             // test ---------------------------------------------------------
@@ -141,7 +141,7 @@ namespace TestDALNetCore_Integration
             // set up ------------------------------------------------------
             RemoveTestUser();
 
-            IBucketListData bd = new BucketListData(this.GetDbContext());
+            IBucketListData bd = new BucketListData(this.GetDbContext(), this.userHelper);
 
             // test ---------------------------------------------------------
             var nonExistantBucketListItemId = -12412;

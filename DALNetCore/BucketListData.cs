@@ -5,6 +5,7 @@ using Shared.dto;
 using Shared.misc;
 using Shared.interfaces;
 using models = DALNetCore.Models;
+using DALNetCore.interfaces;
 using Shared.exceptions;
 
 namespace DALNetCore
@@ -12,9 +13,11 @@ namespace DALNetCore
     public class BucketListData : IBucketListData
     {
         private BucketListContext context = null;
+        private IUserHelper userHelper = null;
 
-        public BucketListData(BucketListContext context)
+        public BucketListData(BucketListContext context, IUserHelper userHelper)
         {
+            this.userHelper = userHelper;
             this.context = context;
         }
 
@@ -46,15 +49,18 @@ namespace DALNetCore
                 throw new RecordDoesNotExistException("GetUser - User does not exist. userId - " + id.ToString());
             }
 
-            var user = new User()
-            {
-                UserId = dbUser.UserId,
-                UserName = dbUser.UserName,
-                Salt = dbUser.Salt,
-                Password = dbUser.PassWord,
-                Email = dbUser.Email,
-                Token = dbUser.Token
-            };
+            var user = this.userHelper.ConvertDbUserToUser(dbUser);
+
+            return user;
+        }
+
+        public User GetUser(string userName)
+        {
+            var dbUser = this.context.User
+                            .Where(x => x.UserName == userName)
+                            .FirstOrDefault();
+
+            var user = this.userHelper.ConvertDbUserToUser(dbUser);
 
             return user;
         }

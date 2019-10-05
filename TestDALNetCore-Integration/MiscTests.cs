@@ -28,7 +28,7 @@ namespace TestDALNetCore_Integration
             dbContext.SaveChanges();
 
             //test ---------------------------------------------------------
-            IBucketListData bd = new BucketListData(dbContext);
+            IBucketListData bd = new BucketListData(dbContext, this.userHelper);
             var buildStatistics = bd.GetSystemBuildStatistics();
 
             Assert.IsNotNull(buildStatistics);
@@ -62,7 +62,7 @@ namespace TestDALNetCore_Integration
             dbContext.SaveChanges();
 
             //test ---------------------------------------------------------
-            IBucketListData bd = new BucketListData(dbContext);
+            IBucketListData bd = new BucketListData(dbContext, this.userHelper);
             var systemStatistics = bd.GetSystemStatistics();
 
             Assert.IsNotNull(systemStatistics);
@@ -83,7 +83,7 @@ namespace TestDALNetCore_Integration
         public void LogMsgHappyPath_Test()
         {
             var dbContext = this.GetDbContext();
-            IBucketListData bd = new BucketListData(dbContext);
+            IBucketListData bd = new BucketListData(dbContext, this.userHelper);
 
             //test ----------------------------
             var msg = "I am a log message";

@@ -70,6 +70,7 @@ namespace APINetCore
 
         public string LoginDemoUser() 
         {
+            //var user = this.bucketListData.GetUser(Constants.DEMO_USER);
             // sub test => VerifyUser(args)
             // sub sub test => GetUser(userName)
             // sub sub test => UserExists(user, password)
