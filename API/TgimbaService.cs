@@ -154,7 +154,7 @@ namespace API
                 if (Utilities.ValidUserToRegistration(decodedUser, decodedEmail, decodedPass))
                 {
                     PasswordHelper p = new PasswordHelper();
-                    NewPassword np = p.GetPassword(decodedPass);
+                    var np = p.GetPassword(decodedPass);
                     userAdded = msd.AddUser(decodedUser, decodedEmail, np.SaltedHashedPassword, np.Salt);
                 }
             }

@@ -1,9 +1,10 @@
 ﻿using System.Security.Cryptography;
 using Shared;
+using Shared.interfaces;
 
 namespace BLLNetCore.Security
 {
-    public class Generator
+    public class GeneratorHelper : IGenerator
     {
         public string GetPrivateKey() 
         {

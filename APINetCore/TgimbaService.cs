@@ -10,10 +10,12 @@ namespace APINetCore
     public class TgimbaService : ITgimbaService
     {
         private IBucketListData bucketListData = null;
+        private IPassword password = null;
 
-        public TgimbaService(IBucketListData bucketListData)
+        public TgimbaService(IBucketListData bucketListData, IPassword password)
         {
             this.bucketListData = bucketListData;
+            this.password = password;
         }
 
         #region User 
@@ -68,15 +70,20 @@ namespace APINetCore
             this.bucketListData.LogMsg(msg);
         }
 
+        // TODO - once method is done, add service level test and
+        // TODO - once method/test done, add api method/test
         public string LoginDemoUser() 
         {
-            //var user = this.bucketListData.GetUser(Constants.DEMO_USER);
-            // sub test => VerifyUser(args)
-            // sub sub test => GetUser(userName)
-            // sub sub test => UserExists(user, password)
-            // sub sub sub test => ComparePasswords(user, supplied password)
-            // sub sub sub test => HashPassword(new password)
-            // sub sub test => GenerateToken()
+            // TODO - token needs to be a JWT token
+            string token = string.Empty;
+            var user = this.bucketListData.GetUser(Constants.DEMO_USER);
+
+            if (user != null 
+                    && this.password.PasswordsMatch(Constants.DEMO_USER_PASSWORD, user.Salt, user.Password))
+            {
+                // TODO - this token needs to be a JWTtoken
+                // sub sub test => GenerateToken()
+            }
 
             throw new NotImplementedException();
         }

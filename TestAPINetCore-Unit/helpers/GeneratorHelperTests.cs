@@ -1,15 +1,16 @@
 using BLLNetCore.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shared.interfaces;
 
-namespace TestAPINetCore_Unit
+namespace TestAPINetCore_Unit.helpers
 {
     [TestClass]
-    public class SecurityTests : BaseTest
+    public class GeneratorHelperTests : BaseTest
     {
-        private Generator sut = null;
+        private IGenerator sut = null;
 
-        public SecurityTests() {
-            sut = new Generator();
+        public GeneratorHelperTests() {
+            sut = new GeneratorHelper();
         }
 
         [TestMethod]

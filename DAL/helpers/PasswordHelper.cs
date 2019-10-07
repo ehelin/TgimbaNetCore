@@ -7,9 +7,9 @@ namespace DAL.helpers
 {
     public class PasswordHelper
     {
-        public NewPassword GetPassword(string clearTxtPassword)
+        public Password GetPassword(string clearTxtPassword)
         {
-            NewPassword np = new NewPassword(clearTxtPassword);
+            var np = new Password(clearTxtPassword);
 
             np.Salt = GetSalt();
             np = HashPassword(np);
@@ -25,7 +25,7 @@ namespace DAL.helpers
         private bool ComparePasswords(User u, string suppliedPass)
         {
             bool goodUser = false;
-            NewPassword np = new NewPassword(suppliedPass);
+            var np = new Password(suppliedPass);
 
             np.Salt = u.Salt;
             np = HashPassword(np);
@@ -62,7 +62,7 @@ namespace DAL.helpers
 
             return salt;
         }
-        private NewPassword HashPassword(NewPassword np)
+        private Password HashPassword(Password np)
         {
             HashAlgorithm hashAlg = null;
 

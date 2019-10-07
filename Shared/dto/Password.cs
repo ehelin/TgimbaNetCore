@@ -1,19 +1,19 @@
 ﻿namespace Shared.dto
 {
-    public class NewPassword
+    public class Password
     {
-        private string Password { get; set; }
+        private string PassWord { get; set; }
         public string Salt { get; set; }
         public string SaltedHashedPassword { get; set; }
 
-        public NewPassword(string clearPass)
+        public Password(string clearPass)
         {
-            Password = clearPass;
+            PassWord = clearPass;
         }
 
         public string GetSaltPassword()
         {
-            return Salt + Password;
+            return Salt + PassWord;
         }
     }
 }
