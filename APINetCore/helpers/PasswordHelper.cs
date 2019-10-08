@@ -3,6 +3,7 @@ using Shared;
 using System;
 using Shared.interfaces;
 using Shared.dto;
+using System.Text;
 
 namespace BLLNetCore.Security
 {
@@ -52,34 +53,18 @@ namespace BLLNetCore.Security
             //return salt;
         }
 
-        public Password HashPassword(Password np)
+        public Password HashPassword(Password passwordDto)
         {
-            // TODO - update with latest/greatest after research...this is probably dated
-            throw new NotImplementedException();
-            //HashAlgorithm hashAlg = null;
+            byte[] bytePassword = Encoding.UTF8.GetBytes(passwordDto.GetPassword());
+            byte[] byteSalt = Encoding.UTF8.GetBytes(passwordDto.Salt);
+            byte[] bytesHash;
+            using (var deriveBytes = new Rfc2898DeriveBytes(bytePassword, byteSalt, Constants.HASH_ITERATIONS, HashAlgorithmName.SHA256))
+            {
+                bytesHash = deriveBytes.GetBytes(Constants.KEY_LENGTH);
+            }
+            passwordDto.SaltedHashedPassword = Convert.ToBase64String(bytesHash);            
 
-            //try
-            //{
-            //    hashAlg = new SHA256CryptoServiceProvider();
-            //    byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(np.GetSaltPassword());
-            //    byte[] bytHash = hashAlg.ComputeHash(bytValue);
-            //    np.SaltedHashedPassword = Convert.ToBase64String(bytHash);
-            //}
-            //catch (Exception e)
-            //{
-            //    throw e;
-            //}
-            //finally
-            //{
-            //    if (hashAlg != null)
-            //    {
-            //        hashAlg.Clear();
-            //        hashAlg.Dispose();
-            //        hashAlg = null;
-            //    }
-            //}
-
-            //return np;
+            return passwordDto;
         }
     }
 }

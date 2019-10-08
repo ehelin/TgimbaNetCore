@@ -6,9 +6,14 @@
         public string Salt { get; set; }
         public string SaltedHashedPassword { get; set; }
 
-        public Password(string clearPass)
+        public Password(string clearPass, string salt = "")
         {
             PassWord = clearPass;
+            this.Salt = salt;
+        }
+        public string GetPassword()
+        {
+            return PassWord;
         }
 
         public string GetSaltPassword()

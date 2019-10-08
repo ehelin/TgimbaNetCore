@@ -21,7 +21,9 @@ namespace Shared
         public const string EMAIL_AT_SIGN = "@";
         public const string API_TEST_RESULT = "Test Service Response";
 
-        public const int SALT_SIZE = 32;   //arbitrary value read in article
+        public const int SALT_SIZE = 32;            //arbitrary value read in article
+        public const int HASH_ITERATIONS = 1000;    //arbitrary value read in article
+        public const int KEY_LENGTH = 250;         //arbitrary value read in article
 
         //Demo user
         public const string DEMO_USER = "demouser";
