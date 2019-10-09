@@ -10,12 +10,14 @@ namespace APINetCore
     public class TgimbaService : ITgimbaService
     {
         private IBucketListData bucketListData = null;
-        private IPassword password = null;
+        private IPassword passwordHelper = null;
+        private IGenerator generatorHelper = null;
 
-        public TgimbaService(IBucketListData bucketListData, IPassword password)
+        public TgimbaService(IBucketListData bucketListData, IPassword passwordHelper, IGenerator generatorHelper)
         {
             this.bucketListData = bucketListData;
-            this.password = password;
+            this.passwordHelper = passwordHelper;
+            this.generatorHelper = generatorHelper;
         }
 
         #region User 
@@ -70,22 +72,22 @@ namespace APINetCore
             this.bucketListData.LogMsg(msg);
         }
 
-        // TODO - once method is done, add service level test and
-        // TODO - once method/test done, add api method/test
         public string LoginDemoUser() 
         {
-            // TODO - token needs to be a JWT token
-            string token = string.Empty;
+            string jwtToken = string.Empty;
             var user = this.bucketListData.GetUser(Constants.DEMO_USER);
+            var password = new Password(Constants.DEMO_USER_PASSWORD);
+            var passwordDto = this.passwordHelper.HashPassword(password);
 
             if (user != null 
-                    && this.password.PasswordsMatch(Constants.DEMO_USER_PASSWORD, user.Salt, user.Password))
+                    && this.passwordHelper.PasswordsMatch(passwordDto, user))
             {
-                // TODO - this token needs to be a JWTtoken
-                // sub sub test => GenerateToken()
+                var jwtPrivateKey = this.generatorHelper.GetJwtPrivateKey();
+                var jwtIssuer = this.generatorHelper.GetJwtIssuer();
+                jwtToken = this.generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer);
             }
 
-            throw new NotImplementedException();
+            return jwtToken;
         }
 
         public string GetTestResult()

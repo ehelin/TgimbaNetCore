@@ -4,7 +4,7 @@ namespace Shared.interfaces
 {
     public interface IPassword
     {
-        bool PasswordsMatch(string suppliedPassword, string dbSalt, string dbPassword);
+        bool PasswordsMatch(Password passwordDto, User user);
         string GetSalt();
         Password HashPassword(Password np);
     }

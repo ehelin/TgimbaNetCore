@@ -2,6 +2,8 @@
 {
     public interface IGenerator
     {
-        string GetPrivateKey();
+        string GetJwtPrivateKey(); 
+        string GetJwtIssuer();
+        string GetJwtToken(string jwtPrivateKey, string jwtIssuer);
     }
 }

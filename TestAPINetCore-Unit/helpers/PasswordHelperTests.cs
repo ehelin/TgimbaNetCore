@@ -3,6 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
 using Shared.dto;
 using System;
+using System.Collections.Generic;
+using Moq;
+using Shared;
 
 namespace TestAPINetCore_Unit.helpers
 {
@@ -16,14 +19,46 @@ namespace TestAPINetCore_Unit.helpers
         }
 
         [TestMethod]
-        [Ignore]
-        public void PasswordsMatch_HappyPathTest()
+        public void PasswordsMatch_True()
         {
-            throw new NotImplementedException();
-            // TODO - passwords match
-            // TODO - test HashwordPassword(args) is called
+            var existingUserPassword = "IAmAnExistingUserPassword";
+            var existingUserSalt = "IAmAnExistingUserSalt";
+            var existingPasswordDto = new Password(existingUserPassword, existingUserSalt);
+            var hashedExistingUserSaltedPassword = sut.HashPassword(existingPasswordDto);
+
+            var loginPassword = "IAmAnExistingUserPassword";
+            var loginPasswordDto = new Password(loginPassword, existingUserSalt);
+            var hashedLoginUserSaltedPassword = sut.HashPassword(loginPasswordDto);
+
+            var user = new User();
+            user.Password = hashedExistingUserSaltedPassword.SaltedHashedPassword;
+            user.Salt = existingUserSalt;
+
+            var passwordsMatch = sut.PasswordsMatch(hashedLoginUserSaltedPassword, user);
+
+            Assert.IsTrue(passwordsMatch);
         }
-        // TODO - alternate test - passwords do not match
+
+        [TestMethod]
+        public void PasswordsMatch_False()
+        {
+            var existingUserPassword = "IAmAnExistingUserPassword";
+            var existingUserSalt = "IAmAnExistingUserSalt";
+            var existingPasswordDto = new Password(existingUserPassword, existingUserSalt);
+            var hashedExistingUserSaltedPassword = sut.HashPassword(existingPasswordDto);
+
+            var loginPassword = "IAmAnExistingUserPasswordThatIsDifferent";
+            var loginPasswordDto = new Password(loginPassword, existingUserSalt);
+            var hashedLoginUserSaltedPassword = sut.HashPassword(loginPasswordDto);
+
+            var user = new User();
+            user.Password = hashedExistingUserSaltedPassword.SaltedHashedPassword;
+            user.Salt = existingUserSalt;
+
+            var passwordsMatch = sut.PasswordsMatch(hashedLoginUserSaltedPassword, user);
+
+            Assert.IsFalse(passwordsMatch);
+        }
 
         [TestMethod]
         [Ignore]

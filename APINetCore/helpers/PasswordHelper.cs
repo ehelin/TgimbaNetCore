@@ -9,15 +9,11 @@ namespace BLLNetCore.Security
 {
     public class PasswordHelper : IPassword
     {
-        public bool PasswordsMatch(string suppliedPassword, string dbSalt, string dbPassword)
+        public bool PasswordsMatch(Password passwordDto, User user)
         {
             bool passwordsMatch = false;
-            var np = new Password(suppliedPassword);
 
-            np.Salt = dbSalt;
-            np = HashPassword(np);
-
-            if (dbPassword.Equals(np.SaltedHashedPassword))
+            if (user.Password.Equals(passwordDto.SaltedHashedPassword))
                 passwordsMatch = true;
 
             return passwordsMatch;
