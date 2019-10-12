@@ -1,11 +1,8 @@
+using System;
 using BLLNetCore.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shared.interfaces;
 using Shared.dto;
-using System;
-using System.Collections.Generic;
-using Moq;
-using Shared;
+using Shared.interfaces;
 
 namespace TestAPINetCore_Unit.helpers
 {

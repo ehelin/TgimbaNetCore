@@ -80,7 +80,55 @@ namespace TestAPINetCore_Unit
         [Ignore]
         public void LoginDemoUser_HappyPathTest()
         {
-            throw new NotImplementedException();
+            var jwtPrivateKey = "jwtPrivateKey";
+            var jwtIssuer = "jwtIssuer";
+            var jwtToken = "jwtToken";
+            var demoUserToReturn = GetUser(1, Constants.DEMO_USER, Constants.DEMO_USER_PASSWORD);
+            var expectedHashPasswordParameter = new Password(Constants.DEMO_USER_PASSWORD);
+            var expectedHashPasswordToReturn = new Password(Constants.DEMO_USER_PASSWORD);
+            expectedHashPasswordToReturn.SaltedHashedPassword = "saltedDemoUserPassword";
+
+            this.mockBucketListData
+                .Setup(x => x.GetUser(It.IsAny<string>()))
+                .Returns(demoUserToReturn);
+            this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKey);
+            this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuer); 
+            this.mockPassword.Setup(x =>
+                x.HashPassword
+                    (It.IsAny<Password>()))
+                        .Returns(expectedHashPasswordToReturn);
+            this.mockPassword.Setup(x =>
+                    x.PasswordsMatch
+                        (It.Is<Password>(z => z == expectedHashPasswordToReturn)
+                        , It.Is<User>(s => s == demoUserToReturn))).Returns(true);
+            this.mockGenerator.Setup(x =>
+                    x.GetJwtToken
+                        (It.Is<string>(z => z == jwtPrivateKey)
+                        , It.Is<string>(s => s == jwtIssuer))).Returns(jwtToken);
+
+            var token = this.service.LoginDemoUser();
+
+            Assert.IsNotNull(token);
+            Assert.IsTrue(token.Length > 0);
+            Assert.AreEqual(jwtToken, token);
+
+            this.mockPassword
+                .Verify(x => x.HashPassword(
+                    It.Is<Password>(s => s == expectedHashPasswordToReturn))
+                            , Times.Once);
+
+            this.mockPassword.Verify(x => 
+                    x.PasswordsMatch
+                        (It.Is<Password>(z => z == expectedHashPasswordParameter)
+                        , It.Is<User>(s => s == demoUserToReturn))
+                        , Times.Once);
+            this.mockGenerator.Verify(x => x.GetJwtPrivateKey(), Times.Once);
+            this.mockGenerator.Verify(x => x.GetJwtIssuer(), Times.Once);
+            this.mockGenerator.Verify(x =>
+                    x.GetJwtToken
+                        (It.Is<string>(z => z == jwtPrivateKey)
+                        , It.Is<string>(s => s == jwtIssuer))
+                        , Times.Once);
         }
     }
 }

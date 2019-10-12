@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Shared;
 using Shared.dto;
 using Shared.interfaces;
-using System.Net;
-using Shared;
 
 namespace APINetCore
 {
@@ -79,12 +78,16 @@ namespace APINetCore
             var password = new Password(Constants.DEMO_USER_PASSWORD);
             var passwordDto = this.passwordHelper.HashPassword(password);
 
-            if (user != null 
-                    && this.passwordHelper.PasswordsMatch(passwordDto, user))
+            if (user != null)
             {
-                var jwtPrivateKey = this.generatorHelper.GetJwtPrivateKey();
-                var jwtIssuer = this.generatorHelper.GetJwtIssuer();
-                jwtToken = this.generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer);
+                var passwordsMatch = this.passwordHelper.PasswordsMatch(passwordDto, user);
+
+                if (passwordsMatch) 
+                {
+                    var jwtPrivateKey = this.generatorHelper.GetJwtPrivateKey();
+                    var jwtIssuer = this.generatorHelper.GetJwtIssuer();
+                    jwtToken = this.generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer);
+                }
             }
 
             return jwtToken;

@@ -1,9 +1,9 @@
-﻿using System.Security.Cryptography;
-using Shared;
-using System;
-using Shared.interfaces;
-using Shared.dto;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
+using Shared;
+using Shared.dto;
+using Shared.interfaces;
 
 namespace BLLNetCore.Security
 {
