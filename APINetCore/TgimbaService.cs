@@ -75,11 +75,11 @@ namespace APINetCore
         {
             string jwtToken = null;
             var user = this.bucketListData.GetUser(Constants.DEMO_USER);
-            var password = new Password(Constants.DEMO_USER_PASSWORD);
-            var passwordDto = this.passwordHelper.HashPassword(password);
 
             if (user != null)
             {
+                var password = new Password(Constants.DEMO_USER_PASSWORD);
+                var passwordDto = this.passwordHelper.HashPassword(password);
                 var passwordsMatch = this.passwordHelper.PasswordsMatch(passwordDto, user);
 
                 if (passwordsMatch) 
