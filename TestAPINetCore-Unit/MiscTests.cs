@@ -77,7 +77,7 @@ namespace TestAPINetCore_Unit
         }
 
         [TestMethod]
-        [Ignore]
+        //[Ignore]
         public void LoginDemoUser_HappyPathTest()
         {
             var jwtPrivateKey = "jwtPrivateKey";
@@ -85,18 +85,21 @@ namespace TestAPINetCore_Unit
             var jwtToken = "jwtToken";
             var demoUserToReturn = GetUser(1, Constants.DEMO_USER, Constants.DEMO_USER_PASSWORD);
             var expectedHashPasswordParameter = new Password(Constants.DEMO_USER_PASSWORD);
+            
             var expectedHashPasswordToReturn = new Password(Constants.DEMO_USER_PASSWORD);
             expectedHashPasswordToReturn.SaltedHashedPassword = "saltedDemoUserPassword";
 
             this.mockBucketListData
                 .Setup(x => x.GetUser(It.IsAny<string>()))
-                .Returns(demoUserToReturn);
+                    .Returns(demoUserToReturn);
             this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKey);
-            this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuer); 
+            this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuer);
+
             this.mockPassword.Setup(x =>
                 x.HashPassword
-                    (It.IsAny<Password>()))
+                    (It.Is<Password>(s => s.GetPassword() == expectedHashPasswordParameter.GetPassword())))
                         .Returns(expectedHashPasswordToReturn);
+            
             this.mockPassword.Setup(x =>
                     x.PasswordsMatch
                         (It.Is<Password>(z => z == expectedHashPasswordToReturn)
@@ -114,12 +117,12 @@ namespace TestAPINetCore_Unit
 
             this.mockPassword
                 .Verify(x => x.HashPassword(
-                    It.Is<Password>(s => s == expectedHashPasswordToReturn))
+                    It.Is<Password>(s => s.GetPassword() == expectedHashPasswordParameter.GetPassword()))
                             , Times.Once);
 
-            this.mockPassword.Verify(x => 
+            this.mockPassword.Verify(x =>
                     x.PasswordsMatch
-                        (It.Is<Password>(z => z == expectedHashPasswordParameter)
+                        (It.Is<Password>(z => z == expectedHashPasswordToReturn)
                         , It.Is<User>(s => s == demoUserToReturn))
                         , Times.Once);
             this.mockGenerator.Verify(x => x.GetJwtPrivateKey(), Times.Once);

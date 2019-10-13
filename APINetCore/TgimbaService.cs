@@ -73,7 +73,7 @@ namespace APINetCore
 
         public string LoginDemoUser() 
         {
-            string jwtToken = string.Empty;
+            string jwtToken = null;
             var user = this.bucketListData.GetUser(Constants.DEMO_USER);
             var password = new Password(Constants.DEMO_USER_PASSWORD);
             var passwordDto = this.passwordHelper.HashPassword(password);
