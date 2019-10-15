@@ -94,9 +94,6 @@ namespace API
         {
             return "Test Service Response";
         }
-
-        #endregion
-
         public string LoginDemoUser()
         {
             string token = string.Empty;
@@ -117,6 +114,9 @@ namespace API
 
             return token;
         }
+
+        #endregion
+
         public string ProcessUser(string encodedUser, string encodedPass)
         {
             IMemberShipData_Old msd = null;
