@@ -18,8 +18,71 @@ namespace HttpAPINetCore.Controllers
 
         #region User
 
-        // TODO - add user methods
+        [HttpPost]
+        public IActionResult ProcessUserRegistration
+        (
+            [FromBody]string encodedUser, 
+            [FromBody]string encodedEmail, 
+            [FromBody]string encodedPass
+        ){
+            bool isBadRequest = false;
 
+            try
+            {
+                if (string.IsNullOrEmpty(encodedUser))
+                {
+                    isBadRequest = true;
+                    throw new ArgumentNullException("encodedUser is null or empty");
+                }
+                else if (string.IsNullOrEmpty(encodedEmail))
+                {
+                    isBadRequest = true;
+                    throw new ArgumentNullException("encodedEmail is null or empty");
+                }
+                else if (string.IsNullOrEmpty(encodedPass))
+                {
+                    isBadRequest = true;
+                    throw new ArgumentNullException("encodedPass is null or empty");
+                }
+
+                var userRegistered = this.service.ProcessUserRegistration(encodedUser, encodedEmail, encodedPass);
+
+                return Ok(userRegistered); // 200
+            }
+            catch (Exception ex)
+            {
+                return this.HandleError(isBadRequest, ex);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ProcessUser([FromBody]string encodedUser, [FromBody]string encodedPass)
+        {
+            bool isBadRequest = false;
+
+            try
+            {
+                if (string.IsNullOrEmpty(encodedUser))
+                {
+                    isBadRequest = true;
+                    throw new ArgumentNullException("encodedUser is null or empty");
+                }
+                else if (string.IsNullOrEmpty(encodedPass))
+                {
+                    isBadRequest = true;
+                    throw new ArgumentNullException("encodedPass is null or empty");
+                }
+
+                var token = this.service.ProcessUser(encodedUser, encodedPass);
+
+                return Ok(token); // 200
+            }
+            catch (Exception ex)
+            {
+                return this.HandleError(isBadRequest, ex);
+            }
+        }
+        
         #endregion
 
         #region Bucket List Items
@@ -117,6 +180,24 @@ namespace HttpAPINetCore.Controllers
                 return Ok(token); // 200
             }
             catch (Exception ex)
+            {
+                this.service.Log(ex.Message);
+                return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
+            }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private IActionResult HandleError(bool isBadRequest, Exception ex) 
+        {
+            if (isBadRequest)
+            {
+                this.service.Log("400 BadRequest - " + ex.Message);
+                return BadRequest();
+            }
+            else
             {
                 this.service.Log(ex.Message);
                 return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
