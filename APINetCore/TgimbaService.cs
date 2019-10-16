@@ -11,19 +11,44 @@ namespace APINetCore
         private IBucketListData bucketListData = null;
         private IPassword passwordHelper = null;
         private IGenerator generatorHelper = null;
+        private IString stringHelper = null;
 
-        public TgimbaService(IBucketListData bucketListData, IPassword passwordHelper, IGenerator generatorHelper)
-        {
+        public TgimbaService
+        (
+            IBucketListData bucketListData, 
+            IPassword passwordHelper, 
+            IGenerator generatorHelper,
+            IString stringHelper
+        ) {
             this.bucketListData = bucketListData;
             this.passwordHelper = passwordHelper;
             this.generatorHelper = generatorHelper;
+            this.stringHelper = stringHelper;
         }
 
         #region User 
 
-        public string ProcessUser(string encodedUser, string encodedPass)
+        public string ProcessUser(string encodedUserName, string encodedPassword)
         {
-            throw new NotImplementedException();
+            string token = string.Empty;
+            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUserName);
+            string decodedPassword = this.stringHelper.DecodeBase64String(encodedPassword);
+            var user = this.bucketListData.GetUser(decodedUserName);
+
+            if (user != null)
+            {
+                var passwordDto = new Password(decodedPassword, user.Salt);
+                var passwordsMatch = this.passwordHelper.PasswordsMatch(passwordDto, user);
+
+                if (passwordsMatch)
+                {
+                    var jwtPrivateKey = this.generatorHelper.GetJwtPrivateKey();
+                    var jwtIssuer = this.generatorHelper.GetJwtIssuer();
+                    token = this.generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer);
+                }
+            }
+
+            return token;
         }
 
         public bool ProcessUserRegistration(string encodedUser, string encodedEmail, string encodedPass)
