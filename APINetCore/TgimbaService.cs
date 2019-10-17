@@ -38,6 +38,10 @@ namespace APINetCore
             if (user != null)
             {
                 var passwordDto = new Password(decodedPassword, user.Salt);
+
+                // TODO - update tests to handle this addition
+                var hashedPassword = this.passwordHelper.HashPassword(passwordDto);
+
                 var passwordsMatch = this.passwordHelper.PasswordsMatch(passwordDto, user);
 
                 if (passwordsMatch)
