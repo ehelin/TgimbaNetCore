@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shared.dto;
 using Shared;
+using BLLNetCore.Security;
 
 namespace TestAPINetCore_Unit
 {
@@ -16,17 +17,25 @@ namespace TestAPINetCore_Unit
             var encodedUserName = "base64=>userName";
             var encodedPassword = "base64=>password";
             var decodedUserNameToReturn = "userName";
-            var decodedPasswordToReturn = "password";            
+            var decodedPasswordToReturn = "password";       
+            var salt = "IAmAReallyLongSaltValueToComplicateAPassword";
+            var hashedUserPassword = "0W32zG7AdYwR1e3pgZbupRZjvuXOmNhOJcY/B8rm77L23knzTsDD4EeZS6ll5UjbMJUzTmrLNEJmnC07/jCthA2XVBBre1C3LYEo2dhi0s2f4CAWYMW9YT9tC8rcfpyp5FWSH2DAe/kdD3h/qXrrA8utTRD54au09a1heocVCdrZJdwkDXHMnGtLj40nRs8dnGRpKB1Xe9fuDmWLfWSdjRiSr/lWG+v1fMk+LYq51GF44RYL6QofcebRVolAetAkOabFGvLzaUuo5p77RXehNRHUWbT01pFZWrzEYAksNCBFqaXsbUxK488J+/o9MF3XySKBAPoHz/tG6w==";
             var jwtIssuerToReturn = "jwtIssuer";
             var jwtPrivateKeyToReturn = "jwtPrivateKey";
-            var userToReturn = GetUser(1, decodedUserNameToReturn, decodedPasswordToReturn);
-            var passwordDtoToReturn = new Password(decodedPasswordToReturn, userToReturn.Salt);
+            var jwtTokenToReturn = "IAmAJwtToken";
+            var userToReturn = GetUser(1, decodedUserNameToReturn, hashedUserPassword, salt);
+            var hashPasswordDtoToReturn = new Password(decodedPasswordToReturn, userToReturn.Salt);
+            hashPasswordDtoToReturn.SaltedHashedPassword = hashedUserPassword;
 
             ProcessUser_HappyPathTest_SetUps(encodedUserName, encodedPassword, decodedUserNameToReturn,
                                               decodedPasswordToReturn, userToReturn, jwtPrivateKeyToReturn, 
-                                              jwtIssuerToReturn);
+                                              jwtIssuerToReturn, hashPasswordDtoToReturn, jwtTokenToReturn);
 
             var token = this.service.ProcessUser(encodedUserName, encodedPassword);
+            var tes = 1;
+            this.mockPassword.Verify(x => x.HashPassword(
+                                        It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn ))
+                                        , Times.Once);
 
             ProcessUser_HappyPathTest_Asserts(token, encodedUserName, encodedPassword, decodedUserNameToReturn,
                                                decodedPasswordToReturn, jwtPrivateKeyToReturn, jwtIssuerToReturn,
@@ -107,7 +116,9 @@ namespace TestAPINetCore_Unit
             string decodedPasswordToReturn,
             User userToReturn,
             string jwtPrivateKeyToReturn,
-            string jwtIssuerToReturn
+            string jwtIssuerToReturn,
+            Password hashPasswordDtoToReturn, 
+            string jwtTokenToReturn
         ) 
         {
             this.mockString.Setup(x => x.DecodeBase64String
@@ -123,12 +134,15 @@ namespace TestAPINetCore_Unit
             this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKeyToReturn);
             this.mockGenerator.Setup(x => x.GetJwtToken(It.Is<string>(s => s == jwtPrivateKeyToReturn),
                                                                It.Is<string>(s => s == jwtIssuerToReturn)))
-                                                                    .Returns(jwtPrivateKeyToReturn);
+                                                                    .Returns(jwtTokenToReturn);
             this.mockPassword.Setup(x => x.PasswordsMatch
                         (It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
                                                 && s.Salt == userToReturn.Salt),
                                             It.Is<User>(s => s.UserName == decodedUserNameToReturn)))
                                                  .Returns(true);
+            this.mockPassword.Setup(x => x.HashPassword(
+                                        It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn)))
+                                            .Returns(hashPasswordDtoToReturn);
         }
 
         private void ProcessUser_HappyPathTest_Asserts

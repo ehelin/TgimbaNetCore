@@ -54,6 +54,7 @@ namespace BLLNetCore.Security
             byte[] bytePassword = Encoding.UTF8.GetBytes(passwordDto.GetPassword());
             byte[] byteSalt = Encoding.UTF8.GetBytes(passwordDto.Salt);
             byte[] bytesHash;
+
             using (var deriveBytes = new Rfc2898DeriveBytes(bytePassword, byteSalt, Constants.HASH_ITERATIONS, HashAlgorithmName.SHA256))
             {
                 bytesHash = deriveBytes.GetBytes(Constants.KEY_LENGTH);
