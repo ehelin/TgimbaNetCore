@@ -4,6 +4,7 @@ using System.Text;
 using Shared;
 using Shared.dto;
 using Shared.interfaces;
+using System.Linq;
 
 namespace BLLNetCore.Security
 {
@@ -62,6 +63,26 @@ namespace BLLNetCore.Security
             passwordDto.SaltedHashedPassword = Convert.ToBase64String(bytesHash);            
 
             return passwordDto;
+        }
+        
+        public bool ContainsOneNumber(string password)
+        {
+            char[] charArray = password.ToArray();
+            var numberFound = false;
+
+            for (var i = 0; i < charArray.Length; i++)
+            {
+                string curChar = charArray[i].ToString();
+
+                int j;
+                if (Int32.TryParse(curChar, out j))
+                {
+                    numberFound = true;
+                    break;
+                }
+            }
+
+            return numberFound;
         }
     }
 }

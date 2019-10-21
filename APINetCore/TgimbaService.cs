@@ -52,9 +52,45 @@ namespace APINetCore
             return token;
         }
 
-        public bool ProcessUserRegistration(string encodedUser, string encodedEmail, string encodedPass)
+        //==========================
+        //public bool ProcessUserRegistration(string encodedUser, string encodedEmail, string encodedPass)
+        //{
+        //    IMemberShipData_Old msd = null;
+        //    bool userAdded = false;
+
+        //    try
+        //    {
+        //        msd = new MemberShipData(Utilities.GetDbSetting());
+        //        string decodedUser = Utilities.DecodeClientBase64String(encodedUser);
+        //        string decodedEmail = Utilities.DecodeClientBase64String(encodedEmail);
+        //        string decodedPass = Utilities.DecodeClientBase64String(encodedPass);
+
+        //        if (Utilities.ValidUserToRegistration(decodedUser, decodedEmail, decodedPass))
+        //        {
+        //            PasswordHelper p = new PasswordHelper();
+        //            var np = p.GetPassword(decodedPass);
+        //            userAdded = msd.AddUser(decodedUser, decodedEmail, np.SaltedHashedPassword, np.Salt);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        msd.LogMsg("Error: " + e.Message + ", trace: " + e.StackTrace.ToString());
+        //    }
+
+        //    return userAdded;
+        //}
+        //==========================
+        public bool ProcessUserRegistration(string encodedUserName, string encodedEmail, string encodedPassword)
         {
-            throw new NotImplementedException();
+            bool userAdded = false;
+
+            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUserName);
+            string decodedEmail = this.stringHelper.DecodeBase64String(encodedEmail);
+            string decodedPassword = this.stringHelper.DecodeBase64String(encodedPassword);
+            
+            // TODO - complete method & tests
+
+            return userAdded;
         }
 
         #endregion

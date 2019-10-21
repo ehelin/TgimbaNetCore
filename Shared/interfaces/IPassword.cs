@@ -7,5 +7,6 @@ namespace Shared.interfaces
         bool PasswordsMatch(Password passwordDto, User user);
         string GetSalt();
         Password HashPassword(Password np);
+        bool ContainsOneNumber(string password);
     }
 }

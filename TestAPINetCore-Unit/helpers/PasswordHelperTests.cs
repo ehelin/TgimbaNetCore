@@ -15,6 +15,8 @@ namespace TestAPINetCore_Unit.helpers
             sut = new PasswordHelper();
         }
 
+        #region Passwords match
+
         [TestMethod]
         public void PasswordsMatch_True()
         {
@@ -57,12 +59,20 @@ namespace TestAPINetCore_Unit.helpers
             Assert.IsFalse(passwordsMatch);
         }
 
+        #endregion
+
+        #region Salt
+
         [TestMethod]
         [Ignore]
         public void GetSalt_HappyPathTest()
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region HashPassword
 
         [TestMethod]
         public void HashPassword_HappyPathTest()
@@ -74,5 +84,27 @@ namespace TestAPINetCore_Unit.helpers
             Assert.IsNotNull(updatedPasswordDto.SaltedHashedPassword);
             Assert.IsTrue(updatedPasswordDto.SaltedHashedPassword.Length>0);
         }
+
+        #endregion
+
+        #region Contains a number
+
+        [TestMethod]
+        public void ContainsOneNumber_ValueContainsANumber()
+        {
+            var password = "IAmAPassword9";
+            var passwordContainsANumber = sut.ContainsOneNumber(password);
+            Assert.IsTrue(passwordContainsANumber);
+        }
+
+        [TestMethod]
+        public void ContainsOneNumber_ValueDoesNotContainsANumber()
+        {
+            var password = "IAmAPassword";
+            var passwordContainsANumber = sut.ContainsOneNumber(password);
+            Assert.IsFalse(passwordContainsANumber);
+        }
+
+        #endregion
     }
 }

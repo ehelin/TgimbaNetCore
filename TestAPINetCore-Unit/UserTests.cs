@@ -11,6 +11,8 @@ namespace TestAPINetCore_Unit
     [TestClass]
     public class UserTests : BaseTest
     {
+        #region ProcessUser(args)
+
         [TestMethod]
         public void ProcessUser_HappyPathTest()
         {
@@ -32,7 +34,7 @@ namespace TestAPINetCore_Unit
                                               jwtIssuerToReturn, hashPasswordDtoToReturn, jwtTokenToReturn);
 
             var token = this.service.ProcessUser(encodedUserName, encodedPassword);
-            var tes = 1;
+           
             this.mockPassword.Verify(x => x.HashPassword(
                                         It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn ))
                                         , Times.Once);
@@ -181,5 +183,13 @@ namespace TestAPINetCore_Unit
                                             It.Is<string>(s => s == jwtIssuerToReturn))
                                              , Times.Once);
         }
+
+        #endregion
+
+        #region ProcessUserRegistration(args)
+
+        // TODO - add tests
+
+        #endregion
     }
 }

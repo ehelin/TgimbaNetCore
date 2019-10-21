@@ -11,6 +11,13 @@ namespace BLLNetCore.Security
 {
     public class GeneratorHelper : IGenerator
     {
+        private IPassword passwordHelper = null;
+
+        public GeneratorHelper(IPassword passwordHelper)
+        {
+            this.passwordHelper = passwordHelper;
+        }
+
         public string GetJwtPrivateKey() 
         {
             // TODO - re test this after .net core 3 is installed
@@ -47,6 +54,28 @@ namespace BLLNetCore.Security
             var jwtToken = jwtSecurityTokenHandler.WriteToken(token);
 
             return jwtToken;
+        }
+
+        public bool IsValidUserToRegister(string user, string email, string password)
+        {
+            bool valid = true;
+
+            if (string.IsNullOrEmpty(user) || user.Equals("null"))
+                valid = false;
+            else if (string.IsNullOrEmpty(email) || email.Equals("null"))
+                valid = false;
+            else if (string.IsNullOrEmpty(password) || password.Equals("null"))
+                valid = false;
+            else if (user.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
+                valid = false;
+            else if (password.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
+                valid = false;
+            else if (!this.passwordHelper.ContainsOneNumber(password))
+                valid = false;
+            else if (email.IndexOf(Shared.Constants.EMAIL_AT_SIGN) < 1)
+                valid = false;
+
+            return valid;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Shared.misc
            
             return dbConn;
         }
+        // TODO - remove this method when new API is live
         public static string DecodeClientBase64String(string encodedString)
         {
             string decodedString = string.Empty;
@@ -41,6 +42,7 @@ namespace Shared.misc
 
             return decodedString;
         }
+        // TODO - remove this method when new API is live
         public static string EncodeClientBase64String(string val)
         {
             string encodedString = string.Empty;
@@ -53,6 +55,7 @@ namespace Shared.misc
 
             return encodedString;
         }
+        // TODO - remove this method when new API is live
         public static string GenerateToken()
         {
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
@@ -79,6 +82,7 @@ namespace Shared.misc
 
             return result;
         }
+        // TODO - remove this method when new API is live
         public static bool ValidUserToRegistration(string user, string email, string password)
         {
             bool valid = true;
@@ -100,6 +104,7 @@ namespace Shared.misc
 
             return valid;
         }
+        // TODO - remove this method when new API is live
         public static bool ContainsOneNumber(string password)
         {
             char[] charArray = password.ToArray();

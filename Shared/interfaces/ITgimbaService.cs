@@ -7,7 +7,7 @@ namespace Shared.interfaces
     public interface ITgimbaService
     {
         string ProcessUser(string encodedUser, string encodedPass);
-        bool ProcessUserRegistration(string encodedUser, string encodedEmail, string encodedPass);
+        bool ProcessUserRegistration(string encodedUserName, string encodedEmail, string encodedPassword);
 
         string[] GetBucketListItems(string encodedUserName, string encodedSortString, 
 											string encodedToken, string encodedSrchString = "");
