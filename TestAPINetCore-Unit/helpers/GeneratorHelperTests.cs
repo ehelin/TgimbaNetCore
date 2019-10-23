@@ -54,11 +54,8 @@ namespace TestAPINetCore_Unit.helpers
         [DataRow("user", "email@email.com", "pass", false, true)]                   //user- not long enough
         [DataRow("userName", null, "password123", false, true)]                     //email - null
         [DataRow("userName", "", "password123", false, true)]                       //email - empty string
-        
-        // TODO - why these two not working?
-        //[DataRow("userName", "null", "password123", false, true)]                   //email - "null"
-        //[DataRow("userName", "emailnoatsigh", "password123", false)]                //email - no @
-
+        [DataRow("userName", "null", "password123", false, true)]                   //email - "null"
+        [DataRow("userName", "emailnoatsigh", "password123", false, true)]
         [DataRow("userName", "email@email.com", null, false, true)]                 //password - null
         [DataRow("userName", "email@email.com", "", false, true)]                   //password- empty string
         [DataRow("userName", "email@email.com", "null", false, true)]               //password - "null"
