@@ -45,7 +45,7 @@ namespace TestAPINetCore_Unit.helpers
         #endregion
 
         #region User Registration
-        
+
         [DataTestMethod]
         [DataRow("userName", "email@email.com", "password123", true, true)]         //correct values
         [DataRow(null, "email@email.com", "password123", false, true)]              //user - null

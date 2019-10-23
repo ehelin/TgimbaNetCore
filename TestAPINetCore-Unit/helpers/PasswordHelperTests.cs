@@ -3,6 +3,7 @@ using BLLNetCore.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.dto;
 using Shared.interfaces;
+using Shared;
 
 namespace TestAPINetCore_Unit.helpers
 {
@@ -60,14 +61,38 @@ namespace TestAPINetCore_Unit.helpers
         }
 
         #endregion
-
+        
         #region Salt
 
-        [TestMethod]
-        [Ignore]
-        public void GetSalt_HappyPathTest()
+        [DataTestMethod]
+        [DataRow(Constants.SALT_SIZE, false)]
+        [DataRow(18, false)]
+        [DataRow(64, false)]
+        [DataRow(128, false)]
+        [DataRow(2, true)]
+        public void GetSalt_MultipleTests(int size, bool expectError)
         {
-            throw new NotImplementedException();
+            if (expectError) 
+            {
+                try 
+                {
+                    var result = sut.GetSalt(size);
+
+                    Assert.Fail("Exception not thrown");
+                } 
+                catch (Exception ex)
+                {
+                    Assert.IsNotNull(ex);
+                    Assert.IsTrue(ex.Message.Length > 0);
+                }
+            } 
+            else
+            {
+                var result = sut.GetSalt(size);
+
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Length > 0);
+            }
         }
 
         #endregion

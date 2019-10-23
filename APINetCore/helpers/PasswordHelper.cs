@@ -20,34 +20,14 @@ namespace BLLNetCore.Security
             return passwordsMatch;
         }
 
-        public string GetSalt()
+        public string GetSalt(int size)
         {
-            // TODO - update with latest/greatest after research...this is probably dated
-            throw new NotImplementedException();
-            //RNGCryptoServiceProvider saltGen = null;
-            //string salt = string.Empty;
+            var saltGen = new RNGCryptoServiceProvider();
+            byte[] buffer = new byte[size];
+            saltGen.GetNonZeroBytes(buffer);
+            var salt = Convert.ToBase64String(buffer);
 
-            //try
-            //{
-            //    saltGen = new RNGCryptoServiceProvider();
-            //    byte[] buffer = new byte[Constants.SALT_SIZE];
-            //    saltGen.GetBytes(buffer);
-            //    salt = Convert.ToBase64String(buffer);
-            //}
-            //catch (Exception e)
-            //{
-            //    throw e;
-            //}
-            //finally
-            //{
-            //    if (saltGen != null)
-            //    {
-            //        saltGen.Dispose();
-            //        saltGen = null;
-            //    }
-            //}
-
-            //return salt;
+            return salt;
         }
 
         public Password HashPassword(Password passwordDto)
