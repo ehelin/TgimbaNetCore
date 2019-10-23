@@ -81,9 +81,7 @@ namespace APINetCore
                 }
             }
 
-            // TODO - complete method & tests
-
-                return userAdded;
+            return userAdded;
         }
 
         #endregion

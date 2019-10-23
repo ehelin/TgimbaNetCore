@@ -188,7 +188,71 @@ namespace TestAPINetCore_Unit
 
         #region ProcessUserRegistration(args)
 
-        // TODO - add tests
+        [TestMethod]
+        public void ProcessUserRegistration_HappyPathTest()
+        {
+            var encodedUserName = "base64=>userName";
+            var encodedPassword = "base64=>password";
+            var encodedEmail = "base64=>email";
+
+            var decodedUserNameToReturn = "userName";
+            var decodedPasswordToReturn = "password";
+            var decodedEmailToReturn = "email";
+
+            // TODO - add remaining variables
+
+            ProcessUserRegistration_HappyPathTest_SetUps(encodedUserName, encodedPassword, encodedEmail,
+                                                        decodedUserNameToReturn, decodedPasswordToReturn,
+                                                        decodedEmailToReturn);
+
+            var userRegistered = this.service.ProcessUserRegistration(encodedUserName, encodedEmail, encodedPassword);
+
+            ProcessUserRegistration_HappyPathTest_Asserts(encodedUserName, encodedPassword, encodedEmail);
+        }
+
+        private void ProcessUserRegistration_HappyPathTest_SetUps
+         (
+            string encodedUserName,
+            string encodedPassword,
+            string encodedEmail,
+            string decodedUserNameToReturn,
+            string decodedPasswordToReturn,
+            string decodedEmailToReturn
+         )
+        {
+            this.mockString.Setup(x => x.DecodeBase64String
+                         (It.Is<string>(s => s == encodedUserName)))
+                             .Returns(decodedUserNameToReturn);
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedPassword)))
+                            .Returns(decodedPasswordToReturn);
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedEmail)))
+                            .Returns(decodedEmailToReturn);
+
+            // TODO - add remaining setups
+        }
+
+
+        private void ProcessUserRegistration_HappyPathTest_Asserts
+        (
+            string encodedUserName,
+            string encodedPassword,
+            string encodedEmail
+        )
+        {           
+            this.mockString.Verify(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedUserName))
+                            , Times.Once);
+            this.mockString.Verify(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedPassword))
+                            , Times.Once);
+            this.mockString.Verify(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedPassword))
+                            , Times.Once);
+
+            // TODO - add remaining asserts
+        }
 
         #endregion
     }
