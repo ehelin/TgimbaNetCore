@@ -198,28 +198,82 @@ namespace TestAPINetCore_Unit
             var decodedUserNameToReturn = "userName";
             var decodedPasswordToReturn = "password";
             var decodedEmailToReturn = "email";
+            var saltToReturn = "IAmAUserAssignedSaltValue";
+            var saltedPasswordToReturn = "IAmASaltedUserPassword";
+            var userIdToReturn = 1;
 
-            // TODO - add remaining variables
-
-            ProcessUserRegistration_HappyPathTest_SetUps(encodedUserName, encodedPassword, encodedEmail,
+            ProcessUserRegistration_SetUps(encodedUserName, encodedPassword, encodedEmail,
                                                         decodedUserNameToReturn, decodedPasswordToReturn,
-                                                        decodedEmailToReturn);
+                                                        decodedEmailToReturn, saltToReturn, 
+                                                        saltedPasswordToReturn, userIdToReturn);
 
             var userRegistered = this.service.ProcessUserRegistration(encodedUserName, encodedEmail, encodedPassword);
 
-            ProcessUserRegistration_HappyPathTest_Asserts(encodedUserName, encodedPassword, encodedEmail);
+            Assert.IsTrue(userRegistered);
+
+            ProcessUserRegistration_Asserts(encodedUserName, encodedPassword, encodedEmail,
+                                                        decodedUserNameToReturn, decodedPasswordToReturn,
+                                                        decodedEmailToReturn, saltToReturn, saltedPasswordToReturn);
         }
 
-        private void ProcessUserRegistration_HappyPathTest_SetUps
-         (
+        [TestMethod]
+        public void ProcessUserRegistration_NotValidUserRegistration()
+        {
+            var userRegistered = this.service.ProcessUserRegistration(null, null, null);
+
+            Assert.IsFalse(userRegistered);
+            
+            this.mockGenerator.Verify(x => x.IsValidUserToRegister
+                        (It.Is<string>(s => s == null),
+                            It.Is<string>(s => s == null),
+                                It.Is<string>(s => s == null))
+                                    , Times.Once);
+
+            this.mockPassword.Verify(x => x.GetSalt(It.IsAny<int>()), Times.Never);
+            this.mockPassword.Verify(x => x.HashPassword(It.IsAny<Password>()) , Times.Never);
+            this.mockBucketListData.Verify(x => x.AddUser(It.IsAny<User>()), Times.Never);
+        }
+
+        [TestMethod]
+        public void ProcessUserRegistration_UserNotAdded()
+        {
+            var encodedUserName = "base64=>userName";
+            var encodedPassword = "base64=>password";
+            var encodedEmail = "base64=>email";
+
+            var decodedUserNameToReturn = "userName";
+            var decodedPasswordToReturn = "password";
+            var decodedEmailToReturn = "email";
+            var saltToReturn = "IAmAUserAssignedSaltValue";
+            var saltedPasswordToReturn = "IAmASaltedUserPassword";
+            var userIdToReturn = 0;
+
+            ProcessUserRegistration_SetUps(encodedUserName, encodedPassword, encodedEmail,
+                                                        decodedUserNameToReturn, decodedPasswordToReturn,
+                                                        decodedEmailToReturn, saltToReturn, 
+                                                        saltedPasswordToReturn, userIdToReturn);
+
+            var userRegistered = this.service.ProcessUserRegistration(encodedUserName, encodedEmail, encodedPassword);
+
+            Assert.IsFalse(userRegistered);
+
+            ProcessUserRegistration_Asserts(encodedUserName, encodedPassword, encodedEmail,
+                                                        decodedUserNameToReturn, decodedPasswordToReturn,
+                                                        decodedEmailToReturn, saltToReturn, saltedPasswordToReturn);
+        }
+
+        private void ProcessUserRegistration_SetUps
+        (
             string encodedUserName,
             string encodedPassword,
             string encodedEmail,
             string decodedUserNameToReturn,
             string decodedPasswordToReturn,
-            string decodedEmailToReturn
-         )
-        {
+            string decodedEmailToReturn,
+            string saltToReturn,
+            string saltedPasswordToReturn,
+            int userIdToReturn
+        ) {
             this.mockString.Setup(x => x.DecodeBase64String
                          (It.Is<string>(s => s == encodedUserName)))
                              .Returns(decodedUserNameToReturn);
@@ -230,28 +284,68 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == encodedEmail)))
                             .Returns(decodedEmailToReturn);
 
-            // TODO - add remaining setups
+            this.mockGenerator.Setup(x => x.IsValidUserToRegister
+                        (It.Is<string>(s => s == decodedUserNameToReturn),
+                        It.Is<string>(s => s == decodedEmailToReturn),
+                        It.Is<string>(s => s == decodedPasswordToReturn)))
+                            .Returns(true);
+            
+            var p = new Password(decodedPasswordToReturn, saltToReturn);
+            p.SaltedHashedPassword = saltedPasswordToReturn;
+            this.mockPassword.Setup(x => x.GetSalt(Constants.SALT_SIZE))
+                                            .Returns(saltToReturn);
+            this.mockPassword.Setup(x => x.HashPassword
+                                        (It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
+                                            && s.Salt == saltToReturn)))
+                                            .Returns(p);
+
+            this.mockBucketListData.Setup(x => x.AddUser(It.Is<User>
+                                            (s => s.Password == saltedPasswordToReturn
+                                                && s.UserName == decodedUserNameToReturn
+                                                    && s.Email == decodedEmailToReturn)))
+                                                        .Returns(userIdToReturn);
         }
 
-
-        private void ProcessUserRegistration_HappyPathTest_Asserts
+        private void ProcessUserRegistration_Asserts
         (
             string encodedUserName,
             string encodedPassword,
-            string encodedEmail
-        )
-        {           
+            string encodedEmail,
+            string decodedUserNameToReturn,
+            string decodedPasswordToReturn,
+            string decodedEmailToReturn,
+            string saltToReturn,
+            string saltedPasswordToReturn
+        ) {           
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUserName))
                             , Times.Once);
             this.mockString.Verify(x => x.DecodeBase64String
-                        (It.Is<string>(s => s == encodedPassword))
+                        (It.Is<string>(s => s == encodedEmail))
                             , Times.Once);
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedPassword))
                             , Times.Once);
 
-            // TODO - add remaining asserts
+            this.mockGenerator.Verify(x => x.IsValidUserToRegister
+                        (It.Is<string>(s => s == decodedUserNameToReturn),
+                            It.Is<string>(s => s == decodedEmailToReturn),
+                                It.Is<string>(s => s == decodedPasswordToReturn))
+                                    , Times.Once);
+
+            this.mockPassword.Verify(x => x.GetSalt
+                                        (It.Is<int>(s => s == Constants.SALT_SIZE))
+                                            , Times.Once);
+            this.mockPassword.Verify(x => x.HashPassword
+                                        (It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
+                                            && s.Salt == saltToReturn))
+                                                , Times.Once);
+
+            this.mockBucketListData.Verify(x => x.AddUser(It.Is<User>
+                                            (s => s.Password == saltedPasswordToReturn
+                                                && s.UserName == decodedUserNameToReturn
+                                                    && s.Email == decodedEmailToReturn))
+                                                        , Times.Once);
         }
 
         #endregion
