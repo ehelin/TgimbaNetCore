@@ -1,6 +1,7 @@
 using BLLNetCore.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Shared;
 using Shared.interfaces;
 
 namespace TestAPINetCore_Unit.helpers
@@ -41,7 +42,22 @@ namespace TestAPINetCore_Unit.helpers
             Assert.IsNotNull(jwtToken);
             Assert.IsTrue(jwtToken.Length > 0);
         }
+        
+        [TestMethod]
+        public void GetValidTokenResponse_HappyPathTest()
+        {
+            var validTokenResponse = sut.GetValidTokenResponse();
+            Assert.IsNotNull(validTokenResponse);
+            Assert.AreEqual(Constants.TOKEN_VALID, validTokenResponse[0]);
+        }
 
+        [TestMethod]
+        public void GetInValidTokenResponse_HappyPathTest()
+        {
+            var inValidTokenResponse = sut.GetInValidTokenResponse();
+            Assert.IsNotNull(inValidTokenResponse);
+            Assert.AreEqual(Constants.TOKEN_IN_VALID, inValidTokenResponse[0]);
+        }
         #endregion
 
         #region User Registration

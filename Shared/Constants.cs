@@ -9,6 +9,7 @@ namespace Shared
         public const string MOBILE = "DesktopHome";
         public const string NON_MOBILE = "MobileHome";
         public const string TOKEN_VALID = "TokenValid";
+        public const string TOKEN_IN_VALID = "TokenInValid";
         public const string CATEGORY = "Category";
 
         public const string ENVIRONMENT = "Environment";
