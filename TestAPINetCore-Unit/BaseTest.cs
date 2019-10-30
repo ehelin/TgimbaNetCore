@@ -2,6 +2,8 @@
 using Moq;
 using Shared.interfaces;
 using Shared.dto;
+using Shared.misc;
+using System;
 
 namespace TestAPINetCore_Unit
 {
@@ -44,6 +46,84 @@ namespace TestAPINetCore_Unit
             };
 
             return user;
+        }
+
+        protected BucketListItem GetBucketListItem
+        (
+            string userName, 
+            string listItemName = "Bucket list item", 
+            int dbIdStr = 1
+        ) {
+            var model = new BucketListItem
+            {
+                Name = listItemName,
+                Created = DateTime.Parse("12/15/2010"),
+                Category = Enums.BucketListItemTypes.Hot.ToString(),
+                Achieved = true,
+                Latitude = (decimal)123.333,
+                Longitude = (decimal)555.1345,
+                Id = dbIdStr//,
+                //UserName = userName
+            };
+
+            return model;
+        }
+
+        protected string GetBucketListItemSingleString
+        (
+            string userName = "userName",
+            string listItemName = "Bucket list item",
+            string dbIdStr = "1",
+            bool extended = true
+        ) {
+            string[] bucketListItem = GetBucketListItem(userName, listItemName, dbIdStr, extended);
+            string singleLineBucketListItem = "";
+
+            foreach (string bucketListItemEntry in bucketListItem)
+            {
+                singleLineBucketListItem += "," + bucketListItemEntry;
+            }
+
+            return singleLineBucketListItem;
+        }
+
+        protected string[] GetBucketListItem
+        (
+            string userName = "userName",
+            string listItemName = "Bucket list item",
+            string dbIdStr = "1",
+            bool extended = false
+        ) {
+            string[] bucketListItems;
+
+            if (extended)
+            {
+                bucketListItems = new string[8];
+            }
+            else
+            {
+                bucketListItems = new string[6];
+            }
+
+            bucketListItems[0] = listItemName;
+            bucketListItems[1] = "12/15/2010";
+            bucketListItems[2] = "Hot";
+            bucketListItems[3] = "1";
+
+            if (extended)
+            {
+                bucketListItems[4] = "123.333";
+                bucketListItems[5] = "555.1345";
+                bucketListItems[6] = dbIdStr;
+                bucketListItems[7] = userName;
+            }
+            else
+            {
+                bucketListItems[4] = dbIdStr;
+                bucketListItems[5] = userName;
+            }
+
+            return bucketListItems;
         }
     }
 }

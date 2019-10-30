@@ -113,6 +113,9 @@ namespace APINetCore
             decodedBucketListItems = decodedBucketListItems.Trim(';');
             string[] items = decodedBucketListItems.Split(',');
 
+            var user = this.bucketListData.GetUser(decodedUserName);
+
+
             // TODO - handle demo user at client so they cannot upsert values
 
             //=================================================
@@ -121,22 +124,23 @@ namespace APINetCore
             //IMemberShipData_Old msd = new MemberShipData(Utilities.GetDbSetting());
             //User u = msd.GetUser(userName);
 
-            ////HACK for android
-            //token = token.Replace("\"", "");
+            //HACK for android
+            decodedToken = decodedToken.Replace("\"", "");
 
-            //if (u != null
-            //        && !string.IsNullOrEmpty(u.Token)
-            //            && !string.IsNullOrEmpty(token)
-            //                && u.Token.Equals(token))
-            //{
-            //    byte[] data = Convert.FromBase64String(token);
-            //    DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
-            //    DateTime now = DateTime.UtcNow.AddHours(-2);
-            //    if (when >= now)
-            //    {
-            //        goodToken = true;
-            //    }
-            //}
+            if (user != null
+                    && !string.IsNullOrEmpty(user.Token)
+                        && !string.IsNullOrEmpty(decodedToken)
+                            && user.Token.Equals(decodedToken))
+            {
+                byte[] data = Convert.FromBase64String(decodedToken);
+                DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
+                DateTime now = DateTime.UtcNow.AddHours(-2);
+                if (when >= now)
+                {
+                    // TODO - refactor this?
+                    validToken = true;
+                }
+            }
 
             //return goodToken;
             //=================================================
