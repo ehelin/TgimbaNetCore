@@ -8,5 +8,7 @@ namespace Shared.interfaces
         string GetSalt(int size);
         Password HashPassword(Password np);
         bool ContainsOneNumber(string password);
+        bool IsValidToken(User user, string token);
+        bool IsValidUserToRegister(string user, string email, string password);
     }
 }

@@ -1,11 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shared.dto;
-using Shared;
-using BLLNetCore.Security;
 
 namespace TestAPINetCore_Unit
 {
@@ -48,7 +43,7 @@ namespace TestAPINetCore_Unit
             var token = this.service.UpsertBucketListItem(encodedBucketListItems, encodedUser, encodedToken);
 
             UpsertBucketListItem_HappyPathTest_Asserts(encodedBucketListItems, encodedUser, encodedToken,
-                                                        decodedUser);
+                                                        decodedUser, decodedToken, userToReturn);
         }
         
         private void UpsertBucketListItem_HappyPathTest_SetUps
@@ -85,6 +80,11 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == decodedUser)))
                             .Returns(userToReturn);
 
+            this.mockPassword.Setup(x => x.IsValidToken
+                        (It.Is<User>(s => s.Email == userToReturn.Email),
+                                            It.Is<string>(s => s == decodedToken)))
+                                                 .Returns(true);
+
             //this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuerToReturn);
             //this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKeyToReturn);
             //this.mockGenerator.Setup(x => x.GetJwtToken(It.Is<string>(s => s == jwtPrivateKeyToReturn),
@@ -105,8 +105,9 @@ namespace TestAPINetCore_Unit
             string encodedBucketListItems,
             string encodedUser,
             string encodedToken,
-            string decodedUserNameToReturn
-            //User user
+            string decodedUserNameToReturn,
+            string decodedTokenToReturn,
+            User userToReturn
         //string token,
         //string encodedUserName,
         //string encodedPassword,
@@ -128,6 +129,11 @@ namespace TestAPINetCore_Unit
            this.mockBucketListData.Verify(x => x.GetUser
                        (It.Is<string>(s => s == decodedUserNameToReturn))
                            , Times.Once);
+
+            this.mockPassword.Verify(x => x.IsValidToken
+                        (It.Is<User>(s => s.Email == userToReturn.Email),
+                                            It.Is<string>(s => s == decodedTokenToReturn))
+                                            , Times.Once);
 
             //this.mockPassword.Verify(x => x.PasswordsMatch(It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
             //                                                && s.Salt == user.Salt),

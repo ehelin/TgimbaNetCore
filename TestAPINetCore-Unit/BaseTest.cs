@@ -1,9 +1,11 @@
-﻿using APINetCore;
+﻿using System;
+using APINetCore;
+using BLLNetCore.Security;
 using Moq;
-using Shared.interfaces;
+using Shared;
 using Shared.dto;
+using Shared.interfaces;
 using Shared.misc;
-using System;
 
 namespace TestAPINetCore_Unit
 {
@@ -124,6 +126,17 @@ namespace TestAPINetCore_Unit
             }
 
             return bucketListItems;
+        }
+
+        protected string GetRealJwtToken(int tokenLife = Constants.TOKEN_LIFE) 
+        {
+            //NOTE: Generating real jwt token for validation tests :)
+            var generatorHelper = new GeneratorHelper();
+            var jwtPrivateKey = generatorHelper.GetJwtPrivateKey();
+            var jwtIssuer = generatorHelper.GetJwtIssuer();
+            var jwtToken = generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer, tokenLife);
+
+            return jwtToken;
         }
     }
 }

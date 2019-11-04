@@ -60,7 +60,7 @@ namespace APINetCore
             string decodedEmail = this.stringHelper.DecodeBase64String(encodedEmail);
             string decodedPassword = this.stringHelper.DecodeBase64String(encodedPassword);
 
-            var validUserRegistration = this.generatorHelper.IsValidUserToRegister(decodedUserName, decodedEmail, decodedPassword);
+            var validUserRegistration = this.passwordHelper.IsValidUserToRegister(decodedUserName, decodedEmail, decodedPassword);
 
             if (validUserRegistration)
             {
@@ -100,8 +100,7 @@ namespace APINetCore
 
         public string[] UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken)
         {
-            //throw new NotImplementedException();
-            //==============================================
+            // TODO - handle demo user at client so they cannot upsert values
             string[] result = null;
             var validToken = false;
 
@@ -114,36 +113,7 @@ namespace APINetCore
             string[] items = decodedBucketListItems.Split(',');
 
             var user = this.bucketListData.GetUser(decodedUserName);
-
-
-            // TODO - handle demo user at client so they cannot upsert values
-
-            //=================================================
-            // TODO - implement valid token code (this is from previous implementation)
-            //bool goodToken = false;
-            //IMemberShipData_Old msd = new MemberShipData(Utilities.GetDbSetting());
-            //User u = msd.GetUser(userName);
-
-            //HACK for android
-            decodedToken = decodedToken.Replace("\"", "");
-
-            if (user != null
-                    && !string.IsNullOrEmpty(user.Token)
-                        && !string.IsNullOrEmpty(decodedToken)
-                            && user.Token.Equals(decodedToken))
-            {
-                byte[] data = Convert.FromBase64String(decodedToken);
-                DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
-                DateTime now = DateTime.UtcNow.AddHours(-2);
-                if (when >= now)
-                {
-                    // TODO - refactor this?
-                    validToken = true;
-                }
-            }
-
-            //return goodToken;
-            //=================================================
+            validToken = this.passwordHelper.IsValidToken(user, decodedToken);
 
             if (validToken)
             {

@@ -1,15 +1,45 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Shared;
 using Shared.dto;
 using Shared.interfaces;
-using System.Linq;
 
 namespace BLLNetCore.Security
 {
     public class PasswordHelper : IPassword
     {
+        private IGenerator generator = null;
+
+        public PasswordHelper()
+        {
+            generator = new GeneratorHelper();
+        }
+               
+        public bool IsValidUserToRegister(string user, string email, string password)
+        {
+            bool valid = true;
+
+            if (string.IsNullOrEmpty(user) || user.Equals("null"))
+                valid = false;
+            else if (string.IsNullOrEmpty(email) || email.Equals("null"))
+                valid = false;
+            else if (string.IsNullOrEmpty(password) || password.Equals("null"))
+                valid = false;
+            else if (user.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
+                valid = false;
+            else if (password.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
+                valid = false;
+            else if (!this.ContainsOneNumber(password))
+                valid = false;
+            else if (email.IndexOf(Shared.Constants.EMAIL_AT_SIGN) < 1)
+                valid = false;
+
+            return valid;
+        }
+
         public bool PasswordsMatch(Password passwordDto, User user)
         {
             bool passwordsMatch = false;
@@ -63,6 +93,27 @@ namespace BLLNetCore.Security
             }
 
             return numberFound;
+        }
+
+        public bool IsValidToken(User user, string token)
+        {
+            bool isValid = false;
+
+            if (user != null
+                    && !string.IsNullOrEmpty(user.Token)
+                        && !string.IsNullOrEmpty(token)
+                            && user.Token.Equals(token))
+            {
+                var jwtToken = this.generator.DecryptJwtToken(token);
+
+                DateTime now = DateTime.UtcNow;
+                if (jwtToken.ValidTo >= now)
+                {
+                    isValid = true;
+                }
+            }
+
+            return isValid;
         }
     }
 }

@@ -11,13 +11,6 @@ namespace BLLNetCore.Security
 {
     public class GeneratorHelper : IGenerator
     {
-        private IPassword passwordHelper = null;
-
-        public GeneratorHelper(IPassword passwordHelper)
-        {
-            this.passwordHelper = passwordHelper;
-        }
-
         public string GetJwtPrivateKey() 
         {
             // TODO - re test this after .net core 3 is installed
@@ -38,44 +31,32 @@ namespace BLLNetCore.Security
             return issuer;
         }
 
-        public string GetJwtToken(string jwtPrivateKey, string jwtIssuer)
+        public SecurityToken DecryptJwtToken(string token)
+        {
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = jwtSecurityTokenHandler.ReadToken(token);
+
+            return jwtToken;
+        }
+
+        // TODO - add test for variable token life
+        public string GetJwtToken(string jwtPrivateKey, string jwtIssuer, int tokenLife = Constants.TOKEN_LIFE)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtPrivateKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
+            var expiresIn = DateTime.UtcNow.AddMinutes(tokenLife);
+            
             var claims = new List<Claim>();
             var token = new JwtSecurityToken(jwtIssuer,
               jwtIssuer,
               claims,
-              expires: DateTime.Now.AddMinutes(120),
+              expires: expiresIn,
               signingCredentials: credentials);
 
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = jwtSecurityTokenHandler.WriteToken(token);
 
             return jwtToken;
-        }
-
-        public bool IsValidUserToRegister(string user, string email, string password)
-        {
-            bool valid = true;
-
-            if (string.IsNullOrEmpty(user) || user.Equals("null"))
-                valid = false;
-            else if (string.IsNullOrEmpty(email) || email.Equals("null"))
-                valid = false;
-            else if (string.IsNullOrEmpty(password) || password.Equals("null"))
-                valid = false;
-            else if (user.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
-                valid = false;
-            else if (password.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
-                valid = false;
-            else if (!this.passwordHelper.ContainsOneNumber(password))
-                valid = false;
-            else if (email.IndexOf(Shared.Constants.EMAIL_AT_SIGN) < 1)
-                valid = false;
-
-            return valid;
         }
     
         public string[] GetValidTokenResponse()

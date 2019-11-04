@@ -132,7 +132,8 @@ namespace TestAPINetCore_Unit
             this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuerToReturn);
             this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKeyToReturn);
             this.mockGenerator.Setup(x => x.GetJwtToken(It.Is<string>(s => s == jwtPrivateKeyToReturn),
-                                                               It.Is<string>(s => s == jwtIssuerToReturn)))
+                                                               It.Is<string>(s => s == jwtIssuerToReturn)
+                                                                , It.Is<int>(s => s == Constants.TOKEN_LIFE)))
                                                                     .Returns(jwtTokenToReturn);
             this.mockPassword.Setup(x => x.PasswordsMatch
                         (It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
@@ -177,8 +178,9 @@ namespace TestAPINetCore_Unit
             this.mockGenerator.Verify(x => x.GetJwtIssuer(), Times.Once);
             this.mockGenerator.Verify(x => x.GetJwtToken(
                                         It.Is<string>(s => s == jwtPrivateKeyToReturn),
-                                            It.Is<string>(s => s == jwtIssuerToReturn))
-                                             , Times.Once);
+                                            It.Is<string>(s => s == jwtIssuerToReturn)
+                                             , It.Is<int>(s => s == Constants.TOKEN_LIFE))
+                                                , Times.Once);
         }
 
         #endregion
@@ -220,7 +222,7 @@ namespace TestAPINetCore_Unit
 
             Assert.IsFalse(userRegistered);
             
-            this.mockGenerator.Verify(x => x.IsValidUserToRegister
+            this.mockPassword.Verify(x => x.IsValidUserToRegister
                         (It.Is<string>(s => s == null),
                             It.Is<string>(s => s == null),
                                 It.Is<string>(s => s == null))
@@ -281,7 +283,7 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == encodedEmail)))
                             .Returns(decodedEmailToReturn);
 
-            this.mockGenerator.Setup(x => x.IsValidUserToRegister
+            this.mockPassword.Setup(x => x.IsValidUserToRegister
                         (It.Is<string>(s => s == decodedUserNameToReturn),
                         It.Is<string>(s => s == decodedEmailToReturn),
                         It.Is<string>(s => s == decodedPasswordToReturn)))
@@ -324,7 +326,7 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == encodedPassword))
                             , Times.Once);
 
-            this.mockGenerator.Verify(x => x.IsValidUserToRegister
+            this.mockPassword.Verify(x => x.IsValidUserToRegister
                         (It.Is<string>(s => s == decodedUserNameToReturn),
                             It.Is<string>(s => s == decodedEmailToReturn),
                                 It.Is<string>(s => s == decodedPasswordToReturn))

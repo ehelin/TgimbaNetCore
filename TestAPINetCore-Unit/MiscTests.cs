@@ -144,7 +144,8 @@ namespace TestAPINetCore_Unit
             this.mockGenerator.Setup(x =>
                     x.GetJwtToken
                         (It.Is<string>(z => z == jwtPrivateKey)
-                        , It.Is<string>(s => s == jwtIssuer))).Returns(jwtToken);
+                        , It.Is<string>(s => s == jwtIssuer)
+                        , It.Is<int>(s => s == Constants.TOKEN_LIFE))).Returns(jwtToken);
         }
 
         private void LoginDemoUserTest_Asserts
@@ -175,9 +176,10 @@ namespace TestAPINetCore_Unit
             this.mockGenerator.Verify(x =>
                     x.GetJwtToken
                         (It.Is<string>(z => z == jwtPrivateKey)
-                        , It.Is<string>(s => s == jwtIssuer))
+                        , It.Is<string>(s => s == jwtIssuer)
+                        , It.Is<int>(s => s == Constants.TOKEN_LIFE))
                         , Times.Once);
-        }
+         }
 
         #endregion
 
