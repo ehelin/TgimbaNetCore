@@ -110,40 +110,15 @@ namespace APINetCore
 
             decodedBucketListItems = decodedBucketListItems.Trim(',');
             decodedBucketListItems = decodedBucketListItems.Trim(';');
-            string[] items = decodedBucketListItems.Split(',');
+            string[] bucketListItemArray = decodedBucketListItems.Split(',');
 
             var user = this.bucketListData.GetUser(decodedUserName);
             validToken = this.passwordHelper.IsValidToken(user, decodedToken);
 
             if (validToken)
             {
-                //=========================================================
-                // TODO - get bucket list item from string[] and add to db using entity framework code (this is from previous code)
-                //bool goodDbAction = false;
-                //bool Achieved = false;
-
-                //string ListItemName = bucketListItems[0];
-                //DateTime Created = this.GetSafeDateTime(bucketListItems[1]);
-                //string Category = bucketListItems[2];
-                //string AchievedStr = bucketListItems[3];
-                //decimal Latitude = this.GetSafeDecimal(bucketListItems[4]);
-                //decimal Longitude = this.GetSafeDecimal(bucketListItems[5]);
-
-                //int BucketListItemId = 0;
-                //if (!string.IsNullOrEmpty(bucketListItems[6]))
-                //    BucketListItemId = this.GetSafeInt(bucketListItems[6]);
-
-                //string UserName = bucketListItems[7];
-
-                //if (!string.IsNullOrEmpty(AchievedStr) && AchievedStr.Equals("1"))
-                //    Achieved = true;
-
-                //goodDbAction = UpsertBucketListItemV2(ListItemName, Created, Category, Achieved, BucketListItemId, UserName, Latitude, Longitude);
-
-                //return goodDbAction;
-                //bld.UpsertBucketListItemV2(items);
-                //=========================================================
-
+                var bucketListItem = this.stringHelper.GetBucketListItem(bucketListItemArray);
+                this.bucketListData.UpsertBucketListItem(bucketListItem, decodedUserName);
                 result = this.generatorHelper.GetValidTokenResponse();
             }
             else
