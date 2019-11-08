@@ -12,18 +12,21 @@ namespace APINetCore
         private IPassword passwordHelper = null;
         private IGenerator generatorHelper = null;
         private IString stringHelper = null;
+        private IConversion conversionHelper = null;
 
         public TgimbaService
         (
             IBucketListData bucketListData, 
             IPassword passwordHelper, 
             IGenerator generatorHelper,
-            IString stringHelper
+            IString stringHelper,
+            IConversion conversionHelper
         ) {
             this.bucketListData = bucketListData;
             this.passwordHelper = passwordHelper;
             this.generatorHelper = generatorHelper;
             this.stringHelper = stringHelper;
+            this.conversionHelper = conversionHelper;
         }
 
         #region User 
@@ -117,7 +120,7 @@ namespace APINetCore
 
             if (validToken)
             {
-                var bucketListItem = this.stringHelper.GetBucketListItem(bucketListItemArray);
+                var bucketListItem = this.conversionHelper.GetBucketListItem(bucketListItemArray);
                 this.bucketListData.UpsertBucketListItem(bucketListItem, decodedUserName);
                 result = this.generatorHelper.GetValidTokenResponse();
             }

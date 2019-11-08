@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Shared
+﻿namespace Shared
 {
     public class Constants
     {
@@ -17,6 +13,8 @@ namespace Shared
         public const string ENVIRONMENT_PRODUCTION = "Production";
         public const string DB_PROD = "BucketListDbConnStrProd";
         public const string DB_TEST = "BucketListDbConnStrDev";
+
+        public const int BUCKET_LIST_ITEM_STANDARD_ARRAY_SIZE = 8;
 
         public const int REGISTRATION_VALUE_LENGTH = 8;
         public const string EMAIL_AT_SIGN = "@";

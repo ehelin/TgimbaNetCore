@@ -16,6 +16,7 @@ namespace TestAPINetCore_Unit
         protected Mock<IPassword> mockPassword { get; set; }
         protected Mock<IGenerator> mockGenerator { get; set; }
         protected Mock<IString> mockString { get; set; }
+        protected Mock<IConversion> mockConversion { get; set; }
 
         public BaseTest()
         {
@@ -23,9 +24,10 @@ namespace TestAPINetCore_Unit
             this.mockPassword = new Mock<IPassword>();
             this.mockGenerator = new Mock<IGenerator>();
             this.mockString = new Mock<IString>();
+            this.mockConversion = new Mock<IConversion>();
             this.service = new TgimbaService(this.mockBucketListData.Object, 
                                     mockPassword.Object, mockGenerator.Object,
-                                        mockString.Object);
+                                        mockString.Object, mockConversion.Object);
         }
 
         public User GetUser
