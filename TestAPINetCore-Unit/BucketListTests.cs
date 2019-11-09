@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Shared;
 using Shared.dto;
 using Shared.interfaces;
 using BLLNetCore.helpers;
@@ -17,7 +18,6 @@ namespace TestAPINetCore_Unit
         // -> 
 
         [TestMethod]
-        [Ignore]
         public void UpsertBucketListItem_HappyPathTest()
         {
             var test = this.GetBucketListItem();
@@ -27,6 +27,7 @@ namespace TestAPINetCore_Unit
             var encodedUser = "base64=>username";
             var encodedToken = "base64=>token";            
             var decodedBucketListItems = this.GetBucketListItemSingleString();
+            decodedBucketListItems = decodedBucketListItems.Trim(',');
             var decodedUser = "username";
             var decodedToken = "token";
             var decodedBucketListItemsArray = decodedBucketListItems.Split(',');
@@ -34,22 +35,18 @@ namespace TestAPINetCore_Unit
 
             var salt = "IAmAReallyLongSaltValueToComplicateAPassword";
             var hashedUserPassword = "0W32zG7AdYwR1e3pgZbupRZjvuXOmNhOJcY/B8rm77L23knzTsDD4EeZS6ll5UjbMJUzTmrLNEJmnC07/jCthA2XVBBre1C3LYEo2dhi0s2f4CAWYMW9YT9tC8rcfpyp5FWSH2DAe/kdD3h/qXrrA8utTRD54au09a1heocVCdrZJdwkDXHMnGtLj40nRs8dnGRpKB1Xe9fuDmWLfWSdjRiSr/lWG+v1fMk+LYq51GF44RYL6QofcebRVolAetAkOabFGvLzaUuo5p77RXehNRHUWbT01pFZWrzEYAksNCBFqaXsbUxK488J+/o9MF3XySKBAPoHz/tG6w==";
-            //var jwtIssuerToReturn = "jwtIssuer";
-            //var jwtPrivateKeyToReturn = "jwtPrivateKey";
-            var jwtTokenToReturn = "IAmAJwtToken";
             var userToReturn = GetUser(1, decodedUser, hashedUserPassword, salt);
             userToReturn.Token = decodedToken;
-            //var hashPasswordDtoToReturn = new Password(decodedPasswordToReturn, userToReturn.Salt);
-            //hashPasswordDtoToReturn.SaltedHashedPassword = hashedUserPassword;
 
             UpsertBucketListItem_HappyPathTest_SetUps(encodedBucketListItems, encodedUser, encodedToken, 
                                                     decodedBucketListItems, decodedUser, decodedToken,
                                                     userToReturn, bucketListItemToReturn, decodedBucketListItemsArray);
 
-            var token = this.service.UpsertBucketListItem(encodedBucketListItems, encodedUser, encodedToken);
+            var response = this.service.UpsertBucketListItem(encodedBucketListItems, encodedUser, encodedToken);
 
-            UpsertBucketListItem_HappyPathTest_Asserts(encodedBucketListItems, encodedUser, encodedToken,
-                                                        decodedUser, decodedToken, userToReturn, decodedBucketListItemsArray);
+            UpsertBucketListItem_HappyPathTest_Asserts(response, encodedBucketListItems, encodedUser, encodedToken,
+                                                        decodedUser, decodedToken, userToReturn,
+                                                        decodedBucketListItemsArray, bucketListItemToReturn);
         }
         
         private void UpsertBucketListItem_HappyPathTest_SetUps
@@ -63,15 +60,6 @@ namespace TestAPINetCore_Unit
             User userToReturn,
             BucketListItem bucketListItemToReturn,
             string[] bucketListItemArray
-            //string encodedUserName,
-            //string encodedPassword,
-            //string decodedUserNameToReturn,
-            //string decodedPasswordToReturn,
-            //User userToReturn,
-            //string jwtPrivateKeyToReturn,
-            //string jwtIssuerToReturn,
-            //Password hashPasswordDtoToReturn,
-            //string jwtTokenToReturn
         )
         {
             this.mockString.Setup(x => x.DecodeBase64String
@@ -94,41 +82,30 @@ namespace TestAPINetCore_Unit
                                                  .Returns(true);
 
             this.mockConversion.Setup(x => x.GetBucketListItem
-                        (It.Is<string[]>(s => s == bucketListItemArray)))
+                        (It.Is<string[]>(s => s[0] == bucketListItemArray[0])))
                                                  .Returns(bucketListItemToReturn);
-
-            //this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuerToReturn);
-            //this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKeyToReturn);
-            //this.mockGenerator.Setup(x => x.GetJwtToken(It.Is<string>(s => s == jwtPrivateKeyToReturn),
-            //                                                   It.Is<string>(s => s == jwtIssuerToReturn)))
-            //                                                        .Returns(jwtTokenToReturn);
-            //this.mockPassword.Setup(x => x.PasswordsMatch
-            //            (It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
-            //                                    && s.Salt == userToReturn.Salt),
-            //                                It.Is<User>(s => s.UserName == decodedUserNameToReturn)))
-            //                                     .Returns(true);
-            //this.mockPassword.Setup(x => x.HashPassword(
-            //                            It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn)))
-            //                                .Returns(hashPasswordDtoToReturn);
+            string[] result = null;
+            result = new string[1];
+            result[0] = Constants.TOKEN_VALID;
+            this.mockGenerator.Setup(x => x.GetValidTokenResponse()).Returns(result);
         }
 
         private void UpsertBucketListItem_HappyPathTest_Asserts
         (
+            string[] token,
             string encodedBucketListItems,
             string encodedUser,
             string encodedToken,
             string decodedUserNameToReturn,
             string decodedTokenToReturn,
             User userToReturn,
-            string[] bucketListItemArray
-            //string token,
-            //string encodedUserName,
-            //string encodedPassword,
-            //string decodedPasswordToReturn,
-            //string jwtPrivateKeyToReturn,
-            //string jwtIssuerToReturn,
-            //User user
+            string[] bucketListItemArray,
+            BucketListItem bucketListItem
         ) {
+            Assert.IsNotNull(token);
+            Assert.IsTrue(token.Length == 1);
+            Assert.AreEqual(Constants.TOKEN_VALID, token[0]);
+
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedBucketListItems))
                             , Times.Once);
@@ -149,20 +126,15 @@ namespace TestAPINetCore_Unit
                                             , Times.Once);
 
             this.mockConversion.Verify(x => x.GetBucketListItem
-                        (It.Is<string[]>(s => s == bucketListItemArray))
+                        (It.Is<string[]>(s => s[0] == bucketListItemArray[0]))
                                             , Times.Once);
 
-            //this.mockPassword.Verify(x => x.PasswordsMatch(It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
-            //                                                && s.Salt == user.Salt),
-            //                                                    It.Is<User>(s => s.UserName == decodedUserNameToReturn)),
-            //                                                        Times.Once);
+            this.mockBucketListData.Verify(x => x.UpsertBucketListItem
+                          (It.Is<BucketListItem>(s => s.Name == bucketListItem.Name),
+                            It.Is<string>(s => s == decodedUserNameToReturn))
+                                              , Times.Once);
 
-            //this.mockGenerator.Verify(x => x.GetJwtPrivateKey(), Times.Once);
-            //this.mockGenerator.Verify(x => x.GetJwtIssuer(), Times.Once);
-            //this.mockGenerator.Verify(x => x.GetJwtToken(
-            //                            It.Is<string>(s => s == jwtPrivateKeyToReturn),
-            //                                It.Is<string>(s => s == jwtIssuerToReturn))
-            //                                 , Times.Once);
+            this.mockGenerator.Verify(x => x.GetValidTokenResponse(), Times.Once);
         }
 
         #endregion
