@@ -127,8 +127,7 @@ namespace APINetCore
             else
             {
                 result = this.generatorHelper.GetInValidTokenResponse();
-            }
-            
+            }            
 
             return result;
         }
