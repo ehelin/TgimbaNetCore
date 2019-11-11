@@ -9,10 +9,10 @@ namespace Shared.interfaces
         string ProcessUser(string encodedUser, string encodedPass);
         bool ProcessUserRegistration(string encodedUserName, string encodedEmail, string encodedPassword);
 
-        string[] GetBucketListItems(string encodedUserName, string encodedSortString, 
+        IList<Shared.dto.BucketListItem> GetBucketListItems(string encodedUserName, string encodedSortString, 
 											string encodedToken, string encodedSrchString = "");
-        string[] UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken);
-        string[] DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
+        bool UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken);
+        bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
  
         IList<SystemStatistic> GetSystemStatistics();
         IList<SystemBuildStatistic> GetSystemBuildStatistics();

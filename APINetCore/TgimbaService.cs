@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Shared;
 using Shared.dto;
 using Shared.interfaces;
+using Shared.misc;
 
 namespace APINetCore
 {
@@ -49,6 +50,12 @@ namespace APINetCore
                     var jwtPrivateKey = this.generatorHelper.GetJwtPrivateKey();
                     var jwtIssuer = this.generatorHelper.GetJwtIssuer();
                     token = this.generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer);
+
+                    // TODO - add test step for saving the token
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        this.bucketListData.AddToken(user.UserId, token);
+                    }
                 }
             }
 
@@ -91,21 +98,43 @@ namespace APINetCore
 
         #region BucketList
 
-        public string[] DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken)
+        public bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken)
         {
             throw new NotImplementedException();
         }
 
-        public string[] GetBucketListItems(string encodedUserName, string encodedSortString, string encodedToken, string encodedSrchString = "")
+        // Tests to add
+        // happy path (existing records sorted asc by list name)
+        // sort asc/desc
+        // sort for each column in enum
+        // couple of search tests
+        public IList<BucketListItem> GetBucketListItems(string encodedUserName, string encodedSortString, string encodedToken, string encodedSrchString = "")
         {
-            throw new NotImplementedException();
+            IList <BucketListItem> bucketListItems = null;
+
+            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUserName);
+            string decodedSortString = this.stringHelper.DecodeBase64String(encodedSortString);
+            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
+            string decodedSrchString = this.stringHelper.DecodeBase64String(encodedSrchString);
+
+            var user = this.bucketListData.GetUser(decodedUserName);
+            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
+
+            if (validToken)
+            {
+                // TODO - add method(s) to handle taking the sort string and translatting to sort column enum...AND handle asc/desc part of that
+                var sortColumn = Enums.SortColumns.ListItemName;
+                var sortAsc = true;
+                bucketListItems = this.bucketListData.GetBucketList(decodedUserName, sortColumn, sortAsc, encodedSrchString);               
+            }
+
+            return bucketListItems;
         }
 
-        public string[] UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken)
+        public bool UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken)
         {
             // TODO - handle demo user at client so they cannot upsert values
-            string[] result = null;
-            var validToken = false;
+            bool goodUpsert = false;
 
             string decodedBucketListItems = this.stringHelper.DecodeBase64String(encodedBucketListItems);
             string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
@@ -116,20 +145,16 @@ namespace APINetCore
             string[] bucketListItemArray = decodedBucketListItems.Split(',');
 
             var user = this.bucketListData.GetUser(decodedUserName);
-            validToken = this.passwordHelper.IsValidToken(user, decodedToken);
+            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
 
             if (validToken)
             {
                 var bucketListItem = this.conversionHelper.GetBucketListItem(bucketListItemArray);
                 this.bucketListData.UpsertBucketListItem(bucketListItem, decodedUserName);
-                result = this.generatorHelper.GetValidTokenResponse();
-            }
-            else
-            {
-                result = this.generatorHelper.GetInValidTokenResponse();
-            }            
+                goodUpsert = true;
+            }          
 
-            return result;
+            return goodUpsert;
         }
 
         #endregion

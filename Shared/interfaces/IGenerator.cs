@@ -7,8 +7,10 @@ namespace Shared.interfaces
         string GetJwtPrivateKey(); 
         string GetJwtIssuer();
         string GetJwtToken(string jwtPrivateKey, string jwtIssuer, int tokenLife = Constants.TOKEN_LIFE);
-        string[] GetValidTokenResponse();
-        string[] GetInValidTokenResponse();
         SecurityToken DecryptJwtToken(string token);
+
+        // TODO - remove any methods below this comment and any tests
+        //string[] GetValidTokenResponse();
+        //string[] GetInValidTokenResponse();
     }
 }
