@@ -58,25 +58,5 @@ namespace BLLNetCore.Security
 
             return jwtToken;
         }
-    
-        public string[] GetValidTokenResponse()
-        {
-            string[] result = null;
-
-            result = new string[1];
-            result[0] = Shared.Constants.TOKEN_VALID;
-
-            return result;
-        }
-
-        public string[] GetInValidTokenResponse()
-        {
-            string[] result = null;
-
-            result = new string[1];
-            result[0] = Constants.TOKEN_IN_VALID;
-
-            return result;
-        }
     }
 }

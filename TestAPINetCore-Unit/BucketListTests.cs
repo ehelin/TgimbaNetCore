@@ -17,55 +17,41 @@ namespace TestAPINetCore_Unit
         [DataRow(false)] 
         public void UpsertBucketListItem_HappyPathTest(bool returnValidToken)
         {
-            var test = this.GetBucketListItem();
-            IConversion conversionHelper = new ConversionHelper();
-
-            var encodedBucketListItems = "base64=>bucketListItemsArray";
             var encodedUser = "base64=>username";
             var encodedToken = "base64=>token";            
-            var decodedBucketListItems = this.GetBucketListItemSingleString();
-            decodedBucketListItems = decodedBucketListItems.Trim(',');
             var decodedUser = "username";
             var decodedToken = "token";
-            var decodedBucketListItemsArray = decodedBucketListItems.Split(',');
-            var bucketListItemToReturn = conversionHelper.GetBucketListItem(decodedBucketListItemsArray);
+            var bucketListItemToReturn = GetBucketListItemObject();
 
             var salt = "IAmAReallyLongSaltValueToComplicateAPassword";
             var hashedUserPassword = "0W32zG7AdYwR1e3pgZbupRZjvuXOmNhOJcY/B8rm77L23knzTsDD4EeZS6ll5UjbMJUzTmrLNEJmnC07/jCthA2XVBBre1C3LYEo2dhi0s2f4CAWYMW9YT9tC8rcfpyp5FWSH2DAe/kdD3h/qXrrA8utTRD54au09a1heocVCdrZJdwkDXHMnGtLj40nRs8dnGRpKB1Xe9fuDmWLfWSdjRiSr/lWG+v1fMk+LYq51GF44RYL6QofcebRVolAetAkOabFGvLzaUuo5p77RXehNRHUWbT01pFZWrzEYAksNCBFqaXsbUxK488J+/o9MF3XySKBAPoHz/tG6w==";
             var userToReturn = GetUser(1, decodedUser, hashedUserPassword, salt);
             userToReturn.Token = decodedToken;
 
-            UpsertBucketListItem_HappyPathTest_SetUps(encodedBucketListItems, encodedUser, encodedToken, 
-                                                    decodedBucketListItems, decodedUser, decodedToken,
-                                                    userToReturn, bucketListItemToReturn, decodedBucketListItemsArray,
+            UpsertBucketListItem_HappyPathTest_SetUps(encodedUser, encodedToken, 
+                                                    decodedUser, decodedToken,
+                                                    userToReturn, bucketListItemToReturn, 
                                                     returnValidToken);
 
-            var response = this.service.UpsertBucketListItem(encodedBucketListItems, encodedUser, encodedToken);
+            var response = this.service.UpsertBucketListItem(bucketListItemToReturn, encodedUser, encodedToken);
             Assert.IsTrue(returnValidToken ? response == true : response == false);
 
-            UpsertBucketListItem_HappyPathTest_Asserts(encodedBucketListItems, encodedUser, encodedToken,
+            UpsertBucketListItem_HappyPathTest_Asserts(encodedUser, encodedToken,
                                                         decodedUser, decodedToken, userToReturn,
-                                                        decodedBucketListItemsArray, bucketListItemToReturn,
+                                                        bucketListItemToReturn,
                                                         returnValidToken);
         }
         
         private void UpsertBucketListItem_HappyPathTest_SetUps
         (
-            string encodedBucketListItems,
             string encodedUser,
             string encodedToken,
-            string decodedBucketListItems,
             string decodedUser,
             string decodedToken,
             User userToReturn,
             BucketListItem bucketListItemToReturn,
-            string[] bucketListItemArray,
             bool returnValidToken
-        )
-        {
-            this.mockString.Setup(x => x.DecodeBase64String
-                         (It.Is<string>(s => s == encodedBucketListItems)))
-                             .Returns(decodedBucketListItems);
+        ) {
             this.mockString.Setup(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUser)))
                             .Returns(decodedUser);
@@ -81,28 +67,18 @@ namespace TestAPINetCore_Unit
                         (It.Is<User>(s => s.Email == userToReturn.Email),
                                             It.Is<string>(s => s == decodedToken)))
                                                  .Returns(returnValidToken);
-
-            this.mockConversion.Setup(x => x.GetBucketListItem
-                        (It.Is<string[]>(s => s[0] == bucketListItemArray[0])))
-                                                 .Returns(bucketListItemToReturn);
         }
 
         private void UpsertBucketListItem_HappyPathTest_Asserts
         (
-            string encodedBucketListItems,
             string encodedUser,
             string encodedToken,
             string decodedUserNameToReturn,
             string decodedTokenToReturn,
             User userToReturn,
-            string[] bucketListItemArray,
             BucketListItem bucketListItem, 
             bool expectingValidTokenResponse
-        ) {
-           
-            this.mockString.Verify(x => x.DecodeBase64String
-                        (It.Is<string>(s => s == encodedBucketListItems))
-                            , Times.Once);
+        ) {           
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUser))
                             , Times.Once); 
@@ -121,10 +97,6 @@ namespace TestAPINetCore_Unit
 
             if (expectingValidTokenResponse)
             {
-                this.mockConversion.Verify(x => x.GetBucketListItem
-                            (It.Is<string[]>(s => s[0] == bucketListItemArray[0]))
-                                                , Times.Once);
-
                 this.mockBucketListData.Verify(x => x.UpsertBucketListItem
                               (It.Is<BucketListItem>(s => s.Name == bucketListItem.Name),
                                 It.Is<string>(s => s == decodedUserNameToReturn))
@@ -132,10 +104,6 @@ namespace TestAPINetCore_Unit
             } 
             else
             {
-                this.mockConversion.Verify(x => x.GetBucketListItem
-                            (It.Is<string[]>(s => s[0] == bucketListItemArray[0]))
-                                                , Times.Never);
-
                 this.mockBucketListData.Verify(x => x.UpsertBucketListItem
                               (It.Is<BucketListItem>(s => s.Name == bucketListItem.Name),
                                 It.Is<string>(s => s == decodedUserNameToReturn))

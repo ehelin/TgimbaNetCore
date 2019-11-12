@@ -1,8 +1,7 @@
 using System;
+using BLLNetCore.helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
-using BLLNetCore.helpers;
-using Shared.dto;
 
 namespace TestAPINetCore_Unit.helpers
 {
@@ -14,33 +13,6 @@ namespace TestAPINetCore_Unit.helpers
         public ConversionHelperTests() {
             sut = new ConversionHelper();
         }
-
-        // TODO - add test for GetBucketListItem(arg)
-
-        #region GetBucketListItem(arg)
-
-        [TestMethod]
-        public void GetBucketListItem_HappyPath()
-        {
-            var userName = "IAmAUserName";
-            var bucketListName = "IAmABucketListName";
-            var dbIdStr = "22";
-            var bucketListItem = GetBucketListItem(userName, bucketListName, dbIdStr, true);
-            var result = sut.GetBucketListItem(bucketListItem);
-
-            Assert.IsNotNull(result); 
-            Assert.IsInstanceOfType(result, typeof(BucketListItem));
-
-            Assert.AreEqual(bucketListName, result.Name);
-            Assert.AreEqual(DateTime.Parse("12/15/2010"), result.Created);
-            Assert.AreEqual("Hot", result.Category);
-            Assert.AreEqual(true, result.Achieved);
-            Assert.AreEqual((decimal)123.333, result.Latitude);
-            Assert.AreEqual((decimal)555.1345, result.Longitude);
-            Assert.AreEqual(22, result.Id);
-        }
-
-        #endregion
 
         #region GetSafeBool(val)
 

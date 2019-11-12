@@ -130,25 +130,19 @@ namespace APINetCore
             return bucketListItems;
         }
 
-        public bool UpsertBucketListItem(string encodedBucketListItems, string encodedUser, string encodedToken)
+        public bool UpsertBucketListItem(BucketListItem bucketListItem, string encodedUser, string encodedToken)
         {
             // TODO - handle demo user at client so they cannot upsert values
             bool goodUpsert = false;
 
-            string decodedBucketListItems = this.stringHelper.DecodeBase64String(encodedBucketListItems);
             string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
             string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
-
-            decodedBucketListItems = decodedBucketListItems.Trim(',');
-            decodedBucketListItems = decodedBucketListItems.Trim(';');
-            string[] bucketListItemArray = decodedBucketListItems.Split(',');
 
             var user = this.bucketListData.GetUser(decodedUserName);
             var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
 
             if (validToken)
             {
-                var bucketListItem = this.conversionHelper.GetBucketListItem(bucketListItemArray);
                 this.bucketListData.UpsertBucketListItem(bucketListItem, decodedUserName);
                 goodUpsert = true;
             }          

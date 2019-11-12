@@ -1,37 +1,11 @@
 ﻿using System;
-using Shared.dto;
 using Shared.interfaces;
-using Shared;
 
 namespace BLLNetCore.helpers
 {
     public class ConversionHelper : IConversion
     {
-        public BucketListItem GetBucketListItem(string[] bucketListItemArray)
-        {
-            BucketListItem bucketListItem = null;
-
-            // TODO - remove username from string[]...we apparently do not need it
-            if (bucketListItemArray != null && bucketListItemArray.Length == Constants.BUCKET_LIST_ITEM_STANDARD_ARRAY_SIZE)  
-            {
-                bucketListItem = new BucketListItem();
-
-                bucketListItem.Name = bucketListItemArray[0];
-                bucketListItem.Created = this.GetSafeDateTime(bucketListItemArray[1]);      //date
-                bucketListItem.Category = bucketListItemArray[2];
-                
-                if (!string.IsNullOrEmpty(bucketListItemArray[3]) && bucketListItemArray[3].Equals("1"))
-                    bucketListItem.Achieved = true;
-
-                bucketListItem.Latitude = this.GetSafeDecimal(bucketListItemArray[4]);
-                bucketListItem.Longitude = this.GetSafeDecimal(bucketListItemArray[5]);
-
-                if (!string.IsNullOrEmpty(bucketListItemArray[6]))
-                    bucketListItem.Id = this.GetSafeInt(bucketListItemArray[6]);
-            }
-
-            return bucketListItem;
-        }
+        // TODO - decide if we need these conversion methods...without string arrays, I think we many not...
         public bool GetSafeBool(object val)
         {
             bool result = false;
