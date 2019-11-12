@@ -10,8 +10,10 @@ namespace TestAPINetCore_Unit
     {
         #region ProcessUser(args)
 
-        [TestMethod]
-        public void ProcessUser_HappyPathTest()
+        [DataTestMethod]
+        [DataRow(true)]         // token is returned by generator helper
+        [DataRow(false)]        // token is not returned by generator helper (only covers null...not empty string)
+        public void ProcessUser_HappyPathTest(bool tokenIsGenerated)
         {
             var encodedUserName = "base64=>userName";
             var encodedPassword = "base64=>password";
@@ -28,7 +30,8 @@ namespace TestAPINetCore_Unit
 
             ProcessUser_HappyPathTest_SetUps(encodedUserName, encodedPassword, decodedUserNameToReturn,
                                               decodedPasswordToReturn, userToReturn, jwtPrivateKeyToReturn, 
-                                              jwtIssuerToReturn, hashPasswordDtoToReturn, jwtTokenToReturn);
+                                              jwtIssuerToReturn, hashPasswordDtoToReturn, jwtTokenToReturn,
+                                              tokenIsGenerated);
 
             var token = this.service.ProcessUser(encodedUserName, encodedPassword);
            
@@ -38,7 +41,7 @@ namespace TestAPINetCore_Unit
 
             ProcessUser_HappyPathTest_Asserts(token, encodedUserName, encodedPassword, decodedUserNameToReturn,
                                                decodedPasswordToReturn, jwtPrivateKeyToReturn, jwtIssuerToReturn,
-                                                userToReturn);
+                                                userToReturn, tokenIsGenerated);
         }
 
         [TestMethod]
@@ -117,7 +120,8 @@ namespace TestAPINetCore_Unit
             string jwtPrivateKeyToReturn,
             string jwtIssuerToReturn,
             Password hashPasswordDtoToReturn, 
-            string jwtTokenToReturn
+            string jwtTokenToReturn, 
+            bool tokenIsGenerated
         ) 
         {
             this.mockString.Setup(x => x.DecodeBase64String
@@ -134,7 +138,7 @@ namespace TestAPINetCore_Unit
             this.mockGenerator.Setup(x => x.GetJwtToken(It.Is<string>(s => s == jwtPrivateKeyToReturn),
                                                                It.Is<string>(s => s == jwtIssuerToReturn)
                                                                 , It.Is<int>(s => s == Constants.TOKEN_LIFE)))
-                                                                    .Returns(jwtTokenToReturn);
+                                                                    .Returns(tokenIsGenerated ? jwtTokenToReturn : null);
             this.mockPassword.Setup(x => x.PasswordsMatch
                         (It.Is<Password>(s => s.GetPassword() == decodedPasswordToReturn
                                                 && s.Salt == userToReturn.Salt),
@@ -154,11 +158,9 @@ namespace TestAPINetCore_Unit
             string decodedPasswordToReturn,
             string jwtPrivateKeyToReturn,
             string jwtIssuerToReturn,
-            User user
+            User user, 
+            bool tokenIsGenerated
         ) {
-            Assert.IsNotNull(token);
-            Assert.IsTrue(token.Length > 0);
-
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUserName))
                             , Times.Once);
@@ -181,6 +183,21 @@ namespace TestAPINetCore_Unit
                                             It.Is<string>(s => s == jwtIssuerToReturn)
                                              , It.Is<int>(s => s == Constants.TOKEN_LIFE))
                                                 , Times.Once);
+
+            if (tokenIsGenerated)
+            {
+                Assert.IsNotNull(token);
+                Assert.IsTrue(token.Length > 0);
+                this.mockBucketListData.Verify(x => x.AddToken(It.Is<int>(s => s == user.UserId),
+                                                            It.Is<string>(s => s == token))
+                                                            , Times.Once);
+            } else
+            {
+                Assert.IsNull(token);
+                this.mockBucketListData.Verify(x => x.AddToken(It.Is<int>(s => s == user.UserId),
+                                                                It.Is<string>(s => s == token))
+                                                                , Times.Never);
+            }
         }
 
         #endregion

@@ -51,7 +51,6 @@ namespace APINetCore
                     var jwtIssuer = this.generatorHelper.GetJwtIssuer();
                     token = this.generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer);
 
-                    // TODO - add test step for saving the token
                     if (!string.IsNullOrEmpty(token))
                     {
                         this.bucketListData.AddToken(user.UserId, token);

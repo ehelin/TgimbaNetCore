@@ -41,8 +41,9 @@ namespace TestAPINetCore_Unit
                                                     returnValidToken);
 
             var response = this.service.UpsertBucketListItem(encodedBucketListItems, encodedUser, encodedToken);
+            Assert.IsTrue(returnValidToken ? response == true : response == false);
 
-            UpsertBucketListItem_HappyPathTest_Asserts(response, encodedBucketListItems, encodedUser, encodedToken,
+            UpsertBucketListItem_HappyPathTest_Asserts(encodedBucketListItems, encodedUser, encodedToken,
                                                         decodedUser, decodedToken, userToReturn,
                                                         decodedBucketListItemsArray, bucketListItemToReturn,
                                                         returnValidToken);
@@ -84,29 +85,10 @@ namespace TestAPINetCore_Unit
             this.mockConversion.Setup(x => x.GetBucketListItem
                         (It.Is<string[]>(s => s[0] == bucketListItemArray[0])))
                                                  .Returns(bucketListItemToReturn);
-
-            SetValidTokenReturnValue(returnValidToken);
-        }
-
-        private void SetValidTokenReturnValue(bool expectingValidTokenResponse)
-        {
-            string[] result = null;
-            result = new string[1];
-            result[0] = expectingValidTokenResponse ? Constants.TOKEN_VALID : Constants.TOKEN_IN_VALID;
-
-            if (expectingValidTokenResponse)
-            {
-                this.mockGenerator.Setup(x => x.GetValidTokenResponse()).Returns(result);
-            }
-            else
-            {
-                this.mockGenerator.Setup(x => x.GetInValidTokenResponse()).Returns(result);
-            }
         }
 
         private void UpsertBucketListItem_HappyPathTest_Asserts
         (
-            string[] token,
             string encodedBucketListItems,
             string encodedUser,
             string encodedToken,
@@ -158,33 +140,6 @@ namespace TestAPINetCore_Unit
                               (It.Is<BucketListItem>(s => s.Name == bucketListItem.Name),
                                 It.Is<string>(s => s == decodedUserNameToReturn))
                                                   , Times.Never);
-            }
-
-            ValidateToken(token, expectingValidTokenResponse);
-        }
-
-        private void ValidateToken(string[] token, bool expectingValidTokenResponse)
-        {
-            Assert.IsNotNull(token);
-            Assert.IsTrue(token.Length == 1);
-            if (expectingValidTokenResponse)
-            {
-                Assert.AreEqual(Constants.TOKEN_VALID, token[0]);
-            }
-            else
-            {
-                Assert.AreEqual(Constants.TOKEN_IN_VALID, token[0]);
-            }
-
-            if (expectingValidTokenResponse)
-            {
-                this.mockGenerator.Verify(x => x.GetValidTokenResponse(), Times.Once);
-                this.mockGenerator.Verify(x => x.GetInValidTokenResponse(), Times.Never);
-            }
-            else
-            {
-                this.mockGenerator.Verify(x => x.GetInValidTokenResponse(), Times.Once);
-                this.mockGenerator.Verify(x => x.GetValidTokenResponse(), Times.Never);
             }
         }
 

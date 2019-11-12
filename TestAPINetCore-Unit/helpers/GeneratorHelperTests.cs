@@ -53,21 +53,6 @@ namespace TestAPINetCore_Unit.helpers
             Assert.IsTrue(decodedJwtToken.Issuer == Credentials.GetJwtIssuer());
         }
 
-        [TestMethod]
-        public void GetValidTokenResponse_HappyPathTest()
-        {
-            var validTokenResponse = sut.GetValidTokenResponse();
-            Assert.IsNotNull(validTokenResponse);
-            Assert.AreEqual(Constants.TOKEN_VALID, validTokenResponse[0]);
-        }
-
-        [TestMethod]
-        public void GetInValidTokenResponse_HappyPathTest()
-        {
-            var inValidTokenResponse = sut.GetInValidTokenResponse();
-            Assert.IsNotNull(inValidTokenResponse);
-            Assert.AreEqual(Constants.TOKEN_IN_VALID, inValidTokenResponse[0]);
-        }
         #endregion
     }
 }
