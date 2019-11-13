@@ -121,9 +121,9 @@ namespace APINetCore
 
             if (validToken)
             {
-                // TODO - add method(s) to handle taking the sort string and translatting to sort column enum...AND handle asc/desc part of that
-                var sortColumn = Enums.SortColumns.ListItemName;
-                var sortAsc = true;
+                var sortColumn = this.stringHelper.GetSortColumn(decodedSortString);
+                bool? sortAscSet = this.stringHelper.HasSortOrderAsc(decodedSortString);
+                bool sortAsc = true; // TODO - decide how to handle...null, no sort order...true, asc and false desc...null may not be needed...
                 bucketListItems = this.bucketListData.GetBucketList(decodedUserName, sortColumn, sortAsc, encodedSrchString);               
             }
 
