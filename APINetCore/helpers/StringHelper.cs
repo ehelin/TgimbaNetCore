@@ -34,9 +34,9 @@ namespace BLLNetCore.helpers
         }
 
         // TODO - add test
-        public bool? HasSortOrderAsc(string sortString)
+        public bool HasSortOrderAsc(string sortString)
         {
-            bool? isAscOrder = null;
+            bool isAscOrder = false;
 
             if (!string.IsNullOrEmpty(sortString))
             {
@@ -46,10 +46,6 @@ namespace BLLNetCore.helpers
                 if (sortStringToLower.IndexOf("asc") != 1)
                 {
                     isAscOrder = true;
-                }
-                else if (sortStringToLower.IndexOf("desc") != 1)
-                {
-                    isAscOrder = false;
                 }
             }
 

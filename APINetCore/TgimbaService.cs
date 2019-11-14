@@ -102,13 +102,13 @@ namespace APINetCore
             throw new NotImplementedException();
         }
 
-        // Tests to add
-        // happy path (existing records sorted asc by list name)
-        // sort asc/desc
-        // sort for each column in enum
-        // couple of search tests
-        public IList<BucketListItem> GetBucketListItems(string encodedUserName, string encodedSortString, string encodedToken, string encodedSrchString = "")
-        {
+        public IList<BucketListItem> GetBucketListItems
+        (
+            string encodedUserName, 
+            string encodedSortString, 
+            string encodedToken, 
+            string encodedSrchString = ""
+        ) {
             IList <BucketListItem> bucketListItems = null;
 
             string decodedUserName = this.stringHelper.DecodeBase64String(encodedUserName);
@@ -121,10 +121,16 @@ namespace APINetCore
 
             if (validToken)
             {
-                var sortColumn = this.stringHelper.GetSortColumn(decodedSortString);
-                bool? sortAscSet = this.stringHelper.HasSortOrderAsc(decodedSortString);
-                bool sortAsc = true; // TODO - decide how to handle...null, no sort order...true, asc and false desc...null may not be needed...
-                bucketListItems = this.bucketListData.GetBucketList(decodedUserName, sortColumn, sortAsc, encodedSrchString);               
+                Enums.SortColumns? sortColumn = null;
+                bool sortAsc = false;
+
+                if (!string.IsNullOrEmpty(decodedSortString))
+                {
+                    sortColumn = this.stringHelper.GetSortColumn(decodedSortString);
+                    sortAsc = this.stringHelper.HasSortOrderAsc(decodedSortString);
+                }
+               
+                bucketListItems = this.bucketListData.GetBucketList(decodedUserName, sortColumn, sortAsc, decodedSrchString);               
             }
 
             return bucketListItems;

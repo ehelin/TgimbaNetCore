@@ -22,11 +22,7 @@ namespace TestAPINetCore_Unit
             var decodedUser = "username";
             var decodedToken = "token";
             var bucketListItemToReturn = GetBucketListItemObject();
-
-            var salt = "IAmAReallyLongSaltValueToComplicateAPassword";
-            var hashedUserPassword = "0W32zG7AdYwR1e3pgZbupRZjvuXOmNhOJcY/B8rm77L23knzTsDD4EeZS6ll5UjbMJUzTmrLNEJmnC07/jCthA2XVBBre1C3LYEo2dhi0s2f4CAWYMW9YT9tC8rcfpyp5FWSH2DAe/kdD3h/qXrrA8utTRD54au09a1heocVCdrZJdwkDXHMnGtLj40nRs8dnGRpKB1Xe9fuDmWLfWSdjRiSr/lWG+v1fMk+LYq51GF44RYL6QofcebRVolAetAkOabFGvLzaUuo5p77RXehNRHUWbT01pFZWrzEYAksNCBFqaXsbUxK488J+/o9MF3XySKBAPoHz/tG6w==";
-            var userToReturn = GetUser(1, decodedUser, hashedUserPassword, salt);
-            userToReturn.Token = decodedToken;
+            var userToReturn = GetUser(decodedUser, decodedToken);
 
             UpsertBucketListItem_HappyPathTest_SetUps(encodedUser, encodedToken, 
                                                     decodedUser, decodedToken,
@@ -109,6 +105,126 @@ namespace TestAPINetCore_Unit
                                 It.Is<string>(s => s == decodedUserNameToReturn))
                                                   , Times.Never);
             }
+        }
+
+        #endregion
+
+        #region GetBucketListItems(args)
+
+        // TODO - complete happy path test
+        // TODO - Tests to add
+        // happy path (existing records sorted asc by list name)
+        // sort asc/desc
+        // sort for each column in enum
+        // couple of search tests
+        [TestMethod]
+        public void GetBucketListItems_HappyPathTest()
+        {
+            var encodedUser = "base64=>username";
+            var encodedSortString = "base64=>sortString";
+            var encodedToken = "base64=>token";
+            var encodedSrchString = "base64=>srchString";
+            var decodedUserToReturn = "username";
+            var decodedSortStringToReturn = "sortString";
+            var decodedTokenToReturn = "token";
+            var decodedSrchStringToReturn = "srchString";
+            var userToReturn = GetUser(decodedUserToReturn, decodedTokenToReturn);
+
+            GetBucketListItems_HappyPathTest_SetUps(encodedUser, encodedSortString, encodedToken, encodedSrchString,
+                                                    decodedUserToReturn, decodedSortStringToReturn, 
+                                                    decodedTokenToReturn, decodedSrchStringToReturn,
+                                                    userToReturn);
+
+            var response = this.service.GetBucketListItems(encodedUser, encodedSortString, encodedToken, encodedSrchString);
+            
+            // TODO - assert response
+            
+            GetBucketListItems_HappyPathTest_Asserts(encodedUser, encodedSortString, encodedToken, 
+                                                     encodedSrchString, decodedUserToReturn,
+                                                     decodedTokenToReturn, userToReturn);
+        }
+
+        private void GetBucketListItems_HappyPathTest_SetUps
+        (
+            string encodedUser,
+            string encodedSortString,
+            string encodedToken,
+            string encodedSrchString,
+            string decodedUserToReturn,
+            string decodedSortStringToReturn,
+            string decodedTokenToReturn,
+            string decodedSrchStringToReturn,
+            User userToReturn
+        ) {
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedUser)))
+                            .Returns(decodedUserToReturn);
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedSortString)))
+                            .Returns(decodedSortStringToReturn);
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedToken)))
+                            .Returns(decodedTokenToReturn);
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedSrchString)))
+                            .Returns(decodedSrchStringToReturn);
+
+            this.mockBucketListData.Setup(x => x.GetUser
+                        (It.Is<string>(s => s == decodedUserToReturn)))
+                            .Returns(userToReturn);
+
+            this.mockPassword.Setup(x => x.IsValidToken
+                        (It.Is<User>(s => s.Email == userToReturn.Email),
+                                            It.Is<string>(s => s == decodedTokenToReturn)))
+                                                 .Returns(true);
+        }
+
+        private void GetBucketListItems_HappyPathTest_Asserts
+        (
+            string encodedUser,
+            string encodedSortString,
+            string encodedToken,
+            string encodedSrchString,
+            string decodedUserNameToReturn,
+            string decodedTokenToReturn,
+            User userToReturn
+        ) {
+            this.mockString.Verify(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedUser))
+                            , Times.Once);
+            this.mockString.Verify(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedSortString))
+                            , Times.Once);
+            this.mockString.Verify(x => x.DecodeBase64String
+                (It.Is<string>(s => s == encodedToken))
+                    , Times.Once);
+            this.mockString.Verify(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedSrchString))
+                            , Times.Once);
+
+            this.mockBucketListData.Verify(x => x.GetUser
+                       (It.Is<string>(s => s == decodedUserNameToReturn))
+                           , Times.Once);
+
+            this.mockPassword.Verify(x => x.IsValidToken
+                        (It.Is<User>(s => s.Email == userToReturn.Email),
+                                            It.Is<string>(s => s == decodedTokenToReturn))
+                                            , Times.Once);
+        }
+
+        #endregion
+
+        #region Private
+
+        // TODO - move to base class? consolidate w/other methods?
+        private User GetUser(string decodedUser, string decodedToken)
+        {
+            var salt = "IAmAReallyLongSaltValueToComplicateAPassword";
+            var hashedUserPassword = "0W32zG7AdYwR1e3pgZbupRZjvuXOmNhOJcY/B8rm77L23knzTsDD4EeZS6ll5UjbMJUzTmrLNEJmnC07/jCthA2XVBBre1C3LYEo2dhi0s2f4CAWYMW9YT9tC8rcfpyp5FWSH2DAe/kdD3h/qXrrA8utTRD54au09a1heocVCdrZJdwkDXHMnGtLj40nRs8dnGRpKB1Xe9fuDmWLfWSdjRiSr/lWG+v1fMk+LYq51GF44RYL6QofcebRVolAetAkOabFGvLzaUuo5p77RXehNRHUWbT01pFZWrzEYAksNCBFqaXsbUxK488J+/o9MF3XySKBAPoHz/tG6w==";
+            var userToReturn = GetUser(1, decodedUser, hashedUserPassword, salt);
+            userToReturn.Token = decodedToken;
+
+            return userToReturn;
         }
 
         #endregion
