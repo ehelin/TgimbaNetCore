@@ -1,9 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Shared;
 using Shared.dto;
-using Shared.interfaces;
-using BLLNetCore.helpers;
+using Shared.misc;
+using System.Collections.Generic;
 
 namespace TestAPINetCore_Unit
 {
@@ -111,37 +110,41 @@ namespace TestAPINetCore_Unit
 
         #region GetBucketListItems(args)
 
-        // TODO - complete happy path test
         // TODO - Tests to add
         // happy path (existing records sorted asc by list name)
         // sort asc/desc
         // sort for each column in enum
         // couple of search tests
+        // one test with multiple bucket list items
         [TestMethod]
         public void GetBucketListItems_HappyPathTest()
         {
             var encodedUser = "base64=>username";
-            var encodedSortString = "base64=>sortString";
+            var encodedSortString = "base64=>order by ListItemName Desc";
             var encodedToken = "base64=>token";
             var encodedSrchString = "base64=>srchString";
             var decodedUserToReturn = "username";
-            var decodedSortStringToReturn = "sortString";
+            var decodedSortStringToReturn = "order by ListItemName Desc";
             var decodedTokenToReturn = "token";
             var decodedSrchStringToReturn = "srchString";
             var userToReturn = GetUser(decodedUserToReturn, decodedTokenToReturn);
+            var bucketListItemToReturn = GetBucketListItemObject();
+            var bucketListItems = new List<BucketListItem>();
+            bucketListItems.Add(bucketListItemToReturn);
 
             GetBucketListItems_HappyPathTest_SetUps(encodedUser, encodedSortString, encodedToken, encodedSrchString,
                                                     decodedUserToReturn, decodedSortStringToReturn, 
                                                     decodedTokenToReturn, decodedSrchStringToReturn,
-                                                    userToReturn);
+                                                    userToReturn, bucketListItems);
 
             var response = this.service.GetBucketListItems(encodedUser, encodedSortString, encodedToken, encodedSrchString);
-            
-            // TODO - assert response
+            Assert.IsNotNull(response);
+            Assert.AreEqual("Bucket list item", response[0].Name);
             
             GetBucketListItems_HappyPathTest_Asserts(encodedUser, encodedSortString, encodedToken, 
                                                      encodedSrchString, decodedUserToReturn,
-                                                     decodedTokenToReturn, userToReturn);
+                                                     decodedTokenToReturn, decodedSortStringToReturn,
+                                                     decodedSrchStringToReturn, userToReturn);
         }
 
         private void GetBucketListItems_HappyPathTest_SetUps
@@ -154,7 +157,8 @@ namespace TestAPINetCore_Unit
             string decodedSortStringToReturn,
             string decodedTokenToReturn,
             string decodedSrchStringToReturn,
-            User userToReturn
+            User userToReturn,
+            IList<BucketListItem> bucketListItemsToReturn
         ) {
             this.mockString.Setup(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUser)))
@@ -172,11 +176,24 @@ namespace TestAPINetCore_Unit
             this.mockBucketListData.Setup(x => x.GetUser
                         (It.Is<string>(s => s == decodedUserToReturn)))
                             .Returns(userToReturn);
+            this.mockBucketListData.Setup(x => x.GetBucketList
+                        (It.Is<string>(s => s == decodedUserToReturn),
+                        It.Is<Enums.SortColumns>(s => s == Enums.SortColumns.ListItemName),
+                        It.Is<bool>(s => s == false),
+                        It.Is<string>(s => s == decodedSrchStringToReturn)))
+                            .Returns(bucketListItemsToReturn);
 
             this.mockPassword.Setup(x => x.IsValidToken
                         (It.Is<User>(s => s.Email == userToReturn.Email),
                                             It.Is<string>(s => s == decodedTokenToReturn)))
                                                  .Returns(true);
+
+            this.mockString.Setup(x => x.GetSortColumn
+                        (It.Is<string>(s => s == decodedSortStringToReturn)))
+                            .Returns(Enums.SortColumns.ListItemName);
+            this.mockString.Setup(x => x.HasSortOrderAsc
+                        (It.Is<string>(s => s == decodedSortStringToReturn)))
+                            .Returns(false);
         }
 
         private void GetBucketListItems_HappyPathTest_Asserts
@@ -187,6 +204,8 @@ namespace TestAPINetCore_Unit
             string encodedSrchString,
             string decodedUserNameToReturn,
             string decodedTokenToReturn,
+            string decodedSortStringToReturn,
+            string decodedSrchStringToReturn,
             User userToReturn
         ) {
             this.mockString.Verify(x => x.DecodeBase64String
@@ -205,10 +224,23 @@ namespace TestAPINetCore_Unit
             this.mockBucketListData.Verify(x => x.GetUser
                        (It.Is<string>(s => s == decodedUserNameToReturn))
                            , Times.Once);
+            this.mockBucketListData.Verify(x => x.GetBucketList
+                        (It.Is<string>(s => s == decodedUserNameToReturn),
+                        It.Is<Enums.SortColumns>(s => s == Enums.SortColumns.ListItemName),
+                        It.Is<bool>(s => s == false),
+                        It.Is<string>(s => s == decodedSrchStringToReturn))
+                            , Times.Once);
 
             this.mockPassword.Verify(x => x.IsValidToken
                         (It.Is<User>(s => s.Email == userToReturn.Email),
                                             It.Is<string>(s => s == decodedTokenToReturn))
+                                            , Times.Once);
+
+            this.mockString.Verify(x => x.GetSortColumn
+                        (It.Is<string>(s => s == decodedSortStringToReturn))
+                                            , Times.Once);
+            this.mockString.Verify(x => x.HasSortOrderAsc
+                        (It.Is<string>(s => s == decodedSortStringToReturn))
                                             , Times.Once);
         }
 
