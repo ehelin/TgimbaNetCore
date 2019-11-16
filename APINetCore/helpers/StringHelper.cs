@@ -33,7 +33,6 @@ namespace BLLNetCore.helpers
             return encodedString;
         }
 
-        // TODO - add test
         public bool HasSortOrderAsc(string sortString)
         {
             bool isAscOrder = false;
@@ -42,8 +41,7 @@ namespace BLLNetCore.helpers
             {
                 var sortStringToLower = GetLowerCaseSortString(sortString);
 
-                // TODO - make asc/desc a constant
-                if (sortStringToLower.IndexOf("asc") != 1)
+                if (sortStringToLower.IndexOf("asc") != -1)
                 {
                     isAscOrder = true;
                 }
@@ -52,7 +50,6 @@ namespace BLLNetCore.helpers
             return isAscOrder;
         }
 
-        // TODO - add test
         public string GetLowerCaseSortString(string sortString)
         {
             var sortStringToLower = string.Empty;
@@ -66,37 +63,30 @@ namespace BLLNetCore.helpers
         }
 
         // TODO - add test
-        public Enums.SortColumns? GetSortColumn(string sortString)
+        public Enums.SortColumns GetSortColumn(string sortString)
         {
-            Enums.SortColumns? sortColumn = null;
+            var sortStringToLower = GetLowerCaseSortString(sortString);
 
-            if (!string.IsNullOrEmpty(sortString))
+            if (sortStringToLower.IndexOf(Enums.SortColumns.ListItemName.ToString().ToLower()) != -1)
             {
-                var sortStringToLower = sortString.ToLower();
-
-                if (sortStringToLower.IndexOf(Enums.SortColumns.ListItemName.ToString().ToLower()) != -1)
-                {
-                    sortColumn = Enums.SortColumns.ListItemName;
-                }
-                else if (sortStringToLower.IndexOf(Enums.SortColumns.Created.ToString().ToLower()) != -1)
-                {
-                    sortColumn = Enums.SortColumns.Created;
-                }
-                else if (sortStringToLower.IndexOf(Enums.SortColumns.Category.ToString().ToLower()) != -1)
-                {
-                    sortColumn = Enums.SortColumns.Category;
-                }
-                else if (sortStringToLower.IndexOf(Enums.SortColumns.Achieved.ToString().ToLower()) != -1)
-                {
-                    sortColumn = Enums.SortColumns.Achieved;
-                }
-                else
-                {
-                    throw new ArgumentException("Unknown sort string - " + sortString);
-                }
+                return Enums.SortColumns.ListItemName;
             }
-
-            return sortColumn;
+            else if (sortStringToLower.IndexOf(Enums.SortColumns.Created.ToString().ToLower()) != -1)
+            {
+                return Enums.SortColumns.Created;
+            }
+            else if (sortStringToLower.IndexOf(Enums.SortColumns.Category.ToString().ToLower()) != -1)
+            {
+                return Enums.SortColumns.Category;
+            }
+            else if (sortStringToLower.IndexOf(Enums.SortColumns.Achieved.ToString().ToLower()) != -1)
+            {
+                return Enums.SortColumns.Achieved;
+            }
+            else
+            {
+                throw new ArgumentException("Unknown sort string - " + sortString);
+            }
         }
     }
 }

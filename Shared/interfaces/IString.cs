@@ -8,6 +8,6 @@ namespace Shared.interfaces
         string EncodeBase64String(string val);
         bool HasSortOrderAsc(string sortString);
         string GetLowerCaseSortString(string sortString);
-        Enums.SortColumns? GetSortColumn(string sortString);
+        Enums.SortColumns GetSortColumn(string sortString);
     }
 }
