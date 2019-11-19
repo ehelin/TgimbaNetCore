@@ -99,7 +99,21 @@ namespace APINetCore
 
         public bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken)
         {
-            throw new NotImplementedException();
+            bool bucketListItemDeleted = false;
+
+            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
+            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
+
+            var user = this.bucketListData.GetUser(decodedUserName);
+            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
+
+            if (validToken)
+            {
+                this.bucketListData.DeleteBucketListItem(bucketListDbId);
+                bucketListItemDeleted = true;
+            }
+
+            return bucketListItemDeleted;
         }
 
         public IList<BucketListItem> GetBucketListItems

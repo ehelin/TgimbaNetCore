@@ -9,6 +9,107 @@ namespace TestAPINetCore_Unit
     [TestClass]
     public class BucketListTests : BaseTest
     {
+        #region DeletetBucketListItem(args)
+
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void DeletetBucketListItem_HappyPathTest(bool returnValidToken)
+        {
+            var encodedUser = "base64=>username";
+            var encodedToken = "base64=>token";
+            var decodedUser = "username";
+            var decodedToken = "token";
+            var bucketListItemToReturn = GetBucketListItemObject();
+            var userToReturn = GetUser(decodedUser, decodedToken);
+            var dbBucketListItemId = 3;
+
+            DeletetBucketListItem_HappyPathTest_SetUps(encodedUser, encodedToken,
+                                                    decodedUser, decodedToken,
+                                                    userToReturn, bucketListItemToReturn,
+                                                    returnValidToken);
+
+            var response = this.service.DeleteBucketListItem(dbBucketListItemId, encodedUser, encodedToken);
+            Assert.IsTrue(returnValidToken ? response == true : response == false);
+
+            DeletetBucketListItem_HappyPathTest_Asserts(encodedUser, encodedToken,
+                                                        decodedUser, decodedToken, userToReturn,
+                                                        bucketListItemToReturn,
+                                                        returnValidToken, dbBucketListItemId);
+        }
+
+        private void DeletetBucketListItem_HappyPathTest_SetUps
+        (
+            string encodedUser,
+            string encodedToken,
+            string decodedUser,
+            string decodedToken,
+            User userToReturn,
+            BucketListItem bucketListItemToReturn,
+            bool returnValidToken
+        )
+        {
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedUser)))
+                            .Returns(decodedUser);
+            this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedToken)))
+                            .Returns(decodedToken);
+
+            this.mockBucketListData.Setup(x => x.GetUser
+                        (It.Is<string>(s => s == decodedUser)))
+                            .Returns(userToReturn);
+
+            this.mockPassword.Setup(x => x.IsValidToken
+                        (It.Is<User>(s => s.Email == userToReturn.Email),
+                                            It.Is<string>(s => s == decodedToken)))
+                                                 .Returns(returnValidToken);
+        }
+
+        private void DeletetBucketListItem_HappyPathTest_Asserts
+        (
+            string encodedUser,
+            string encodedToken,
+            string decodedUserNameToReturn,
+            string decodedTokenToReturn,
+            User userToReturn,
+            BucketListItem bucketListItem,
+            bool expectingValidTokenResponse,
+            int dbBucketListItemId
+        )
+        {
+            this.mockString.Verify(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedUser))
+                            , Times.Once);
+            this.mockString.Verify(x => x.DecodeBase64String
+                (It.Is<string>(s => s == encodedToken))
+                    , Times.Once);
+
+            this.mockBucketListData.Verify(x => x.GetUser
+                       (It.Is<string>(s => s == decodedUserNameToReturn))
+                           , Times.Once);
+
+            this.mockPassword.Verify(x => x.IsValidToken
+                        (It.Is<User>(s => s.Email == userToReturn.Email),
+                                            It.Is<string>(s => s == decodedTokenToReturn))
+                                            , Times.Once);
+
+            if (expectingValidTokenResponse)
+            {
+                this.mockBucketListData.Verify(x => x.DeleteBucketListItem
+                              (It.Is<int>(s => s == dbBucketListItemId))
+                                                  , Times.Once);
+            }
+            else
+            {
+                this.mockBucketListData.Verify(x => x.DeleteBucketListItem
+                              (It.Is<int>(s => s == dbBucketListItemId))
+                                                  , Times.Never);
+            }
+        }
+
+        #endregion
+
         #region UpsertBucketListItem(args)
 
         [DataTestMethod]
