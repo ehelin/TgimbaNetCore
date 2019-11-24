@@ -7,7 +7,7 @@ using Shared;
 using Shared.dto;
 using Shared.interfaces;
 
-namespace BLLNetCore.Security
+namespace BLLNetCore.Security // TODO - change namespace to BLLNetCore.helpers
 {
     public class PasswordHelper : IPassword
     {

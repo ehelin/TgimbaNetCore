@@ -10,6 +10,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
+using Shared.interfaces;
+using APINetCore;
+using DALNetCore;
+using DALNetCore.helpers;
+using DALNetCore.interfaces;
+using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
+using BLLNetCore.helpers;
 
 namespace HttpAPINetCore
 {
@@ -25,7 +33,30 @@ namespace HttpAPINetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IUserHelper userHelper = new UserHelper();
+            BucketListContext context = new BucketListContext();
+            IBucketListData bucketListData = new BucketListData(context, userHelper);
+            IPassword passwordHelper = new PasswordHelper();
+            IGenerator generatorHelper = new GeneratorHelper();
+            IString stringHelper = new StringHelper();
+            IConversion conversionHelper = new ConversionHelper();
+            ITgimbaService service = new TgimbaService(bucketListData, passwordHelper, 
+                                                        generatorHelper, stringHelper, 
+                                                        conversionHelper);
+
+            services.AddSingleton<ITgimbaService>(service);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info
+            //    {
+            //        Version = "v1",
+            //        Title = "My API",
+            //        Description = "My First ASP.NET Core Web API",
+            //        TermsOfService = "None",
+            //        Contact = new Contact() { Name = "Talking Dotnet", Email = "contact@talkingdotnet.com", Url = "www.talkingdotnet.com" }
+            //    });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +74,12 @@ namespace HttpAPINetCore
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            //});
         }
     }
 }

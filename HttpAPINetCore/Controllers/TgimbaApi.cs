@@ -2,6 +2,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Shared.interfaces;
+using Shared.dto.api;
 
 namespace HttpAPINetCore.Controllers
 {
@@ -19,33 +20,32 @@ namespace HttpAPINetCore.Controllers
         #region User
 
         [HttpPost]
-        public IActionResult ProcessUserRegistration
-        (
-            [FromBody]string encodedUser, 
-            [FromBody]string encodedEmail, 
-            [FromBody]string encodedPass
-        ){
+        public IActionResult ProcessUserRegistration([FromBody] Registration registration)
+        {
             bool isBadRequest = false;
 
+            // TODO - add test for null registration
             try
             {
-                if (string.IsNullOrEmpty(encodedUser))
+                if (string.IsNullOrEmpty(registration.encodedUser))
                 {
                     isBadRequest = true;
                     throw new ArgumentNullException("encodedUser is null or empty");
                 }
-                else if (string.IsNullOrEmpty(encodedEmail))
+                else if (string.IsNullOrEmpty(registration.encodedEmail))
                 {
                     isBadRequest = true;
                     throw new ArgumentNullException("encodedEmail is null or empty");
                 }
-                else if (string.IsNullOrEmpty(encodedPass))
+                else if (string.IsNullOrEmpty(registration.encodedPass))
                 {
                     isBadRequest = true;
                     throw new ArgumentNullException("encodedPass is null or empty");
                 }
 
-                var userRegistered = this.service.ProcessUserRegistration(encodedUser, encodedEmail, encodedPass);
+                var userRegistered = this.service.ProcessUserRegistration(registration.encodedUser,
+                                                                            registration.encodedEmail, 
+                                                                            registration.encodedPass);
 
                 return Ok(userRegistered); // 200
             }
@@ -56,24 +56,25 @@ namespace HttpAPINetCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProcessUser([FromBody]string encodedUser, [FromBody]string encodedPass)
+        public IActionResult ProcessUser([FromBody] Login login)
         {
             bool isBadRequest = false;
 
+            // TODO - add test for null login
             try
             {
-                if (string.IsNullOrEmpty(encodedUser))
+                if (string.IsNullOrEmpty(login.encodedUser))
                 {
                     isBadRequest = true;
                     throw new ArgumentNullException("encodedUser is null or empty");
                 }
-                else if (string.IsNullOrEmpty(encodedPass))
+                else if (string.IsNullOrEmpty(login.encodedPass))
                 {
                     isBadRequest = true;
                     throw new ArgumentNullException("encodedPass is null or empty");
                 }
 
-                var token = this.service.ProcessUser(encodedUser, encodedPass);
+                var token = this.service.ProcessUser(login.encodedUser, login.encodedPass);
 
                 return Ok(token); // 200
             }
@@ -155,6 +156,7 @@ namespace HttpAPINetCore.Controllers
         }
         
         [HttpGet]
+        [Route("test")]
         public IActionResult GetTestResult()
         {
             try

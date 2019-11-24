@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Shared;
 using Shared.interfaces;
 
-namespace BLLNetCore.Security
+namespace BLLNetCore.Security // TODO - change namespace to BLLNetCore.helpers
 {
     public class GeneratorHelper : IGenerator
     {
