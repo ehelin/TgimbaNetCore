@@ -97,8 +97,12 @@ namespace APINetCore
 
         #region BucketList
 
-        public bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken)
-        {
+        public bool DeleteBucketListItem
+        (
+            int bucketListDbId, 
+            string encodedUser, 
+            string encodedToken
+        ) {
             bool bucketListItemDeleted = false;
 
             string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
@@ -150,8 +154,12 @@ namespace APINetCore
             return bucketListItems;
         }
 
-        public bool UpsertBucketListItem(BucketListItem bucketListItem, string encodedUser, string encodedToken)
-        {
+        public bool UpsertBucketListItem
+        (
+            BucketListItem bucketListItem, 
+            string encodedUser, 
+            string encodedToken
+        ) {
             // TODO - handle demo user at client so they cannot upsert values
             bool goodUpsert = false;
 

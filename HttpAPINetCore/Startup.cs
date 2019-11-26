@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
-using Shared.interfaces;
+﻿using System.Linq;
 using APINetCore;
+using BLLNetCore.helpers;
+using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
 using DALNetCore;
 using DALNetCore.helpers;
 using DALNetCore.interfaces;
-using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
-using BLLNetCore.helpers;
+using HttpAPINetCore.helpers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.interfaces;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace HttpAPINetCore
 {
@@ -45,6 +40,7 @@ namespace HttpAPINetCore
                                                         conversionHelper);
 
             services.AddSingleton<ITgimbaService>(service);
+            services.AddSingleton<IValidationHelper>(new ValidateHelper());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {

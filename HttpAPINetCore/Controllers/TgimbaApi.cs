@@ -11,83 +11,115 @@ namespace HttpAPINetCore.Controllers
     public class TgimbaApiController : ControllerBase
     {
         private ITgimbaService service = null;
+        private IValidationHelper validationHelper = null;
 
-        public TgimbaApiController(ITgimbaService service) 
+        public TgimbaApiController(ITgimbaService service, IValidationHelper validationHelper) 
         {
             this.service = service;
+            this.validationHelper = validationHelper;
         }
 
         #region User
 
         [HttpPost("processuserregistration")]
-        public IActionResult ProcessUserRegistration([FromBody] Registration registration)
+        public IActionResult ProcessUserRegistration([FromBody] RegistrationRequest request)
         {
-            bool isBadRequest = false;
-
             try
             {
-                if (string.IsNullOrEmpty(registration.encodedUser))
-                {
-                    isBadRequest = true;
-                    throw new ArgumentNullException("encodedUser is null or empty");
-                }
-                else if (string.IsNullOrEmpty(registration.encodedEmail))
-                {
-                    isBadRequest = true;
-                    throw new ArgumentNullException("encodedEmail is null or empty");
-                }
-                else if (string.IsNullOrEmpty(registration.encodedPass))
-                {
-                    isBadRequest = true;
-                    throw new ArgumentNullException("encodedPass is null or empty");
-                }
+                this.validationHelper.IsValidRequest(request);
 
-                var userRegistered = this.service.ProcessUserRegistration(registration.encodedUser,
-                                                                            registration.encodedEmail, 
-                                                                            registration.encodedPass);
+                var userRegistered = this.service.ProcessUserRegistration(request.Login.EncodedUserName,
+                                                                            request.EncodedEmail,
+                                                                            request.Login.EncodedPassword);
 
                 return Ok(userRegistered); // 200
             }
             catch (Exception ex)
             {
-                return this.HandleError(isBadRequest, ex);
+                return this.HandleError(ex);
             }
         }
 
         [HttpPost("processuser")]
-        public IActionResult ProcessUser([FromBody] Login login)
+        public IActionResult ProcessUser([FromBody] LoginRequest request)
         {
-            bool isBadRequest = false;
-
             try
             {
-                if (string.IsNullOrEmpty(login.encodedUser))
-                {
-                    isBadRequest = true;
-                    throw new ArgumentNullException("encodedUser is null or empty");
-                }
-                else if (string.IsNullOrEmpty(login.encodedPass))
-                {
-                    isBadRequest = true;
-                    throw new ArgumentNullException("encodedPass is null or empty");
-                }
+                this.validationHelper.IsValidRequest(request);
 
-                var token = this.service.ProcessUser(login.encodedUser, login.encodedPass);
+                var token = this.service.ProcessUser(request.EncodedUserName, request.EncodedPassword);
 
                 return Ok(token); // 200
             }
             catch (Exception ex)
             {
-                return this.HandleError(isBadRequest, ex);
+                return this.HandleError(ex);
             }
         }
-        
+
         #endregion
 
         #region Bucket List Items
 
-        // TODO - add bucket list item methods
+        // TODO - add tests for delete, get and upsert
 
+        [HttpDelete("delete")]
+        public IActionResult DeleteBucketListItem([FromBody] DeleteBucketListItemRequest request)
+        {
+            try
+            {
+                this.validationHelper.IsValidRequest(request);
+
+                var userRegistered = this.service.DeleteBucketListItem(request.BucketListItemId,
+                                                                        request.Token.EncodedUserName,
+                                                                        request.Token.EncodedToken);
+
+                return Ok(userRegistered); // 200
+            }
+            catch (Exception ex)
+            {
+                return this.HandleError(ex);
+            }
+        }
+        
+        [HttpGet("getbucketlistitems")]
+        public IActionResult GetBucketListItem([FromBody] GetBucketListItemRequest request)
+        {
+            try
+            {
+                this.validationHelper.IsValidRequest(request);
+
+                var userRegistered = this.service.GetBucketListItems(request.Token.EncodedUserName,
+                                                                        request.EncodedSortString,                                                                  
+                                                                        request.Token.EncodedToken,
+                                                                        request.EncodedSearchString);
+
+                return Ok(userRegistered); // 200
+            }
+            catch (Exception ex)
+            {
+                return this.HandleError(ex);
+            }
+        }
+
+        [HttpPost("upsert")]
+        public IActionResult UpsertBucketListItem([FromBody] UpsertBucketListItemRequest request)
+        {
+            try
+            {
+                this.validationHelper.IsValidRequest(request);
+
+                var userRegistered = this.service.UpsertBucketListItem(request.BucketListItem,
+                                                                        request.Token.EncodedUserName,
+                                                                        request.Token.EncodedToken);
+
+                return Ok(userRegistered); // 200
+            }
+            catch (Exception ex)
+            {
+                return this.HandleError(ex);
+            }
+        }
         #endregion
 
         #region Misc
@@ -189,9 +221,9 @@ namespace HttpAPINetCore.Controllers
 
         #region Private methods
 
-        private IActionResult HandleError(bool isBadRequest, Exception ex) 
+        private IActionResult HandleError(Exception ex) 
         {
-            if (isBadRequest)
+            if (ex is ArgumentNullException)
             {
                 this.service.Log("400 BadRequest - " + ex.Message);
                 return BadRequest();

@@ -21,7 +21,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var userName = "userName";
             var password = "password";
-            var login = new Login() { encodedUser  = userName, encodedPass = password };
+            var login = new LoginRequest() { encodedUser  = userName, encodedPass = password };
             var tokenToReturn = "token";
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
@@ -48,7 +48,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var login = new Login() { encodedUser = null, encodedPass = "password" };
+            var login = new LoginRequest() { encodedUser = null, encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUser(login);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -65,7 +65,7 @@ namespace TestHttpAPINetCore_Unit
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
 
-            var login = new Login() { encodedUser = "", encodedPass = "password" };
+            var login = new LoginRequest() { encodedUser = "", encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUser(login);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -81,7 +81,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var login = new Login() { encodedUser = "userName", encodedPass = null };
+            var login = new LoginRequest() { encodedUser = "userName", encodedPass = null };
 
             IActionResult result = tgimbaApi.ProcessUser(login);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -97,7 +97,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var login = new Login() { encodedUser = "userName", encodedPass = "" };
+            var login = new LoginRequest() { encodedUser = "userName", encodedPass = "" };
 
             IActionResult result = tgimbaApi.ProcessUser(login);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -116,7 +116,7 @@ namespace TestHttpAPINetCore_Unit
             tgimbaService.Setup(x => x.ProcessUser
                                 (It.IsAny<string>(), It.IsAny<string>()))
                                      .Throws(new Exception("I am an exception"));
-            var login = new Login() { encodedUser = "userName", encodedPass = "password" };
+            var login = new LoginRequest() { encodedUser = "userName", encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUser(login);
             StatusCodeResult requestResult = (StatusCodeResult)result;
@@ -139,7 +139,7 @@ namespace TestHttpAPINetCore_Unit
             var userRegisteredToReturn = true;
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var registration = new Registration() { encodedUser = userName, encodedEmail = email, encodedPass = password };
+            var registration = new RegistrationRequest() { encodedUser = userName, encodedEmail = email, encodedPass = password };
             tgimbaService.Setup(x => x.ProcessUserRegistration
                                         (It.Is<string>(s => s == userName),
                                             It.Is<string>(s => s == email),
@@ -165,7 +165,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var registration = new Registration() { encodedUser = null, encodedEmail = "email", encodedPass = "password" };
+            var registration = new RegistrationRequest() { encodedUser = null, encodedEmail = "email", encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -182,7 +182,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var login = new Login() { encodedUser = "", encodedPass = "password" };
+            var login = new LoginRequest() { encodedUser = "", encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUser(login);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -198,7 +198,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var registration = new Registration() { encodedUser = "userName", encodedEmail = null, encodedPass = "password" };
+            var registration = new RegistrationRequest() { encodedUser = "userName", encodedEmail = null, encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -215,7 +215,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var registration = new Registration() { encodedUser = "userName", encodedEmail = "", encodedPass = "password" };
+            var registration = new RegistrationRequest() { encodedUser = "userName", encodedEmail = "", encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -231,7 +231,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var registration = new Registration() { encodedUser = "userName", encodedEmail = "email", encodedPass = null };
+            var registration = new RegistrationRequest() { encodedUser = "userName", encodedEmail = "email", encodedPass = null };
 
             IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -248,7 +248,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-            var registration = new Registration() { encodedUser = "userName", encodedEmail = "email", encodedPass = "" };
+            var registration = new RegistrationRequest() { encodedUser = "userName", encodedEmail = "email", encodedPass = "" };
 
             IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -267,7 +267,7 @@ namespace TestHttpAPINetCore_Unit
             tgimbaService.Setup(x => x.ProcessUserRegistration
                                     (It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                                         .Throws(new Exception("I am an exception"));
-            var registration = new Registration() { encodedUser = "userName", encodedEmail = "email", encodedPass = "password" };
+            var registration = new RegistrationRequest() { encodedUser = "userName", encodedEmail = "email", encodedPass = "password" };
 
             IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
             StatusCodeResult requestResult = (StatusCodeResult)result;

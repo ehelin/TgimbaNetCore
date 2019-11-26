@@ -19,7 +19,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemBuildStatistics_HappyPathTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var createdDate = DateTime.UtcNow.ToString();
             var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
             systemBuildStatisticsToReturn.Add(new SystemBuildStatistic()
@@ -47,7 +48,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemBuildStatistics_NoResultNullCollection()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             List<SystemBuildStatistic> systemBuildStatisticsToReturn = null;
 
             tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
@@ -63,7 +65,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemBuildStatistics_NoResultEmptyCollection()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
 
             tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
@@ -79,7 +82,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemBuildStatistics_GeneralErrorTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.GetSystemBuildStatistics())
                             .Throws(new Exception(exception));
@@ -99,7 +103,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemStatistics_HappyPathTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var createdDate = DateTime.UtcNow.ToString();
             var systemStatisticsToReturn = new List<SystemStatistic>();
             systemStatisticsToReturn.Add(new SystemStatistic()
@@ -126,7 +131,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemStatistics_NoResultNullCollection()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             List<SystemStatistic> systemStatisticsToReturn = null;
 
             tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
@@ -142,7 +148,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemStatistics_NoResultEmptyCollection()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var systemStatisticsToReturn = new List<SystemStatistic>();
 
             tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
@@ -157,8 +164,8 @@ namespace TestHttpAPINetCore_Unit
         [TestMethod]
         public void GetSystemStatistics_GeneralErrorTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.GetSystemStatistics())
                             .Throws(new Exception(exception));
@@ -178,7 +185,8 @@ namespace TestHttpAPINetCore_Unit
         public void Log_HappyPathTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             string msg = "I am a message";
             IActionResult result = tgimbaApi.Log(msg);
             OkResult requestResult = (OkResult)result;
@@ -192,7 +200,8 @@ namespace TestHttpAPINetCore_Unit
         public void Log_NullMessageTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             string msg = null;
             IActionResult result = tgimbaApi.Log(msg);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -205,7 +214,8 @@ namespace TestHttpAPINetCore_Unit
         public void Log_EmptyMessageTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             string msg = "";
             IActionResult result = tgimbaApi.Log(msg);
             BadRequestResult requestResult = (BadRequestResult)result;
@@ -218,7 +228,8 @@ namespace TestHttpAPINetCore_Unit
         public void Log_GeneralErrorTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             tgimbaService.Setup(x => x.Log(It.IsAny<string>()))
                             .Throws(new Exception("I am an exception"));
             string msg = "I am a log message";
@@ -237,7 +248,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetTestResult_HappyPathTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             tgimbaService.Setup(x => x.GetTestResult())
                             .Returns(Constants.API_TEST_RESULT);
 
