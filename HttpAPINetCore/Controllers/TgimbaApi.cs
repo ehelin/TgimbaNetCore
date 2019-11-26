@@ -19,12 +19,11 @@ namespace HttpAPINetCore.Controllers
 
         #region User
 
-        [HttpPost]
+        [HttpPost("processuserregistration")]
         public IActionResult ProcessUserRegistration([FromBody] Registration registration)
         {
             bool isBadRequest = false;
 
-            // TODO - add test for null registration
             try
             {
                 if (string.IsNullOrEmpty(registration.encodedUser))
@@ -55,12 +54,11 @@ namespace HttpAPINetCore.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("processuser")]
         public IActionResult ProcessUser([FromBody] Login login)
         {
             bool isBadRequest = false;
 
-            // TODO - add test for null login
             try
             {
                 if (string.IsNullOrEmpty(login.encodedUser))
@@ -94,7 +92,7 @@ namespace HttpAPINetCore.Controllers
 
         #region Misc
 
-        [HttpGet]
+        [HttpGet("getsystemstatistics")]
         public IActionResult GetSystemStatistics()
         {
             try
@@ -115,7 +113,7 @@ namespace HttpAPINetCore.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("getsystembuildstatistics")]
         public IActionResult GetSystemBuildStatistics()
         {
             try
@@ -136,7 +134,7 @@ namespace HttpAPINetCore.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("log")]
         public IActionResult Log([FromBody] string msg)
         {
             try 
@@ -155,8 +153,7 @@ namespace HttpAPINetCore.Controllers
             }
         }
         
-        [HttpGet]
-        [Route("test")]
+        [HttpGet("test")]
         public IActionResult GetTestResult()
         {
             try
@@ -172,7 +169,7 @@ namespace HttpAPINetCore.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("logindemouser")]
         public IActionResult LoginDemoUser()
         {
             try

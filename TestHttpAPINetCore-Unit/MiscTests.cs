@@ -1,313 +1,313 @@
-//using HttpAPINetCore.Controllers;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using System;
-//using Shared.interfaces;
-//using Shared.dto;
-//using System.Collections.Generic;
-//using Shared;
+using HttpAPINetCore.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
+using Shared.interfaces;
+using Shared.dto;
+using System.Collections.Generic;
+using Shared;
 
-//namespace TestHttpAPINetCore_Unit
-//{
-//    [TestClass]
-//    public class MiscTests 
-//    {
-//        #region GetSystemBuildStatistics
+namespace TestHttpAPINetCore_Unit
+{
+    [TestClass]
+    public class MiscTests
+    {
+        #region GetSystemBuildStatistics
 
-//        [TestMethod]
-//        public void GetSystemBuildStatistics_HappyPathTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var createdDate = DateTime.UtcNow.ToString();
-//            var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
-//            systemBuildStatisticsToReturn.Add(new SystemBuildStatistic()
-//            {
-//                Start = createdDate,
-//                End = createdDate,
-//                BuildNumber = "I am a build number",
-//                Status = "I am a status",
-//            });
-            
-//            tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
+        [TestMethod]
+        public void GetSystemBuildStatistics_HappyPathTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var createdDate = DateTime.UtcNow.ToString();
+            var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
+            systemBuildStatisticsToReturn.Add(new SystemBuildStatistic()
+            {
+                Start = createdDate,
+                End = createdDate,
+                BuildNumber = "I am a build number",
+                Status = "I am a status",
+            });
 
-//            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
-//            OkObjectResult requestResult = (OkObjectResult)result;
+            tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.GetSystemBuildStatistics(), Times.Once);
-//            var systemStatistics = (List<SystemBuildStatistic>)requestResult.Value;
-//            Assert.AreEqual(1, systemStatistics.Count);
-//            Assert.AreEqual(systemBuildStatisticsToReturn, systemStatistics);
-//        }
+            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
+            OkObjectResult requestResult = (OkObjectResult)result;
 
-//        [TestMethod]
-//        public void GetSystemBuildStatistics_NoResultNullCollection()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            List<SystemBuildStatistic> systemBuildStatisticsToReturn = null;
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.GetSystemBuildStatistics(), Times.Once);
+            var systemStatistics = (List<SystemBuildStatistic>)requestResult.Value;
+            Assert.AreEqual(1, systemStatistics.Count);
+            Assert.AreEqual(systemBuildStatisticsToReturn, systemStatistics);
+        }
 
-//            tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
+        [TestMethod]
+        public void GetSystemBuildStatistics_NoResultNullCollection()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            List<SystemBuildStatistic> systemBuildStatisticsToReturn = null;
 
-//            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+            tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(404, requestResult.StatusCode);
-//        }
+            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//        [TestMethod]
-//        public void GetSystemBuildStatistics_NoResultEmptyCollection()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(404, requestResult.StatusCode);
+        }
 
-//            tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
+        [TestMethod]
+        public void GetSystemBuildStatistics_NoResultEmptyCollection()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
 
-//            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+            tgimbaService.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(404, requestResult.StatusCode);
-//        }
+            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//        [TestMethod]
-//        public void GetSystemBuildStatistics_GeneralErrorTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var exception = "I am an exception";
-//            tgimbaService.Setup(x => x.GetSystemBuildStatistics())
-//                            .Throws(new Exception(exception));
-//            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(404, requestResult.StatusCode);
+        }
 
-//            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(500, requestResult.StatusCode);
-//        }
+        [TestMethod]
+        public void GetSystemBuildStatistics_GeneralErrorTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var exception = "I am an exception";
+            tgimbaService.Setup(x => x.GetSystemBuildStatistics())
+                            .Throws(new Exception(exception));
+            IActionResult result = tgimbaApi.GetSystemBuildStatistics();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//        #endregion
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(500, requestResult.StatusCode);
+        }
 
-//        #region GetSystemStatistics
+        #endregion
 
-//        [TestMethod]
-//        public void GetSystemStatistics_HappyPathTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var createdDate = DateTime.UtcNow.ToString();
-//            var systemStatisticsToReturn = new List<SystemStatistic>();
-//            systemStatisticsToReturn.Add(new SystemStatistic() 
-//            {
-//                WebSiteIsUp = true,
-//                DatabaseIsUp = true,
-//                AzureFunctionIsUp = true,
-//                Created = createdDate,
-//            });
-//            tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
+        #region GetSystemStatistics
 
-//            IActionResult result = tgimbaApi.GetSystemStatistics();
-//            OkObjectResult requestResult = (OkObjectResult)result;
+        [TestMethod]
+        public void GetSystemStatistics_HappyPathTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var createdDate = DateTime.UtcNow.ToString();
+            var systemStatisticsToReturn = new List<SystemStatistic>();
+            systemStatisticsToReturn.Add(new SystemStatistic()
+            {
+                WebSiteIsUp = true,
+                DatabaseIsUp = true,
+                AzureFunctionIsUp = true,
+                Created = createdDate,
+            });
+            tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.GetSystemStatistics(), Times.Once);
-//            var systemStatistics = (List<SystemStatistic>)requestResult.Value;
-//            Assert.AreEqual(1, systemStatistics.Count);
-//            Assert.AreEqual(systemStatisticsToReturn, systemStatistics);
-//        }
+            IActionResult result = tgimbaApi.GetSystemStatistics();
+            OkObjectResult requestResult = (OkObjectResult)result;
 
-//        [TestMethod]
-//        public void GetSystemStatistics_NoResultNullCollection()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            List<SystemStatistic> systemStatisticsToReturn = null;
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.GetSystemStatistics(), Times.Once);
+            var systemStatistics = (List<SystemStatistic>)requestResult.Value;
+            Assert.AreEqual(1, systemStatistics.Count);
+            Assert.AreEqual(systemStatisticsToReturn, systemStatistics);
+        }
 
-//            tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
-            
-//            IActionResult result = tgimbaApi.GetSystemStatistics();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+        [TestMethod]
+        public void GetSystemStatistics_NoResultNullCollection()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            List<SystemStatistic> systemStatisticsToReturn = null;
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(404, requestResult.StatusCode);
-//        }
+            tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
 
-//        [TestMethod]
-//        public void GetSystemStatistics_NoResultEmptyCollection()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var systemStatisticsToReturn = new List<SystemStatistic>();
+            IActionResult result = tgimbaApi.GetSystemStatistics();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//            tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(404, requestResult.StatusCode);
+        }
 
-//            IActionResult result = tgimbaApi.GetSystemStatistics();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+        [TestMethod]
+        public void GetSystemStatistics_NoResultEmptyCollection()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var systemStatisticsToReturn = new List<SystemStatistic>();
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(404, requestResult.StatusCode);
-//        }
+            tgimbaService.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
 
-//        [TestMethod]
-//        public void GetSystemStatistics_GeneralErrorTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var exception = "I am an exception";
-//            tgimbaService.Setup(x => x.GetSystemStatistics())
-//                            .Throws(new Exception(exception));
-//            IActionResult result = tgimbaApi.GetSystemStatistics();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+            IActionResult result = tgimbaApi.GetSystemStatistics();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(500, requestResult.StatusCode);
-//        }
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(404, requestResult.StatusCode);
+        }
 
-//        #endregion
+        [TestMethod]
+        public void GetSystemStatistics_GeneralErrorTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var exception = "I am an exception";
+            tgimbaService.Setup(x => x.GetSystemStatistics())
+                            .Throws(new Exception(exception));
+            IActionResult result = tgimbaApi.GetSystemStatistics();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//        #region Log
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(500, requestResult.StatusCode);
+        }
 
-//        [TestMethod]
-//        public void Log_HappyPathTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            string msg = "I am a message";
-//            IActionResult result = tgimbaApi.Log(msg);
-//            OkResult requestResult = (OkResult)result;
+        #endregion
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains(msg))), Times.Once);
-//        }
+        #region Log
 
-//        [TestMethod]
-//        public void Log_NullMessageTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            string msg = null;
-//            IActionResult result = tgimbaApi.Log(msg);
-//            BadRequestResult requestResult = (BadRequestResult)result;
+        [TestMethod]
+        public void Log_HappyPathTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            string msg = "I am a message";
+            IActionResult result = tgimbaApi.Log(msg);
+            OkResult requestResult = (OkResult)result;
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(400, requestResult.StatusCode);
-//        }
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains(msg))), Times.Once);
+        }
 
-//        [TestMethod]
-//        public void Log_EmptyMessageTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            string msg = "";
-//            IActionResult result = tgimbaApi.Log(msg);
-//            BadRequestResult requestResult = (BadRequestResult)result;
+        [TestMethod]
+        public void Log_NullMessageTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            string msg = null;
+            IActionResult result = tgimbaApi.Log(msg);
+            BadRequestResult requestResult = (BadRequestResult)result;
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(400, requestResult.StatusCode);
-//        }
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(400, requestResult.StatusCode);
+        }
 
-//        [TestMethod]
-//        public void Log_GeneralErrorTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            tgimbaService.Setup(x => x.Log(It.IsAny<string>()))
-//                            .Throws(new Exception("I am an exception"));
-//            string msg = "I am a log message";
-//            IActionResult result = tgimbaApi.Log(msg);
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+        [TestMethod]
+        public void Log_EmptyMessageTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            string msg = "";
+            IActionResult result = tgimbaApi.Log(msg);
+            BadRequestResult requestResult = (BadRequestResult)result;
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(500, requestResult.StatusCode);
-//        }
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(400, requestResult.StatusCode);
+        }
 
-//        #endregion
+        [TestMethod]
+        public void Log_GeneralErrorTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            tgimbaService.Setup(x => x.Log(It.IsAny<string>()))
+                            .Throws(new Exception("I am an exception"));
+            string msg = "I am a log message";
+            IActionResult result = tgimbaApi.Log(msg);
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//        #region Test Result
-        
-//        [TestMethod]
-//        public void GetTestResult_HappyPathTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            tgimbaService.Setup(x => x.GetTestResult())
-//                            .Returns(Constants.API_TEST_RESULT);
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(500, requestResult.StatusCode);
+        }
 
-//            IActionResult result = tgimbaApi.GetTestResult();
-//            OkObjectResult requestResult = (OkObjectResult)result;
+        #endregion
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.GetTestResult(), Times.Once);
-//            var testResult = (string)requestResult.Value;
-//            Assert.AreEqual(Constants.API_TEST_RESULT, testResult);
-//        }
-        
-//        [TestMethod]
-//        public void GetTestResult_GeneralErrorTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var exception = "I am an exception";
-//            tgimbaService.Setup(x => x.GetTestResult())
-//                            .Throws(new Exception(exception));
-           
-//            IActionResult result = tgimbaApi.GetTestResult();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+        #region Test Result
 
-//            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(500, requestResult.StatusCode);
-//        }
+        [TestMethod]
+        public void GetTestResult_HappyPathTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            tgimbaService.Setup(x => x.GetTestResult())
+                            .Returns(Constants.API_TEST_RESULT);
 
-//        #endregion
+            IActionResult result = tgimbaApi.GetTestResult();
+            OkObjectResult requestResult = (OkObjectResult)result;
 
-//        #region LoginDemoUser
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.GetTestResult(), Times.Once);
+            var testResult = (string)requestResult.Value;
+            Assert.AreEqual(Constants.API_TEST_RESULT, testResult);
+        }
 
-//        [TestMethod]
-//        public void LoginDemoUser_HappyPathTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tokenToReturn = "IAmAToken";
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            tgimbaService.Setup(x => x.LoginDemoUser())
-//                            .Returns(tokenToReturn);
+        [TestMethod]
+        public void GetTestResult_GeneralErrorTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var exception = "I am an exception";
+            tgimbaService.Setup(x => x.GetTestResult())
+                            .Throws(new Exception(exception));
 
-//            IActionResult result = tgimbaApi.LoginDemoUser();
-//            OkObjectResult requestResult = (OkObjectResult)result;
+            IActionResult result = tgimbaApi.GetTestResult();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.LoginDemoUser(), Times.Once);
-//            var token = (string)requestResult.Value;
-//            Assert.AreEqual(tokenToReturn, token);
-//        }
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(500, requestResult.StatusCode);
+        }
 
-//        [TestMethod]
-//        public void LoginDemoUser_GeneralErrorTest()
-//        {
-//            var tgimbaService = new Mock<ITgimbaService>();
-//            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
-//            var exception = "I am an exception";
-//            tgimbaService.Setup(x => x.LoginDemoUser())
-//                            .Throws(new Exception(exception));
+        #endregion
 
-//            IActionResult result = tgimbaApi.LoginDemoUser();
-//            StatusCodeResult requestResult = (StatusCodeResult)result;
+        #region LoginDemoUser
 
-//            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(500, requestResult.StatusCode);
-//        }
+        [TestMethod]
+        public void LoginDemoUser_HappyPathTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tokenToReturn = "IAmAToken";
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            tgimbaService.Setup(x => x.LoginDemoUser())
+                            .Returns(tokenToReturn);
 
-//        #endregion
-//    }
-//}
+            IActionResult result = tgimbaApi.LoginDemoUser();
+            OkObjectResult requestResult = (OkObjectResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.LoginDemoUser(), Times.Once);
+            var token = (string)requestResult.Value;
+            Assert.AreEqual(tokenToReturn, token);
+        }
+
+        [TestMethod]
+        public void LoginDemoUser_GeneralErrorTest()
+        {
+            var tgimbaService = new Mock<ITgimbaService>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var exception = "I am an exception";
+            tgimbaService.Setup(x => x.LoginDemoUser())
+                            .Throws(new Exception(exception));
+
+            IActionResult result = tgimbaApi.LoginDemoUser();
+            StatusCodeResult requestResult = (StatusCodeResult)result;
+
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(500, requestResult.StatusCode);
+        }
+
+        #endregion
+    }
+}
