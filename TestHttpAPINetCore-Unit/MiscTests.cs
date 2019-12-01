@@ -165,6 +165,7 @@ namespace TestHttpAPINetCore_Unit
         public void GetSystemStatistics_GeneralErrorTest()
         {
             var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.GetSystemStatistics())
@@ -267,7 +268,8 @@ namespace TestHttpAPINetCore_Unit
         public void GetTestResult_GeneralErrorTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.GetTestResult())
                             .Throws(new Exception(exception));
@@ -289,7 +291,8 @@ namespace TestHttpAPINetCore_Unit
         {
             var tgimbaService = new Mock<ITgimbaService>();
             var tokenToReturn = "IAmAToken";
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             tgimbaService.Setup(x => x.LoginDemoUser())
                             .Returns(tokenToReturn);
 
@@ -307,7 +310,8 @@ namespace TestHttpAPINetCore_Unit
         public void LoginDemoUser_GeneralErrorTest()
         {
             var tgimbaService = new Mock<ITgimbaService>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object);
+            var validationHelper = new Mock<IValidationHelper>();
+            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.LoginDemoUser())
                             .Throws(new Exception(exception));
