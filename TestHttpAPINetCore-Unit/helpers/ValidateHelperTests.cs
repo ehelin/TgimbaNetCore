@@ -3,11 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
 using System;
 using Shared.dto.api;
+using TestHttpAPINetCore_Unit;
 
 namespace TestAPINetCore_Unit.helpers
 {
     [TestClass]
-    public class ValidateHelperTests 
+    public class ValidateHelperTests : BaseTest
     {
         private IValidationHelper sut = null;
 
@@ -51,7 +52,6 @@ namespace TestAPINetCore_Unit.helpers
         }
 
         #endregion
-
 
         #region IsValidRequest - GetBucketListItemRequest
 
@@ -235,32 +235,6 @@ namespace TestAPINetCore_Unit.helpers
                 Assert.IsTrue(validationErrorExpected);
                 Assert.IsTrue(ex is ArgumentNullException);
             }
-        }
-
-        #endregion
-
-        #region Private methods
-
-        private TokenRequest SetTokenRequest(string userName = "userName", string token = "token")
-        {
-            var login = new TokenRequest()
-            {
-                EncodedUserName = userName,
-                EncodedToken = token
-            };
-
-            return login;
-        }
-
-        private LoginRequest SetLoginRequest(string userName = "userName", string password = "password")
-        {
-            var login = new LoginRequest() 
-            { 
-                EncodedUserName = userName, 
-                EncodedPassword = password 
-            };
-            
-            return login;
         }
 
         #endregion
