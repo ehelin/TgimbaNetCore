@@ -4,8 +4,7 @@ using Shared.interfaces;
 
 namespace HttpAPINetCore.helpers
 {
-    // TODO - add tests for each method
-    public class ValidateHelper : IValidationHelper
+    public class ValidationHelper : IValidationHelper
     {
         public void IsValidRequest(DeleteBucketListItemRequest request)
         {
@@ -36,7 +35,7 @@ namespace HttpAPINetCore.helpers
         {   
             if (request == null)
             {
-                throw new ArgumentNullException("Login Request is null");
+                throw new ArgumentNullException("request is null");
             }
             else if (string.IsNullOrEmpty(request.EncodedUserName))
             {
@@ -52,7 +51,7 @@ namespace HttpAPINetCore.helpers
         {
             if (request == null)
             {
-                throw new ArgumentNullException("Token request property is null");
+                throw new ArgumentNullException("request is null");
             }
             else if (string.IsNullOrEmpty(request.EncodedEmail))
             {
@@ -66,7 +65,7 @@ namespace HttpAPINetCore.helpers
         {           
             if (request == null)
             {
-                throw new ArgumentNullException("Token request property is null");
+                throw new ArgumentNullException("requesty is null");
             }
             else if (string.IsNullOrEmpty(request.EncodedUserName))
             {
