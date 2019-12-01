@@ -1,9 +1,31 @@
-﻿using Shared.dto.api;
+﻿using HttpAPINetCore.Controllers;
+using Moq;
+using Shared.dto.api;
+using Shared.interfaces;
+using System;
+using HttpAPINetCore.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Shared.dto.api;
+using Shared.dto;
+using Shared.interfaces;
 
 namespace TestHttpAPINetCore_Unit
 {
     public class BaseTest
     {
+        protected TgimbaApiController tgimbaApi = null;
+        protected Mock<ITgimbaService> tgimbaService = null;
+        protected Mock<IValidationHelper> validationHelper = null;
+
+        public BaseTest() 
+        {
+            this.validationHelper = new Mock<IValidationHelper>();
+            this.tgimbaService = new Mock<ITgimbaService>();
+            this.tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
+        }
+
         protected TokenRequest SetTokenRequest(string userName = "userName", string token = "token")
         {
             var login = new TokenRequest()
@@ -24,6 +46,53 @@ namespace TestHttpAPINetCore_Unit
             };
 
             return login;
+        }
+
+        protected UpsertBucketListItemRequest GetUpsertRequest() 
+        {
+            var request = new UpsertBucketListItemRequest()
+            {
+                Token = SetTokenRequest()
+            };
+
+            return request;
+        }
+
+        protected GetBucketListItemRequest GetBucketListItemRequest()
+        {
+            var request = new GetBucketListItemRequest()
+            {
+                Token = SetTokenRequest()
+            };
+
+            return request;
+        }
+        
+        protected DeleteBucketListItemRequest GetDeleteListItemRequest()
+        {
+            var request = new DeleteBucketListItemRequest()
+            {
+                Token = SetTokenRequest()
+            };
+
+            return request;
+        }
+
+        protected void BadResultVerify(IActionResult result)
+        {
+            BadRequestResult requestResult = (BadRequestResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(400, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains("400 BadRequest"))), Times.Once);
+        }
+        protected void GoodResultVerify(IActionResult result)
+        {
+            OkObjectResult requestResult = (OkObjectResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
         }
     }
 }

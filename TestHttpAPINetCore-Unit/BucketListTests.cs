@@ -17,47 +17,25 @@ namespace TestHttpAPINetCore_Unit
         [TestMethod]
         public void DeleteBucketListItem_HappyPathTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            var request = new DeleteBucketListItemRequest()
-            {
-                BucketListItemId = 1,
-                Token = SetTokenRequest()
-            };
+            var request = GetDeleteListItemRequest();
 
             IActionResult result = tgimbaApi.DeleteBucketListItem(request);
-            OkObjectResult requestResult = (OkObjectResult)result;
-
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(200, requestResult.StatusCode);
+            GoodResultVerify(result);
             tgimbaService.Verify(x => x.DeleteBucketListItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
         }
 
         [TestMethod]
         public void DeleteBucketListItem_ErrorTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            var request = new DeleteBucketListItemRequest()
-            {
-                BucketListItemId = 1,
-                Token = SetTokenRequest()
-            };
+            var request = GetDeleteListItemRequest();
 
             validationHelper.Setup(x => x.IsValidRequest
                                         (It.IsAny<DeleteBucketListItemRequest>()))
                                             .Throws(new ArgumentNullException(""));
 
             IActionResult result = tgimbaApi.DeleteBucketListItem(request);
-            BadRequestResult requestResult = (BadRequestResult)result;
-
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(400, requestResult.StatusCode);
+            BadResultVerify(result);
             tgimbaService.Verify(x => x.DeleteBucketListItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains("400 BadRequest"))), Times.Once);
         }
 
         #endregion
@@ -67,93 +45,53 @@ namespace TestHttpAPINetCore_Unit
         [TestMethod]
         public void GetBucketListItem_HappyPathTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            var request = new GetBucketListItemRequest()
-            {
-                Token = SetTokenRequest()
-            };
+            var request = GetBucketListItemRequest();
 
             IActionResult result = tgimbaApi.GetBucketListItem(request);
-            OkObjectResult requestResult = (OkObjectResult)result;
-
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(200, requestResult.StatusCode);
+            GoodResultVerify(result);
             tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
         }
 
         [TestMethod]
         public void GetBucketListItem_ErrorTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            var request = new GetBucketListItemRequest()
-            {
-                Token = SetTokenRequest()
-            };
+            var request = GetBucketListItemRequest();
 
             validationHelper.Setup(x => x.IsValidRequest
                                         (It.IsAny<GetBucketListItemRequest>()))
                                             .Throws(new ArgumentNullException(""));
 
             IActionResult result = tgimbaApi.GetBucketListItem(request);
-            BadRequestResult requestResult = (BadRequestResult)result;
-
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(400, requestResult.StatusCode);
+            BadResultVerify(result);
             tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains("400 BadRequest"))), Times.Once);
         }
 
         #endregion
 
-        #region GetBucketListItem
+        #region UpsertBucketListItem
 
         [TestMethod]
         public void UpsertBucketListItem_HappyPathTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            var request = new UpsertBucketListItemRequest()
-            {
-                Token = SetTokenRequest()
-            };
+            var request = GetUpsertRequest();
 
             IActionResult result = tgimbaApi.UpsertBucketListItem(request);
-            OkObjectResult requestResult = (OkObjectResult)result;
-
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(200, requestResult.StatusCode);
+            GoodResultVerify(result);
             tgimbaService.Verify(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
         }
 
         [TestMethod]
         public void UpsertBucketListItem_ErrorTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            var request = new UpsertBucketListItemRequest()
-            {
-                Token = SetTokenRequest()
-            };
-
+            var request = GetUpsertRequest();
+            
             validationHelper.Setup(x => x.IsValidRequest
                                         (It.IsAny<UpsertBucketListItemRequest>()))
                                             .Throws(new ArgumentNullException(""));
 
             IActionResult result = tgimbaApi.UpsertBucketListItem(request);
-            BadRequestResult requestResult = (BadRequestResult)result;
-
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(400, requestResult.StatusCode);
+            BadResultVerify(result);
             tgimbaService.Verify(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains("400 BadRequest"))), Times.Once);
         }
 
         #endregion
