@@ -25,7 +25,7 @@ namespace TestHttpAPINetCore_Unit
         }
 
         [TestMethod]
-        public void DeleteBucketListItem_ErrorTest()
+        public void DeleteBucketListItem_ValidationErrorTest()
         {
             var request = GetDeleteListItemRequest();
 
@@ -35,7 +35,23 @@ namespace TestHttpAPINetCore_Unit
 
             IActionResult result = tgimbaApi.DeleteBucketListItem(request);
             BadResultVerify(result);
-            tgimbaService.Verify(x => x.DeleteBucketListItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+            tgimbaService.Verify(x => x.DeleteBucketListItem(
+                                        It.IsAny<int>(), It.IsAny<string>(), 
+                                            It.IsAny<string>()), Times.Never);
+        }
+        
+        [TestMethod]
+        public void DeleteBucketListItem_GeneralErrorTest()
+        {
+            var request = GetDeleteListItemRequest();
+
+            tgimbaService.Setup(x => x.DeleteBucketListItem(
+                                        It.IsAny<int>(), It.IsAny<string>(),
+                                            It.IsAny<string>()))
+                                                .Throws(new Exception("I am an exception"));
+
+            IActionResult result = tgimbaApi.DeleteBucketListItem(request);
+            BadResultVerify(result, 500);
         }
 
         #endregion
@@ -53,7 +69,7 @@ namespace TestHttpAPINetCore_Unit
         }
 
         [TestMethod]
-        public void GetBucketListItem_ErrorTest()
+        public void GetBucketListItem_ValidationErrorTest()
         {
             var request = GetBucketListItemRequest();
 
@@ -63,7 +79,22 @@ namespace TestHttpAPINetCore_Unit
 
             IActionResult result = tgimbaApi.GetBucketListItem(request);
             BadResultVerify(result);
-            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(), 
+                                                             It.IsAny<string>(), It.IsAny<string>()), 
+                                                                Times.Never);
+        }
+        
+        [TestMethod]
+        public void GetBucketListItem_GeneralErrorTest()
+        {
+            var request = GetBucketListItemRequest();
+
+            tgimbaService.Setup(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(),
+                                                             It.IsAny<string>(), It.IsAny<string>()))
+                                                                .Throws(new Exception("I am an exception"));
+
+            IActionResult result = tgimbaApi.GetBucketListItem(request);
+            BadResultVerify(result, 500);
         }
 
         #endregion
@@ -81,7 +112,7 @@ namespace TestHttpAPINetCore_Unit
         }
 
         [TestMethod]
-        public void UpsertBucketListItem_ErrorTest()
+        public void UpsertBucketListItem_ValidationErrorTest()
         {
             var request = GetUpsertRequest();
             
@@ -92,6 +123,20 @@ namespace TestHttpAPINetCore_Unit
             IActionResult result = tgimbaApi.UpsertBucketListItem(request);
             BadResultVerify(result);
             tgimbaService.Verify(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        }
+
+
+        [TestMethod]
+        public void UpsertBucketListItem_GeneralErrorTest()
+        {
+            var request = GetUpsertRequest();
+
+            tgimbaService.Setup(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(),
+                                                             It.IsAny<string>(), It.IsAny<string>()))
+                                                                .Throws(new Exception("I am an exception"));
+
+            IActionResult result = tgimbaApi.UpsertBucketListItem(request);
+            BadResultVerify(result, 500);
         }
 
         #endregion

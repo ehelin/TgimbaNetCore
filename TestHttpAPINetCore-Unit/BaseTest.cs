@@ -1,14 +1,10 @@
-﻿using HttpAPINetCore.Controllers;
-using Moq;
-using Shared.dto.api;
-using Shared.interfaces;
-using System;
+﻿using System;
+using System.Net;
 using HttpAPINetCore.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shared.dto.api;
-using Shared.dto;
 using Shared.interfaces;
 
 namespace TestHttpAPINetCore_Unit
@@ -57,6 +53,16 @@ namespace TestHttpAPINetCore_Unit
 
             return request;
         }
+        protected LoginRequest GetLoginRequest()
+        {
+            var request = new LoginRequest()
+            {
+                EncodedUserName = "userName",
+                EncodedPassword = "password",
+            };
+
+            return request;
+        }
 
         protected GetBucketListItemRequest GetBucketListItemRequest()
         {
@@ -78,14 +84,23 @@ namespace TestHttpAPINetCore_Unit
             return request;
         }
 
-        protected void BadResultVerify(IActionResult result)
+        protected void BadResultVerify(IActionResult result, int code = 400)
         {
-            BadRequestResult requestResult = (BadRequestResult)result;
+            Assert.IsNotNull(result);
 
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(400, requestResult.StatusCode);
-            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains("400 BadRequest"))), Times.Once);
+            if (code == 400) 
+            {
+                var badResult = (BadRequestResult)result;
+                Assert.AreEqual(code, badResult.StatusCode);
+                tgimbaService.Verify(x => x.Log(It.Is<string>(s => s.Contains("400 BadRequest"))), Times.Once);
+            } 
+            else
+            {
+                Assert.AreEqual(code, Convert.ToInt32(HttpStatusCode.InternalServerError));
+                tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Once);
+            }
         }
+
         protected void GoodResultVerify(IActionResult result)
         {
             OkObjectResult requestResult = (OkObjectResult)result;
