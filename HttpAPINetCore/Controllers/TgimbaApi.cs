@@ -60,9 +60,7 @@ namespace HttpAPINetCore.Controllers
         #endregion
 
         #region Bucket List Items
-
-        // TODO - add tests for delete, get and upsert
-
+        
         [HttpDelete("delete")]
         public IActionResult DeleteBucketListItem([FromBody] DeleteBucketListItemRequest request)
         {
