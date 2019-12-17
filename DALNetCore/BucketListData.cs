@@ -72,7 +72,11 @@ namespace DALNetCore
                 UserName = user.UserName,
                 Email = user.Email,
                 PassWord = user.Password,
-                Salt = user.Salt
+                Salt = user.Salt,
+                Created = DateTime.Now.ToUniversalTime(),
+                CreatedBy = "Website",
+                Modified = DateTime.Now.ToUniversalTime(),
+                ModifiedBy = "Website"
             };
             this.context.User.Add(dbUser);
             this.context.SaveChanges();
