@@ -10,12 +10,16 @@ namespace API_IntegrationTests
     public class HappyPathTests
     {
         private string host = "https://localhost:44363";
+        private string userName = "fredFlintstone";
+        private string password = "wilmaRules87&";
+        private string email = "fred@bedrock.com";
 
         [TestMethod]
         public void HappyPathTest()
         {
             EndPoint_TestPage();
             EndPoint_Register();
+            EndPoint_Login();
         }
 
         private void EndPoint_TestPage()
@@ -31,10 +35,10 @@ namespace API_IntegrationTests
             {
                 Login = new LoginRequest() 
                 { 
-                    EncodedUserName = Base64Encode("fredFlintstone"),
-                    EncodedPassword = Base64Encode("wilmaRules87&")
+                    EncodedUserName = Base64Encode(userName),
+                    EncodedPassword = Base64Encode(password)
                 },
-                EncodedEmail = Base64Encode("fred@bedrock.com")
+                EncodedEmail = Base64Encode(email)
             };
             
             var json = JsonConvert.SerializeObject(request);
@@ -43,6 +47,21 @@ namespace API_IntegrationTests
             var result = Post(url, content).Result;
 
             Assert.AreEqual(true, System.Convert.ToBoolean(result));
+        }
+        private void EndPoint_Login()
+        {
+            var request =  new LoginRequest()
+            {
+                EncodedUserName = Base64Encode(userName),
+                EncodedPassword = Base64Encode(password)
+            };
+
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "/api/tgimbaapi/processuser";
+            var result = Post(url, content).Result;
+
+            Assert.AreEqual(true, result.Length > 1);
         }
 
         #region Http methods
