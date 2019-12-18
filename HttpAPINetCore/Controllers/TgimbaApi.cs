@@ -3,6 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Shared.interfaces;
 using Shared.dto.api;
+using System.Net.Http;
 
 namespace HttpAPINetCore.Controllers
 {
@@ -81,15 +82,15 @@ namespace HttpAPINetCore.Controllers
         }
         
         [HttpGet("getbucketlistitems")]
-        public IActionResult GetBucketListItem([FromBody] GetBucketListItemRequest request)
+        public IActionResult GetBucketListItem([FromQuery] GetBucketListItemRequest request)
         {
             try
             {
                 this.validationHelper.IsValidRequest(request);
 
-                var userRegistered = this.service.GetBucketListItems(request.Token.EncodedUserName,
+                var userRegistered = this.service.GetBucketListItems(request.EncodedUserName,
                                                                         request.EncodedSortString,                                                                  
-                                                                        request.Token.EncodedToken,
+                                                                        request.EncodedToken,
                                                                         request.EncodedSearchString);
 
                 return Ok(userRegistered); // 200
@@ -107,11 +108,11 @@ namespace HttpAPINetCore.Controllers
             {
                 this.validationHelper.IsValidRequest(request);
 
-                var userRegistered = this.service.UpsertBucketListItem(request.BucketListItem,
+                var itemAdded = this.service.UpsertBucketListItem(request.BucketListItem,
                                                                         request.Token.EncodedUserName,
                                                                         request.Token.EncodedToken);
 
-                return Ok(userRegistered); // 200
+                return Ok(itemAdded); // 200
             }
             catch (Exception ex)
             {
@@ -121,6 +122,8 @@ namespace HttpAPINetCore.Controllers
         #endregion
 
         #region Misc
+
+        // TODO - add requests for each endpoint (including test...none of these should be open and need to require a token)
 
         [HttpGet("getsystemstatistics")]
         public IActionResult GetSystemStatistics()

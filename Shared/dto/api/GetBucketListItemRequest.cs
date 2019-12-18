@@ -2,7 +2,8 @@
 {
     public class GetBucketListItemRequest
     {
-        public TokenRequest Token { get; set; }
+        public string EncodedUserName { get; set; }
+        public string EncodedToken { get; set; }
         public string EncodedSortString { get; set; }
         public string EncodedSearchString { get; set; }
     }

@@ -27,8 +27,14 @@ namespace HttpAPINetCore.helpers
             {
                 throw new ArgumentNullException("request is null");
             }
-            
-            this.IsValidRequest(request.Token);
+            else if (string.IsNullOrEmpty(request.EncodedUserName))
+            {
+                throw new ArgumentNullException("EncodedUserName is null or empty");
+            }
+            else if (string.IsNullOrEmpty(request.EncodedToken))
+            {
+                throw new ArgumentNullException("EncodedToken is null or empty");
+            }
         }
 
         public void IsValidRequest(LoginRequest request)

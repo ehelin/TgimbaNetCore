@@ -65,12 +65,14 @@ namespace TestAPINetCore_Unit.helpers
         )
         {
             GetBucketListItemRequest request = null;
-
+            var token = SetTokenRequest();
+            
             if (!nullRequest)
             {
                 request = new GetBucketListItemRequest()
                 {
-                    Token = SetTokenRequest()
+                    EncodedUserName = token.EncodedUserName,
+                    EncodedToken = token.EncodedToken
                 };
             }
 

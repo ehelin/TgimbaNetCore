@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shared.dto.api;
+using Shared.dto;
+using Shared.misc;
 
 namespace API_IntegrationTests
 {
@@ -17,18 +19,17 @@ namespace API_IntegrationTests
         [TestMethod]
         public void HappyPathTest()
         {
-            EndPoint_TestPage();
             EndPoint_Register();
-            EndPoint_Login();
+            var token = EndPoint_Login();
+            EndPoint_Get(token);
+            EndPoint_Upsert(token);
+            EndPoint_Get(token);
+
+
+            //TODO - add requests for each call and make sure each one uses a token
+            //EndPoint_TestPage();
         }
 
-        private void EndPoint_TestPage()
-        {
-            var url = host + "/api/tgimbaapi/test";
-            var result = Get(url).Result;
-
-            Assert.AreEqual("Test Service Response", result);
-        }
         private void EndPoint_Register()
         {            
             var request = new RegistrationRequest() 
@@ -48,7 +49,7 @@ namespace API_IntegrationTests
 
             Assert.AreEqual(true, System.Convert.ToBoolean(result));
         }
-        private void EndPoint_Login()
+        private string EndPoint_Login()
         {
             var request =  new LoginRequest()
             {
@@ -59,9 +60,39 @@ namespace API_IntegrationTests
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var url = host + "/api/tgimbaapi/processuser";
+            var token = Post(url, content).Result;
+
+            Assert.AreEqual(true, token.Length > 1);
+
+            return token;
+        }
+        private void EndPoint_Get(string token)
+        {
+            var url = host + "/api/tgimbaapi/getbucketlistitems";
+            var query = CreateGetRequest(token, this.userName, "", "");
+            var fullUrl = url + query;
+            var result = Get(fullUrl).Result;
+
+            Assert.IsNotNull(result);
+        }
+        private void EndPoint_Upsert(string token)
+        {
+            var request = CreateUpsertRequest(token);
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "/api/tgimbaapi/upsert";
             var result = Post(url, content).Result;
 
-            Assert.AreEqual(true, result.Length > 1);
+            Assert.AreEqual(true, System.Convert.ToBoolean(result));
+        }
+
+        // TODO - add requests to test page and all other endpoints to currently expecting a token...they need to take a token
+        private void EndPoint_TestPage()
+        {
+            var url = host + "/api/tgimbaapi/test";
+            var result = Get(url).Result;
+
+            Assert.AreEqual("Test Service Response", result);
         }
 
         #region Http methods
@@ -106,6 +137,38 @@ namespace API_IntegrationTests
         {
             byte[] data = System.Text.Encoding.UTF8.GetBytes(value);
             return System.Convert.ToBase64String(data);
+        }
+
+        private UpsertBucketListItemRequest CreateUpsertRequest(string token)
+        {
+            var request = new UpsertBucketListItemRequest()
+            {
+                Token = new TokenRequest()
+                {
+                    EncodedToken = Base64Encode(token),
+                    EncodedUserName = Base64Encode(userName)
+                },
+                BucketListItem = new BucketListItem()
+                {
+                    Name = "IAmABucketListItem",
+                    Created = System.DateTime.UtcNow,
+                    Category = Enums.BucketListItemTypes.Warm.ToString(),
+                    Achieved = false,
+                    Latitude = (decimal)1.1,
+                    Longitude = (decimal)1.2
+                }
+            };
+
+            return request;
+        }
+        private string CreateGetRequest(string token, string userName, string sort, string search)
+        {
+            var query = "?EncodedUserName=" + Base64Encode(userName)
+                + "&EncodedToken=" + Base64Encode(token)
+                + "&EncodedSortString=" + Base64Encode(sort)
+                + "&EncodedSearchString=" +  Base64Encode(search);
+
+            return query;
         }
 
         #endregion

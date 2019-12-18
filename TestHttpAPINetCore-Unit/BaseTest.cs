@@ -66,9 +66,12 @@ namespace TestHttpAPINetCore_Unit
 
         protected GetBucketListItemRequest GetBucketListItemRequest()
         {
+            var token = SetTokenRequest();
+
             var request = new GetBucketListItemRequest()
             {
-                Token = SetTokenRequest()
+                EncodedUserName = token.EncodedUserName,
+                EncodedToken = token.EncodedToken
             };
 
             return request;
