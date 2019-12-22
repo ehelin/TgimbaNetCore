@@ -2,7 +2,8 @@
 {
     public class DeleteBucketListItemRequest
     {
-        public TokenRequest Token { get; set; }
+        public string EncodedUserName { get; set; }
+        public string EncodedToken { get; set; }
         public int BucketListItemId { get; set; }
     }
 }

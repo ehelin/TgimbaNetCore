@@ -61,17 +61,17 @@ namespace HttpAPINetCore.Controllers
         #endregion
 
         #region Bucket List Items
-        
+
         [HttpDelete("delete")]
-        public IActionResult DeleteBucketListItem([FromBody] DeleteBucketListItemRequest request)
+        public IActionResult DeleteBucketListItem(string EncodedUserName, string EncodedToken, int BucketListItemId)
         {
             try
             {
-                this.validationHelper.IsValidRequest(request);
+                this.validationHelper.IsValidRequest(EncodedUserName, EncodedToken, BucketListItemId);
 
-                var userRegistered = this.service.DeleteBucketListItem(request.BucketListItemId,
-                                                                        request.Token.EncodedUserName,
-                                                                        request.Token.EncodedToken);
+                var userRegistered = this.service.DeleteBucketListItem(BucketListItemId,
+                                                                        EncodedUserName,
+                                                                        EncodedToken);
 
                 return Ok(userRegistered); // 200
             }

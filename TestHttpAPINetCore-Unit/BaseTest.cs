@@ -79,9 +79,12 @@ namespace TestHttpAPINetCore_Unit
         
         protected DeleteBucketListItemRequest GetDeleteListItemRequest()
         {
+            var token = SetTokenRequest();
+
             var request = new DeleteBucketListItemRequest()
             {
-                Token = SetTokenRequest()
+                EncodedToken = token.EncodedToken,
+                EncodedUserName = token.EncodedUserName
             };
 
             return request;

@@ -6,16 +6,18 @@ namespace HttpAPINetCore.helpers
 {
     public class ValidationHelper : IValidationHelper
     {
-        public void IsValidRequest(DeleteBucketListItemRequest request)
+        public void IsValidRequest(string EncodedUserName, string EncodedToken, int BucketListItemId)
         {
-            if (request == null)
+            if (string.IsNullOrEmpty(EncodedUserName))
             {
-                throw new ArgumentNullException("request is null");
+                throw new ArgumentNullException("EncodedUserName is null or empty");
+            }
+            else if (string.IsNullOrEmpty(EncodedToken))
+            {
+                throw new ArgumentNullException("EncodedToken is null or empty");
             }
 
-            IsValidRequest(request.Token);
-
-            if (request.BucketListItemId <= 0)
+            if (BucketListItemId <= 0)
             {
                 throw new ArgumentNullException("BucketListItemId is less than zero");
             }

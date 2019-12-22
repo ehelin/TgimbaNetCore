@@ -56,32 +56,48 @@ namespace DALNetCore
 
         public User GetUser(string userName)
         {
-            var dbUser = this.context.User
+            User user = null;
+            try
+            {
+                var dbUser = this.context.User
                             .Where(x => x.UserName == userName)
                             .FirstOrDefault();
 
-            var user = this.userHelper.ConvertDbUserToUser(dbUser);
+                user = this.userHelper.ConvertDbUserToUser(dbUser);
+            }
+            catch(Exception e)
+            {
+                var test = 1;
+            }
 
             return user;
         }
 
         public int AddUser(User user)
         {
-            var dbUser = new models.User
+            try
             {
-                UserName = user.UserName,
-                Email = user.Email,
-                PassWord = user.Password,
-                Salt = user.Salt,
-                Created = DateTime.Now.ToUniversalTime(),
-                CreatedBy = "Website",
-                Modified = DateTime.Now.ToUniversalTime(),
-                ModifiedBy = "Website"
-            };
-            this.context.User.Add(dbUser);
-            this.context.SaveChanges();
+                var dbUser = new models.User
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PassWord = user.Password,
+                    Salt = user.Salt,
+                    Created = DateTime.Now.ToUniversalTime(),
+                    CreatedBy = "Website",
+                    Modified = DateTime.Now.ToUniversalTime(),
+                    ModifiedBy = "Website"
+                };
+                this.context.User.Add(dbUser);
+                this.context.SaveChanges();
 
-            return dbUser.UserId;
+                return dbUser.UserId;
+            } catch (Exception e)
+            {
+                var test = 1;
+            }
+
+            return 1;
         }
 
         public void DeleteUser(int userId)

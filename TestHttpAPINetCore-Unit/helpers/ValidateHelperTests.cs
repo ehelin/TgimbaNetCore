@@ -21,7 +21,6 @@ namespace TestAPINetCore_Unit.helpers
         [DataTestMethod]
         [DataRow(1, false, false)]
         [DataRow(0, false, true)]
-        [DataRow(0, true, true)]
         public void IsValidRequest_DeleteBucketListItemRequest_Tests
         (
             int id, 
@@ -29,19 +28,21 @@ namespace TestAPINetCore_Unit.helpers
             bool validationErrorExpected
         ) {
             DeleteBucketListItemRequest request = null;
+            var token = SetTokenRequest();
 
             if (!nullRequest)
             {
                 request = new DeleteBucketListItemRequest() 
                 { 
                     BucketListItemId = id,
-                    Token = SetTokenRequest()
+                    EncodedToken = token.EncodedToken,
+                    EncodedUserName = token.EncodedUserName
                 };
             }
                 
             try 
             {
-                sut.IsValidRequest(request);
+                sut.IsValidRequest(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
                 Assert.IsFalse(validationErrorExpected);  
             } 
             catch (Exception ex) 

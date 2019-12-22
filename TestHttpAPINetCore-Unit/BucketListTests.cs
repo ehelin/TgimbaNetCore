@@ -19,7 +19,7 @@ namespace TestHttpAPINetCore_Unit
         {
             var request = GetDeleteListItemRequest();
 
-            IActionResult result = tgimbaApi.DeleteBucketListItem(request);
+            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
             GoodResultVerify(result);
             tgimbaService.Verify(x => x.DeleteBucketListItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
@@ -30,10 +30,10 @@ namespace TestHttpAPINetCore_Unit
             var request = GetDeleteListItemRequest();
 
             validationHelper.Setup(x => x.IsValidRequest
-                                        (It.IsAny<DeleteBucketListItemRequest>()))
+                                        (It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
                                             .Throws(new ArgumentNullException(""));
 
-            IActionResult result = tgimbaApi.DeleteBucketListItem(request);
+            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
             BadResultVerify(result);
             tgimbaService.Verify(x => x.DeleteBucketListItem(
                                         It.IsAny<int>(), It.IsAny<string>(), 
@@ -50,7 +50,7 @@ namespace TestHttpAPINetCore_Unit
                                             It.IsAny<string>()))
                                                 .Throws(new Exception("I am an exception"));
 
-            IActionResult result = tgimbaApi.DeleteBucketListItem(request);
+            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
             BadResultVerify(result, 500);
         }
 

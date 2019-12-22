@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Shared.dto.api;
 using Shared.dto;
 using Shared.misc;
+using System.Collections.Generic;
 
 namespace API_IntegrationTests
 {
@@ -19,12 +20,31 @@ namespace API_IntegrationTests
         [TestMethod]
         public void HappyPathTest()
         {
-            EndPoint_Register();
-            var token = EndPoint_Login();
-            EndPoint_Get(token);
-            EndPoint_Upsert(token);
-            EndPoint_Get(token);
+            try
+            {
+                EndPoint_Register();
+                var token = EndPoint_Login();
+                var resultBeforeUpsert = EndPoint_Get(token);
+                Assert.IsNotNull(resultBeforeUpsert);
+                Assert.IsTrue(resultBeforeUpsert.Count == 0);
 
+                EndPoint_Upsert(token);
+
+                var resultsAfterUpsert = EndPoint_Get(token);
+                Assert.IsNotNull(resultsAfterUpsert);
+                Assert.IsTrue(resultsAfterUpsert.Count == 1);
+                var bucketListItem = resultsAfterUpsert[0];
+
+                EndPoint_Delete(token, bucketListItem.Id);
+
+                var resultsAfterDelete = EndPoint_Get(token);
+                Assert.IsNotNull(resultBeforeUpsert);
+                Assert.IsTrue(resultBeforeUpsert.Count == 0);
+            }
+            catch (System.Exception e)
+            {
+                var test = 1;
+            }
 
             //TODO - add requests for each call and make sure each one uses a token
             //EndPoint_TestPage();
@@ -66,14 +86,15 @@ namespace API_IntegrationTests
 
             return token;
         }
-        private void EndPoint_Get(string token)
+        private List<BucketListItem> EndPoint_Get(string token)
         {
             var url = host + "/api/tgimbaapi/getbucketlistitems";
             var query = CreateGetRequest(token, this.userName, "", "");
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
-
-            Assert.IsNotNull(result);
+            var bucketListItems = JsonConvert.DeserializeObject<List<BucketListItem>>(result);
+            
+            return bucketListItems;
         }
         private void EndPoint_Upsert(string token)
         {
@@ -82,6 +103,15 @@ namespace API_IntegrationTests
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var url = host + "/api/tgimbaapi/upsert";
             var result = Post(url, content).Result;
+
+            Assert.AreEqual(true, System.Convert.ToBoolean(result));
+        }
+        private void EndPoint_Delete(string token, int id)
+        {
+            var url = host + "/api/tgimbaapi/delete";
+            var query = CreateDeleteRequest(token, userName, id);
+            var fullUrl = url + query;
+            var result = Delete(fullUrl).Result;
 
             Assert.AreEqual(true, System.Convert.ToBoolean(result));
         }
@@ -96,6 +126,18 @@ namespace API_IntegrationTests
         }
 
         #region Http methods
+
+        private async Task<string> Delete(string url)
+        {
+            var client = new HttpClient();
+
+            var response = await client.DeleteAsync(url);
+            CheckStatus(response);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            return result;
+        }
 
         private async Task<string> Post(string url, StringContent content)
         {
@@ -167,6 +209,14 @@ namespace API_IntegrationTests
                 + "&EncodedToken=" + Base64Encode(token)
                 + "&EncodedSortString=" + Base64Encode(sort)
                 + "&EncodedSearchString=" +  Base64Encode(search);
+
+            return query;
+        }
+        private string CreateDeleteRequest(string token, string userName, int id)
+        {
+            var query = "?EncodedUserName=" + Base64Encode(userName)
+                + "&EncodedToken=" + Base64Encode(token)
+                + "&BucketListItemId=" + id.ToString();
 
             return query;
         }
