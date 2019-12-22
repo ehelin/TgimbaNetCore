@@ -56,48 +56,32 @@ namespace DALNetCore
 
         public User GetUser(string userName)
         {
-            User user = null;
-            try
-            {
-                var dbUser = this.context.User
+            var dbUser = this.context.User
                             .Where(x => x.UserName == userName)
                             .FirstOrDefault();
 
-                user = this.userHelper.ConvertDbUserToUser(dbUser);
-            }
-            catch(Exception e)
-            {
-                var test = 1;
-            }
-
+            var user = this.userHelper.ConvertDbUserToUser(dbUser);
+          
             return user;
         }
 
         public int AddUser(User user)
         {
-            try
+            var dbUser = new models.User
             {
-                var dbUser = new models.User
-                {
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    PassWord = user.Password,
-                    Salt = user.Salt,
-                    Created = DateTime.Now.ToUniversalTime(),
-                    CreatedBy = "Website",
-                    Modified = DateTime.Now.ToUniversalTime(),
-                    ModifiedBy = "Website"
-                };
-                this.context.User.Add(dbUser);
-                this.context.SaveChanges();
+                UserName = user.UserName,
+                Email = user.Email,
+                PassWord = user.Password,
+                Salt = user.Salt,
+                Created = DateTime.Now.ToUniversalTime(),
+                CreatedBy = "Website",
+                Modified = DateTime.Now.ToUniversalTime(),
+                ModifiedBy = "Website"
+            };
+            this.context.User.Add(dbUser);
+            this.context.SaveChanges();
 
-                return dbUser.UserId;
-            } catch (Exception e)
-            {
-                var test = 1;
-            }
-
-            return 1;
+            return dbUser.UserId;
         }
 
         public void DeleteUser(int userId)

@@ -13,38 +13,39 @@ namespace API_IntegrationTests
     public class HappyPathTests
     {
         private string host = "https://localhost:44363";
-        private string userName = "fredFlintstone";
+        private string userName = null;
         private string password = "wilmaRules87&";
         private string email = "fred@bedrock.com";
+
+        private void SetUser()
+        {
+            var guid = System.Guid.NewGuid().ToString();
+            this.userName = "fredFlintstone" + guid;
+        }
 
         [TestMethod]
         public void HappyPathTest()
         {
-            try
-            {
-                EndPoint_Register();
-                var token = EndPoint_Login();
-                var resultBeforeUpsert = EndPoint_Get(token);
-                Assert.IsNotNull(resultBeforeUpsert);
-                Assert.IsTrue(resultBeforeUpsert.Count == 0);
+            SetUser();
 
-                EndPoint_Upsert(token);
+            EndPoint_Register();
+            var token = EndPoint_Login();
+            var resultBeforeUpsert = EndPoint_Get(token);
+            Assert.IsNotNull(resultBeforeUpsert);
+            Assert.IsTrue(resultBeforeUpsert.Count == 0);
 
-                var resultsAfterUpsert = EndPoint_Get(token);
-                Assert.IsNotNull(resultsAfterUpsert);
-                Assert.IsTrue(resultsAfterUpsert.Count == 1);
-                var bucketListItem = resultsAfterUpsert[0];
+            EndPoint_Upsert(token);
 
-                EndPoint_Delete(token, bucketListItem.Id);
+            var resultsAfterUpsert = EndPoint_Get(token);
+            Assert.IsNotNull(resultsAfterUpsert);
+            Assert.IsTrue(resultsAfterUpsert.Count == 1);
+            var bucketListItem = resultsAfterUpsert[0];
 
-                var resultsAfterDelete = EndPoint_Get(token);
-                Assert.IsNotNull(resultBeforeUpsert);
-                Assert.IsTrue(resultBeforeUpsert.Count == 0);
-            }
-            catch (System.Exception e)
-            {
-                var test = 1;
-            }
+            EndPoint_Delete(token, bucketListItem.Id);
+
+            var resultsAfterDelete = EndPoint_Get(token);
+            Assert.IsNotNull(resultBeforeUpsert);
+            Assert.IsTrue(resultBeforeUpsert.Count == 0);
 
             //TODO - add requests for each call and make sure each one uses a token
             //EndPoint_TestPage();
