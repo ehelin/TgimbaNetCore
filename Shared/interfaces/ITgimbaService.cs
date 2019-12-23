@@ -16,8 +16,9 @@ namespace Shared.interfaces
         bool UpsertBucketListItem(BucketListItem bucketListItem, string encodedUser, string encodedToken);
         bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
  
-        IList<SystemStatistic> GetSystemStatistics();
-        IList<SystemBuildStatistic> GetSystemBuildStatistics();
+        IList<SystemStatistic> GetSystemStatistics(string encodedUser, string encodedToken);
+        IList<SystemBuildStatistic> GetSystemBuildStatistics(string encodedUser, string encodedToken);
+        void LogAuthenticated(string msg, string encodedUser, string encodedToken);
         void Log(string msg);
         string LoginDemoUser();
         string GetTestResult();

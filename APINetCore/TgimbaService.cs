@@ -95,6 +95,22 @@ namespace APINetCore
 
         #endregion
 
+        #region Private Methods
+
+        // TODO - move this to helper?
+        private bool IsValidToken(string encodedUser, string encodedToken)
+        {
+            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
+            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
+
+            var user = this.bucketListData.GetUser(decodedUserName);
+            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
+
+            return validToken;
+        }
+
+        #endregion
+
         #region BucketList
 
         public bool DeleteBucketListItem
@@ -105,13 +121,7 @@ namespace APINetCore
         ) {
             bool bucketListItemDeleted = false;
 
-            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
-            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
-
-            var user = this.bucketListData.GetUser(decodedUserName);
-            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
-
-            if (validToken)
+            if (this.IsValidToken(encodedUser, encodedToken))
             {
                 this.bucketListData.DeleteBucketListItem(bucketListDbId);
                 bucketListItemDeleted = true;
@@ -129,15 +139,10 @@ namespace APINetCore
         ) {
             IList <BucketListItem> bucketListItems = null;
 
-            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUserName);
             string decodedSortString = this.stringHelper.DecodeBase64String(encodedSortString);
-            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
             string decodedSrchString = this.stringHelper.DecodeBase64String(encodedSrchString);
 
-            var user = this.bucketListData.GetUser(decodedUserName);
-            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
-
-            if (validToken)
+            if (this.IsValidToken(encodedUserName, encodedToken))
             {
                 Enums.SortColumns? sortColumn = null;
                 bool sortAsc = false;
@@ -148,7 +153,10 @@ namespace APINetCore
                     sortAsc = this.stringHelper.HasSortOrderAsc(decodedSortString);
                 }
                
-                bucketListItems = this.bucketListData.GetBucketList(decodedUserName, sortColumn, sortAsc, decodedSrchString);               
+                bucketListItems = this.bucketListData.GetBucketList(this.stringHelper.DecodeBase64String(encodedUserName), 
+                                                                        sortColumn, 
+                                                                            sortAsc, 
+                                                                               decodedSrchString);               
             }
 
             return bucketListItems;
@@ -162,16 +170,10 @@ namespace APINetCore
         ) {
             // TODO - handle demo user at client so they cannot upsert values
             bool goodUpsert = false;
-
-            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
-            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
-
-            var user = this.bucketListData.GetUser(decodedUserName);
-            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
-
-            if (validToken)
+            
+            if (this.IsValidToken(encodedUser, encodedToken))
             {
-                this.bucketListData.UpsertBucketListItem(bucketListItem, decodedUserName);
+                this.bucketListData.UpsertBucketListItem(bucketListItem, this.stringHelper.DecodeBase64String(encodedUser));
                 goodUpsert = true;
             }          
 
@@ -182,24 +184,46 @@ namespace APINetCore
 
         #region Misc
 
-        public IList<SystemBuildStatistic> GetSystemBuildStatistics()
+        public IList<SystemBuildStatistic> GetSystemBuildStatistics(string encodedUser, string encodedToken)
         {
-            var systemBuildStatistics = this.bucketListData.GetSystemBuildStatistics();
+            IList<SystemBuildStatistic> systemBuildStatistics = null;
+
+            if (this.IsValidToken(encodedUser, encodedToken))
+            {
+                systemBuildStatistics = this.bucketListData.GetSystemBuildStatistics();
+            }
+
             return systemBuildStatistics;
         }
 
-        public IList<SystemStatistic> GetSystemStatistics()
+        public IList<SystemStatistic> GetSystemStatistics(string encodedUser, string encodedToken)
         {
-            var systemBuildStatistics = this.bucketListData.GetSystemStatistics();
+            IList<SystemStatistic> systemBuildStatistics = null;
+            
+            if (this.IsValidToken(encodedUser, encodedToken))
+            {
+                systemBuildStatistics = this.bucketListData.GetSystemStatistics();
+            }
+            
             return systemBuildStatistics;
         }
 
+        // TODO - verify you have added tests for...
+        public void LogAuthenticated(string msg, string encodedUser, string encodedToken)
+        {
+            if (this.IsValidToken(encodedUser, encodedToken))
+            {
+                this.Log(msg);
+            }
+        }
+
+        // TODO - verify you have added tests for...
         public void Log(string msg)
         {
             this.bucketListData.LogMsg(msg);
         }
 
-        public string LoginDemoUser() 
+        public string LoginDemoUser()
         {
             string jwtToken = null;
             var user = this.bucketListData.GetUser(Constants.DEMO_USER);

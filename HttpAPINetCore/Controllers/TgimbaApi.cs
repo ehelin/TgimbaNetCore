@@ -119,18 +119,17 @@ namespace HttpAPINetCore.Controllers
                 return this.HandleError(ex);
             }
         }
+
         #endregion
 
         #region Misc
 
-        // TODO - add requests for each endpoint (including test...none of these should be open and need to require a token)
-
         [HttpGet("getsystemstatistics")]
-        public IActionResult GetSystemStatistics()
+        public IActionResult GetSystemStatistics(string encodedUser, string encodedToken)
         {
             try
             {
-                var systemStatistics = this.service.GetSystemStatistics();
+                var systemStatistics = this.service.GetSystemStatistics(encodedUser, encodedToken);
 
                 if (systemStatistics == null || systemStatistics.Count == 0)
                 {
@@ -147,11 +146,11 @@ namespace HttpAPINetCore.Controllers
         }
 
         [HttpGet("getsystembuildstatistics")]
-        public IActionResult GetSystemBuildStatistics()
+        public IActionResult GetSystemBuildStatistics(string encodedUser, string encodedToken)
         {
             try
             {
-                var systemBuildStatistics = this.service.GetSystemBuildStatistics();
+                var systemBuildStatistics = this.service.GetSystemBuildStatistics(encodedUser, encodedToken);
 
                 if (systemBuildStatistics == null || systemBuildStatistics.Count == 0)
                 {
@@ -168,7 +167,7 @@ namespace HttpAPINetCore.Controllers
         }
 
         [HttpPost("log")]
-        public IActionResult Log([FromBody] string msg)
+        public IActionResult Log([FromBody] string msg, string encodedUser, string encodedToken)
         {
             try 
             {
@@ -177,7 +176,7 @@ namespace HttpAPINetCore.Controllers
                     return BadRequest();
                 }
 
-                this.service.Log(msg);
+                this.service.LogAuthenticated(msg, encodedUser, encodedToken);
                 return Ok(); // 200
             } 
             catch(Exception ex)
