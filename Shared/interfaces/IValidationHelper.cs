@@ -10,5 +10,6 @@ namespace Shared.interfaces
         void IsValidRequest(TokenRequest request);
         void IsValidRequest(LoginRequest request);
         void IsValidRequest(RegistrationRequest request);
+        void IsValidRequest(LogMessageRequest request);
     }
 }

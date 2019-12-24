@@ -53,6 +53,16 @@ namespace TestHttpAPINetCore_Unit
 
             return request;
         }
+        protected LogMessageRequest GetLogMessageRequest()
+        {
+            var request = new LogMessageRequest()
+            {
+                Token = SetTokenRequest(),
+                Message = "IAmALogMessage"
+            };
+
+            return request;
+        }
         protected LoginRequest GetLoginRequest()
         {
             var request = new LoginRequest()

@@ -1,11 +1,11 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Shared.dto.api;
 using Shared.dto;
+using Shared.dto.api;
 using Shared.misc;
-using System.Collections.Generic;
 
 namespace API_IntegrationTests
 {
@@ -50,8 +50,7 @@ namespace API_IntegrationTests
             //misc endpoints
             EndPoint_GetSystemStatistics(token);
             EndPoint_GetSystemBuildStatistics(token);
-            // TODO update to be a post...doh!
-            //EndPoint_Log(token);
+            EndPoint_Log(token);
             EndPoint_TestPage();
         }
 
@@ -142,11 +141,18 @@ namespace API_IntegrationTests
         }
         private void EndPoint_Log(string token)
         {
+            var request = new LoginRequest()
+            {
+                EncodedUserName = Base64Encode(userName),
+                EncodedPassword = Base64Encode(password)
+            };
+
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var url = host + "/api/tgimbaapi/log";
-            var query = CreateLogQueryString("IAmALogMsg", token, userName);
-            var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
+
             // Test is if a 200 returns
+            Post(url, content);    
         }
         private void EndPoint_TestPage()
         {

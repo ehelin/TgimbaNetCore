@@ -85,6 +85,16 @@ namespace HttpAPINetCore.helpers
             }
         }
 
+        public void IsValidRequest(LogMessageRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request is null");
+            }
+
+            this.IsValidRequest(request.Token);
+        }
+
         public void IsValidRequest(UpsertBucketListItemRequest request)
         {
             if (request == null)

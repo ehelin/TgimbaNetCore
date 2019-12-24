@@ -167,16 +167,13 @@ namespace HttpAPINetCore.Controllers
         }
 
         [HttpPost("log")]
-        public IActionResult Log([FromBody] string msg, string encodedUser, string encodedToken)
+        public IActionResult Log([FromBody] LogMessageRequest request)
         {
-            try 
+            try
             {
-                if (string.IsNullOrEmpty(msg))
-                {
-                    return BadRequest();
-                }
+                this.validationHelper.IsValidRequest(request);
 
-                this.service.LogAuthenticated(msg, encodedUser, encodedToken);
+                this.service.LogAuthenticated(request.Message, request.Token.EncodedUserName, request.Token.EncodedToken);
                 return Ok(); // 200
             } 
             catch(Exception ex)

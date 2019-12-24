@@ -112,6 +112,43 @@ namespace TestHttpAPINetCore_Unit
         }
 
         [TestMethod]
+        public void LogMessage_HappyPathTest()
+        {
+            var request = GetLogMessageRequest();
+
+            IActionResult result = tgimbaApi.Log(request);
+
+            OkResult requestResult = (OkResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
+            tgimbaService.Verify(x => x.LogAuthenticated(It.Is<string>(s => s == request.Message), 
+                                                            It.IsAny<string>(), 
+                                                                It.IsAny<string>()), 
+                                                                    Times.Once);
+        }
+
+        [TestMethod]
+        public void LogMessage_ValidationError()
+        {
+            var request = GetLogMessageRequest();
+            validationHelper.Setup(x => x.IsValidRequest
+                                        (It.IsAny<LogMessageRequest>()))
+                                            .Throws(new ArgumentNullException(""));
+
+            IActionResult result = tgimbaApi.Log(request);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(500, Convert.ToInt32(System.Net.HttpStatusCode.InternalServerError));
+            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
+            tgimbaService.Verify(x => x.LogAuthenticated(It.Is<string>(s => s == request.Message),
+                                                        It.IsAny<string>(),
+                                                            It.IsAny<string>()),
+                                                                Times.Never);
+        }
+
+        [TestMethod]
         public void UpsertBucketListItem_ValidationErrorTest()
         {
             var request = GetUpsertRequest();
