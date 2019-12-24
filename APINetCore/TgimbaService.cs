@@ -97,7 +97,6 @@ namespace APINetCore
 
         #region Private Methods
 
-        // TODO - move this to helper?
         private bool IsValidToken(string encodedUser, string encodedToken)
         {
             string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);

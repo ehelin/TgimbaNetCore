@@ -177,7 +177,7 @@ namespace TestAPINetCore_Unit
         ) {           
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUser))
-                            , Times.Once); 
+                            , Times.AtLeastOnce); 
             this.mockString.Verify(x => x.DecodeBase64String
                 (It.Is<string>(s => s == encodedToken))
                     , Times.Once);
@@ -321,7 +321,7 @@ namespace TestAPINetCore_Unit
         ) {
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUser))
-                            , Times.Once);
+                            , Times.AtLeastOnce);
             this.mockString.Verify(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedSortString))
                             , Times.Once);

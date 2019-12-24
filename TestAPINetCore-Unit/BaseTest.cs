@@ -6,6 +6,7 @@ using Shared;
 using Shared.dto;
 using Shared.interfaces;
 using Shared.misc;
+using TestAPINetCore_Unit.dto;
 
 namespace TestAPINetCore_Unit
 {
@@ -82,6 +83,44 @@ namespace TestAPINetCore_Unit
             var jwtToken = generatorHelper.GetJwtToken(jwtPrivateKey, jwtIssuer, tokenLife);
 
             return jwtToken;
+        }
+
+        protected TestToken SetUpTokenForTesting(bool validToken)
+        {
+            var testToken = new TestToken()
+            {
+                EncodedUserName = "base64EncodedUserName",
+                EncodedToken = "base64EncodedToken",
+                DecodedUserName = "decodedUser",
+                DecodedToken = "decodedToken"
+            };
+            var userToReturn = GetUser(1, testToken.DecodedUserName);
+            this.mockString.Setup(x => x.DecodeBase64String(
+                                            It.Is<string>(s => s == testToken.EncodedUserName)))
+                                                .Returns("decodedUser");
+            this.mockString.Setup(x => x.DecodeBase64String(
+                                            It.Is<string>(s => s == testToken.EncodedToken)))
+                                                .Returns("decodedToken");
+            this.mockBucketListData.Setup(x => x.GetUser(
+                                            It.Is<string>(s => s == testToken.DecodedUserName)))
+                                                .Returns(userToReturn);
+            this.mockPassword.Setup(x => x.IsValidToken(
+                                            It.Is<User>(s => s.UserName == userToReturn.UserName),
+                                            It.Is<string>(s => s == testToken.DecodedToken)))
+                                                .Returns(validToken);
+
+            return testToken;
+        }
+
+        protected void TestTokenVerifies(TestToken testToken)
+        {
+            this.mockString.Verify(x => x.DecodeBase64String(It.Is<string>(s => s == testToken.EncodedUserName)), Times.Once);
+            this.mockString.Verify(x => x.DecodeBase64String(It.Is<string>(s => s == testToken.EncodedToken)), Times.Once);
+            this.mockBucketListData.Verify(x => x.GetUser(It.Is<string>(s => s == testToken.DecodedUserName)), Times.Once);
+            this.mockPassword.Verify(x => x.IsValidToken(
+                                                It.Is<User>(s => s.UserName == testToken.DecodedUserName),
+                                                    It.Is<string>(s => s == testToken.DecodedToken))
+                                                        , Times.Once);
         }
     }
 }

@@ -10,206 +10,229 @@ namespace TestAPINetCore_Unit
     [TestClass]
     public class MiscTests : BaseTest
     {
-        [TestMethod]
-        public void Log_HappyPathTest_MsgLogged()
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void LogAuthenticated_HappyPathTest(bool isValidToken)
         {
             var msg = "I am a message";
-            var encodedUser = "base64EncodedUserName";
-            var encodedToken = "base64EncodedToken";
-            var decodedUser = "decodedUser";
-            var decodedToken = "decodedToken";
-            var userToReturn = GetUser();
-            this.mockString.Setup(x => x.DecodeBase64String(
-                                            It.Is<string>(s => s == encodedUser)))  
-                                                .Returns("decodedUser");
-            this.mockString.Setup(x => x.DecodeBase64String(
-                                            It.Is<string>(s => s == encodedToken)))
-                                                .Returns("decodedToken");
-            this.mockBucketListData.Setup(x => x.GetUser(
-                                            It.Is<string>(s => s == decodedUser)))
-                                                .Returns(userToReturn);
-            this.mockPassword.Setup(x => x.IsValidToken(
-                                            It.Is<User>(s => s.UserName == userToReturn.UserName),
-                                            It.Is<string>(s => s == decodedToken)))
-                                                .Returns(true);
-                       
-            this.service.LogAuthenticated(msg, encodedUser, encodedToken);
+            var testToken = SetUpTokenForTesting(isValidToken);
 
-            this.mockString.Verify(x => x.DecodeBase64String(It.Is<string>(s => s == encodedUser)), Times.Once);
-            this.mockString.Verify(x => x.DecodeBase64String(It.Is<string>(s => s == encodedToken)), Times.Once);
-            this.mockBucketListData.Verify(x => x.GetUser(It.Is<string>(s => s == decodedUser)), Times.Once);
-            this.mockPassword.Verify(x => x.IsValidToken(
-                                                It.Is<User>(s => s.UserName == userToReturn.UserName),
-                                                    It.Is<string>(s => s == decodedToken))
-                                                        , Times.Once);
+            this.service.LogAuthenticated(msg, testToken.EncodedUserName, testToken.EncodedToken);
+
+            if (isValidToken)
+            {
+                this.mockBucketListData.Verify(x => x.LogMsg(It.Is<string>(s => s.Contains(msg))), Times.Once);
+            }
+            else
+            {
+                this.mockBucketListData.Verify(x => x.LogMsg(It.Is<string>(s => s.Contains(msg))), Times.Never);
+            }
+
+            TestTokenVerifies(testToken);
+        }
+
+        [TestMethod]
+        public void Log_HappyPathTest()
+        {
+            var msg = "I am a message";
+
+            this.service.Log(msg);
+
             this.mockBucketListData.Verify(x => x.LogMsg(It.Is<string>(s => s.Contains(msg))), Times.Once);
         }
 
-        //[TestMethod]
-        //public void GetSystemStatistics_HappyPathTest()
-        //{
-        //    var systemStatisticToReturn = new SystemStatistic()
-        //    {
-        //        WebSiteIsUp = true,
-        //        DatabaseIsUp = true,
-        //        AzureFunctionIsUp = true,
-        //        Created = DateTime.UtcNow.ToString()
-        //    };
-        //    IList<SystemStatistic> systemStatisticsToReturn = new List<SystemStatistic>();
-        //    systemStatisticsToReturn.Add(systemStatisticToReturn);
-        //    this.mockBucketListData.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void GetSystemStatistics_HappyPathTest(bool isValidToken)
+        {
+            var testToken = SetUpTokenForTesting(isValidToken);
+            var systemStatisticToReturn = new SystemStatistic()
+            {
+                WebSiteIsUp = true,
+                DatabaseIsUp = true,
+                AzureFunctionIsUp = true,
+                Created = DateTime.UtcNow.ToString()
+            };
+            IList<SystemStatistic> systemStatisticsToReturn = new List<SystemStatistic>();
+            systemStatisticsToReturn.Add(systemStatisticToReturn);
+            this.mockBucketListData.Setup(x => x.GetSystemStatistics()).Returns(systemStatisticsToReturn);
 
-        //    var systemStatistics = this.service.GetSystemStatistics();
+            var systemStatistics = this.service.GetSystemStatistics(testToken.EncodedUserName, testToken.EncodedToken);
 
-        //    Assert.IsNotNull(systemStatistics);
-        //    Assert.AreEqual(systemStatisticToReturn.WebSiteIsUp, systemStatistics[0].WebSiteIsUp);
-        //    Assert.AreEqual(systemStatisticToReturn.DatabaseIsUp, systemStatistics[0].DatabaseIsUp);
-        //    Assert.AreEqual(systemStatisticToReturn.AzureFunctionIsUp, systemStatistics[0].AzureFunctionIsUp);
-        //    Assert.AreEqual(systemStatisticToReturn.Created, systemStatistics[0].Created);
-        //    this.mockBucketListData.Verify(x => x.GetSystemStatistics(), Times.Once);
-        //}
+            if (isValidToken)
+            {
+                Assert.IsNotNull(systemStatistics);
+                Assert.AreEqual(systemStatisticToReturn.WebSiteIsUp, systemStatistics[0].WebSiteIsUp);
+                Assert.AreEqual(systemStatisticToReturn.DatabaseIsUp, systemStatistics[0].DatabaseIsUp);
+                Assert.AreEqual(systemStatisticToReturn.AzureFunctionIsUp, systemStatistics[0].AzureFunctionIsUp);
+                Assert.AreEqual(systemStatisticToReturn.Created, systemStatistics[0].Created);
+                this.mockBucketListData.Verify(x => x.GetSystemStatistics(), Times.Once);
+            }
+            else
+            {
+                Assert.IsNull(systemStatistics);
+            }
 
-        //[TestMethod]
-        //public void GetSystemBuildStatistics_HappyPathTest()
-        //{
-        //    var commonDate = DateTime.UtcNow.ToString();
-        //    var systemBuildStatisticToReturn = new SystemBuildStatistic()
-        //    {
-        //        Start = commonDate,
-        //        End = commonDate,
-        //        BuildNumber = "build",
-        //        Status = "status"
-        //    };
-        //    var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
-        //    systemBuildStatisticsToReturn.Add(systemBuildStatisticToReturn);
-        //    this.mockBucketListData.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
+            TestTokenVerifies(testToken);
+        }
 
-        //    var systemBuildStatistics = this.service.GetSystemBuildStatistics();
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void GetSystemBuildStatistics_HappyPathTest(bool isValidToken)
+        {
+            var testToken = SetUpTokenForTesting(isValidToken);
+            var commonDate = DateTime.UtcNow.ToString();
+            var systemBuildStatisticToReturn = new SystemBuildStatistic()
+            {
+                Start = commonDate,
+                End = commonDate,
+                BuildNumber = "build",
+                Status = "status"
+            };
+            var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
+            systemBuildStatisticsToReturn.Add(systemBuildStatisticToReturn);
+            this.mockBucketListData.Setup(x => x.GetSystemBuildStatistics()).Returns(systemBuildStatisticsToReturn);
 
-        //    Assert.IsNotNull(systemBuildStatistics);
-        //    Assert.AreEqual(systemBuildStatisticToReturn.Start, systemBuildStatistics[0].Start);
-        //    Assert.AreEqual(systemBuildStatisticToReturn.End, systemBuildStatistics[0].End);
-        //    Assert.AreEqual(systemBuildStatisticToReturn.BuildNumber, systemBuildStatistics[0].BuildNumber);
-        //    Assert.AreEqual(systemBuildStatisticToReturn.Status, systemBuildStatistics[0].Status);
-        //    this.mockBucketListData.Verify(x => x.GetSystemBuildStatistics(), Times.Once);
-        //}
+            var systemBuildStatistics = this.service.GetSystemBuildStatistics(testToken.EncodedUserName, testToken.EncodedToken);
 
-        //[TestMethod]
-        //public void GetTestResult_HappyPathTest()
-        //{
-        //    var testResult = this.service.GetTestResult();
+            if (isValidToken)
+            {
+                Assert.IsNotNull(systemBuildStatistics);
+                Assert.AreEqual(systemBuildStatisticToReturn.Start, systemBuildStatistics[0].Start);
+                Assert.AreEqual(systemBuildStatisticToReturn.End, systemBuildStatistics[0].End);
+                Assert.AreEqual(systemBuildStatisticToReturn.BuildNumber, systemBuildStatistics[0].BuildNumber);
+                Assert.AreEqual(systemBuildStatisticToReturn.Status, systemBuildStatistics[0].Status);
+                this.mockBucketListData.Verify(x => x.GetSystemBuildStatistics(), Times.Once);
+            }
+            else
+            {
+                Assert.IsNull(systemBuildStatistics);
+            }
 
-        //    Assert.IsNotNull(testResult);
-        //    Assert.AreEqual(Constants.API_TEST_RESULT, testResult);
-        //}
+            TestTokenVerifies(testToken);
+        }
 
-        //#region Login Demo User Tests
+        [TestMethod]
+        public void GetTestResult_HappyPathTest()
+        {
+            var testResult = this.service.GetTestResult();
 
-        //[TestMethod]
-        //public void LoginDemoUser_HappyPathTest()
-        //{
-        //    var jwtToken = "jwtToken";
-        //    var jwtPrivateKey = "jwtPrivateKey";
-        //    var jwtIssuer = "jwtIssuer";
-        //    var demoUserToReturn = GetUser(1, Constants.DEMO_USER, Constants.DEMO_USER_PASSWORD);
-        //    var expectedHashPasswordParameter = new Password(Constants.DEMO_USER_PASSWORD);
-        //    var expectedHashPasswordToReturn = new Password(Constants.DEMO_USER_PASSWORD);
+            Assert.IsNotNull(testResult);
+            Assert.AreEqual(Constants.API_TEST_RESULT, testResult);
+        }
 
-        //    LoginDemoUserTest_MockSetup(jwtToken, jwtPrivateKey, jwtIssuer, demoUserToReturn, expectedHashPasswordParameter, expectedHashPasswordToReturn);
+        #region Login Demo User Tests
 
-        //    var token = this.service.LoginDemoUser();
+        [TestMethod]
+        public void LoginDemoUser_HappyPathTest()
+        {
+            var jwtToken = "jwtToken";
+            var jwtPrivateKey = "jwtPrivateKey";
+            var jwtIssuer = "jwtIssuer";
+            var demoUserToReturn = GetUser(1, Constants.DEMO_USER, Constants.DEMO_USER_PASSWORD);
+            var expectedHashPasswordParameter = new Password(Constants.DEMO_USER_PASSWORD);
+            var expectedHashPasswordToReturn = new Password(Constants.DEMO_USER_PASSWORD);
 
-        //    LoginDemoUserTest_Asserts(token, jwtToken, jwtPrivateKey, jwtIssuer, demoUserToReturn, expectedHashPasswordParameter, expectedHashPasswordToReturn);
-        //}
+            LoginDemoUserTest_MockSetup(jwtToken, jwtPrivateKey, jwtIssuer, demoUserToReturn, expectedHashPasswordParameter, expectedHashPasswordToReturn);
 
-        //[TestMethod]
-        //public void LoginDemoUser_PasswordsDoNotMatch()
-        //{
-        //    var demoUserToReturn = GetUser(1, Constants.DEMO_USER, Constants.DEMO_USER_PASSWORD);
-        //    this.mockBucketListData
-        //        .Setup(x => x.GetUser(It.Is<string>(s => s == Constants.DEMO_USER)))
-        //            .Returns(demoUserToReturn);
-        //    var token = this.service.LoginDemoUser();
+            var token = this.service.LoginDemoUser();
 
-        //    Assert.IsNull(token);
-        //}
-        
-        //[TestMethod]
-        //public void LoginDemoUser_UserDoesNotExist()
-        //{
-        //    var token = this.service.LoginDemoUser();
+            LoginDemoUserTest_Asserts(token, jwtToken, jwtPrivateKey, jwtIssuer, demoUserToReturn, expectedHashPasswordParameter, expectedHashPasswordToReturn);
+        }
 
-        //    Assert.IsNull(token);
-        //}
+        [TestMethod]
+        public void LoginDemoUser_PasswordsDoNotMatch()
+        {
+            var demoUserToReturn = GetUser(1, Constants.DEMO_USER, Constants.DEMO_USER_PASSWORD);
+            this.mockBucketListData
+                .Setup(x => x.GetUser(It.Is<string>(s => s == Constants.DEMO_USER)))
+                    .Returns(demoUserToReturn);
+            var token = this.service.LoginDemoUser();
 
-        //#region private methods
+            Assert.IsNull(token);
+        }
 
-        //private void LoginDemoUserTest_MockSetup
-        //(
-        //    string jwtToken,
-        //    string jwtPrivateKey, 
-        //    string jwtIssuer, 
-        //    User demoUserToReturn, 
-        //    Password expectedHashPasswordParameter, 
-        //    Password expectedHashPasswordToReturn
-        //) {
-        //    expectedHashPasswordToReturn.SaltedHashedPassword = "saltedDemoUserPassword";
+        [TestMethod]
+        public void LoginDemoUser_UserDoesNotExist()
+        {
+            var token = this.service.LoginDemoUser();
 
-        //    this.mockBucketListData
-        //        .Setup(x => x.GetUser(It.Is<string>(s => s == Constants.DEMO_USER)))
-        //            .Returns(demoUserToReturn);
-        //    this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKey);
-        //    this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuer);
-        //    this.mockPassword.Setup(x =>
-        //        x.HashPassword
-        //            (It.Is<Password>(s => s.GetPassword() == expectedHashPasswordParameter.GetPassword())))
-        //                .Returns(expectedHashPasswordToReturn);
-        //    this.mockPassword.Setup(x =>
-        //            x.PasswordsMatch
-        //                (It.Is<Password>(z => z == expectedHashPasswordToReturn)
-        //                , It.Is<User>(s => s == demoUserToReturn))).Returns(true);
-        //    this.mockGenerator.Setup(x =>
-        //            x.GetJwtToken
-        //                (It.Is<string>(z => z == jwtPrivateKey)
-        //                , It.Is<string>(s => s == jwtIssuer)
-        //                , It.Is<int>(s => s == Constants.TOKEN_LIFE))).Returns(jwtToken);
-        //}
+            Assert.IsNull(token);
+        }
 
-        //private void LoginDemoUserTest_Asserts
-        //(
-        //    string token,
-        //    string jwtToken,
-        //    string jwtPrivateKey,
-        //    string jwtIssuer,
-        //    User demoUserToReturn,
-        //    Password expectedHashPasswordParameter,
-        //    Password expectedHashPasswordToReturn
-        //) {
-        //    Assert.IsNotNull(token);
-        //    Assert.IsTrue(token.Length > 0);
-        //    Assert.AreEqual(jwtToken, token);
+        #region private methods
 
-        //    this.mockPassword
-        //        .Verify(x => x.HashPassword(
-        //            It.Is<Password>(s => s.GetPassword() == expectedHashPasswordParameter.GetPassword()))
-        //                    , Times.Once);
-        //    this.mockPassword.Verify(x =>
-        //            x.PasswordsMatch
-        //                (It.Is<Password>(z => z == expectedHashPasswordToReturn)
-        //                , It.Is<User>(s => s == demoUserToReturn))
-        //                , Times.Once);
-        //    this.mockGenerator.Verify(x => x.GetJwtPrivateKey(), Times.Once);
-        //    this.mockGenerator.Verify(x => x.GetJwtIssuer(), Times.Once);
-        //    this.mockGenerator.Verify(x =>
-        //            x.GetJwtToken
-        //                (It.Is<string>(z => z == jwtPrivateKey)
-        //                , It.Is<string>(s => s == jwtIssuer)
-        //                , It.Is<int>(s => s == Constants.TOKEN_LIFE))
-        //                , Times.Once);
-        // }
+        private void LoginDemoUserTest_MockSetup
+        (
+            string jwtToken,
+            string jwtPrivateKey,
+            string jwtIssuer,
+            User demoUserToReturn,
+            Password expectedHashPasswordParameter,
+            Password expectedHashPasswordToReturn
+        )
+        {
+            expectedHashPasswordToReturn.SaltedHashedPassword = "saltedDemoUserPassword";
 
-        //#endregion
+            this.mockBucketListData
+                .Setup(x => x.GetUser(It.Is<string>(s => s == Constants.DEMO_USER)))
+                    .Returns(demoUserToReturn);
+            this.mockGenerator.Setup(x => x.GetJwtPrivateKey()).Returns(jwtPrivateKey);
+            this.mockGenerator.Setup(x => x.GetJwtIssuer()).Returns(jwtIssuer);
+            this.mockPassword.Setup(x =>
+                x.HashPassword
+                    (It.Is<Password>(s => s.GetPassword() == expectedHashPasswordParameter.GetPassword())))
+                        .Returns(expectedHashPasswordToReturn);
+            this.mockPassword.Setup(x =>
+                    x.PasswordsMatch
+                        (It.Is<Password>(z => z == expectedHashPasswordToReturn)
+                        , It.Is<User>(s => s == demoUserToReturn))).Returns(true);
+            this.mockGenerator.Setup(x =>
+                    x.GetJwtToken
+                        (It.Is<string>(z => z == jwtPrivateKey)
+                        , It.Is<string>(s => s == jwtIssuer)
+                        , It.Is<int>(s => s == Constants.TOKEN_LIFE))).Returns(jwtToken);
+        }
 
-        //#endregion
+        private void LoginDemoUserTest_Asserts
+        (
+            string token,
+            string jwtToken,
+            string jwtPrivateKey,
+            string jwtIssuer,
+            User demoUserToReturn,
+            Password expectedHashPasswordParameter,
+            Password expectedHashPasswordToReturn
+        )
+        {
+            Assert.IsNotNull(token);
+            Assert.IsTrue(token.Length > 0);
+            Assert.AreEqual(jwtToken, token);
+
+            this.mockPassword
+                .Verify(x => x.HashPassword(
+                    It.Is<Password>(s => s.GetPassword() == expectedHashPasswordParameter.GetPassword()))
+                            , Times.Once);
+            this.mockPassword.Verify(x =>
+                    x.PasswordsMatch
+                        (It.Is<Password>(z => z == expectedHashPasswordToReturn)
+                        , It.Is<User>(s => s == demoUserToReturn))
+                        , Times.Once);
+            this.mockGenerator.Verify(x => x.GetJwtPrivateKey(), Times.Once);
+            this.mockGenerator.Verify(x => x.GetJwtIssuer(), Times.Once);
+            this.mockGenerator.Verify(x =>
+                    x.GetJwtToken
+                        (It.Is<string>(z => z == jwtPrivateKey)
+                        , It.Is<string>(s => s == jwtIssuer)
+                        , It.Is<int>(s => s == Constants.TOKEN_LIFE))
+                        , Times.Once);
+        }
+
+        #endregion
+
+        #endregion
     }
 }
