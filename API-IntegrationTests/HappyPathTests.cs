@@ -47,8 +47,12 @@ namespace API_IntegrationTests
             Assert.IsNotNull(resultBeforeUpsert);
             Assert.IsTrue(resultBeforeUpsert.Count == 0);
 
-            //TODO - add requests for each call and make sure each one uses a token
-            //EndPoint_TestPage();
+            //misc endpoints
+            EndPoint_GetSystemStatistics(token);
+            EndPoint_GetSystemBuildStatistics(token);
+            // TODO update to be a post...doh!
+            //EndPoint_Log(token);
+            EndPoint_TestPage();
         }
 
         private void EndPoint_Register()
@@ -90,7 +94,7 @@ namespace API_IntegrationTests
         private List<BucketListItem> EndPoint_Get(string token)
         {
             var url = host + "/api/tgimbaapi/getbucketlistitems";
-            var query = CreateGetRequest(token, this.userName, "", "");
+            var query = CreateGetQueryString(token, this.userName, "", "");
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
             var bucketListItems = JsonConvert.DeserializeObject<List<BucketListItem>>(result);
@@ -110,14 +114,40 @@ namespace API_IntegrationTests
         private void EndPoint_Delete(string token, int id)
         {
             var url = host + "/api/tgimbaapi/delete";
-            var query = CreateDeleteRequest(token, userName, id);
+            var query = CreateDeleteQueryString(token, userName, id);
             var fullUrl = url + query;
             var result = Delete(fullUrl).Result;
 
             Assert.AreEqual(true, System.Convert.ToBoolean(result));
         }
+        private void EndPoint_GetSystemStatistics(string token)
+        {
+            var url = host + "/api/tgimbaapi/getsystemstatistics";
+            var query = CreateTokenQueryString(token, userName);
+            var fullUrl = url + query;
+            var result = Get(fullUrl).Result;
 
-        // TODO - add requests to test page and all other endpoints to currently expecting a token...they need to take a token
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
+        }
+        private void EndPoint_GetSystemBuildStatistics(string token)
+        {
+            var url = host + "/api/tgimbaapi/getsystembuildstatistics";
+            var query = CreateTokenQueryString(token, userName);
+            var fullUrl = url + query;
+            var result = Get(fullUrl).Result;
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
+        }
+        private void EndPoint_Log(string token)
+        {
+            var url = host + "/api/tgimbaapi/log";
+            var query = CreateLogQueryString("IAmALogMsg", token, userName);
+            var fullUrl = url + query;
+            var result = Get(fullUrl).Result;
+            // Test is if a 200 returns
+        }
         private void EndPoint_TestPage()
         {
             var url = host + "/api/tgimbaapi/test";
@@ -204,7 +234,7 @@ namespace API_IntegrationTests
 
             return request;
         }
-        private string CreateGetRequest(string token, string userName, string sort, string search)
+        private string CreateGetQueryString(string token, string userName, string sort, string search)
         {
             var query = "?EncodedUserName=" + Base64Encode(userName)
                 + "&EncodedToken=" + Base64Encode(token)
@@ -213,11 +243,26 @@ namespace API_IntegrationTests
 
             return query;
         }
-        private string CreateDeleteRequest(string token, string userName, int id)
+        private string CreateDeleteQueryString(string token, string userName, int id)
         {
             var query = "?EncodedUserName=" + Base64Encode(userName)
                 + "&EncodedToken=" + Base64Encode(token)
                 + "&BucketListItemId=" + id.ToString();
+
+            return query;
+        }
+        private string CreateLogQueryString(string msg, string token, string userName)
+        {
+            var query = "?msg=" + msg
+                + "&encodedUser =" + Base64Encode(userName)
+                + "&encodedToken=" + Base64Encode(token);
+
+            return query;
+        }
+        private string CreateTokenQueryString(string token, string userName)
+        {
+            var query = "?encodedUser=" + Base64Encode(userName)
+                + "&encodedToken=" + Base64Encode(token);
 
             return query;
         }
