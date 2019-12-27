@@ -1,82 +1,122 @@
-﻿using Shared.interfaces;
-using System;
-using TgimbaNetCoreWebShared.Models;
+﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Shared.dto;
+using Shared.interfaces;
+using TgimbaNetCoreWebShared.Models;
+using SharedMisc = Shared.misc;
+using SharedApi = Shared.dto.api;
+using Newtonsoft.Json;
 
 namespace TgimbaNetCoreWebShared
 {
     public class WebClient : IWebClient
     {
-        private ITgimbaService_Old service = null;
+        private string host = null;        
 
-        public WebClient(ITgimbaService_Old service)
+        public WebClient(string host)
         {
-            this.service = service;
+            this.host = host;
         }
 
-        public List<SystemStatistic> GetSystemStatistics()
+        private string CreateTokenQueryString(string token, string userName)
         {
-            var results = this.service.GetSystemStatistics();
+            var query = "?encodedUser=" + SharedMisc.Utilities.EncodeClientBase64String(userName)
+               + "&encodedToken=" + SharedMisc.Utilities.EncodeClientBase64String(token);
 
-            return results;
+            return query;
         }
 
-        public List<SystemBuildStatistic> GetSystemBuildStatistics()
+        public List<SystemStatistic> GetSystemStatistics(string userName, string token)
         {
-            var results = this.service.GetSystemBuildStatistics();
+            var url = host + "/api/tgimbaapi/getsystemstatistics"; 
+            var query = CreateTokenQueryString(token, userName);
+            var fullUrl = url + query;
+            var result = Get(fullUrl).Result;
 
-            return results;
+            var systemStatistics = JsonConvert.DeserializeObject<List<SystemStatistic>>(result);
+
+            return systemStatistics;
+        }
+
+        public List<SystemBuildStatistic> GetSystemBuildStatistics(string userName, string token)
+        {
+            var url = host + "/api/tgimbaapi/getsystemstatistics";
+            var query = CreateTokenQueryString(token, userName);
+            var fullUrl = url + query;
+            var result = Get(fullUrl).Result;
+
+            var systemBuildStatistics = JsonConvert.DeserializeObject< List<SystemBuildStatistic>>(result);
+
+            return systemBuildStatistics;
         }
         
         public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken) 
 		{
-			var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
-			var bucketListItemArrayBase64 = Shared.misc.Utilities.EncodeClientBase64String(bucketListItemArray);
+            // TODO - convert bucket list item to one used by API
+            // TODO - create request
+            // TODO - make upsert call
+            // TODO - parse and return the result
+            throw new NotImplementedException();
 
-			var result = this.service.UpsertBucketListItemV2(bucketListItemArrayBase64, encodedUser, encodedToken);
+			//var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
+			//var bucketListItemArrayBase64 = Shared.misc.Utilities.EncodeClientBase64String(bucketListItemArray);
 
-			if (result != null && result.Length == 1 && result[0] == "TokenValid")
-			{		 
-				return true;
-			}
-			else 
-			{	   
-				return false;
-			}				
+			//var result = this.service.UpsertBucketListItemV2(bucketListItemArrayBase64, encodedUser, encodedToken);
+
+			//if (result != null && result.Length == 1 && result[0] == "TokenValid")
+			//{		 
+			//	return true;
+			//}
+			//else 
+			//{	   
+			//	return false;
+			//}				
 		}
 
 		public bool EditBucketListItem(SharedBucketListModel bucketListItem, string encodedUser, string encodedToken)
-		{										
-			var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
-			var bucketListItemArrayBase64 = Shared.misc.Utilities.EncodeClientBase64String(bucketListItemArray);
+        {
+            // TODO - convert bucket list item to one used by API
+            // TODO - create request
+            // TODO - make upsert call
+            // TODO - parse and return the result
+            throw new NotImplementedException();
 
-			var result = this.service.UpsertBucketListItemV2(bucketListItemArrayBase64, encodedUser, encodedToken);
+            //var bucketListItemArray = Utilities.ConvertModelToString(bucketListItem);
+            //var bucketListItemArrayBase64 = Shared.misc.Utilities.EncodeClientBase64String(bucketListItemArray);
 
-			if (result != null && result.Length == 1 && result[0] == "TokenValid")
-			{		 
-				return true;
-			}
-			else 
-			{	   
-				return false;
-			}	
-		}		   
+            //var result = this.service.UpsertBucketListItemV2(bucketListItemArrayBase64, encodedUser, encodedToken);
+
+            //if (result != null && result.Length == 1 && result[0] == "TokenValid")
+            //{		 
+            //	return true;
+            //}
+            //else 
+            //{	   
+            //	return false;
+            //}	
+        }		   
 
 		public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
-		{										  
-			int databaseId = Convert.ToInt32(dbId);
-			var result = this.service.DeleteBucketListItem(databaseId, encodedUser, encodedToken);
+        {
+            // TODO - create request
+            // TODO - make delete call
+            // TODO - parse and return the result
+            throw new NotImplementedException();
 
-			if (result != null && result.Length == 1 && result[0] == "TokenValid")
-			{		 
-				return true;
-			}
-			else 
-			{	   
-				return false;
-			}	
-		}
+            //int databaseId = Convert.ToInt32(dbId);
+            //var result = this.service.DeleteBucketListItem(databaseId, encodedUser, encodedToken);
+
+            //if (result != null && result.Length == 1 && result[0] == "TokenValid")
+            //{		 
+            //	return true;
+            //}
+            //else 
+            //{	   
+            //	return false;
+            //}	
+        }
 
 		public List<SharedBucketListModel> GetBucketListItems
 		(
@@ -84,33 +124,95 @@ namespace TgimbaNetCoreWebShared
 			string encodedSortString, 
 			string encodedToken,
 			string encodedSrchTerm
-		){	 											
-			var result = this.service.GetBucketListItemsV2(encodedUserName, encodedSortString, encodedToken, encodedSrchTerm);	  														   
-			var list = Utilities.ConvertStringArrayToModelList(result, encodedUserName);		   
-
-			return list;
-		}
-
-        public string Login(string encodedUser, string encodedPass)
+		)
         {
-            string token = string.Empty;
+            // TODO - create request
+            // TODO - make get call
+            // TODO - parse and return the result
+            throw new NotImplementedException();
 
-            token = service.ProcessUser(encodedUser, encodedPass);
+            //var result = this.service.GetBucketListItemsV2(encodedUserName, encodedSortString, encodedToken, encodedSrchTerm);	  														   
+            //var list = Utilities.ConvertStringArrayToModelList(result, encodedUserName);		   
+
+            //return list;
+        }
+
+        public string Login(string userName, string password)
+        {
+            var request = new SharedApi.LoginRequest()
+            {
+                EncodedUserName = SharedMisc.Utilities.EncodeClientBase64String(userName),
+                EncodedPassword = SharedMisc.Utilities.EncodeClientBase64String(password)
+            };
+
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "/api/tgimbaapi/processuser";
+            var token = Post(url, content).Result;
 
             return token;
         }
 
-		// Encrypt username/email/password/and all data points
 		public bool Registration(
-			string encodedUser, 
-			string encodedEmail, 
-			string encodedPassword
+			string userName, 
+			string email, 
+			string password
 		) {
-			bool registered = false;
+            var request = new SharedApi.RegistrationRequest()
+            {
+                Login = new SharedApi.LoginRequest()
+                {
+                    EncodedUserName = SharedMisc.Utilities.EncodeClientBase64String(userName),
+                    EncodedPassword = SharedMisc.Utilities.EncodeClientBase64String(password)
+                },
+                EncodedEmail = SharedMisc.Utilities.EncodeClientBase64String(email)
+            };
 
-			registered = service.ProcessUserRegistration(encodedUser, encodedEmail, encodedPassword);
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "/api/tgimbaapi/processuserregistration";
+            var result = Post(url, content).Result;
 
-			return registered;
-		} 		   
-	}
+            bool registered = Convert.ToBoolean(result);
+
+            return registered;
+		}
+
+        #region Http methods
+
+        private async Task<string> Delete(string url)
+        {
+            var client = new HttpClient();
+
+            var response = await client.DeleteAsync(url);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            return result;
+        }
+
+        private async Task<string> Post(string url, StringContent content)
+        {
+            var client = new HttpClient();
+
+            var response = await client.PostAsync(url, content);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            return result;
+        }
+
+        private async Task<string> Get(string url)
+        {
+            var client = new HttpClient();
+
+            var response = await client.GetAsync(url);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            return result;
+        }
+
+        #endregion
+    }
 }

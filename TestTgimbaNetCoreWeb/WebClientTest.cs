@@ -99,7 +99,7 @@ namespace TestTgimbaNetCoreWeb
 		}		
 		
 		private IWebClient GetWebClient() {
-			IWebClient webClient = new WebClient(this.mockITgimbaService.Object);
+			IWebClient webClient = new WebClient("https://api.tgimba.com");
 
 			return webClient;
 		}		 

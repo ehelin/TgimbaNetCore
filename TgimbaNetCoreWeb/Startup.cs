@@ -20,10 +20,12 @@ namespace TgimbaNetCoreWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // TODO - make a configuration item
+            var host = "https://localhost:44363/";
             ITgimbaService_Old service = new TgimbaService(); 
 
             services.AddSingleton<ITgimbaService_Old>(service);																  
-			services.AddSingleton<IWebClient>(new WebClient(service));
+			services.AddSingleton<IWebClient>(new WebClient(host));
 
             services.AddMvc();
 

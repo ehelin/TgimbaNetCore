@@ -28,7 +28,7 @@ namespace TestTgimbaNetCoreWeb
 		private SharedRegistrationController GetController() {												
 			SharedRegistrationController controller = new SharedRegistrationController(
 				this.mockITgimbaService.Object, 
-				new WebClient(this.mockITgimbaService.Object)
+				new WebClient("https://api.tgimba.com")
 			);
 
 			return controller;

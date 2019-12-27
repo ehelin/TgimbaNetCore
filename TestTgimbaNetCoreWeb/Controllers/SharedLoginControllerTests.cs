@@ -30,7 +30,7 @@ namespace TestTgimbaNetCoreWeb
 		private SharedLoginController GetController() {												
 			SharedLoginController controller = new SharedLoginController(
 				this.mockITgimbaService.Object, 
-				new WebClient(this.mockITgimbaService.Object)
+				new WebClient("https://api.tgimba.com")
 			);
 
 			return controller;
