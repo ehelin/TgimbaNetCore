@@ -14,7 +14,7 @@ namespace Shared.dto
         public DateTime Created { get; set; }
         public string Category { get; set; }
         public bool Achieved { get; set; }
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
 
