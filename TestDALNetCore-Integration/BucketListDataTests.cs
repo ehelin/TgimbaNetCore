@@ -42,7 +42,7 @@ namespace TestDALNetCore_Integration
             Assert.AreEqual(savedBucketListItem.Name, savedBucketListItemUpdated.Name);
 
             // we can delete the bucket list item
-            bd.DeleteBucketListItem(savedBucketListItemUpdated.Id);
+            bd.DeleteBucketListItem(savedBucketListItemUpdated.Id.Value);
             var deletedBucketListItem = bd.GetBucketList(user.UserName, null).FirstOrDefault();
             Assert.IsNotNull(savedBucketListItem);
 
@@ -84,7 +84,7 @@ namespace TestDALNetCore_Integration
             //clean up
             foreach(var savedBucketListItem in savedBucketListItems) 
             {
-                bd.DeleteBucketListItem(savedBucketListItem.Id);
+                bd.DeleteBucketListItem(savedBucketListItem.Id.Value);
             }
             bd.DeleteUser(userId);
         }
@@ -113,7 +113,7 @@ namespace TestDALNetCore_Integration
             //clean up
             foreach (var savedBucketListItem in savedBucketListItems)
             {
-                bd.DeleteBucketListItem(savedBucketListItem.Id);
+                bd.DeleteBucketListItem(savedBucketListItem.Id.Value);
             }
             bd.DeleteUser(userId);
         }

@@ -294,46 +294,46 @@ namespace TestHttpAPINetCore_Unit
 
         #endregion
 
-        #region LoginDemoUser
+        //#region LoginDemoUser
 
-        [TestMethod]
-        public void LoginDemoUser_HappyPathTest()
-        {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var tokenToReturn = "IAmAToken";
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            tgimbaService.Setup(x => x.LoginDemoUser())
-                            .Returns(tokenToReturn);
+        //[TestMethod]
+        //public void LoginDemoUser_HappyPathTest()
+        //{
+        //    var tgimbaService = new Mock<ITgimbaService>();
+        //    var tokenToReturn = "IAmAToken";
+        //    var validationHelper = new Mock<IValidationHelper>();
+        //    var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
+        //    tgimbaService.Setup(x => x.LoginDemoUser())
+        //                    .Returns(tokenToReturn);
 
-            IActionResult result = tgimbaApi.LoginDemoUser();
-            OkObjectResult requestResult = (OkObjectResult)result;
+        //    IActionResult result = tgimbaApi.LoginDemoUser();
+        //    OkObjectResult requestResult = (OkObjectResult)result;
 
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(200, requestResult.StatusCode);
-            tgimbaService.Verify(x => x.LoginDemoUser(), Times.Once);
-            var token = (string)requestResult.Value;
-            Assert.AreEqual(tokenToReturn, token);
-        }
+        //    Assert.IsNotNull(requestResult);
+        //    Assert.AreEqual(200, requestResult.StatusCode);
+        //    tgimbaService.Verify(x => x.LoginDemoUser(), Times.Once);
+        //    var token = (string)requestResult.Value;
+        //    Assert.AreEqual(tokenToReturn, token);
+        //}
 
-        [TestMethod]
-        public void LoginDemoUser_GeneralErrorTest()
-        {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-            var exception = "I am an exception";
-            tgimbaService.Setup(x => x.LoginDemoUser())
-                            .Throws(new Exception(exception));
+        //[TestMethod]
+        //public void LoginDemoUser_GeneralErrorTest()
+        //{
+        //    var tgimbaService = new Mock<ITgimbaService>();
+        //    var validationHelper = new Mock<IValidationHelper>();
+        //    var tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
+        //    var exception = "I am an exception";
+        //    tgimbaService.Setup(x => x.LoginDemoUser())
+        //                    .Throws(new Exception(exception));
 
-            IActionResult result = tgimbaApi.LoginDemoUser();
-            StatusCodeResult requestResult = (StatusCodeResult)result;
+        //    IActionResult result = tgimbaApi.LoginDemoUser();
+        //    StatusCodeResult requestResult = (StatusCodeResult)result;
 
-            tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
-            Assert.IsNotNull(requestResult);
-            Assert.AreEqual(500, requestResult.StatusCode);
-        }
+        //    tgimbaService.Verify(x => x.Log(It.Is<string>(s => s == exception)), Times.Once);
+        //    Assert.IsNotNull(requestResult);
+        //    Assert.AreEqual(500, requestResult.StatusCode);
+        //}
 
-        #endregion
+        //#endregion
     }
 }

@@ -88,12 +88,12 @@ namespace HttpAPINetCore.Controllers
             {
                 this.validationHelper.IsValidRequest(request);
 
-                var userRegistered = this.service.GetBucketListItems(request.EncodedUserName,
+                var bucketListItems = this.service.GetBucketListItems(request.EncodedUserName,
                                                                         request.EncodedSortString,                                                                  
                                                                         request.EncodedToken,
                                                                         request.EncodedSearchString);
 
-                return Ok(userRegistered); // 200
+                return Ok(bucketListItems); // 200
             }
             catch (Exception ex)
             {
@@ -198,21 +198,21 @@ namespace HttpAPINetCore.Controllers
             }
         }
 
-        [HttpPost("logindemouser")]
-        public IActionResult LoginDemoUser()
-        {
-            try
-            {
-                var token = this.service.LoginDemoUser();
+        //[HttpPost("logindemouser")]
+        //public IActionResult LoginDemoUser()
+        //{
+        //    try
+        //    {
+        //        var token = this.service.LoginDemoUser();
 
-                return Ok(token); // 200
-            }
-            catch (Exception ex)
-            {
-                this.service.Log(ex.Message);
-                return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
-            }
-        }
+        //        return Ok(token); // 200
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this.service.Log(ex.Message);
+        //        return StatusCode(Convert.ToInt32(HttpStatusCode.InternalServerError));
+        //    }
+        //}
 
         #endregion
 

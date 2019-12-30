@@ -21,7 +21,7 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - make a configuration item
-            var host = "https://localhost:44363/";
+            var host = "https://localhost:44363";
             ITgimbaService_Old service = new TgimbaService(); 
 
             services.AddSingleton<ITgimbaService_Old>(service);																  

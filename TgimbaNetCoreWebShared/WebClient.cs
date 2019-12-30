@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Shared.dto;
-using Shared.interfaces;
-using TgimbaNetCoreWebShared.Models;
-using SharedMisc = Shared.misc;
-using SharedApi = Shared.dto.api;
 using Newtonsoft.Json;
+using Shared.dto;
+using TgimbaNetCoreWebShared.Models;
+using SharedApi = Shared.dto.api;
+using SharedMisc = Shared.misc;
 
 namespace TgimbaNetCoreWebShared
 {
@@ -20,18 +19,15 @@ namespace TgimbaNetCoreWebShared
             this.host = host;
         }
 
-        private string CreateTokenQueryString(string token, string userName)
+        public List<SystemStatistic> GetSystemStatistics()
         {
-            var query = "?encodedUser=" + SharedMisc.Utilities.EncodeClientBase64String(userName)
-               + "&encodedToken=" + SharedMisc.Utilities.EncodeClientBase64String(token);
-
-            return query;
-        }
-
-        public List<SystemStatistic> GetSystemStatistics(string userName, string token)
-        {
-            var url = host + "/api/tgimbaapi/getsystemstatistics"; 
-            var query = CreateTokenQueryString(token, userName);
+            var url = host + "/api/tgimbaapi/getsystemstatistics";
+            var token = this.Login(Shared.Constants.DEMO_USER, Shared.Constants.DEMO_USER_PASSWORD);
+            var query = CreateTokenQueryString
+                        (
+                            Shared.misc.Utilities.EncodeClientBase64String(token), 
+                            Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER)
+                        );
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
 
@@ -40,21 +36,26 @@ namespace TgimbaNetCoreWebShared
             return systemStatistics;
         }
 
-        public List<SystemBuildStatistic> GetSystemBuildStatistics(string userName, string token)
+        public List<SystemBuildStatistic> GetSystemBuildStatistics()
         {
             var url = host + "/api/tgimbaapi/getsystemstatistics";
-            var query = CreateTokenQueryString(token, userName);
+            var token = this.Login(Shared.Constants.DEMO_USER, Shared.Constants.DEMO_USER_PASSWORD);
+            var query = CreateTokenQueryString
+            (
+                Shared.misc.Utilities.EncodeClientBase64String(token),
+                Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER)
+            );
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
 
-            var systemBuildStatistics = JsonConvert.DeserializeObject< List<SystemBuildStatistic>>(result);
+            var systemBuildStatistics = JsonConvert.DeserializeObject<List<SystemBuildStatistic>>(result);
 
             return systemBuildStatistics;
         }
         
-        public bool AddBucketListItem(SharedBucketListModel bucketListItem, string userName, string token) 
+        public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUserName, string encodedToken) 
 		{
-            var request = CreateAddEditRequest(bucketListItem, userName, token, true);
+            var request = CreateAddEditRequest(bucketListItem, encodedUserName, encodedToken, true);
 
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -66,9 +67,9 @@ namespace TgimbaNetCoreWebShared
             return added;
 		}
 
-        public bool EditBucketListItem(SharedBucketListModel bucketListItem, string userName, string token)
+        public bool EditBucketListItem(SharedBucketListModel bucketListItem, string encodedUserName, string encodedToken)
         {
-            var request = CreateAddEditRequest(bucketListItem, userName, token, false);
+            var request = CreateAddEditRequest(bucketListItem, encodedUserName, encodedToken, false);
 
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -80,11 +81,11 @@ namespace TgimbaNetCoreWebShared
             return updated;
         }		   
 
-		public bool DeleteBucketListItem(string dbId, string userName, string token)
+		public bool DeleteBucketListItem(string dbId, string encodedUserName, string encodedToken)
         {
             var url = host + "/api/tgimbaapi/delete";
-            var query = "?EncodedUserName=" + SharedMisc.Utilities.EncodeClientBase64String(userName)
-                            + "&EncodedToken=" + SharedMisc.Utilities.EncodeClientBase64String(token)
+            var query = "?EncodedUserName=" + encodedUserName
+                            + "&EncodedToken=" + encodedToken
                             + "&BucketListItemId=" + dbId;
             var fullUrl = url + query;
             var result = Delete(fullUrl).Result;
@@ -94,57 +95,31 @@ namespace TgimbaNetCoreWebShared
 
 		public List<SharedBucketListModel> GetBucketListItems
 		(
-			string userName, 
-			string sort, 
-			string token,
-			string search
+			string encodedUserName, 
+			string encodedSort, 
+			string encodedToken,
+			string encodedSearch
 		)
         {
             var url = host + "/api/tgimbaapi/getbucketlistitems";
-            var query = "?EncodedUserName=" + SharedMisc.Utilities.EncodeClientBase64String(userName)
-                + "&EncodedToken=" + SharedMisc.Utilities.EncodeClientBase64String(token)
-                + "&EncodedSortString=" + SharedMisc.Utilities.EncodeClientBase64String(sort)
-                + "&EncodedSearchString=" + SharedMisc.Utilities.EncodeClientBase64String(search);
+            var query = "?EncodedUserName=" + encodedUserName
+                + "&EncodedToken=" + encodedToken
+                + "&EncodedSortString=" + encodedSort
+                + "&EncodedSearchString=" + encodedSearch;
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
             var bucketListItems = JsonConvert.DeserializeObject<List<BucketListItem>>(result);
-            var convertedBucketListItems = Convert(bucketListItems, userName);
+            var convertedBucketListItems = Convert(bucketListItems, encodedUserName);
 
             return convertedBucketListItems;
         }
 
-        private List<SharedBucketListModel> Convert(List<BucketListItem> bucketListItems, string userName)
-        {
-            var convertedBucketListItems = new List<SharedBucketListModel>();
-
-            foreach(var bucketListItem in bucketListItems)
-            {
-                var convertedBucketListItem = new SharedBucketListModel()
-                {
-                    Name = bucketListItem.Name,
-                    DateCreated = bucketListItem.Created.ToString(),
-                    BucketListItemType = (SharedMisc.Enums.BucketListItemTypes)Enum.Parse(
-                                                            typeof(SharedMisc.Enums.BucketListItemTypes), 
-                                                                    bucketListItem.Category),
-                    Completed = bucketListItem.Achieved,
-                    Latitude = bucketListItem.Latitude.ToString(),
-                    Longitude = bucketListItem.Longitude.ToString(),
-                    DatabaseId = bucketListItem.Id.HasValue ? bucketListItem.Id.ToString() : null,
-                    UserName = userName,
-                };
-
-                convertedBucketListItems.Add(convertedBucketListItem);
-            }
-
-            return convertedBucketListItems;
-        }
-
-        public string Login(string userName, string password)
+        public string Login(string encodedUserName, string encodedPassword)
         {
             var request = new SharedApi.LoginRequest()
             {
-                EncodedUserName = SharedMisc.Utilities.EncodeClientBase64String(userName),
-                EncodedPassword = SharedMisc.Utilities.EncodeClientBase64String(password)
+                EncodedUserName = encodedUserName,
+                EncodedPassword = encodedPassword
             };
 
             var json = JsonConvert.SerializeObject(request);
@@ -156,18 +131,19 @@ namespace TgimbaNetCoreWebShared
         }
 
 		public bool Registration(
-			string userName, 
-			string email, 
-			string password
-		) {
+			string encodedUserName, 
+			string encodedEmail, 
+			string eoncodedPassword
+		) 
+        {
             var request = new SharedApi.RegistrationRequest()
             {
                 Login = new SharedApi.LoginRequest()
                 {
-                    EncodedUserName = SharedMisc.Utilities.EncodeClientBase64String(userName),
-                    EncodedPassword = SharedMisc.Utilities.EncodeClientBase64String(password)
+                    EncodedUserName = encodedUserName, 
+                    EncodedPassword = eoncodedPassword 
                 },
-                EncodedEmail = SharedMisc.Utilities.EncodeClientBase64String(email)
+                EncodedEmail = encodedEmail
             };
 
             var json = JsonConvert.SerializeObject(request);
@@ -218,12 +194,46 @@ namespace TgimbaNetCoreWebShared
         #endregion
 
         #region Private methods
+               
+        private string CreateTokenQueryString(string encodedToken, string encodedUserName)
+        {
+            var query = "?encodedUser=" + encodedUserName
+               + "&encodedToken=" + encodedToken;
+
+            return query;
+        }
+
+        private List<SharedBucketListModel> Convert(List<BucketListItem> bucketListItems, string encodedUserName)
+        {
+            var convertedBucketListItems = new List<SharedBucketListModel>();
+
+            foreach (var bucketListItem in bucketListItems)
+            {
+                var convertedBucketListItem = new SharedBucketListModel()
+                {
+                    Name = bucketListItem.Name,
+                    DateCreated = bucketListItem.Created.ToString(),
+                    BucketListItemType = (SharedMisc.Enums.BucketListItemTypes)Enum.Parse(
+                                                            typeof(SharedMisc.Enums.BucketListItemTypes),
+                                                                    bucketListItem.Category),
+                    Completed = bucketListItem.Achieved,
+                    Latitude = bucketListItem.Latitude.ToString(),
+                    Longitude = bucketListItem.Longitude.ToString(),
+                    DatabaseId = bucketListItem.Id.HasValue ? bucketListItem.Id.ToString() : null,
+                    UserName = Shared.misc.Utilities.DecodeClientBase64String(encodedUserName),
+                };
+
+                convertedBucketListItems.Add(convertedBucketListItem);
+            }
+
+            return convertedBucketListItems;
+        }
 
         private SharedApi.UpsertBucketListItemRequest CreateAddEditRequest
         (
             SharedBucketListModel bucketListItem,
-            string userName,
-            string token,
+            string encodedUserName,
+            string encodedToken,
             bool isAdd
         )
         {
@@ -231,8 +241,8 @@ namespace TgimbaNetCoreWebShared
             {
                 Token = new SharedApi.TokenRequest()
                 {
-                    EncodedToken = SharedMisc.Utilities.EncodeClientBase64String(token),
-                    EncodedUserName = SharedMisc.Utilities.EncodeClientBase64String(userName)
+                    EncodedToken = encodedToken,
+                    EncodedUserName = encodedUserName
                 },
                 BucketListItem = new BucketListItem()
                 {

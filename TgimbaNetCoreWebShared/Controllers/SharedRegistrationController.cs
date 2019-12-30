@@ -1,13 +1,11 @@
-﻿using Shared.interfaces;					 
-using Microsoft.AspNetCore.Mvc;	
-using TgimbaNetCoreWebShared.Models;	   
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace TgimbaNetCoreWebShared.Controllers
 {
     public class SharedRegistrationController : SharedBaseController
     {
-		public SharedRegistrationController(ITgimbaService_Old service, IWebClient webClient)
-            : base(service, webClient) { }
+		public SharedRegistrationController(IWebClient webClient)
+            : base(webClient) { }
 											   
 		[HttpPost]
 		public bool Registration(

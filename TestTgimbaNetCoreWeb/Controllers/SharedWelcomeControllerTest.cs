@@ -12,10 +12,7 @@ namespace TestTgimbaNetCoreWeb
         [Ignore]
 		public void TestSharedWelcomeControllerIndex()
 		{
-			SharedWelcomeController welcomeController = new SharedWelcomeController(
-				this.mockITgimbaService.Object, 
-				this.mockWebClient.Object
-			);
+			SharedWelcomeController welcomeController = new SharedWelcomeController(this.mockWebClient.Object);
 
 			IActionResult result = welcomeController.Index();
 			ViewResult view = (ViewResult)result;

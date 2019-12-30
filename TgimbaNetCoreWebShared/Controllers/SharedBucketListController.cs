@@ -1,14 +1,13 @@
-﻿using Shared.interfaces;		
-using TgimbaNetCoreWebShared.Models;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;  
+using TgimbaNetCoreWebShared.Models;
 
 namespace TgimbaNetCoreWebShared.Controllers
 {
     public class SharedBucketListController : SharedBaseController
     {
-		public SharedBucketListController(ITgimbaService_Old service, IWebClient webClient)
-            : base(service, webClient) { }
+		public SharedBucketListController(IWebClient webClient)
+            : base(webClient) { }
 
 		[HttpPost]
 		public bool AddBucketListItem(SharedBucketListModel model, string encodedUser, string encodedToken)

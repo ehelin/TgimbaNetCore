@@ -33,8 +33,7 @@ namespace TgimbaNetCoreWebShared
 			string encodedToken,
 			string encodedSrchTerm = ""
 		);
-        List<SystemStatistic> GetSystemStatistics(string userName, string token);
-        List<SystemBuildStatistic> GetSystemBuildStatistics(string userName, string token);
-
+        List<SystemStatistic> GetSystemStatistics();
+        List<SystemBuildStatistic> GetSystemBuildStatistics();
     }
 }

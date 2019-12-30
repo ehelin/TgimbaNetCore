@@ -1,21 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.interfaces;		 					  
-using TgimbaNetCoreWebShared;  	 					  
-using TgimbaNetCoreWebShared.Models;
+using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
 {
-    #if !DEBUG
+#if !DEBUG
     [RequireHttpsAttribute]
-    #endif
+#endif
     public class LoginController : Controller
     {
 		private SharedLoginController sharedLoginController = null;
 
-        public LoginController(ITgimbaService_Old service, IWebClient webClient)
+        public LoginController(IWebClient webClient)
         {
-			sharedLoginController = new SharedLoginController(service, webClient);
+			sharedLoginController = new SharedLoginController(webClient);
 		}		  
 
         [HttpPost]

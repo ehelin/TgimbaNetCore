@@ -78,7 +78,7 @@ MainController.FormEditClick = function (itemName, dateCreated, bucketListItemTy
 };
 
 MainController.FormDeleteClick = function (dbId) {							   
-	ServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
+	HtmlVanillaJsServerCalls.DeleteBucketListItem(BUCKET_LIST_PROCESS_DELETE, dbId);
 };
 
 MainController.Edit = function () {

@@ -1,25 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;	  				   
-using Shared.interfaces;		 					 		  
-using TgimbaNetCoreWebShared;  	 					  
-using TgimbaNetCoreWebShared.Models;
-using TgimbaNetCoreWebShared.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shared.dto;
-using System.Collections.Generic;
+using Shared.interfaces;
+using TgimbaNetCoreWebShared;
+using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
 {
-    #if !DEBUG
+#if !DEBUG
     [RequireHttpsAttribute]
-    #endif
+#endif
     public class WelcomeController : Controller
     {
 		private SharedWelcomeController sharedWelcomeController = null;
-		private ITgimbaService_Old service = null;
 
-        public WelcomeController(ITgimbaService_Old service, IWebClient webClient)
+        public WelcomeController(IWebClient webClient)
         {
-			sharedWelcomeController = new SharedWelcomeController(service, webClient);
-			this.service = service;
+			sharedWelcomeController = new SharedWelcomeController(webClient);
 		}
 
         public IActionResult Index()
@@ -32,8 +28,8 @@ namespace TgimbaNetCoreWeb.Controllers
         {
             var systemStatistics = new SystemStatistics();
 
-            systemStatistics.SystemStats = this.service.GetSystemStatistics();
-            systemStatistics.SystemBuildStats = this.service.GetSystemBuildStatistics();
+            systemStatistics.SystemStats = this.sharedWelcomeController.webClient.GetSystemStatistics();
+            systemStatistics.SystemBuildStats = this.sharedWelcomeController.webClient.GetSystemBuildStatistics();
 
             return systemStatistics;
         }

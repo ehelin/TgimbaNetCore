@@ -83,10 +83,7 @@ namespace TestTgimbaNetCoreWeb
 		}
 				 
 		private SharedBucketListController GetController() {												
-			SharedBucketListController controller = new SharedBucketListController(
-				this.mockITgimbaService.Object, 
-				this.mockWebClient.Object
-			);
+			SharedBucketListController controller = new SharedBucketListController(this.mockWebClient.Object);
 
 			return controller;
 		}

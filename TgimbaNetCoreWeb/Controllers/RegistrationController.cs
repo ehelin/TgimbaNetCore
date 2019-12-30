@@ -1,21 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.interfaces;		 							 		  
-using TgimbaNetCoreWebShared;  	 					  
-using TgimbaNetCoreWebShared.Models;
+using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
 {
-    #if !DEBUG
+#if !DEBUG
     [RequireHttpsAttribute]
-    #endif
+#endif
     public class RegistrationController	: Controller
     {
 		private SharedRegistrationController sharedRegistrationController = null;
 
-        public RegistrationController(ITgimbaService_Old service, IWebClient webClient)
+        public RegistrationController(IWebClient webClient)
         {
-			sharedRegistrationController = new SharedRegistrationController(service, webClient);
+			sharedRegistrationController = new SharedRegistrationController(webClient);
 		}	                   	
 															   
 		[HttpPost]
