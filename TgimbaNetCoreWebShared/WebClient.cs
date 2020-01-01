@@ -22,7 +22,7 @@ namespace TgimbaNetCoreWebShared
         public List<SystemStatistic> GetSystemStatistics()
         {
             var url = host + "/api/tgimbaapi/getsystemstatistics";
-            var token = this.Login(Shared.Constants.DEMO_USER, Shared.Constants.DEMO_USER_PASSWORD);
+            var token = DemoUserLogin();
             var query = CreateTokenQueryString
                         (
                             Shared.misc.Utilities.EncodeClientBase64String(token), 
@@ -31,15 +31,26 @@ namespace TgimbaNetCoreWebShared
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
 
-            var systemStatistics = JsonConvert.DeserializeObject<List<SystemStatistic>>(result);
+            //var systemStatistics = JsonConvert.DeserializeObject<List<SystemStatistic>>(result);
 
-            return systemStatistics;
+            //return systemStatistics;
+            return null;
+        }
+
+        private string DemoUserLogin()
+        {
+            var encodedUser = Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER);
+            var encodedPassword = Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER_PASSWORD);
+
+            var token = this.Login(encodedUser, encodedPassword);
+
+            return token;
         }
 
         public List<SystemBuildStatistic> GetSystemBuildStatistics()
         {
             var url = host + "/api/tgimbaapi/getsystemstatistics";
-            var token = this.Login(Shared.Constants.DEMO_USER, Shared.Constants.DEMO_USER_PASSWORD);
+            var token = DemoUserLogin();
             var query = CreateTokenQueryString
             (
                 Shared.misc.Utilities.EncodeClientBase64String(token),
@@ -48,9 +59,10 @@ namespace TgimbaNetCoreWebShared
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
 
-            var systemBuildStatistics = JsonConvert.DeserializeObject<List<SystemBuildStatistic>>(result);
+            //var systemBuildStatistics = JsonConvert.DeserializeObject<List<SystemBuildStatistic>>(result);
 
-            return systemBuildStatistics;
+            //return systemBuildStatistics;
+            return null;
         }
         
         public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUserName, string encodedToken) 
