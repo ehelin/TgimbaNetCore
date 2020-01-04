@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\TestAPI\TestsAPI-Integration.csproj" />
     <ProjectReference Include="..\TgimbaNetCoreWebShared\TgimbaNetCoreWebShared.csproj" />
   </ItemGroup>
 

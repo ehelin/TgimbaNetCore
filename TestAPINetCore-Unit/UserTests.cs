@@ -79,15 +79,18 @@ namespace TestAPINetCore_Unit
             var userToReturn = GetUser(1, decodedUserNameToReturn, decodedPasswordToReturn);
             var passwordDtoToReturn = new Password(decodedPasswordToReturn, userToReturn.Salt);
 
+            this.mockPassword.Setup(x => x.HashPassword(
+                            It.IsAny<Password>()))
+                                .Returns(passwordDtoToReturn);
             this.mockString.Setup(x => x.DecodeBase64String
-             (It.Is<string>(s => s == encodedUserName)))
-                 .Returns(decodedUserNameToReturn);
+                            (It.Is<string>(s => s == encodedUserName)))
+                                .Returns(decodedUserNameToReturn);
             this.mockString.Setup(x => x.DecodeBase64String
-                        (It.Is<string>(s => s == encodedPassword)))
-                            .Returns(decodedPasswordToReturn);
+                            (It.Is<string>(s => s == encodedPassword)))
+                                .Returns(decodedPasswordToReturn);
             this.mockBucketListData.Setup(x => x.GetUser
-                        (It.Is<string>(s => s == decodedUserNameToReturn)))
-                            .Returns(userToReturn);
+                            (It.Is<string>(s => s == decodedUserNameToReturn)))
+                                .Returns(userToReturn);
             this.mockPassword.Setup(x => x.PasswordsMatch(It.IsAny<Password>(),
                                                                 It.IsAny<User>()))
                                                                      .Returns(false);

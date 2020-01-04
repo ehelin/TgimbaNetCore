@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharedWeb = TgimbaNetCoreWebShared;
-using TestsAPIIntegration;
+//using TestsAPIIntegration;
 using System;
 using Shared.misc;									  
 

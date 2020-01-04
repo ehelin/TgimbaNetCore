@@ -1,7 +1,7 @@
 ﻿using Shared.interfaces;
 using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Models;
-using TestsAPIIntegration;
+//using TestsAPIIntegration;
 using Moq;
 using System;
 using System.Collections.Generic;
