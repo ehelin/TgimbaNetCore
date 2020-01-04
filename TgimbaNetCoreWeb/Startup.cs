@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;				   
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.interfaces;  		  
-using TgimbaNetCoreWebShared;  	 			   
-using API;
+using TgimbaNetCoreWebShared;
 
 namespace TgimbaNetCoreWeb
 {
@@ -21,10 +19,7 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - make a configuration item
-            var host = "https://localhost:44363";
-            ITgimbaService_Old service = new TgimbaService(); 
-
-            services.AddSingleton<ITgimbaService_Old>(service);																  
+            var host = "https://localhost:44363";														  
 			services.AddSingleton<IWebClient>(new WebClient(host));
 
             services.AddMvc();

@@ -1,29 +1,29 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TgimbaNetCoreWebShared.Controllers;
 using TgimbaNetCoreWebShared.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace TestTgimbaNetCoreWeb
 {
     [TestClass]
     public class SharedWelcomeControllerTest : BaseTest
     {
-		[TestMethod]
+        [TestMethod]
         [Ignore]
-		public void TestSharedWelcomeControllerIndex()
-		{
-			SharedWelcomeController welcomeController = new SharedWelcomeController(this.mockWebClient.Object);
+        public void TestSharedWelcomeControllerIndex()
+        {
+            SharedWelcomeController welcomeController = new SharedWelcomeController(this.mockWebClient.Object);
 
-			IActionResult result = welcomeController.Index();
-			ViewResult view = (ViewResult)result;
+            IActionResult result = welcomeController.Index();
+            ViewResult view = (ViewResult)result;
 
-			Assert.IsNotNull(view);
-			Assert.IsNotNull(view.Model);
+            Assert.IsNotNull(view);
+            Assert.IsNotNull(view.Model);
 
-			SharedWelcomeModel model = (SharedWelcomeModel)view.Model;
+            SharedWelcomeModel model = (SharedWelcomeModel)view.Model;
 
-			//Assert.IsNotNull(model.DashboardData);
-			//Assert.IsTrue(model.DashboardData.Length > 0);
-		}
-	}
+            // TODO - revisit this test...still relevant?
+            Assert.IsNotNull(model);
+        }
+    }
 }
