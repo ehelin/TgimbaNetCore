@@ -31,10 +31,9 @@ namespace TgimbaNetCoreWebShared
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
 
-            //var systemStatistics = JsonConvert.DeserializeObject<List<SystemStatistic>>(result);
+            var systemStatistics = JsonConvert.DeserializeObject<List<SystemStatistic>>(result);
 
-            //return systemStatistics;
-            return null;
+            return systemStatistics;
         }
 
         private string DemoUserLogin()
@@ -59,10 +58,9 @@ namespace TgimbaNetCoreWebShared
             var fullUrl = url + query;
             var result = Get(fullUrl).Result;
 
-            //var systemBuildStatistics = JsonConvert.DeserializeObject<List<SystemBuildStatistic>>(result);
+            var systemBuildStatistics = JsonConvert.DeserializeObject<List<SystemBuildStatistic>>(result);
 
-            //return systemBuildStatistics;
-            return null;
+            return systemBuildStatistics;
         }
         
         public bool AddBucketListItem(SharedBucketListModel bucketListItem, string encodedUserName, string encodedToken) 

@@ -44,6 +44,7 @@ namespace BLLNetCore.Security // TODO - change namespace to BLLNetCore.helpers
         {
             bool passwordsMatch = false;
 
+            //var hashPasswordSalted = user.Password + user.Salt;
             if (user.Password.Equals(passwordDto.SaltedHashedPassword))
                 passwordsMatch = true;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Shared;
 using Shared.dto;
 using Shared.interfaces;
@@ -44,6 +45,13 @@ namespace APINetCore
                 var passwordDto = new Password(decodedPassword, user.Salt);
                 var hashedPassword = this.passwordHelper.HashPassword(passwordDto);
                 var passwordsMatch = this.passwordHelper.PasswordsMatch(hashedPassword, user);
+
+                if (!passwordsMatch)
+                {
+                    // NOTE: Legacy user passwords where hashed with another algorithm - TODO - update users
+                    hashedPassword.SaltedHashedPassword = this.HashPasswordLegacy(user.Salt, decodedPassword);
+                    passwordsMatch = this.passwordHelper.PasswordsMatch(hashedPassword, user);
+                }
 
                 if (passwordsMatch)
                 {
@@ -248,6 +256,41 @@ namespace APINetCore
         {
             return Constants.API_TEST_RESULT;
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private string HashPasswordLegacy(string salt, string password)
+        {
+            HashAlgorithm hashAlg = null;
+            string hashedPassword = null;
+
+            try
+            {
+                hashAlg = new SHA256CryptoServiceProvider();
+                var saltAndPassword = salt + password;
+                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(saltAndPassword);
+                byte[] bytHash = hashAlg.ComputeHash(bytValue);
+                hashedPassword = Convert.ToBase64String(bytHash);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                if (hashAlg != null)
+                {
+                    hashAlg.Clear();
+                    hashAlg.Dispose();
+                    hashAlg = null;
+                }
+            }
+
+            return hashedPassword;
+        }
+
 
         #endregion
     }
