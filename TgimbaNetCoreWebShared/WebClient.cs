@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shared.dto;
 using TgimbaNetCoreWebShared.Models;
@@ -126,7 +125,12 @@ namespace TgimbaNetCoreWebShared
             var result = httpClient.Get(fullUrl);
 
             var bucketListItems = JsonConvert.DeserializeObject<List<BucketListItem>>(result);
-            var convertedBucketListItems = Convert(bucketListItems, encodedUserName);
+
+            List<SharedBucketListModel> convertedBucketListItems = null;
+            if (bucketListItems != null && bucketListItems.Count > 0)
+            {
+                convertedBucketListItems = Convert(bucketListItems, encodedUserName);
+            }
 
             return convertedBucketListItems;
         }
