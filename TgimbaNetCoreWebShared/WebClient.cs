@@ -12,11 +12,13 @@ namespace TgimbaNetCoreWebShared
 {
     public class WebClient : IWebClient
     {
-        private string host = null;        
+        private string host = null;
+        private ITgimbaHttpClient httpClient = null;
 
-        public WebClient(string host)
+        public WebClient(string host, ITgimbaHttpClient httpClient)
         {
             this.host = host;
+            this.httpClient = httpClient;
         }
 
         public List<SystemStatistic> GetSystemStatistics()
@@ -29,7 +31,7 @@ namespace TgimbaNetCoreWebShared
                             Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER)
                         );
             var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
+            var result = httpClient.Get(fullUrl);
 
             var systemStatistics = JsonConvert.DeserializeObject<List<SystemStatistic>>(result);
 
@@ -56,7 +58,7 @@ namespace TgimbaNetCoreWebShared
                 Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER)
             );
             var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
+            var result = httpClient.Get(fullUrl);
 
             var systemBuildStatistics = JsonConvert.DeserializeObject<List<SystemBuildStatistic>>(result);
 
@@ -70,7 +72,8 @@ namespace TgimbaNetCoreWebShared
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var url = host + "/api/tgimbaapi/upsert";
-            var result = Post(url, content).Result;
+
+            var result = httpClient.Post(url, content);
 
             bool added = System.Convert.ToBoolean(result);
 
@@ -84,7 +87,8 @@ namespace TgimbaNetCoreWebShared
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var url = host + "/api/tgimbaapi/upsert";
-            var result = Post(url, content).Result;
+
+            var result = httpClient.Post(url, content);
 
             bool updated = System.Convert.ToBoolean(result);
 
@@ -98,7 +102,8 @@ namespace TgimbaNetCoreWebShared
                             + "&EncodedToken=" + encodedToken
                             + "&BucketListItemId=" + dbId;
             var fullUrl = url + query;
-            var result = Delete(fullUrl).Result;
+
+            var result = httpClient.Delete(fullUrl);
 
             return System.Convert.ToBoolean(result);
         }
@@ -117,7 +122,9 @@ namespace TgimbaNetCoreWebShared
                 + "&EncodedSortString=" + encodedSort
                 + "&EncodedSearchString=" + encodedSearch;
             var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
+
+            var result = httpClient.Get(fullUrl);
+
             var bucketListItems = JsonConvert.DeserializeObject<List<BucketListItem>>(result);
             var convertedBucketListItems = Convert(bucketListItems, encodedUserName);
 
@@ -135,7 +142,8 @@ namespace TgimbaNetCoreWebShared
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var url = host + "/api/tgimbaapi/processuser";
-            var token = Post(url, content).Result;
+
+            var token = httpClient.Post(url, content);
 
             return token;
         }
@@ -159,50 +167,14 @@ namespace TgimbaNetCoreWebShared
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var url = host + "/api/tgimbaapi/processuserregistration";
-            var result = Post(url, content).Result;
+
+            var result = httpClient.Post(url, content);
 
             bool registered = System.Convert.ToBoolean(result);
 
             return registered;
 		}
-
-        #region Http methods
-
-        private async Task<string> Delete(string url)
-        {
-            var client = new HttpClient();
-
-            var response = await client.DeleteAsync(url);
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            return result;
-        }
-
-        private async Task<string> Post(string url, StringContent content)
-        {
-            var client = new HttpClient();
-
-            var response = await client.PostAsync(url, content);
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            return result;
-        }
-
-        private async Task<string> Get(string url)
-        {
-            var client = new HttpClient();
-
-            var response = await client.GetAsync(url);
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            return result;
-        }
-
-        #endregion
-
+        
         #region Private methods
                
         private string CreateTokenQueryString(string encodedToken, string encodedUserName)

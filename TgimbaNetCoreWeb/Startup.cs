@@ -20,7 +20,7 @@ namespace TgimbaNetCoreWeb
         {
             // TODO - make a configuration item
             var host = "https://localhost:44363";														  
-			services.AddSingleton<IWebClient>(new WebClient(host));
+			services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
 
             services.AddMvc();
 

@@ -8,10 +8,12 @@ namespace TestTgimbaNetCoreWeb
     public class BaseTest
     {
         protected Mock<IWebClient> mockWebClient { get; set; }
+        protected Mock<ITgimbaHttpClient> mockTgimbaHttpClient { get; set; }
 
         public BaseTest()
         {
             mockWebClient = new Mock<IWebClient>();
+            mockTgimbaHttpClient = new Mock<ITgimbaHttpClient>();
 
             SetupWebClient();
         }
@@ -45,9 +47,16 @@ namespace TestTgimbaNetCoreWeb
                                                         "base64EncodedGoodUser",
                                                         "base64EncodedGoodToken"
                                                         )).Returns(true);
-        }
 
+            mockWebClient.Setup(x => x.Login("base64EncodedGoodUser", 
+                                                "base64EncodedGoodPass"))
+                                                    .Returns("token");
 
+            mockWebClient.Setup(x => x.Registration("base64EncodedGoodUser",
+                                                        "base64EncodedGoodEmail",
+                                                            "base64EncodedGoodPass"))
+                                                                .Returns(true);
+}
 
         #region To Delete
 

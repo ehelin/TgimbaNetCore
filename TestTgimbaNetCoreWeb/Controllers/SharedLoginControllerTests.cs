@@ -24,12 +24,12 @@ namespace TestTgimbaNetCoreWeb
 
             string token = homeController.Login("base64EncodedBadUser", "base64EncodedBadPass");
 
-            Assert.AreEqual("", token);
+            Assert.AreEqual(null, token);
         }
 
         private SharedLoginController GetController()
         {
-            SharedLoginController controller = new SharedLoginController(new WebClient("https://api.tgimba.com"));
+            SharedLoginController controller = new SharedLoginController(mockWebClient.Object);
 
             return controller;
         }
