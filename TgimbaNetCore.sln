@@ -34,15 +34,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLLNetCore", "APINetCore\BL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALNetCore", "DALNetCore\DALNetCore.csproj", "{67C21877-1332-4B7D-A2FE-410C69D5336B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpAPINetCore", "HttpAPINetCore\HttpAPINetCore.csproj", "{0406BF5A-D6D5-4F0C-A9D8-82E52F381B4E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetClassicUtility", "NetClassicUtility\NetClassicUtility.csproj", "{DFEA9300-B5C3-4B6B-A2CF-DEB021C694CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBLLNetCore-Unit", "TestAPINetCore-Unit\TestBLLNetCore-Unit.csproj", "{F4D9823F-CF3C-4DCC-A400-B27C7CA5E2CD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDALNetCore-Integration", "TestDALNetCore-Integration\TestDALNetCore-Integration.csproj", "{9AC9433D-895F-4F0A-B0E1-9297067CD3F7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHttpAPINetCore-Unit", "TestHttpAPINetCore-Unit\TestHttpAPINetCore-Unit.csproj", "{B59CB95D-BA55-496F-994B-F711C6534AE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,10 +82,6 @@ Global
 		{67C21877-1332-4B7D-A2FE-410C69D5336B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67C21877-1332-4B7D-A2FE-410C69D5336B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67C21877-1332-4B7D-A2FE-410C69D5336B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0406BF5A-D6D5-4F0C-A9D8-82E52F381B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0406BF5A-D6D5-4F0C-A9D8-82E52F381B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0406BF5A-D6D5-4F0C-A9D8-82E52F381B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0406BF5A-D6D5-4F0C-A9D8-82E52F381B4E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DFEA9300-B5C3-4B6B-A2CF-DEB021C694CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DFEA9300-B5C3-4B6B-A2CF-DEB021C694CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFEA9300-B5C3-4B6B-A2CF-DEB021C694CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -102,10 +94,6 @@ Global
 		{9AC9433D-895F-4F0A-B0E1-9297067CD3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AC9433D-895F-4F0A-B0E1-9297067CD3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AC9433D-895F-4F0A-B0E1-9297067CD3F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B59CB95D-BA55-496F-994B-F711C6534AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B59CB95D-BA55-496F-994B-F711C6534AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B59CB95D-BA55-496F-994B-F711C6534AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B59CB95D-BA55-496F-994B-F711C6534AE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

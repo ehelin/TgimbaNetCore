@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using APINetCore;
+using BLLNetCore.helpers;
+using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
+using DALNetCore;
+using DALNetCore.helpers;
+using DALNetCore.interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TgimbaNetCoreWebShared;
+using Shared.interfaces;
 
 namespace TgimbaNetCoreWebShared
 {
-	public class Startup
+    public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{
@@ -25,16 +26,30 @@ namespace TgimbaNetCoreWebShared
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.Configure<CookiePolicyOptions>(options =>
-			{
-				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
-				options.CheckConsentNeeded = context => true;
-				options.MinimumSameSitePolicy = SameSiteMode.None;
-			});
+            IUserHelper userHelper = new UserHelper();
+            BucketListContext context = new BucketListContext();
+            IBucketListData bucketListData = new BucketListData(context, userHelper);
+            IPassword passwordHelper = new PasswordHelper();
+            IGenerator generatorHelper = new GeneratorHelper();
+            IString stringHelper = new StringHelper();
+            IConversion conversionHelper = new ConversionHelper();
+            ITgimbaService service = new TgimbaService(bucketListData, passwordHelper,
+                                                        generatorHelper, stringHelper,
+                                                        conversionHelper);
+
+            services.AddSingleton<ITgimbaService>(service);
+            services.AddSingleton<IValidationHelper>(new ValidationHelper());
+
+   //         services.Configure<CookiePolicyOptions>(options =>
+			//{
+			//	// This lambda determines whether user consent for non-essential cookies is needed for a given request.
+			//	options.CheckConsentNeeded = context => true;
+			//	options.MinimumSameSitePolicy = SameSiteMode.None;
+			//});
 
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-		}
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -41,6 +41,7 @@ namespace HttpAPINetCore
 
             services.AddSingleton<ITgimbaService>(service);
             services.AddSingleton<IValidationHelper>(new ValidationHelper());
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
