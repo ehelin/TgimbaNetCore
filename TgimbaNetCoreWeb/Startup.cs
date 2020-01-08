@@ -1,7 +1,14 @@
+using APINetCore;
+using BLLNetCore.helpers;
+using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
+using DALNetCore;
+using DALNetCore.helpers;
+using DALNetCore.interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.interfaces;
 using TgimbaNetCoreWebShared;
 
 namespace TgimbaNetCoreWeb
@@ -19,8 +26,22 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - make a configuration item
-            var host = "https://localhost:44363";														  
-			services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
+            var host = "http://localhost:61755";    												  
+            services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
+
+            IUserHelper userHelper = new UserHelper();
+            BucketListContext context = new BucketListContext();
+            IBucketListData bucketListData = new BucketListData(context, userHelper);
+            IPassword passwordHelper = new PasswordHelper();
+            IGenerator generatorHelper = new GeneratorHelper();
+            IString stringHelper = new StringHelper();
+            IConversion conversionHelper = new ConversionHelper();
+            ITgimbaService service = new TgimbaService(bucketListData, passwordHelper,
+                                                        generatorHelper, stringHelper,
+                                                        conversionHelper);
+
+            services.AddSingleton<ITgimbaService>(service);
+            services.AddSingleton<IValidationHelper>(new ValidationHelper());
 
             services.AddMvc();
 

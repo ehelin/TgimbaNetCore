@@ -12,9 +12,9 @@ namespace TgimbaNetCoreWebShared.Controllers
     {
         private SharedTgimbaApiController sharedTgimbaApiController = null;
 
-        public TgimbaApiController(SharedTgimbaApiController sharedTgimbaApiController)
+        public TgimbaApiController(ITgimbaService service, IValidationHelper validationHelper)
         {
-            this.sharedTgimbaApiController = sharedTgimbaApiController;
+            this.sharedTgimbaApiController = new SharedTgimbaApiController(service, validationHelper);
         }
 
         #region User
