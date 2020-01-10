@@ -26,7 +26,8 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - make a configuration item
-            var host = "http://localhost:61755";    												  
+            //var host = "http://localhost:61755";    	
+            var host = "https://www.tgimba.com";
             services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
 
             IUserHelper userHelper = new UserHelper();
@@ -62,7 +63,7 @@ namespace TgimbaNetCoreWeb
             }
 
             app.UseStaticFiles();
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();  // TODO - add local flag to handle
             
             app.UseSession();
 
@@ -71,18 +72,6 @@ namespace TgimbaNetCoreWeb
 				routes.MapRoute(
 					name: "welcome",
 					template: "{controller=Welcome}/{action=Index}/{id?}");
-
-				//routes.MapRoute(
-				//	name: "vanillaJsEntry",
-				//	template: "{controller=Home}/{action=HtmlVanillaJsIndex}/{id?}");
-
-				//routes.MapRoute(
-				//	name: "default",
-				//	template: "{controller=Home}/{action=HtmlJQueryIndex}/{id?}");
-
-				//routes.MapSpaFallbackRoute(
-				//	name: "spa-fallback",
-				//	defaults: new { controller = "Home", action = "HtmlVanillaJsIndex" });
 			});
         }
     }

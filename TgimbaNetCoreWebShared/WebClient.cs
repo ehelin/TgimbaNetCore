@@ -49,7 +49,7 @@ namespace TgimbaNetCoreWebShared
 
         public List<SystemBuildStatistic> GetSystemBuildStatistics()
         {
-            var url = host + "/api/tgimbaapi/getsystemstatistics";
+            var url = host + "/api/tgimbaapi/getsystembuildstatistics";
             var token = DemoUserLogin();
             var query = CreateTokenQueryString
             (

@@ -115,7 +115,10 @@ namespace DALNetCore
 
         public IList<SystemBuildStatistic> GetSystemBuildStatistics()
         {
-            var buildStatistics = this.context.BuildStatistics.ToList();
+            var buildStatistics = this.context.BuildStatistics
+                                    .OrderByDescending(s => s.Start)
+                                    .Take(2)
+                                    .ToList();
             var systemBuildStatics = new List<SystemBuildStatistic>();
 
             if (buildStatistics != null)
@@ -139,7 +142,10 @@ namespace DALNetCore
 
         public IList<SystemStatistic> GetSystemStatistics()
         {
-            var systemStatistics = this.context.SystemStatistics.ToList();
+            var systemStatistics = this.context.SystemStatistics
+                                    .OrderByDescending(s => s.Created)
+                                    .Take(2)
+                                    .ToList();
             var systemSystemStatics = new List<SystemStatistic>();
 
             if (systemStatistics != null)

@@ -19,7 +19,9 @@ namespace TgimbaNetCoreWeb.Controllers
         [HttpPost]
         public string Login(string user, string pass)
         {
-            return sharedLoginController.Login(user, pass);
+            var token = sharedLoginController.Login(user, pass);
+
+            return token;
         } 
     }
 }

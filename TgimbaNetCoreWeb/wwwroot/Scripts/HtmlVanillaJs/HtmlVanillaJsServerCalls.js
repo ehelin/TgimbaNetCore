@@ -27,9 +27,13 @@ HtmlVanillaJsServerCalls.GetBucketListItems = function (url, params, sortColumn)
 
 	return ServerCall.Get(queryUrl)
 			.then(
-				function(response) {
-					// TODO - check for no response?										 
+				function(response) {										 
 					isNullUndefined(response); 
+
+                    if (response === "")
+                    {
+                        response = "[]";
+                    }
 					var bucketListItems = JSON.parse(response);
 					Display.LoadView(VIEW_MAIN, bucketListItems);
 				});
