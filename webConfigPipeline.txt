@@ -1,5 +1,5 @@
 echo add directory browsing off to web.config
-cd d:\a\1\s\TgimbaNetCoreWeb\obj\Release\netcoreapp2.1\PubTmp\Out
+cd d:\a\1\s\TgimbaNetCoreWeb\obj\Release\netcoreapp2.2\PubTmp\Out
 dir
 del web.config
 copy NUL web.config
