@@ -222,8 +222,8 @@ namespace DALNetCore
                     Achieved = dbBucketListItem.Achieved.HasValue
                                     ? dbBucketListItem.Achieved.Value : false,
                     Id = dbBucketListItem.BucketListItemId,
-                    Latitude = (decimal)dbBucketListItem.Latitude,
-                    Longitude = (decimal)dbBucketListItem.Longitude
+                    Latitude = dbBucketListItem.Latitude.HasValue ? (decimal)dbBucketListItem.Latitude : (decimal)0,
+                    Longitude = dbBucketListItem.Longitude.HasValue ? (decimal)dbBucketListItem.Longitude : (decimal)0
                 };
 
                 bucketListItems.Add(bucketListItem);
