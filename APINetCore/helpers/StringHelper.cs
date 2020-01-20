@@ -41,7 +41,7 @@ namespace BLLNetCore.helpers
             {
                 var sortStringToLower = GetLowerCaseSortString(sortString);
 
-                if (sortStringToLower.IndexOf("asc") != -1)
+                if (sortStringToLower.IndexOf("desc") == -1)
                 {
                     isAscOrder = true;
                 }
