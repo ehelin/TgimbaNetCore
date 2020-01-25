@@ -6,6 +6,6 @@ namespace Algorithms.Algorithms.Sorting
 {
     public interface ISort
     {
-        List<BucketListItem> Sort(List<BucketListItem> values, Enums.SortColumns sortColumn);
+        List<BucketListItem> Sort(List<BucketListItem> values, Enums.SortColumns sortColumn, bool desc);
     }
 }

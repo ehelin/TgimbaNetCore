@@ -11,7 +11,43 @@ namespace Algorithms_Unit
     public class SortingTests
     {
         [TestMethod]
-        public void BubbleSortListNameTest()
+        public void BubbleSortListNameAscTest()
+        {
+            var compareValues = GetValues();
+
+            var sortedSorted = RunSortTest(GetValues(), false);
+
+            Assert.AreEqual(compareValues[2].Name, sortedSorted[0].Name);
+            Assert.AreEqual(compareValues[3].Name, sortedSorted[1].Name);
+            Assert.AreEqual(compareValues[1].Name, sortedSorted[2].Name);
+            Assert.AreEqual(compareValues[0].Name, sortedSorted[3].Name);
+        }
+
+        [TestMethod]
+        public void BubbleSortListNameDescTest()
+        {
+            var compareValues = GetValues();
+
+            var sortedSorted = RunSortTest(GetValues(), true);
+
+            Assert.AreEqual(compareValues[0].Name, sortedSorted[0].Name);
+            Assert.AreEqual(compareValues[1].Name, sortedSorted[1].Name);
+            Assert.AreEqual(compareValues[3].Name, sortedSorted[2].Name);
+            Assert.AreEqual(compareValues[2].Name, sortedSorted[3].Name);
+        }
+
+        #region Private Methods
+
+        private List<BucketListItem> RunSortTest(List<BucketListItem> values, bool desc)
+        {
+            ISort bubbleSort = new BubbleSort();
+
+            var sortedList = bubbleSort.Sort(values, Enums.SortColumns.ListItemName, desc);
+
+            return sortedList;
+        }
+               
+        private List<BucketListItem> GetValues()
         {
             var values = new List<BucketListItem>();
 
@@ -25,21 +61,9 @@ namespace Algorithms_Unit
             values.Add(item3);
             values.Add(item4);
 
-            var sortedSorted = RunSortTest(values);
-
-            Assert.AreEqual(item3.Name, sortedSorted[0].Name);
-            Assert.AreEqual(item4.Name, sortedSorted[1].Name);
-            Assert.AreEqual(item2.Name, sortedSorted[2].Name);
-            Assert.AreEqual(item1.Name, sortedSorted[3].Name);
+            return values;
         }
 
-        private List<BucketListItem> RunSortTest(List<BucketListItem> values)
-        {
-            ISort bubbleSort = new BubbleSort();
-
-            var sortedList = bubbleSort.Sort(values, Enums.SortColumns.ListItemName);
-
-            return sortedList;
-        }
+        #endregion
     }
 }

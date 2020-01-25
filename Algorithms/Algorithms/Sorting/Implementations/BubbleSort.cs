@@ -7,38 +7,42 @@ namespace Algorithms.Algorithms.Sorting.Implementations
 {
     public class BubbleSort : ISort
     {
-        public List<BucketListItem> Sort(List<BucketListItem> values, Enums.SortColumns sortColumn)
+        public List<BucketListItem> Sort(List<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
         {
             List<BucketListItem> sortedValues = null;
 
             for(int outer=0; outer<values.Count; outer++)
             {
-                for(int inner=outer; inner<values.Count; inner++)
+                for (int inner=0; inner<values.Count; inner++)
                 {
-                    if (inner+1 >= values.Count) { break; }
+                    if (inner + 1 >= values.Count) { break; }
 
-                    if (sortColumn == Enums.SortColumns.ListItemName) { sortedValues = SortName(inner, inner + 1, values); }
+                    if (sortColumn == Enums.SortColumns.ListItemName) { sortedValues = SortName(inner, inner+1, values, desc); }
                     //if (sortColumn == Enums.SortColumns.Achieved) { sortedValues = SortAchieved(values); }
                     //if (sortColumn == Enums.SortColumns.Category) { sortedValues = SortName(values); }
                     //if (sortColumn == Enums.SortColumns.Created) { sortedValues = SortName(values); }
                 }
-
-                outer++;
             }
 
             return sortedValues;
         }
-
-        private List<BucketListItem> SortName(int inner, int innerPlusOne, List<BucketListItem> values)
+        
+        private List<BucketListItem> SortName(int outer, int innerPlusOne, List<BucketListItem> values, bool desc)
         {
-            int innerCompare = Convert.ToChar(values[inner].Name.ToLower().Substring(0, 1));
-            int innerPlusOneCompare = Convert.ToChar(values[innerPlusOne].Name.ToLower().Substring(0, 1));
+            var innerCompare = Convert.ToChar(values[outer].Name.ToLower().Substring(0, 1));
+            var innerPlusOneCompare = Convert.ToChar(values[innerPlusOne].Name.ToLower().Substring(0, 1));
+            bool swap = !desc && innerCompare > innerPlusOneCompare;
 
-            if (innerCompare > innerPlusOneCompare)
+            if (!swap)
             {
-                var swap = values[inner];
-                values[inner] = values[innerPlusOne];
-                values[innerPlusOne] = swap;
+                 swap = desc && innerCompare < innerPlusOneCompare;
+            }
+
+            if (swap)
+            {
+                var tmp = values[outer];
+                values[outer] = values[innerPlusOne];
+                values[innerPlusOne] = tmp;
             }
 
             return values;
