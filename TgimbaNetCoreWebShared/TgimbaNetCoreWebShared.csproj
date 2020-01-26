@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Algorithms\Algorithms.csproj" />
     <ProjectReference Include="..\APINetCore\BLLNetCore.csproj" />
     <ProjectReference Include="..\DALNetCore\DALNetCore.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />

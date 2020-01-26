@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DALNetCore.interfaces;
 using Shared.dto;
-using Shared.misc;
+using Shared.exceptions;
 using Shared.interfaces;
 using models = DALNetCore.Models;
-using DALNetCore.interfaces;
-using Shared.exceptions;
 
 namespace DALNetCore
 {
@@ -190,8 +189,6 @@ namespace DALNetCore
         public IList<Shared.dto.BucketListItem> GetBucketList
         (
             string userName, 
-            Enums.SortColumns? sortColumn, 
-            bool isAsc, 
             string srchTerm = ""
         )
         {
@@ -222,12 +219,6 @@ namespace DALNetCore
                 };
 
                 bucketListItems.Add(bucketListItem);
-            }
-                       
-            if (sortColumn != null)
-            {
-                bucketListItems = Sort(bucketListItems, sortColumn.Value, isAsc);
-                //dbBucketListItems = Sort(dbBucketListItems, sortColumn.Value, isAsc);
             }
 
             return bucketListItems;
@@ -305,64 +296,6 @@ namespace DALNetCore
 
             this.context.BucketListUser.Add(bucketListItemUser);
             this.context.SaveChanges();
-        }
-
-        private List<BucketListItem> Sort
-        (
-            List<BucketListItem> bucketListItems,
-            Enums.SortColumns sortColumn,
-            bool isAsc
-        )
-        {
-            List<BucketListItem> sortedBucketListItems = null;
-
-            // NOTE: Unknown sort column types handled at service level
-            if (sortColumn == Enums.SortColumns.ListItemName)
-            {
-                if (isAsc)
-                {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Name).ToList();
-                }
-                else
-                {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Name).ToList();
-                }
-            }
-            else if (sortColumn == Enums.SortColumns.Created)
-            {
-                if (isAsc)
-                {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Created).ToList();
-                }
-                else
-                {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Created).ToList();
-                }
-            }
-            else if (sortColumn == Enums.SortColumns.Category)
-            {
-                if (isAsc)
-                {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Category).ToList();
-                }
-                else
-                {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Category).ToList();
-                }
-            }
-            else if (sortColumn == Enums.SortColumns.Achieved)
-            {
-                if (isAsc)
-                {
-                    sortedBucketListItems = bucketListItems.OrderBy(x => x.Achieved).ToList();
-                }
-                else
-                {
-                    sortedBucketListItems = bucketListItems.OrderByDescending(x => x.Achieved).ToList();
-                }
-            }
-
-            return sortedBucketListItems;
         }
 
         private IQueryable<models.BucketListItem> Search(IQueryable<models.BucketListItem> bucketListItems, string srchTerm)

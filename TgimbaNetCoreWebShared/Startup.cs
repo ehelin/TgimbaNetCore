@@ -1,4 +1,6 @@
-﻿using APINetCore;
+﻿using Algorithms.Algorithms.Sorting;
+using Algorithms.Algorithms.Sorting.Implementations;
+using APINetCore;
 using BLLNetCore.helpers;
 using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
 using DALNetCore;
@@ -31,10 +33,11 @@ namespace TgimbaNetCoreWebShared
             IPassword passwordHelper = new PasswordHelper();
             IGenerator generatorHelper = new GeneratorHelper();
             IString stringHelper = new StringHelper();
-            IConversion conversionHelper = new ConversionHelper();
+            IConversion conversionHelper = new ConversionHelper();            
+            ISort sortAlgorithm = new LinqSort(); // TODO - update to load dynanically
             ITgimbaService service = new TgimbaService(bucketListData, passwordHelper,
                                                         generatorHelper, stringHelper,
-                                                        conversionHelper);
+                                                        conversionHelper, sortAlgorithm);
 
             services.AddSingleton<ITgimbaService>(service);
             services.AddSingleton<IValidationHelper>(new ValidationHelper());

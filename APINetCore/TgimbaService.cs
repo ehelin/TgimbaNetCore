@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Algorithms.Algorithms.Sorting;
 using Shared;
 using Shared.dto;
 using Shared.interfaces;
@@ -15,6 +16,7 @@ namespace APINetCore
         private IGenerator generatorHelper = null;
         private IString stringHelper = null;
         private IConversion conversionHelper = null;
+        private ISort sortAlgorithm = null;
 
         public TgimbaService
         (
@@ -22,13 +24,15 @@ namespace APINetCore
             IPassword passwordHelper, 
             IGenerator generatorHelper,
             IString stringHelper,
-            IConversion conversionHelper
+            IConversion conversionHelper,
+            ISort sortAlgorithm
         ) {
             this.bucketListData = bucketListData;
             this.passwordHelper = passwordHelper;
             this.generatorHelper = generatorHelper;
             this.stringHelper = stringHelper;
             this.conversionHelper = conversionHelper;
+            this.sortAlgorithm = sortAlgorithm;
         }
 
         #region User 
@@ -161,9 +165,9 @@ namespace APINetCore
                 }
                
                 bucketListItems = this.bucketListData.GetBucketList(this.stringHelper.DecodeBase64String(encodedUserName), 
-                                                                        sortColumn, 
-                                                                            sortAsc, 
-                                                                               decodedSrchString);               
+                                                                               decodedSrchString);   
+                
+                bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn.Value, !sortAsc);
             }
 
             return bucketListItems;

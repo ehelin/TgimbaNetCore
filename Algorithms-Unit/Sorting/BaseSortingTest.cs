@@ -1,55 +1,33 @@
+using System;
+using System.Collections.Generic;
+using Algorithms.Algorithms.Sorting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.dto;
 using Shared.misc;
-using System.Collections.Generic;
-using Algorithms.Algorithms.Sorting;
-using Algorithms.Algorithms.Sorting.Implementations;
-using System;
 
 namespace Algorithms_Unit
 {
     [TestClass]
-    public class SortingTests
+    public class BaseSortingTest
     {
-        #region name tests
-
-        [TestMethod]
-        public void BubbleSortListNameAscTest()
+        protected void ValidateSortListNameAscTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
         {
-            var compareValues = GetNameValues();
-
-            var sortedSorted = RunSortTest(GetNameValues(), Enums.SortColumns.ListItemName, false);
-
             Assert.AreEqual(compareValues[2].Name, sortedSorted[0].Name);
             Assert.AreEqual(compareValues[3].Name, sortedSorted[1].Name);
             Assert.AreEqual(compareValues[1].Name, sortedSorted[2].Name);
             Assert.AreEqual(compareValues[0].Name, sortedSorted[3].Name);
         }
 
-        [TestMethod]
-        public void BubbleSortListNameDescTest()
+        protected void ValidateSortListNameDescTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
         {
-            var compareValues = GetNameValues();
-
-            var sortedSorted = RunSortTest(GetNameValues(), Enums.SortColumns.ListItemName, true);
-
             Assert.AreEqual(compareValues[0].Name, sortedSorted[0].Name);
             Assert.AreEqual(compareValues[1].Name, sortedSorted[1].Name);
             Assert.AreEqual(compareValues[3].Name, sortedSorted[2].Name);
             Assert.AreEqual(compareValues[2].Name, sortedSorted[3].Name);
         }
 
-        #endregion
-
-        #region created tests
-
-        [TestMethod]
-        public void BubbleSortListCreatedAscTest()
-        {
-            var compareValues = GetCreatedValues();
-
-            var sortedSorted = RunSortTest(GetCreatedValues(), Enums.SortColumns.Created, false);
-            
+        protected void ValidateSortListCreatedAscTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
+        {            
             Assert.AreEqual(compareValues[2].Created.ToString("yyyyMMddHHmmss"), 
                             sortedSorted[0].Created.ToString("yyyyMMddHHmmss"));
             Assert.AreEqual(compareValues[0].Created.ToString("yyyyMMddHHmmss"), 
@@ -60,13 +38,8 @@ namespace Algorithms_Unit
                             sortedSorted[3].Created.ToString("yyyyMMddHHmmss"));
         }
 
-        [TestMethod]
-        public void BubbleSortListCreatedDescTest()
+        protected void ValidateSortListCreatedDescTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
         {
-            var compareValues = GetCreatedValues();
-
-            var sortedSorted = RunSortTest(GetCreatedValues(), Enums.SortColumns.Created, true);
-
             Assert.AreEqual(compareValues[1].Created.ToString("yyyyMMddHHmmss"), 
                             sortedSorted[0].Created.ToString("yyyyMMddHHmmss"));
             Assert.AreEqual(compareValues[3].Created.ToString("yyyyMMddHHmmss"), 
@@ -77,80 +50,57 @@ namespace Algorithms_Unit
                             sortedSorted[3].Created.ToString("yyyyMMddHHmmss"));
         }
 
-        #endregion
-
-        #region category tests
-
-        [TestMethod]
-        public void BubbleSortListCategoryAscTest()
+        protected void ValidateSortListCategoryAscTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
         {
-            var compareValues = GetCategoryValues();
-
-            var sortedSorted = RunSortTest(GetCategoryValues(), Enums.SortColumns.Category, false);
-
             Assert.AreEqual(compareValues[1].Category, sortedSorted[0].Category);
             Assert.AreEqual(compareValues[3].Category, sortedSorted[1].Category);
             Assert.AreEqual(compareValues[2].Category, sortedSorted[2].Category);
             Assert.AreEqual(compareValues[0].Category, sortedSorted[3].Category);
         }
 
-        [TestMethod]
-        public void BubbleSortListCategoryDescTest()
+        protected void ValidateSortListCategoryDescTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted, bool isLinqSort)
         {
-            var compareValues = GetCategoryValues();
-
-            var sortedSorted = RunSortTest(GetCategoryValues(), Enums.SortColumns.Category, true);
-
-            Assert.AreEqual(compareValues[0].Category, sortedSorted[0].Category);
-            Assert.AreEqual(compareValues[2].Category, sortedSorted[1].Category);
-            Assert.AreEqual(compareValues[1].Category, sortedSorted[2].Category);
-            Assert.AreEqual(compareValues[3].Category, sortedSorted[3].Category);
+            // HACK: Handle that linq sort handles multiple characters and other sorts only do one character
+            if (isLinqSort)
+            {
+                Assert.AreEqual(compareValues[0].Category, sortedSorted[0].Category);
+                Assert.AreEqual(compareValues[2].Category, sortedSorted[1].Category);
+                Assert.AreEqual(compareValues[3].Category, sortedSorted[2].Category);
+                Assert.AreEqual(compareValues[1].Category, sortedSorted[3].Category);
+            }
+            else
+            {
+                Assert.AreEqual(compareValues[0].Category, sortedSorted[0].Category);
+                Assert.AreEqual(compareValues[2].Category, sortedSorted[1].Category);
+                Assert.AreEqual(compareValues[1].Category, sortedSorted[2].Category);
+                Assert.AreEqual(compareValues[3].Category, sortedSorted[3].Category);
+            }
         }
 
-        #endregion
-
-        #region acheived tests
-
-        [TestMethod]
-        public void BubbleSortListAchievedAscTest()
+        protected void ValidateSortAchievedAscTest(List<BucketListItem> sortedSorted)
         {
-            var compareValues = GetAchievedValues();
-
-            var sortedSorted = RunSortTest(GetAchievedValues(), Enums.SortColumns.Achieved, false);
-
             Assert.AreEqual(false, sortedSorted[0].Achieved);
             Assert.AreEqual(false, sortedSorted[1].Achieved);
             Assert.AreEqual(true, sortedSorted[2].Achieved);
             Assert.AreEqual(true, sortedSorted[3].Achieved);
         }
 
-        [TestMethod]
-        public void BubbleSortListAchievedDescTest()
+        protected void ValidateSortAchievedDescTest(List<BucketListItem> sortedSorted)
         {
-            var compareValues = GetAchievedValues();
-
-            var sortedSorted = RunSortTest(GetAchievedValues(), Enums.SortColumns.Achieved, true);
-
             Assert.AreEqual(true, sortedSorted[0].Achieved);
             Assert.AreEqual(true, sortedSorted[1].Achieved);
             Assert.AreEqual(false, sortedSorted[2].Achieved);
             Assert.AreEqual(false, sortedSorted[3].Achieved);
         }
 
-        #endregion
-
-        #region Private Methods
-
-        private List<BucketListItem> RunSortTest(List<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
+        protected List<BucketListItem> RunSortTest(List<BucketListItem> values, Enums.SortColumns sortColumn, bool desc, ISort sortAlgorithm)
         {
-            ISort bubbleSort = new BubbleSort();
-
-            var sortedList = bubbleSort.Sort(values, sortColumn, desc);
+            var sortedList = sortAlgorithm.Sort(values, sortColumn, desc);
 
             return sortedList;
         }
-               
-        private List<BucketListItem> GetNameValues()
+
+        protected List<BucketListItem> GetNameValues()
         {
             var values = new List<BucketListItem>();
 
@@ -162,7 +112,7 @@ namespace Algorithms_Unit
             return values;
         }
 
-        private List<BucketListItem> GetCreatedValues()
+        protected List<BucketListItem> GetCreatedValues()
         {
             var values = new List<BucketListItem>();
 
@@ -174,7 +124,7 @@ namespace Algorithms_Unit
             return values;
         }
 
-        private List<BucketListItem> GetCategoryValues()
+        protected List<BucketListItem> GetCategoryValues()
         {
             var values = new List<BucketListItem>();
 
@@ -186,7 +136,7 @@ namespace Algorithms_Unit
             return values;
         }
 
-        private List<BucketListItem> GetAchievedValues()
+        protected List<BucketListItem> GetAchievedValues()
         {
             var values = new List<BucketListItem>();
 
@@ -197,7 +147,5 @@ namespace Algorithms_Unit
 
             return values;
         }
-
-        #endregion
     }
 }
