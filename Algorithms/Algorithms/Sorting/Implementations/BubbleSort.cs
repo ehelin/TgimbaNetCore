@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Shared.dto;
 using Shared.misc;
-using System.Collections.Generic;
 
 namespace Algorithms.Algorithms.Sorting.Implementations
 {
@@ -16,57 +16,87 @@ namespace Algorithms.Algorithms.Sorting.Implementations
                 for (int inner=0; inner<values.Count; inner++)
                 {
                     if (inner + 1 >= values.Count) { break; }
+                    long innerCompare = 0;
+                    long innerPlusOneCompare = 0;
 
-                    if (sortColumn == Enums.SortColumns.ListItemName) { sortedValues = SortName(inner, inner+1, values, desc); }
-                    //if (sortColumn == Enums.SortColumns.Achieved) { sortedValues = SortAchieved(values); }
-                    //if (sortColumn == Enums.SortColumns.Category) { sortedValues = SortName(values); }
-                    //if (sortColumn == Enums.SortColumns.Created) { sortedValues = SortName(values); }
+                    if (sortColumn == Enums.SortColumns.ListItemName) { SortName(inner, inner+1, values, out innerCompare, out innerPlusOneCompare); }
+                    if (sortColumn == Enums.SortColumns.Created) { SortCreated(inner, inner + 1, values, out innerCompare, out innerPlusOneCompare); }
+                    if (sortColumn == Enums.SortColumns.Category) { SortCategory(inner, inner + 1, values, out innerCompare, out innerPlusOneCompare); }
+                    if (sortColumn == Enums.SortColumns.Achieved) { SortAchieved(inner, inner + 1, values, out innerCompare, out innerPlusOneCompare); }
+
+                    if (ifSwapValues(desc, innerCompare, innerPlusOneCompare))
+                    {
+                        var tmp = values[inner];
+                        values[inner] = values[inner + 1];
+                        values[inner + 1] = tmp;
+                    }
                 }
-            }
-
-            return sortedValues;
-        }
-        
-        private List<BucketListItem> SortName(int outer, int innerPlusOne, List<BucketListItem> values, bool desc)
-        {
-            var innerCompare = Convert.ToChar(values[outer].Name.ToLower().Substring(0, 1));
-            var innerPlusOneCompare = Convert.ToChar(values[innerPlusOne].Name.ToLower().Substring(0, 1));
-            bool swap = !desc && innerCompare > innerPlusOneCompare;
-
-            if (!swap)
-            {
-                 swap = desc && innerCompare < innerPlusOneCompare;
-            }
-
-            if (swap)
-            {
-                var tmp = values[outer];
-                values[outer] = values[innerPlusOne];
-                values[innerPlusOne] = tmp;
             }
 
             return values;
         }
 
-        //private BucketListItem[] SortAchieved(BucketListItem inner1, BucketListItem inner2)
-        //{
-        //    // TODO - implement
+        private bool ifSwapValues(bool desc, long innerCompare, long innerPlusOneCompare)
+        {
+            bool swap = !desc && innerCompare > innerPlusOneCompare;
 
-        //    return values;
-        //}
+            if (!swap)
+            {
+                swap = desc && innerCompare < innerPlusOneCompare;
+            }
 
-        //private BucketListItem[] SortCategory(BucketListItem[] values)
-        //{
-        //    // TODO - implement
+            return swap;
+        }
+        
+        private void SortName
+        (
+            int inner, 
+            int innerPlusOne, 
+            List<BucketListItem> values, 
+            out long innerCompare, 
+            out long innerPlusOneCompare
+        ) {
+            innerCompare = Convert.ToChar(values[inner].Name.ToLower().Substring(0, 1));
+            innerPlusOneCompare = Convert.ToChar(values[innerPlusOne].Name.ToLower().Substring(0, 1));
+        }
 
-        //    return values;
-        //}
+        private void SortCreated
+        (
+            int inner,
+            int innerPlusOne,
+            List<BucketListItem> values,
+            out long innerCompare,
+            out long innerPlusOneCompare
+        )
+        {
+            innerCompare = long.Parse(values[inner].Created.ToString("yyyyMMddHHmmss"));
+            innerPlusOneCompare = long.Parse(values[innerPlusOne].Created.ToString("yyyyMMddHHmmss"));
+        }
 
-        //private BucketListItem[] SortCreated(BucketListItem[] values)
-        //{
-        //    // TODO - implement
+        private void SortCategory
+        (
+            int inner,
+            int innerPlusOne,
+            List<BucketListItem> values,
+            out long innerCompare,
+            out long innerPlusOneCompare
+        )
+        {
+            innerCompare = Convert.ToChar(values[inner].Category.ToLower().Substring(0, 1));
+            innerPlusOneCompare = Convert.ToChar(values[innerPlusOne].Category.ToLower().Substring(0, 1));
+        }
 
-        //    return values;
-        //}
+        private void SortAchieved
+        (
+            int inner,
+            int innerPlusOne,
+            List<BucketListItem> values,
+            out long innerCompare,
+            out long innerPlusOneCompare
+        )
+        {
+            innerCompare = Convert.ToInt64(values[inner].Achieved);
+            innerPlusOneCompare = Convert.ToInt64(values[innerPlusOne].Achieved);
+        }
     }
 }
