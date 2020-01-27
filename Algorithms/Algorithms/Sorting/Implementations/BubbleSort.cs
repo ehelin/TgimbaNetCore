@@ -7,10 +7,8 @@ namespace Algorithms.Algorithms.Sorting.Implementations
 {
     public class BubbleSort : ISort
     {
-        public List<BucketListItem> Sort(List<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
+        public IList<BucketListItem> Sort(IList<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
         {
-            List<BucketListItem> sortedValues = null;
-
             for(int outer=0; outer<values.Count; outer++)
             {
                 for (int inner=0; inner<values.Count; inner++)
@@ -52,7 +50,7 @@ namespace Algorithms.Algorithms.Sorting.Implementations
         (
             int inner, 
             int innerPlusOne, 
-            List<BucketListItem> values, 
+            IList<BucketListItem> values, 
             out long innerCompare, 
             out long innerPlusOneCompare
         ) {
@@ -64,7 +62,7 @@ namespace Algorithms.Algorithms.Sorting.Implementations
         (
             int inner,
             int innerPlusOne,
-            List<BucketListItem> values,
+            IList<BucketListItem> values,
             out long innerCompare,
             out long innerPlusOneCompare
         )
@@ -77,7 +75,7 @@ namespace Algorithms.Algorithms.Sorting.Implementations
         (
             int inner,
             int innerPlusOne,
-            List<BucketListItem> values,
+            IList<BucketListItem> values,
             out long innerCompare,
             out long innerPlusOneCompare
         )
@@ -90,7 +88,7 @@ namespace Algorithms.Algorithms.Sorting.Implementations
         (
             int inner,
             int innerPlusOne,
-            List<BucketListItem> values,
+            IList<BucketListItem> values,
             out long innerCompare,
             out long innerPlusOneCompare
         )

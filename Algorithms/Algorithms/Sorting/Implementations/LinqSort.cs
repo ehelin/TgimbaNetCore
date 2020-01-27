@@ -7,7 +7,7 @@ namespace Algorithms.Algorithms.Sorting.Implementations
 {
     public class LinqSort : ISort
     {
-        public List<BucketListItem> Sort(IList<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
+        public IList<BucketListItem> Sort(IList<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
         {
             List<BucketListItem> sortedBucketListItems = null;
 

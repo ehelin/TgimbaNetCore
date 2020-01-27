@@ -6,6 +6,8 @@ using Shared;
 using Shared.dto;
 using Shared.interfaces;
 using Shared.misc;
+using Algorithms.Algorithms.Sorting;
+using Algorithms.Algorithms.Sorting.Implementations;
 using TestAPINetCore_Unit.dto;
 
 namespace TestAPINetCore_Unit
@@ -18,6 +20,7 @@ namespace TestAPINetCore_Unit
         protected Mock<IGenerator> mockGenerator { get; set; }
         protected Mock<IString> mockString { get; set; }
         protected Mock<IConversion> mockConversion { get; set; }
+        protected Mock<ISort> mockSort { get; set; }
 
         public BaseTest()
         {
@@ -26,9 +29,11 @@ namespace TestAPINetCore_Unit
             this.mockGenerator = new Mock<IGenerator>();
             this.mockString = new Mock<IString>();
             this.mockConversion = new Mock<IConversion>();
+            this.mockSort = new Mock<ISort>();
             this.service = new TgimbaService(this.mockBucketListData.Object, 
                                     mockPassword.Object, mockGenerator.Object,
-                                        mockString.Object, mockConversion.Object);
+                                        mockString.Object, mockConversion.Object,
+                                        mockSort.Object);
         }
 
         public User GetUser

@@ -1,3 +1,5 @@
+using Algorithms.Algorithms.Sorting;
+using Algorithms.Algorithms.Sorting.Implementations;
 using APINetCore;
 using BLLNetCore.helpers;
 using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
@@ -26,8 +28,8 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - make a configuration item
-            //var host = "http://localhost:61755";    	
-            var host = "https://www.tgimba.com";
+            var host = "http://localhost:61755";    	
+            //var host = "https://www.tgimba.com";
             services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
 
             IUserHelper userHelper = new UserHelper();
@@ -37,9 +39,10 @@ namespace TgimbaNetCoreWeb
             IGenerator generatorHelper = new GeneratorHelper();
             IString stringHelper = new StringHelper();
             IConversion conversionHelper = new ConversionHelper();
+            ISort sortHelper = new LinqSort();
             ITgimbaService service = new TgimbaService(bucketListData, passwordHelper,
                                                         generatorHelper, stringHelper,
-                                                        conversionHelper);
+                                                        conversionHelper, sortHelper);
 
             services.AddSingleton<ITgimbaService>(service);
             services.AddSingleton<IValidationHelper>(new ValidationHelper());

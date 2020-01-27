@@ -10,7 +10,7 @@ namespace Algorithms_Unit
     [TestClass]
     public class BaseSortingTest
     {
-        protected void ValidateSortListNameAscTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
+        protected void ValidateSortListNameAscTest(IList<BucketListItem> compareValues, IList<BucketListItem> sortedSorted)
         {
             Assert.AreEqual(compareValues[2].Name, sortedSorted[0].Name);
             Assert.AreEqual(compareValues[3].Name, sortedSorted[1].Name);
@@ -18,7 +18,7 @@ namespace Algorithms_Unit
             Assert.AreEqual(compareValues[0].Name, sortedSorted[3].Name);
         }
 
-        protected void ValidateSortListNameDescTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
+        protected void ValidateSortListNameDescTest(IList<BucketListItem> compareValues, IList<BucketListItem> sortedSorted)
         {
             Assert.AreEqual(compareValues[0].Name, sortedSorted[0].Name);
             Assert.AreEqual(compareValues[1].Name, sortedSorted[1].Name);
@@ -26,7 +26,7 @@ namespace Algorithms_Unit
             Assert.AreEqual(compareValues[2].Name, sortedSorted[3].Name);
         }
 
-        protected void ValidateSortListCreatedAscTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
+        protected void ValidateSortListCreatedAscTest(IList<BucketListItem> compareValues, IList<BucketListItem> sortedSorted)
         {            
             Assert.AreEqual(compareValues[2].Created.ToString("yyyyMMddHHmmss"), 
                             sortedSorted[0].Created.ToString("yyyyMMddHHmmss"));
@@ -38,7 +38,7 @@ namespace Algorithms_Unit
                             sortedSorted[3].Created.ToString("yyyyMMddHHmmss"));
         }
 
-        protected void ValidateSortListCreatedDescTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
+        protected void ValidateSortListCreatedDescTest(IList<BucketListItem> compareValues, IList<BucketListItem> sortedSorted)
         {
             Assert.AreEqual(compareValues[1].Created.ToString("yyyyMMddHHmmss"), 
                             sortedSorted[0].Created.ToString("yyyyMMddHHmmss"));
@@ -50,7 +50,7 @@ namespace Algorithms_Unit
                             sortedSorted[3].Created.ToString("yyyyMMddHHmmss"));
         }
 
-        protected void ValidateSortListCategoryAscTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted)
+        protected void ValidateSortListCategoryAscTest(IList<BucketListItem> compareValues, IList<BucketListItem> sortedSorted)
         {
             Assert.AreEqual(compareValues[1].Category, sortedSorted[0].Category);
             Assert.AreEqual(compareValues[3].Category, sortedSorted[1].Category);
@@ -58,7 +58,7 @@ namespace Algorithms_Unit
             Assert.AreEqual(compareValues[0].Category, sortedSorted[3].Category);
         }
 
-        protected void ValidateSortListCategoryDescTest(List<BucketListItem> compareValues, List<BucketListItem> sortedSorted, bool isLinqSort)
+        protected void ValidateSortListCategoryDescTest(IList<BucketListItem> compareValues, IList<BucketListItem> sortedSorted, bool isLinqSort)
         {
             // HACK: Handle that linq sort handles multiple characters and other sorts only do one character
             if (isLinqSort)
@@ -77,7 +77,7 @@ namespace Algorithms_Unit
             }
         }
 
-        protected void ValidateSortAchievedAscTest(List<BucketListItem> sortedSorted)
+        protected void ValidateSortAchievedAscTest(IList<BucketListItem> sortedSorted)
         {
             Assert.AreEqual(false, sortedSorted[0].Achieved);
             Assert.AreEqual(false, sortedSorted[1].Achieved);
@@ -85,7 +85,7 @@ namespace Algorithms_Unit
             Assert.AreEqual(true, sortedSorted[3].Achieved);
         }
 
-        protected void ValidateSortAchievedDescTest(List<BucketListItem> sortedSorted)
+        protected void ValidateSortAchievedDescTest(IList<BucketListItem> sortedSorted)
         {
             Assert.AreEqual(true, sortedSorted[0].Achieved);
             Assert.AreEqual(true, sortedSorted[1].Achieved);
@@ -93,14 +93,14 @@ namespace Algorithms_Unit
             Assert.AreEqual(false, sortedSorted[3].Achieved);
         }
 
-        protected List<BucketListItem> RunSortTest(List<BucketListItem> values, Enums.SortColumns sortColumn, bool desc, ISort sortAlgorithm)
+        protected IList<BucketListItem> RunSortTest(IList<BucketListItem> values, Enums.SortColumns sortColumn, bool desc, ISort sortAlgorithm)
         {
             var sortedList = sortAlgorithm.Sort(values, sortColumn, desc);
 
             return sortedList;
         }
 
-        protected List<BucketListItem> GetNameValues()
+        protected IList<BucketListItem> GetNameValues()
         {
             var values = new List<BucketListItem>();
 
@@ -112,7 +112,7 @@ namespace Algorithms_Unit
             return values;
         }
 
-        protected List<BucketListItem> GetCreatedValues()
+        protected IList<BucketListItem> GetCreatedValues()
         {
             var values = new List<BucketListItem>();
 
@@ -124,7 +124,7 @@ namespace Algorithms_Unit
             return values;
         }
 
-        protected List<BucketListItem> GetCategoryValues()
+        protected IList<BucketListItem> GetCategoryValues()
         {
             var values = new List<BucketListItem>();
 
@@ -136,7 +136,7 @@ namespace Algorithms_Unit
             return values;
         }
 
-        protected List<BucketListItem> GetAchievedValues()
+        protected IList<BucketListItem> GetAchievedValues()
         {
             var values = new List<BucketListItem>();
 

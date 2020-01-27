@@ -288,9 +288,13 @@ namespace TestAPINetCore_Unit
                             .Returns(userToReturn);
             this.mockBucketListData.Setup(x => x.GetBucketList
                         (It.Is<string>(s => s == decodedUserToReturn),
-                        It.IsAny<Enums.SortColumns?>(),
-                        It.IsAny<bool>(),
                         It.IsAny<string>()))
+                            .Returns(bucketListItemsToReturn);
+            
+            this.mockSort.Setup(x => x.Sort
+                        (It.IsAny<IList<BucketListItem>>(),
+                        It.IsAny<Enums.SortColumns>(),
+                        It.IsAny<bool>()))
                             .Returns(bucketListItemsToReturn);
 
             this.mockPassword.Setup(x => x.IsValidToken
@@ -375,8 +379,6 @@ namespace TestAPINetCore_Unit
 
                 this.mockBucketListData.Verify(x => x.GetBucketList
                             (It.Is<string>(s => s == decodedUserNameToReturn),
-                            It.IsAny<Enums.SortColumns?>(),
-                            It.IsAny<bool>(),
                             It.IsAny<string>())
                                 , Times.Once);
             }
@@ -391,8 +393,6 @@ namespace TestAPINetCore_Unit
 
                 this.mockBucketListData.Verify(x => x.GetBucketList
                             (It.Is<string>(s => s == decodedUserNameToReturn),
-                            It.Is<Enums.SortColumns>(s => s == Enums.SortColumns.ListItemName),
-                            It.Is<bool>(s => s == false),
                             It.Is<string>(s => s == decodedSrchStringToReturn))
                                 , Times.Never);
             }

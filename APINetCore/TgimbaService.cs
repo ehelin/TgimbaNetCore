@@ -157,17 +157,17 @@ namespace APINetCore
             {
                 Enums.SortColumns? sortColumn = null;
                 bool sortAsc = false;
+               
+                bucketListItems = this.bucketListData.GetBucketList(this.stringHelper.DecodeBase64String(encodedUserName), 
+                                                                               decodedSrchString);
 
                 if (!string.IsNullOrEmpty(decodedSortString))
                 {
                     sortColumn = this.stringHelper.GetSortColumn(decodedSortString);
                     sortAsc = this.stringHelper.HasSortOrderAsc(decodedSortString);
+
+                    bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn.Value, !sortAsc);
                 }
-               
-                bucketListItems = this.bucketListData.GetBucketList(this.stringHelper.DecodeBase64String(encodedUserName), 
-                                                                               decodedSrchString);   
-                
-                bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn.Value, !sortAsc);
             }
 
             return bucketListItems;
