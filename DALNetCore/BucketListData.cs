@@ -186,22 +186,13 @@ namespace DALNetCore
             }
         }
 
-        public IList<Shared.dto.BucketListItem> GetBucketList
-        (
-            string userName, 
-            string srchTerm = ""
-        )
+        public IList<Shared.dto.BucketListItem> GetBucketList(string userName)
         {
             var dbBucketListItems = from bli in this.context.BucketListItem
                                     join blu in this.context.BucketListUser on bli.BucketListItemId equals blu.BucketListItemId
                                     join u in this.context.User on blu.UserId equals u.UserId
                                     where u.UserName == userName
                                     select bli;
-
-            if (!string.IsNullOrEmpty(srchTerm))
-            {
-                dbBucketListItems = Search(dbBucketListItems, srchTerm);
-            }
 
             var bucketListItems = new List<Shared.dto.BucketListItem>();
             foreach (var dbBucketListItem in dbBucketListItems)

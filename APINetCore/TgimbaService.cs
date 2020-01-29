@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Algorithms.Algorithms.Search;
 using Algorithms.Algorithms.Sorting;
 using Shared;
 using Shared.dto;
@@ -15,8 +16,8 @@ namespace APINetCore
         private IPassword passwordHelper = null;
         private IGenerator generatorHelper = null;
         private IString stringHelper = null;
-        private IConversion conversionHelper = null;
         private ISort sortAlgorithm = null;
+        private ISearch searchAlgorithm = null;
 
         public TgimbaService
         (
@@ -24,15 +25,15 @@ namespace APINetCore
             IPassword passwordHelper, 
             IGenerator generatorHelper,
             IString stringHelper,
-            IConversion conversionHelper,
-            ISort sortAlgorithm
+            ISort sortAlgorithm,
+            ISearch searchAlgorithm
         ) {
             this.bucketListData = bucketListData;
             this.passwordHelper = passwordHelper;
             this.generatorHelper = generatorHelper;
             this.stringHelper = stringHelper;
-            this.conversionHelper = conversionHelper;
             this.sortAlgorithm = sortAlgorithm;
+            this.searchAlgorithm = searchAlgorithm;
         }
 
         #region User 
@@ -158,8 +159,7 @@ namespace APINetCore
                 Enums.SortColumns? sortColumn = null;
                 bool sortAsc = false;
                
-                bucketListItems = this.bucketListData.GetBucketList(this.stringHelper.DecodeBase64String(encodedUserName), 
-                                                                               decodedSrchString);
+                bucketListItems = this.bucketListData.GetBucketList(this.stringHelper.DecodeBase64String(encodedUserName));
 
                 if (!string.IsNullOrEmpty(decodedSortString))
                 {
@@ -167,6 +167,11 @@ namespace APINetCore
                     sortAsc = this.stringHelper.HasSortOrderAsc(decodedSortString);
 
                     bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn.Value, !sortAsc);
+                }
+
+                if (!string.IsNullOrEmpty(decodedSrchString))
+                {
+                    bucketListItems = this.searchAlgorithm.Search(bucketListItems, decodedSrchString);
                 }
             }
 

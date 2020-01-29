@@ -1,5 +1,7 @@
 ﻿using Algorithms.Algorithms.Sorting;
 using Algorithms.Algorithms.Sorting.Implementations;
+using Algorithms.Algorithms.Search;
+using Algorithms.Algorithms.Search.Implementations;
 using APINetCore;
 using BLLNetCore.helpers;
 using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
@@ -32,12 +34,12 @@ namespace TgimbaNetCoreWebShared
             IBucketListData bucketListData = new BucketListData(context, userHelper);
             IPassword passwordHelper = new PasswordHelper();
             IGenerator generatorHelper = new GeneratorHelper();
-            IString stringHelper = new StringHelper();
-            IConversion conversionHelper = new ConversionHelper();            
+            IString stringHelper = new StringHelper();       
             ISort sortAlgorithm = new LinqSort(); // TODO - update to load dynanically
+            ISearch searchAlgorithm = new LinqSearch(); // TODO - update to load dynanically
             ITgimbaService service = new TgimbaService(bucketListData, passwordHelper,
                                                         generatorHelper, stringHelper,
-                                                        conversionHelper, sortAlgorithm);
+                                                        sortAlgorithm, searchAlgorithm);
 
             services.AddSingleton<ITgimbaService>(service);
             services.AddSingleton<IValidationHelper>(new ValidationHelper());

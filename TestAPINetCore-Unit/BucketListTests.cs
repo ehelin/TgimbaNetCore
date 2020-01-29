@@ -287,10 +287,13 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == decodedUserToReturn)))
                             .Returns(userToReturn);
             this.mockBucketListData.Setup(x => x.GetBucketList
-                        (It.Is<string>(s => s == decodedUserToReturn),
-                        It.IsAny<string>()))
+                        (It.Is<string>(s => s == decodedUserToReturn)))
                             .Returns(bucketListItemsToReturn);
-            
+
+            this.mockSearch.Setup(x => x.Search(It.IsAny<List<BucketListItem>>(), 
+                                                It.Is<string>(s => s == decodedSrchStringToReturn)))
+                                                .Returns(bucketListItemsToReturn);
+
             this.mockSort.Setup(x => x.Sort
                         (It.IsAny<IList<BucketListItem>>(),
                         It.IsAny<Enums.SortColumns>(),
@@ -360,42 +363,70 @@ namespace TestAPINetCore_Unit
             {
                 if (!string.IsNullOrEmpty(decodedSortStringToReturn))
                 {
-                    this.mockString.Verify(x => x.GetSortColumn
-                                (It.Is<string>(s => s == decodedSortStringToReturn))
-                                                    , Times.Once);
-                    this.mockString.Verify(x => x.HasSortOrderAsc
-                                (It.Is<string>(s => s == decodedSortStringToReturn))
-                                                    , Times.Once);
+                    SortVerifyOnce(decodedSortStringToReturn);
                 }
                 else
                 {
-                    this.mockString.Verify(x => x.GetSortColumn
-                                (It.Is<string>(s => s == decodedSortStringToReturn))
-                                                    , Times.Never);
-                    this.mockString.Verify(x => x.HasSortOrderAsc
-                                (It.Is<string>(s => s == decodedSortStringToReturn))
-                                                    , Times.Never);
+                    SortVerifyNever(decodedSortStringToReturn);
                 }
 
+                SearchVerify(decodedSrchStringToReturn);
+
                 this.mockBucketListData.Verify(x => x.GetBucketList
-                            (It.Is<string>(s => s == decodedUserNameToReturn),
-                            It.IsAny<string>())
-                                , Times.Once);
+                        (It.Is<string>(s => s == decodedUserNameToReturn))
+                            , Times.Once);
             }
             else
             {
-                this.mockString.Verify(x => x.GetSortColumn
-                            (It.Is<string>(s => s == decodedSortStringToReturn))
-                                                , Times.Never);
-                this.mockString.Verify(x => x.HasSortOrderAsc
-                            (It.Is<string>(s => s == decodedSortStringToReturn))
-                                                , Times.Never);
+                SortVerifyNever(decodedSortStringToReturn);
 
                 this.mockBucketListData.Verify(x => x.GetBucketList
-                            (It.Is<string>(s => s == decodedUserNameToReturn),
-                            It.Is<string>(s => s == decodedSrchStringToReturn))
+                            (It.Is<string>(s => s == decodedUserNameToReturn))
                                 , Times.Never);
             }
+        }
+
+        private void SearchVerify(string decodedSrchStringToReturn)
+        {
+            if (!string.IsNullOrEmpty(decodedSrchStringToReturn))
+            {
+                this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
+                                                     It.Is<string>(s => s == decodedSrchStringToReturn))
+                                                        , Times.Once);
+            } else 
+            {
+                this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
+                                                     It.Is<string>(s => s == decodedSrchStringToReturn))
+                                                        , Times.Never);
+            }
+        }
+
+        private void SortVerifyOnce(string decodedSortStringToReturn)
+        {
+            this.mockString.Verify(x => x.GetSortColumn
+                        (It.Is<string>(s => s == decodedSortStringToReturn))
+                                            , Times.Once);
+            this.mockString.Verify(x => x.HasSortOrderAsc
+                        (It.Is<string>(s => s == decodedSortStringToReturn))
+                                            , Times.Once);
+            this.mockSort.Verify(x => x.Sort(It.IsAny<IList<BucketListItem>>(),
+                                             It.IsAny<Enums.SortColumns>(),
+                                             It.IsAny<bool>())
+                                             , Times.Once);
+        }
+
+        private void SortVerifyNever(string decodedSortStringToReturn)
+        {
+            this.mockString.Verify(x => x.GetSortColumn
+                        (It.Is<string>(s => s == decodedSortStringToReturn))
+                                            , Times.Never);
+            this.mockString.Verify(x => x.HasSortOrderAsc
+                        (It.Is<string>(s => s == decodedSortStringToReturn))
+                                            , Times.Never);
+            this.mockSort.Verify(x => x.Sort(It.IsAny<IList<BucketListItem>>(),
+                                             It.IsAny<Enums.SortColumns>(),
+                                             It.IsAny<bool>())
+                                             , Times.Never);
         }
 
         #endregion
