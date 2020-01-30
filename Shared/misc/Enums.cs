@@ -11,5 +11,10 @@
             Category, 
             Achieved 
         }
+        public enum SortAlgorithms
+        {
+            Linq,
+            Bubble
+        }
     }
 }

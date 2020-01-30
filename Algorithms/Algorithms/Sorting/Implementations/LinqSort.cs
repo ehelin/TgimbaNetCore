@@ -7,6 +7,11 @@ namespace Algorithms.Algorithms.Sorting.Implementations
 {
     public class LinqSort : ISort
     {
+        public Enums.SortAlgorithms GetSortingAlgorithm()
+        { 
+            return Enums.SortAlgorithms.Linq; 
+        }
+
         public IList<BucketListItem> Sort(IList<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
         {
             List<BucketListItem> sortedBucketListItems = null;

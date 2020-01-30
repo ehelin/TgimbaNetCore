@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.interfaces;
 using TgimbaNetCoreWebShared;
+using System.Collections.Generic;
 
 namespace TgimbaNetCoreWeb
 {
@@ -40,11 +41,12 @@ namespace TgimbaNetCoreWeb
             IPassword passwordHelper = new PasswordHelper();
             IGenerator generatorHelper = new GeneratorHelper();
             IString stringHelper = new StringHelper();
-            ISort sortAlgorithm = new LinqSort(); // TODO - update to load dynanically
+            var sortingAlgorithms = new List<ISort>() { new LinqSort(), new BubbleSort() };
+            var availableSortingAlgorithms = new AvailableSortingAlgorithms(sortingAlgorithms);
             ISearch searchAlgorithm = new LinqSearch(); // TODO - update to load dynanically
             ITgimbaService service = new TgimbaService(bucketListData, passwordHelper,
                                                         generatorHelper, stringHelper,
-                                                        sortAlgorithm, searchAlgorithm);
+                                                        availableSortingAlgorithms, searchAlgorithm);
 
             services.AddSingleton<ITgimbaService>(service);
             services.AddSingleton<IValidationHelper>(new ValidationHelper());

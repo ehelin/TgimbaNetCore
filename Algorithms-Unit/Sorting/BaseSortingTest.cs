@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Algorithms.Algorithms.Sorting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Algorithms.Algorithms.Sorting.Implementations;
 using Shared.dto;
 using Shared.misc;
 
@@ -146,6 +147,16 @@ namespace Algorithms_Unit
             values.Add(new BucketListItem() { Achieved = true });
 
             return values;
+        }
+
+        protected IList<ISort> GetSortingAlgorithms()
+        {
+            var sortingAlgorithms = new List<ISort>();
+
+            sortingAlgorithms.Add(new LinqSort());
+            sortingAlgorithms.Add(new BubbleSort());
+
+            return sortingAlgorithms;
         }
     }
 }

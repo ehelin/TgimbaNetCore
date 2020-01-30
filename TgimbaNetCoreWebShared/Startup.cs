@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.interfaces;
 
@@ -34,12 +35,13 @@ namespace TgimbaNetCoreWebShared
             IBucketListData bucketListData = new BucketListData(context, userHelper);
             IPassword passwordHelper = new PasswordHelper();
             IGenerator generatorHelper = new GeneratorHelper();
-            IString stringHelper = new StringHelper();       
-            ISort sortAlgorithm = new LinqSort(); // TODO - update to load dynanically
+            IString stringHelper = new StringHelper();
+            var sortingAlgorithms = new List<ISort>() { new LinqSort(), new BubbleSort() };
+            var availableSortingAlgorithms = new AvailableSortingAlgorithms(sortingAlgorithms);
             ISearch searchAlgorithm = new LinqSearch(); // TODO - update to load dynanically
             ITgimbaService service = new TgimbaService(bucketListData, passwordHelper,
                                                         generatorHelper, stringHelper,
-                                                        sortAlgorithm, searchAlgorithm);
+                                                        availableSortingAlgorithms, searchAlgorithm);
 
             services.AddSingleton<ITgimbaService>(service);
             services.AddSingleton<IValidationHelper>(new ValidationHelper());

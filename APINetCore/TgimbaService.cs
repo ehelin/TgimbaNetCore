@@ -16,7 +16,7 @@ namespace APINetCore
         private IPassword passwordHelper = null;
         private IGenerator generatorHelper = null;
         private IString stringHelper = null;
-        private ISort sortAlgorithm = null;
+        private AvailableSortingAlgorithms availableSortingAlgorithms = null;
         private ISearch searchAlgorithm = null;
 
         public TgimbaService
@@ -25,14 +25,14 @@ namespace APINetCore
             IPassword passwordHelper, 
             IGenerator generatorHelper,
             IString stringHelper,
-            ISort sortAlgorithm,
+            AvailableSortingAlgorithms availableSortingAlgorithms,
             ISearch searchAlgorithm
         ) {
             this.bucketListData = bucketListData;
             this.passwordHelper = passwordHelper;
             this.generatorHelper = generatorHelper;
             this.stringHelper = stringHelper;
-            this.sortAlgorithm = sortAlgorithm;
+            this.availableSortingAlgorithms = availableSortingAlgorithms;
             this.searchAlgorithm = searchAlgorithm;
         }
 
@@ -141,32 +141,28 @@ namespace APINetCore
 
             return bucketListItemDeleted;
         }
-
+        
         public IList<BucketListItem> GetBucketListItems
         (
             string encodedUserName, 
             string encodedSortString, 
             string encodedToken, 
-            string encodedSrchString = ""
+            string encodedSrchString = "",
+            string encodedSortType = ""
         ) {
             IList <BucketListItem> bucketListItems = null;
 
             string decodedSortString = this.stringHelper.DecodeBase64String(encodedSortString);
+            string decodedSortType = this.stringHelper.DecodeBase64String(encodedSortType);
             string decodedSrchString = this.stringHelper.DecodeBase64String(encodedSrchString);
 
             if (this.IsValidToken(encodedUserName, encodedToken))
-            {
-                Enums.SortColumns? sortColumn = null;
-                bool sortAsc = false;
-               
+            {               
                 bucketListItems = this.bucketListData.GetBucketList(this.stringHelper.DecodeBase64String(encodedUserName));
 
                 if (!string.IsNullOrEmpty(decodedSortString))
                 {
-                    sortColumn = this.stringHelper.GetSortColumn(decodedSortString);
-                    sortAsc = this.stringHelper.HasSortOrderAsc(decodedSortString);
-
-                    bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn.Value, !sortAsc);
+                    bucketListItems = Sort(bucketListItems,decodedSortString, decodedSortType);
                 }
 
                 if (!string.IsNullOrEmpty(decodedSrchString))
@@ -175,6 +171,22 @@ namespace APINetCore
                 }
             }
 
+            return bucketListItems;
+        }
+
+        private IList<BucketListItem> Sort
+        (
+            IList<BucketListItem> bucketListItems, 
+            string decodedSortString, 
+            string decodedSortType
+        ) {
+            var sortColumn = this.stringHelper.GetSortColumn(decodedSortString);
+            var sortAsc = this.stringHelper.HasSortOrderAsc(decodedSortString);
+            Enums.SortAlgorithms selectedSortAlgorithm = (Enums.SortAlgorithms)Enum.Parse(typeof(Enums.SortAlgorithms), decodedSortType);
+            var sortAlgorithm = availableSortingAlgorithms.GetAlgorithm(selectedSortAlgorithm);
+
+            bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn, !sortAsc);
+            
             return bucketListItems;
         }
 
@@ -299,7 +311,6 @@ namespace APINetCore
 
             return hashedPassword;
         }
-
 
         #endregion
     }

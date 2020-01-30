@@ -7,6 +7,11 @@ namespace Algorithms.Algorithms.Sorting.Implementations
 {
     public class BubbleSort : ISort
     {
+        public Enums.SortAlgorithms GetSortingAlgorithm()
+        {
+            return Enums.SortAlgorithms.Bubble;
+        }
+
         public IList<BucketListItem> Sort(IList<BucketListItem> values, Enums.SortColumns sortColumn, bool desc)
         {
             for(int outer=0; outer<values.Count; outer++)

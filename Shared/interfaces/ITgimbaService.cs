@@ -1,7 +1,4 @@
-﻿using Shared.misc;
-using System.Collections.Generic;
-using Shared.dto;
-
+﻿using System.Collections.Generic;
 using Shared.dto;
 
 namespace Shared.interfaces
@@ -12,7 +9,8 @@ namespace Shared.interfaces
         bool ProcessUserRegistration(string encodedUserName, string encodedEmail, string encodedPassword);
 
         IList<BucketListItem> GetBucketListItems(string encodedUserName, string encodedSortString, 
-											string encodedToken, string encodedSrchString = "");
+											string encodedToken, string encodedSrchString = "",
+                                            string encodedSortType = "");
         bool UpsertBucketListItem(BucketListItem bucketListItem, string encodedUser, string encodedToken);
         bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
  
