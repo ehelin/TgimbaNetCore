@@ -1,6 +1,7 @@
 ﻿using System;
 using APINetCore;
 using BLLNetCore.Security;
+using System.Collections.Generic;
 using Moq;
 using Shared;
 using Shared.dto;
@@ -19,8 +20,9 @@ namespace TestAPINetCore_Unit
         protected Mock<IPassword> mockPassword { get; set; }
         protected Mock<IGenerator> mockGenerator { get; set; }
         protected Mock<IString> mockString { get; set; }
-        protected Mock<AvailableSortingAlgorithms> mockSort { get; set; }
+        protected Mock<IAvailableSortingAlgorithms> mockSortAlgorithm { get; set; }
         protected Mock<ISearch> mockSearch { get; set; }
+        protected Mock<ISort> mockSort { get; set; }
 
         public BaseTest()
         {
@@ -29,10 +31,11 @@ namespace TestAPINetCore_Unit
             this.mockGenerator = new Mock<IGenerator>();
             this.mockString = new Mock<IString>();
             this.mockSearch = new Mock<ISearch>();
-            this.mockSort = new Mock<AvailableSortingAlgorithms>();
+            this.mockSortAlgorithm = new Mock<IAvailableSortingAlgorithms>();
+            this.mockSort = new Mock<ISort>();
             this.service = new TgimbaService(this.mockBucketListData.Object, 
                                     mockPassword.Object, mockGenerator.Object,
-                                        mockString.Object, mockSort.Object,
+                                        mockString.Object, mockSortAlgorithm.Object,
                                         mockSearch.Object);
         }
 

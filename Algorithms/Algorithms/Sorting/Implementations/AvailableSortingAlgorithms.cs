@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Shared.misc;
 
-namespace Algorithms.Algorithms.Sorting
+namespace Algorithms.Algorithms.Sorting.Implementations
 {
-    public class AvailableSortingAlgorithms
+    public class AvailableSortingAlgorithms : IAvailableSortingAlgorithms
     {
         private IList<ISort> sortingAlgorithms = null;
 

@@ -16,7 +16,7 @@ namespace APINetCore
         private IPassword passwordHelper = null;
         private IGenerator generatorHelper = null;
         private IString stringHelper = null;
-        private AvailableSortingAlgorithms availableSortingAlgorithms = null;
+        private IAvailableSortingAlgorithms availableSortingAlgorithms = null;
         private ISearch searchAlgorithm = null;
 
         public TgimbaService
@@ -25,7 +25,7 @@ namespace APINetCore
             IPassword passwordHelper, 
             IGenerator generatorHelper,
             IString stringHelper,
-            AvailableSortingAlgorithms availableSortingAlgorithms,
+            IAvailableSortingAlgorithms availableSortingAlgorithms,
             ISearch searchAlgorithm
         ) {
             this.bucketListData = bucketListData;

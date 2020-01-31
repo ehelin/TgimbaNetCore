@@ -12,15 +12,21 @@ namespace Algorithms_Unit
         [TestMethod]
         public void LinqSortListNameAscTest()
         {
-            var sortedValues = RunSortTest(GetNameValues(), Enums.SortColumns.ListItemName, false, new LinqSort());
-            ValidateSortListNameAscTest(GetNameValues(), sortedValues);
+            var valuesToBeSorted = GetNameValues();
+            var valuesToBeCompared = GetNameValues();
+
+            var sortedValues = RunSortTest(valuesToBeSorted, Enums.SortColumns.ListItemName, false, new LinqSort());
+            ValidateSortListNameAscTest(valuesToBeCompared, sortedValues);
         }
 
         [TestMethod]
         public void LinqSortListNameDescTest()
         {
-            var sortedValues = RunSortTest(GetNameValues(), Enums.SortColumns.ListItemName, true, new LinqSort());
-            ValidateSortListCreatedDescTest(GetNameValues(), sortedValues);
+            var valuesToBeSorted = GetNameValues();
+            var valuesToBeCompared = GetNameValues();
+
+            var sortedValues = RunSortTest(valuesToBeSorted, Enums.SortColumns.ListItemName, true, new LinqSort());
+            ValidateSortListCreatedDescTest(valuesToBeCompared, sortedValues);
         }
 
         #endregion
@@ -30,15 +36,21 @@ namespace Algorithms_Unit
         [TestMethod]
         public void LinqSortListCreatedAscTest()
         {
-            var sortedValues = RunSortTest(GetCreatedValues(), Enums.SortColumns.Created, false, new LinqSort());
-            ValidateSortListCreatedAscTest(GetCreatedValues(), sortedValues);
+            var valuesToBeSorted = GetCreatedValues();
+            var valuesToBeCompared = GetCreatedValues();
+
+            var sortedValues = RunSortTest(valuesToBeSorted, Enums.SortColumns.Created, false, new LinqSort());
+            ValidateSortListCreatedAscTest(valuesToBeCompared, sortedValues);
         }
 
         [TestMethod]
         public void LinqSortListCreatedDescTest()
         {
-            var sortedValues = RunSortTest(GetCreatedValues(), Enums.SortColumns.Created, true, new LinqSort());
-            ValidateSortListCreatedDescTest(GetCreatedValues(), sortedValues);
+            var valuesToBeSorted = GetCreatedValues();
+            var valuesToBeCompared = GetCreatedValues();
+
+            var sortedValues = RunSortTest(valuesToBeSorted, Enums.SortColumns.Created, true, new LinqSort());
+            ValidateSortListCreatedDescTest(valuesToBeCompared, sortedValues);
         }
 
         #endregion
@@ -48,15 +60,21 @@ namespace Algorithms_Unit
         [TestMethod]
         public void LinqSortListCategoryAscTest()
         {
-            var sortedValues = RunSortTest(GetCategoryValues(), Enums.SortColumns.Category, false, new LinqSort());
-            ValidateSortListCategoryAscTest(GetCategoryValues(), sortedValues);
+            var valuesToBeSorted = GetCategoryValues();
+            var valuesToBeCompared = GetCategoryValues();
+
+            var sortedValues = RunSortTest(valuesToBeSorted, Enums.SortColumns.Category, false, new LinqSort());
+            ValidateSortListCategoryAscTest(valuesToBeCompared, sortedValues);
         }
 
         [TestMethod]
         public void LinqSortListCategoryDescTest()
         {
-            var sortedValues = RunSortTest(GetCategoryValues(), Enums.SortColumns.Category, true, new LinqSort());
-            ValidateSortListCategoryDescTest(GetCategoryValues(), sortedValues, true);
+            var valuesToBeSorted = GetCategoryValues();
+            var valuesToBeCompared = GetCategoryValues();
+
+            var sortedValues = RunSortTest(valuesToBeSorted, Enums.SortColumns.Category, true, new LinqSort());
+            ValidateSortListCategoryDescTest(valuesToBeCompared, sortedValues, true);
         }
 
         #endregion

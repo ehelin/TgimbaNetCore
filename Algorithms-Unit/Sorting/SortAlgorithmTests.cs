@@ -17,7 +17,7 @@ namespace Algorithms_Unit
             ISort sortingAlgorithm = sut.GetAlgorithm(Enums.SortAlgorithms.Linq);
 
             Assert.IsNotNull(sortingAlgorithm);
-            Assert.Equals(Enums.SortAlgorithms.Linq, sortingAlgorithm.GetSortingAlgorithm());
+            Assert.AreEqual(Enums.SortAlgorithms.Linq, sortingAlgorithm.GetSortingAlgorithm());
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace Algorithms_Unit
             ISort sortingAlgorithm = sut.GetAlgorithm(Enums.SortAlgorithms.Bubble);
 
             Assert.IsNotNull(sortingAlgorithm);
-            Assert.Equals(Enums.SortAlgorithms.Bubble, sortingAlgorithm.GetSortingAlgorithm());
+            Assert.AreEqual(Enums.SortAlgorithms.Bubble, sortingAlgorithm.GetSortingAlgorithm());
         }
     }
 }
