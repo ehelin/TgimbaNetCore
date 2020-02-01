@@ -21,6 +21,19 @@ namespace TestTgimbaNetCoreWeb
         }
 
         [TestMethod]
+        public void Test_GetAvailableSortingAlgorithms()
+        {
+            var availableSortingAlgorithms = SharedWeb.Utilities.GetAvailableSortingAlgorithms();
+            var expectedEnumValues = Enum.GetNames(typeof(Enums.SortAlgorithms));
+
+            Assert.AreEqual(expectedEnumValues.Length, availableSortingAlgorithms.Length);
+            foreach(var availableSortingAlgorithm in availableSortingAlgorithms)
+            {
+                Assert.IsTrue(Array.IndexOf(expectedEnumValues, availableSortingAlgorithm) != -1);
+            }
+         }
+
+        [TestMethod]
         public void Test_ConvertModelToStringArray()
         {
             var bucketListItemString = GetBucketListItemSingleString("base64EncodedGoodUser", "testBucketLIstItem", null, true);

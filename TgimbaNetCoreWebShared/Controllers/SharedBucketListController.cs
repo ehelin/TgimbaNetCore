@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TgimbaNetCoreWebShared.Models;
+using Shared.dto;
 
 namespace TgimbaNetCoreWebShared.Controllers
 {
@@ -9,7 +10,19 @@ namespace TgimbaNetCoreWebShared.Controllers
 		public SharedBucketListController(IWebClient webClient)
             : base(webClient) { }
 
-		[HttpPost]
+        [HttpGet]
+        public InitializeResult Initialize(string userAgent)
+        {
+            var initializeResult = new InitializeResult()
+            {
+                IsMobile = Utilities.IsMobile(userAgent),
+                AvailableSortingAlgorithms = Utilities.GetAvailableSortingAlgorithms()
+            };
+
+            return initializeResult;
+        }
+
+        [HttpPost]
 		public bool AddBucketListItem(SharedBucketListModel model, string encodedUser, string encodedToken)
 		{ 
 			var itemAdded = webClient.AddBucketListItem(model, encodedUser, encodedToken);

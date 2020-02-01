@@ -107,22 +107,7 @@ namespace APINetCore
         }
 
         #endregion
-
-        #region Private Methods
-
-        private bool IsValidToken(string encodedUser, string encodedToken)
-        {
-            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
-            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
-
-            var user = this.bucketListData.GetUser(decodedUserName);
-            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
-
-            return validToken;
-        }
-
-        #endregion
-
+        
         #region BucketList
 
         public bool DeleteBucketListItem
@@ -211,7 +196,7 @@ namespace APINetCore
         #endregion
 
         #region Misc
-
+    
         public IList<SystemBuildStatistic> GetSystemBuildStatistics(string encodedUser, string encodedToken)
         {
             IList<SystemBuildStatistic> systemBuildStatistics = null;
@@ -281,6 +266,17 @@ namespace APINetCore
         #endregion
 
         #region Private Methods
+
+        private bool IsValidToken(string encodedUser, string encodedToken)
+        {
+            string decodedUserName = this.stringHelper.DecodeBase64String(encodedUser);
+            string decodedToken = this.stringHelper.DecodeBase64String(encodedToken);
+
+            var user = this.bucketListData.GetUser(decodedUserName);
+            var validToken = this.passwordHelper.IsValidToken(user, decodedToken);
+
+            return validToken;
+        }
 
         private string HashPasswordLegacy(string salt, string password)
         {

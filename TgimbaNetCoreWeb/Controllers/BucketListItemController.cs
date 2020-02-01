@@ -1,15 +1,15 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Shared.interfaces;		
-using TgimbaNetCoreWebShared; 
+using Shared.dto;
+using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Controllers;
-using TgimbaNetCoreWebShared.Models;	
-using System.Collections.Generic;   
+using TgimbaNetCoreWebShared.Models;
 
 namespace TgimbaNetCoreWeb.Controllers
 {
-    #if !DEBUG
+#if !DEBUG
     [RequireHttpsAttribute]
-    #endif
+#endif
     public class BucketListItemController : Controller
     {
 		private SharedBucketListController sharedBucketListController = null;
@@ -20,9 +20,9 @@ namespace TgimbaNetCoreWeb.Controllers
 		}
 
         [HttpGet]
-        public bool IsMobile(string userAgent)
+        public InitializeResult Initialize(string userAgent)
         {
-            return Utilities.IsMobile(userAgent);
+            return sharedBucketListController.Initialize(userAgent);
         }
 
         [HttpPost]

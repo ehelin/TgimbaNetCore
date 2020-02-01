@@ -22,6 +22,13 @@ namespace TgimbaNetCoreWebShared
             return false;
         }
 		   
+        public static string[] GetAvailableSortingAlgorithms()
+        {
+            var availableSortingAlgorithms = Enum.GetNames(typeof(Enums.SortAlgorithms));
+
+            return availableSortingAlgorithms;
+        }
+
 		public static List<SharedBucketListModel> ConvertStringArrayToModelList(string[] bucketListItems, string encodedUserName = "") 
 		{
 			List<SharedBucketListModel> modelList = null;

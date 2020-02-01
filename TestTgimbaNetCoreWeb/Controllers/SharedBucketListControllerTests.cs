@@ -1,11 +1,24 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TgimbaNetCoreWebShared.Controllers;
+using TgimbaNetCoreWebShared;
 
 namespace TestTgimbaNetCoreWeb
 {
     [TestClass]
     public class SharedBucketListControllerTests : BaseTest
     {
+        [TestMethod]
+        public void TestSharedBucketListController_Initialize()
+        {
+            var userAgent = "IAmAUserAgent";
+            var initializeResult = GetController().Initialize(userAgent);
+
+            Assert.IsNotNull(initializeResult);
+            Assert.IsFalse(initializeResult.IsMobile);
+            Assert.AreEqual(Utilities.GetAvailableSortingAlgorithms().Length
+                            , initializeResult.AvailableSortingAlgorithms.Length);
+        }
+
         [TestMethod]
         public void TestSharedBucketListController_EditBucketListItem_GoodParameters()
         {
