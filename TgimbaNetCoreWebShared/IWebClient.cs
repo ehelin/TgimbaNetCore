@@ -31,7 +31,8 @@ namespace TgimbaNetCoreWebShared
 			string encodedUserName, 
 			string encodedSortString, 
 			string encodedToken,
-			string encodedSrchTerm = ""
+			string encodedSrchTerm = "",
+            string encodedSortType = ""
 		);
         List<SystemStatistic> GetSystemStatistics();
         List<SystemBuildStatistic> GetSystemBuildStatistics();

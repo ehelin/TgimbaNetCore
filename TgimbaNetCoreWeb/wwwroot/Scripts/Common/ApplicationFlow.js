@@ -14,26 +14,33 @@ ApplicationFlow.SetView = function(view) {
     )
 };
 
-ApplicationFlow.SetLayout = function () {
-    return HtmlVanillaJsServerCalls.IsMobile(window.navigator.userAgent)
+ApplicationFlow.SetLayout = function () 
+{
+    return HtmlVanillaJsServerCalls.Initialize(window.navigator.userAgent)
         .then(
             function (response) {
-                var cssFileName = null;
                 isNullUndefined(response);
+                response = JSON.parse(response);
 
-                if (response === true || response === "true") {
-                    SessionSetIsMobile(SESSION_CLIENT_IS_MOBILE, true);
-                    cssFileName = CSS_FILE_MOBILE;
-                } else {
-                    SessionSetIsMobile(SESSION_CLIENT_IS_MOBILE, false);
-                    cssFileName = CSS_FILE_DESKTOP;
-                }
-
-                var fileref = document.createElement("link");
-                fileref.rel = "stylesheet";
-                fileref.type = "text/css";
-                fileref.href = cssFileName;
-                document.getElementsByTagName("head")[0].appendChild(fileref)
+                ApplicationFlow.SetupScreenTypeCss(response.isMobile);
+                SessionSet(SESSION_AVAILABLE_SORTING_ALGORITHMS, response.availableSortingAlgorithms);
             }
         );
 };
+
+ApplicationFlow.SetupScreenTypeCss = function(isMobile) 
+{
+    if (isMobile === true || isMobile === "true") {
+        SessionSetIsMobile(SESSION_CLIENT_IS_MOBILE, true);
+        cssFileName = CSS_FILE_MOBILE;
+    } else {
+        SessionSetIsMobile(SESSION_CLIENT_IS_MOBILE, false);
+        cssFileName = CSS_FILE_DESKTOP;
+    }
+    
+    var fileref = document.createElement("link");
+    fileref.rel = "stylesheet";
+    fileref.type = "text/css";
+    fileref.href = cssFileName;
+    document.getElementsByTagName("head")[0].appendChild(fileref)
+}

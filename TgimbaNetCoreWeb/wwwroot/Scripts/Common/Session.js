@@ -1,4 +1,5 @@
-﻿function SessionSetToken(key, value) {
+﻿// TODO = condense sets/gets to one generic
+function SessionSetToken(key, value) {
     sessionStorage.setItem(key, value);
 }
 function SessionGetToken(key) {			  
@@ -53,6 +54,15 @@ function SessionGetUsername(key) {
     var val = sessionStorage.getItem(key);
     return val;
 }
+
+function SessionSet(key, value) {
+    sessionStorage.setItem(key, value);
+}
+
+function SessionGet(key) {			  
+    var val = sessionStorage.getItem(key);
+    return val;
+}		
 													 
 //misc --------------------------------------------------------
 function SessionClearStorage() {

@@ -8,35 +8,60 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
     if (view === VIEW_MAIN_ADD) {
 	    MainController.SetAddViewDate();
 	}
+    else if (view === VIEW_SORT) {
+        Display.BindSortView();
+    }
 
 	if (htmlContent) {
 		if (view === VIEW_MAIN_EDIT) {
 			Display.BindEditView(htmlContent);
 		}
 		// load bucket list item view
-		else
-		{
-			Display.HtmlContent = htmlContent;
-			LoadMainPage();
-
-			// srch results	cancel			
-			var cancelSrchResultsContainer = document.getElementById('cancelSrchResults');
-			isNullUndefined(cancelSrchResultsContainer, 'Display.js', 'cancelSrchResults does not exist');
-			var isSearch = SessionGetIsSearch(SESSION_IS_SRCH_VIEW);
-			var mainHeaderDiv = document.getElementById("tgimbaMainHeader");
-
-			if (isSearch && isSearch === 'true') {
-			    cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterdisplay');
-			    cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterhidden');
-			} else {
-			    cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterhidden');
-			    cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterdisplay');
-			}
-		}
+		else {
+            Display.BindMainView(htmlContent);
+        }
 	}
 };
 
-Display.BindEditView = function (htmlContent) {	  
+Display.BindSortView = function() 
+{	  
+    var availableSortingAlgorithms = SessionGet(SESSION_AVAILABLE_SORTING_ALGORITHMS);
+    var sortingAlgorithmsCtrl = document.getElementById('hvJsSortAvailableSortAlgorithmsSelect');
+
+    isNullUndefined(sortingAlgorithmsCtrl, 'Display.js', 'sortingAlgorithmsCtrl');
+
+    availableSortingAlgorithms = availableSortingAlgorithms.split(",")
+
+    for(var i=0; i<availableSortingAlgorithms.length; i++)
+    {
+        var sortingCtrlLength = sortingAlgorithmsCtrl.options.length;
+        var currentOption = availableSortingAlgorithms[i];
+        sortingAlgorithmsCtrl.options[sortingCtrlLength] = new Option(currentOption, currentOption);
+    }	
+}
+
+Display.BindMainView = function(htmlContent) 
+{
+	Display.HtmlContent = htmlContent;
+	LoadMainPage();
+
+	// srch results	cancel			
+	var cancelSrchResultsContainer = document.getElementById('cancelSrchResults');
+	isNullUndefined(cancelSrchResultsContainer, 'Display.js', 'cancelSrchResults does not exist');
+	var isSearch = SessionGetIsSearch(SESSION_IS_SRCH_VIEW);
+	var mainHeaderDiv = document.getElementById("tgimbaMainHeader");
+
+	if (isSearch && isSearch === 'true') {
+		cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterdisplay');
+		cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterhidden');
+	} else {
+		cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterhidden');
+		cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterdisplay');
+	}
+};
+
+Display.BindEditView = function(htmlContent) 
+{	  
 	SetElementValue('USER_CONTROL_EDIT_ITEM_NAME', htmlContent[0]);		
 	SetElementValue('USER_CONTROL_EDIT_DATE_CREATED', htmlContent[1]);
 	SetElementValue('USER_CONTROL_EDIT_ITEM_CATEGORY', htmlContent[2]);

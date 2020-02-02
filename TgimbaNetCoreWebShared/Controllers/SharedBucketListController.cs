@@ -52,16 +52,18 @@ namespace TgimbaNetCoreWebShared.Controllers
 			string encodedUserName, 
 			string encodedSortString, 
 			string encodedToken,
-			string encodedSrchTerm = ""
-		) 
+			string encodedSrchTerm = "",
+            string encodedSortType = ""
+        ) 
 		{					
 			var bucketListItem = webClient.GetBucketListItems
 			(
 				encodedUserName, 
 				encodedSortString, 
 				encodedToken, 
-				encodedSrchTerm
-			);
+				encodedSrchTerm,
+                encodedSortType
+            );
 
 			return bucketListItem;
 		}

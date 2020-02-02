@@ -112,14 +112,16 @@ namespace TgimbaNetCoreWebShared
 			string encodedUserName, 
 			string encodedSort, 
 			string encodedToken,
-			string encodedSearch
+			string encodedSearch,
+            string encodedSortType
 		)
         {
             var url = host + "/api/tgimbaapi/getbucketlistitems";
             var query = "?EncodedUserName=" + encodedUserName
                 + "&EncodedToken=" + encodedToken
                 + "&EncodedSortString=" + encodedSort
-                + "&EncodedSearchString=" + encodedSearch;
+                + "&EncodedSearchString=" + encodedSearch
+                + "&EncodedSortType=" + encodedSortType;
             var fullUrl = url + query;
 
             var result = httpClient.Get(fullUrl);

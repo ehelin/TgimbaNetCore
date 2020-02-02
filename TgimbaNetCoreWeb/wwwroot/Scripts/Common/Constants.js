@@ -5,6 +5,7 @@ var SESSION_CLIENT = 'SessionClient';
 var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';
 var SESSION_CLIENT_IS_MOBILE = 'SessionIsMobile';
+var SESSION_AVAILABLE_SORTING_ALGORITHMS = 'SessionAvailableSortingAlgorithms';
 
 var SESSION_CLIENT_WEB_AZURE_IS_UP = 'SystemWebSiteAzureFunctionIsUp';
 var SESSION_CLIENT_DB_AZURE_IS_UP = 'SystemDbAzureFunctionIsUp';
@@ -40,7 +41,7 @@ var BUCKET_LIST_PROCESS_GET = '/BucketListItem/GetBucketListItems';
 var BUCKET_LIST_PROCESS_ADD = '/BucketListItem/AddBucketListItem';
 var BUCKET_LIST_PROCESS_EDIT = '/BucketListItem/EditBucketListItem';
 var BUCKET_LIST_PROCESS_DELETE = '/BucketListItem/DeleteBucketListItem';
-var BUCKET_LIST_ISMOBILE = '/BucketListItem/IsMobile?userAgent=';
+var BUCKET_LIST_INITIALIZE = '/BucketListItem/Initialize?userAgent=';
 var WELCOME_GET_SYSTEM_STATISTICS = '/Welcome/GetSystemStatistics';
 
 var VALUE_TYPE_LOGIN_USERNAME = 'loginUsernameValue';

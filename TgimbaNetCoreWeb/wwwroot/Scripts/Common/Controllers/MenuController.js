@@ -30,6 +30,9 @@ MenuController.Sort = function (sortColumnParam) {
 	var params = [];
 	var sortColumn = 'order by ' + sortColumnParam;
 
+    var sortingAlgorithmsCtrl = document.getElementById('hvJsSortAvailableSortAlgorithmsSelect');
+    var sortAlgorithm = sortingAlgorithmsCtrl.options[sortingAlgorithmsCtrl.selectedIndex].value;
+
 	params.push(SessionGetUsername(SESSION_USERNAME));
 	params.push(SessionGetToken(SESSION_TOKEN));
 
@@ -38,5 +41,5 @@ MenuController.Sort = function (sortColumnParam) {
 		sortColumn = sortColumn + ' DESC';
 	}
 
-	HtmlVanillaJsServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params, sortColumn);
+	HtmlVanillaJsServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params, sortColumn, sortAlgorithm);
 };

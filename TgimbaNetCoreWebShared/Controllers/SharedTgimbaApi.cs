@@ -86,7 +86,8 @@ namespace TgimbaNetCoreWebShared.Controllers
                 var bucketListItems = this.service.GetBucketListItems(request.EncodedUserName,
                                                                         request.EncodedSortString,
                                                                         request.EncodedToken,
-                                                                        request.EncodedSearchString);
+                                                                        request.EncodedSearchString,
+                                                                        request.EncodedSortType);
 
                 return Ok(bucketListItems); // 200
             }

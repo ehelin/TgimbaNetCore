@@ -59,10 +59,15 @@ namespace TgimbaNetCoreWeb.Controllers
 			string encodedUserName, 
 			string encoderedSortString, 
 			string encodedToken,
-			string encodedSrchTerm = ""
-		)
+			string encodedSrchTerm = "",
+            string encodedSortType = ""
+        )
         {
-            var result = sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken, encodedSrchTerm);
+            var result = sharedBucketListController.GetBucketListItems(encodedUserName, 
+                                                                       encoderedSortString, 
+                                                                       encodedToken, 
+                                                                       encodedSrchTerm,
+                                                                       encodedSortType);
 			return result;
         }	 
 

@@ -6,5 +6,6 @@
         public string EncodedToken { get; set; }
         public string EncodedSortString { get; set; }
         public string EncodedSearchString { get; set; }
+        public string EncodedSortType { get; set; }
     }
 }

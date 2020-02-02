@@ -1,8 +1,8 @@
 ﻿var HtmlVanillaJsServerCalls = {};
 
-HtmlVanillaJsServerCalls.IsMobile = function (userAgent) {
+HtmlVanillaJsServerCalls.Initialize = function (userAgent) {
     try {
-        return ServerCall.Get(BUCKET_LIST_ISMOBILE + userAgent)
+        return ServerCall.Get(BUCKET_LIST_INITIALIZE + userAgent)
                 .then(
                 function (response) {
                     return response;
@@ -12,7 +12,7 @@ HtmlVanillaJsServerCalls.IsMobile = function (userAgent) {
     }
 };
 	  
-HtmlVanillaJsServerCalls.GetBucketListItems = function (url, params, sortColumn) {
+HtmlVanillaJsServerCalls.GetBucketListItems = function (url, params, sortColumn, sortAlgorithm) {
 	var formData = new FormData();
 	var userName = params[0];	 
 	var token = params[1];
@@ -23,7 +23,8 @@ HtmlVanillaJsServerCalls.GetBucketListItems = function (url, params, sortColumn)
 				+ "?encodedUserName=" + btoa(userName)
 						+ "&encoderedSortString=" + btoa(sortColumn)
 							+ "&encodedToken=" + btoa(token)
-								+ "&encodedSrchTerm=" + btoa(srchTerm);
+								+ "&encodedSrchTerm=" + btoa(srchTerm)
+								    + "&encodedSortType=" + btoa(sortAlgorithm);
 
 	return ServerCall.Get(queryUrl)
 			.then(
