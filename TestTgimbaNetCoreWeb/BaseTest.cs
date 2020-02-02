@@ -27,7 +27,8 @@ namespace TestTgimbaNetCoreWeb
                                                         "YmFzZTY0RW5jb2RlZEdvb2RVc2Vy",//"base64EncodedGoodUser", 
                                                         "base64EncodedGoodSortString",
                                                         "base64EncodedGoodToken",
-                                                        "base64EncodedGoodSrchTerm"
+                                                        "base64EncodedGoodSrchTerm",
+                                                        "base64EncodedGoodSortType"
                                                         )).Returns(bucketListItems);
 
             mockWebClient.Setup(x => x.AddBucketListItem(

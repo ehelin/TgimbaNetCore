@@ -77,7 +77,8 @@ namespace TestTgimbaNetCoreWeb
             var bucketListItems = GetController().GetBucketListItems(user,
                                                                       "base64EncodedGoodSortString",
                                                                       "base64EncodedGoodToken",
-                                                                      "base64EncodedGoodSrchTerm");
+                                                                      "base64EncodedGoodSrchTerm",
+                                                                      "base64EncodedGoodSortType");
 
             Assert.IsNotNull(bucketListItems);
             Assert.AreEqual(1, bucketListItems.Count);
