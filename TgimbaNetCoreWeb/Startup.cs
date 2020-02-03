@@ -31,8 +31,8 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - make a configuration item
-            var host = "http://localhost:61755";    	
-            //var host = "https://www.tgimba.com";
+            //var host = "http://localhost:61755";    	
+            var host = "https://www.tgimba.com";
             services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
 
             IUserHelper userHelper = new UserHelper();
