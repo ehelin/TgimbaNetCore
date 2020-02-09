@@ -29,54 +29,7 @@ namespace TgimbaNetCoreWebShared
             return availableSortingAlgorithms;
         }
 
-		public static List<SharedBucketListModel> ConvertStringArrayToModelList(string[] bucketListItems, string encodedUserName = "") 
-		{
-			List<SharedBucketListModel> modelList = null;
-			SharedBucketListModel model = null;
-
-			if (bucketListItems != null && bucketListItems.Length > 0) 
-			{
-				modelList = new List<SharedBucketListModel>();
-
-				foreach(string bucketListItemStr in bucketListItems) 
-				{
-					string[] bucketListItem = bucketListItemStr.Split(',');
-
-					// TODO - handle expired token error = ERR_000002-Token Expired
-					if (bucketListItem[0] == "ERR_000002-Token Expired") {
-						model = new SharedBucketListModel{ 
-							DatabaseId = "ERR_000002-Token Expired"
-						};	   
-					} 
-					// TODO - handle no items
-					else if (bucketListItem[0] == "No Items") {
-						break;
-						//model = new SharedBucketListModel{ 
-						//	DatabaseId = "No Items"
-						//};	 
-					}
-					else {																							
-						model = new SharedBucketListModel{
-							Name = bucketListItem[1],
-							DateCreated = bucketListItem[2],
-							BucketListItemType = Utilities.ConvertCategoryToEnum(bucketListItem[3]),
-							Completed = bucketListItem[4] == "1" ? true : false,
-							Latitude = bucketListItem[5],			   
-							Longitude = bucketListItem[6],
-							DatabaseId = bucketListItem[7] != "" ? bucketListItem[7] : null,//,
-							UserName = !string.IsNullOrEmpty(encodedUserName) 
-											? Shared.misc.Utilities.DecodeClientBase64String(encodedUserName) 
-												: ""
-						};
-					}
-			
-					modelList.Add(model);
-				}
-			}
-
-			return modelList;
-		}
-
+	
 		public static string ConvertModelToString(SharedBucketListModel model) 
 		{	   			
 			string bucketListItem = null;

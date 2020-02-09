@@ -44,24 +44,6 @@ namespace TestTgimbaNetCoreWeb
             Assert.AreEqual(bucketListItemString, convertedBucketListItem);
         }
 
-        [TestMethod]
-        public void Test_ConvertStringArrayToModel()
-        {
-            var bucketListItemSingleLine = GetBucketListItemSingleString("base64EncodedGoodUser", "testBucketLIstItem", null, true);
-            string[] bucketListItemArray = new string[] { bucketListItemSingleLine };
-            var bucketListItemModel = GetBucketListItemModel("base64EncodedGoodUser", "testBucketLIstItem", null, true);
-
-            var convertedBucketListItem = SharedWeb.Utilities.ConvertStringArrayToModelList(bucketListItemArray);
-
-            Assert.AreEqual(bucketListItemModel.Name, convertedBucketListItem[0].Name);
-            Assert.AreEqual(bucketListItemModel.DateCreated, convertedBucketListItem[0].DateCreated);
-            Assert.AreEqual(bucketListItemModel.BucketListItemType, convertedBucketListItem[0].BucketListItemType);
-            Assert.AreEqual(bucketListItemModel.Completed, convertedBucketListItem[0].Completed);
-            Assert.AreEqual(bucketListItemModel.Latitude, convertedBucketListItem[0].Latitude);
-            Assert.AreEqual(bucketListItemModel.Longitude, convertedBucketListItem[0].Longitude);
-            Assert.AreEqual(bucketListItemModel.DatabaseId, convertedBucketListItem[0].DatabaseId);
-            //Assert.AreEqual(bucketListItemModel.UserName, convertedBucketListItem[0].UserName);
-        }
 
         [TestMethod]
         public void Test_ConvertCategoryHotToEnum()

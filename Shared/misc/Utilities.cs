@@ -6,17 +6,6 @@ namespace Shared.misc
 {
     public class Utilities
     {
-        public static string GetAppSetting(string key)
-        {
-            throw new Exception("implement me");
-            //string value = string.Empty;
-            //string appSetting = System.Configuration.ConfigurationManager.AppSettings[key];
-
-            //if (!string.IsNullOrEmpty(appSetting))
-            //    value = appSetting;
-
-            //return value;
-        }
         public static string GetDbSetting()
         {
             string dbConn = Environment.GetEnvironmentVariable("dataConnectionString");
@@ -29,6 +18,12 @@ namespace Shared.misc
            
             return dbConn;
         }
+
+        public static string GetTestDbSetting()
+        {
+            return Credentials.GetDbConnectionTest();
+        }
+
         // TODO - remove this method when new API is live
         public static string DecodeClientBase64String(string encodedString)
         {

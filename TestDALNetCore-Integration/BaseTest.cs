@@ -64,7 +64,7 @@ namespace TestDALNetCore_Integration
 
         protected BucketListContext GetDbContext()
         {
-            var dbContext = new BucketListContext();
+            var dbContext = new BucketListContext(true);
 
             return dbContext;
         }

@@ -8,8 +8,11 @@ namespace DALNetCore
 {
     public partial class BucketListContext : DbContext
     {
-        public BucketListContext()
+        private bool useTestDatabase;
+
+        public BucketListContext(bool userTestDatabase = false)
         {
+            this.useTestDatabase = userTestDatabase;
         }
 
         public BucketListContext(DbContextOptions<BucketListContext> options)
@@ -30,7 +33,14 @@ namespace DALNetCore
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Utilities.GetDbSetting());
+                if (useTestDatabase)
+                {
+                    optionsBuilder.UseSqlServer(Utilities.GetTestDbSetting());
+                } 
+                else
+                {
+                    optionsBuilder.UseSqlServer(Utilities.GetDbSetting());
+                }
             }
         }
 

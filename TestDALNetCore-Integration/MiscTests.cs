@@ -88,6 +88,7 @@ namespace TestDALNetCore_Integration
             //test ----------------------------
             var msg = "I am a log message";
             bd.LogMsg(msg);
+            dbContext.SaveChanges();
 
             var logModel = dbContext.Log
                                     .Where(x => x.LogMessage == msg)

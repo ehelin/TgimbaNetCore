@@ -31,12 +31,12 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO - make a configuration item
-            //var host = "http://localhost:61755";    	
-            var host = "https://www.tgimba.com";
+            var host = "http://localhost:55161/";    	
+            //var host = "https://www.tgimba.com";
             services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
 
             IUserHelper userHelper = new UserHelper();
-            BucketListContext context = new BucketListContext();
+            BucketListContext context = new BucketListContext(true); // TODO - make this configurable
             IBucketListData bucketListData = new BucketListData(context, userHelper);
             IPassword passwordHelper = new PasswordHelper();
             IGenerator generatorHelper = new GeneratorHelper();
