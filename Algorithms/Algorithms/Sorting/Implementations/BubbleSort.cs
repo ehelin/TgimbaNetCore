@@ -59,8 +59,31 @@ namespace Algorithms.Algorithms.Sorting.Implementations
             out long innerCompare, 
             out long innerPlusOneCompare
         ) {
-            innerCompare = Convert.ToChar(values[inner].Name.ToLower().Substring(0, 1));
-            innerPlusOneCompare = Convert.ToChar(values[innerPlusOne].Name.ToLower().Substring(0, 1));
+            var innerCompareArray = values[inner].Name.Split(" ");
+            var innerPlusOneCompareArray = values[innerPlusOne].Name.Split(" ");
+            var shorterBucketListItemArray = innerCompareArray.Length < innerPlusOneCompareArray.Length 
+                                            ? innerCompareArray : innerPlusOneCompareArray;
+            innerCompare = 0;
+            innerPlusOneCompare = 0;
+
+            for (var i=0; i<shorterBucketListItemArray.Length; i++)
+            {
+                var innerCompareCurrent = Convert.ToChar(innerCompareArray[i].ToLower().Substring(0, 1));
+                var innerPlusOneCompareCurrent = Convert.ToChar(innerPlusOneCompareArray[i].ToLower().Substring(0, 1));
+
+                if (innerCompareCurrent != innerPlusOneCompareCurrent)
+                {
+                    innerCompare = innerCompareCurrent;
+                    innerPlusOneCompare = innerPlusOneCompareCurrent;
+                    break;
+                }
+            }
+
+            // TODO - update tests to handle and fail gracefully...
+            if (innerCompare == 0 && innerPlusOneCompare == 0)
+            {
+                throw new Exception("Bubble sort cannot sort list");
+            }
         }
 
         private void SortCreated

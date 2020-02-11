@@ -60,7 +60,12 @@ namespace TgimbaSeleniumTests.Tests
             AddSortCategoryTestItems(browser);
             System.Threading.Thread.Sleep(_testStepInterval);
 
+            // linq (default) sort
             Sort(browser);
+            System.Threading.Thread.Sleep(_testStepInterval);
+
+            // bubble sort
+            Sort(browser, true);
             System.Threading.Thread.Sleep(_testStepInterval);
 
             //search -------------------------------------------------------

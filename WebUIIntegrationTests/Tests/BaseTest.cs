@@ -9,7 +9,7 @@ namespace TgimbaSeleniumTests.Tests
 {
     public class BaseTest
     {
-        protected int _testStepInterval = 1000;
+        protected int _testStepInterval = 3000;
         protected string url = string.Empty;
 
         #region Base Test Methods		
@@ -140,23 +140,23 @@ namespace TgimbaSeleniumTests.Tests
             if (expectedAlert)
                 browser.SwitchTo().Alert().Accept();			 
         }
-        protected void Sort(RemoteWebDriver browser)
+        protected void Sort(RemoteWebDriver browser, bool useBubbleSort = false)
         {
-            SelectSort(browser, "hvJsSortItemBtn", false);
-            SelectSort(browser, "hvJsSortItemBtn", true);
+            SelectSort(browser, "hvJsSortItemBtn", false, useBubbleSort);
+            SelectSort(browser, "hvJsSortItemBtn", true, useBubbleSort);
 
-            SelectSort(browser, "hvJsSortCreatedBtn", false);
-            SelectSort(browser, "hvJsSortCreatedBtn", true);
+            SelectSort(browser, "hvJsSortCreatedBtn", false, useBubbleSort);
+            SelectSort(browser, "hvJsSortCreatedBtn", true, useBubbleSort);
 
-            SelectSort(browser, "hvJsSortCategoryBtn", false);
-            SelectSort(browser, "hvJsSortCategoryBtn", true);
+            SelectSort(browser, "hvJsSortCategoryBtn", false, useBubbleSort);
+            SelectSort(browser, "hvJsSortCategoryBtn", true, useBubbleSort);
 
-            SelectSort(browser, "hvJsSortAchievedBtn", false);
-            SelectSort(browser, "hvJsSortAchievedBtn", true);
+            SelectSort(browser, "hvJsSortAchievedBtn", false, useBubbleSort);
+            SelectSort(browser, "hvJsSortAchievedBtn", true, useBubbleSort);
 
             SelectSort(browser, "hvJsCancelBtn", false);	
         }
-        private void SelectSort(RemoteWebDriver browser, string buttonName, bool desc)
+        private void SelectSort(RemoteWebDriver browser, string buttonName, bool desc, bool useBubbleSort = false)
         {
             IWebElement link = browser.FindElement(By.Id("btnMainMenu"));
             link.Click();
@@ -165,6 +165,14 @@ namespace TgimbaSeleniumTests.Tests
             link = browser.FindElement(By.Id("hvJsSortBucketListItemBtn"));
             link.Click();
             System.Threading.Thread.Sleep(_testStepInterval);
+
+            if (useBubbleSort)
+            {
+                var selectBox = browser.FindElement(By.Id("hvJsSortAvailableSortAlgorithmsSelect"));
+                var selectElement = new SelectElement(selectBox);
+                selectElement.SelectByText("Bubble");
+                System.Threading.Thread.Sleep(_testStepInterval);
+            }
 
             if (desc)
             {
@@ -194,6 +202,7 @@ namespace TgimbaSeleniumTests.Tests
 			AddItem(browser, "Bucket item test 4", "Warm", true, "4.2", "4.1");
 			System.Threading.Thread.Sleep(_testStepInterval);
 
+            // TODO bug appears to be here...
 			AddItem(browser, "Bucket item test 2", "Cool", false, "2.2", "2.1");
 			System.Threading.Thread.Sleep(_testStepInterval);
 
