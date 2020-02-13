@@ -1,7 +1,8 @@
-using Algorithms.Algorithms.Sorting;
-using Algorithms.Algorithms.Sorting.Implementations;
+using System.Collections.Generic;
 using Algorithms.Algorithms.Search;
 using Algorithms.Algorithms.Search.Implementations;
+using Algorithms.Algorithms.Sorting;
+using Algorithms.Algorithms.Sorting.Implementations;
 using APINetCore;
 using BLLNetCore.helpers;
 using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
@@ -14,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.interfaces;
 using TgimbaNetCoreWebShared;
-using System.Collections.Generic;
 
 namespace TgimbaNetCoreWeb
 {
@@ -30,10 +30,7 @@ namespace TgimbaNetCoreWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // TODO - make a configuration item
-            var host = "http://localhost:56675/";    	
-            //var host = "https://www.tgimba.com";
-            services.AddSingleton<IWebClient>(new WebClient(host, new TgimbaHttpClient()));
+            services.AddSingleton<IWebClient>(new WebClient(Configuration["ApiHost"], new TgimbaHttpClient()));
 
             IUserHelper userHelper = new UserHelper();
             BucketListContext context = new BucketListContext(true); // TODO - make this configurable
@@ -50,6 +47,7 @@ namespace TgimbaNetCoreWeb
 
             services.AddSingleton<ITgimbaService>(service);
             services.AddSingleton<IValidationHelper>(new ValidationHelper());
+            services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddMvc();
 

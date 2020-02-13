@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace TgimbaNetCoreWeb
 {
@@ -19,6 +13,15 @@ namespace TgimbaNetCoreWeb
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                // NOTE: This is not necessary if using environmental variables...leaving in for clarity
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, 
+                                    reloadOnChange: true);
+                    config.AddEnvironmentVariables();
+                })
                 .UseStartup<Startup>()
                 .Build();
     }

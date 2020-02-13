@@ -1,14 +1,26 @@
-﻿using System;		
-using System.Collections.Generic;			 
+﻿using System;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 using Shared.misc;
-using TgimbaNetCoreWebShared.Models; 
-using System.Text.RegularExpressions;  
+using TgimbaNetCoreWebShared.Models;
 
 namespace TgimbaNetCoreWebShared
 {
-	public class Utilities
-	{								
-		public static bool IsMobile(string userAgent) 
+    public class Utilities
+	{
+        public static string GetConfigValue(string key, IConfiguration config)
+        {
+            var section = config.GetSection(key);
+
+            if (section == null)
+            {
+                throw new Exception("Config item " + key + " is null");
+            }
+
+            return section.Value;
+        }
+
+        public static bool IsMobile(string userAgent) 
 		{
             // NOTE: Regex from http://detectmobilebrowsers.com/ 
             Regex b = new Regex(@"(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino", RegexOptions.IgnoreCase | RegexOptions.Multiline);

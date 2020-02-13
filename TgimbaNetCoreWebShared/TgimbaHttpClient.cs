@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace TgimbaNetCoreWebShared
 {
+    // TODO - is this client still needed?
     public class TgimbaHttpClient : ITgimbaHttpClient
     {
         public string Delete(string url)
