@@ -14,7 +14,8 @@
         public enum SortAlgorithms
         {
             Linq,
-            Bubble
+            Bubble,
+            Insertion
         }
     }
 }

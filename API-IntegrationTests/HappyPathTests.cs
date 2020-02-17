@@ -12,7 +12,7 @@ namespace API_IntegrationTests
     [TestClass]
     public class HappyPathTests
     {
-        private string host = "http://localhost:55161/api/TgimbaApi/";
+        private string host = "http://localhost:64602/api/TgimbaApi/";
         private string userName = null;
         private string password = "wilmaRules87&";
         private string email = "fred@bedrock.com";

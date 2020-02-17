@@ -170,7 +170,14 @@ namespace APINetCore
             Enums.SortAlgorithms selectedSortAlgorithm = (Enums.SortAlgorithms)Enum.Parse(typeof(Enums.SortAlgorithms), decodedSortType);
             var sortAlgorithm = availableSortingAlgorithms.GetAlgorithm(selectedSortAlgorithm);
 
-            bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn, !sortAsc);
+            try 
+            {
+                bucketListItems = sortAlgorithm.Sort(bucketListItems, sortColumn, !sortAsc);
+            } 
+            catch(Exception ex)
+            {
+                Log("Sort failed - Error: " + ex.Message);
+            }
             
             return bucketListItems;
         }

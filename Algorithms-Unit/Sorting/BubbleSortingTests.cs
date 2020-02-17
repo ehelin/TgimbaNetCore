@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Algorithms.Algorithms.Sorting;
 using Algorithms.Algorithms.Sorting.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shared.dto;
 using Shared.misc;
 
 namespace Algorithms_Unit

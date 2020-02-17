@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Shared.dto;
 using Shared.misc;
 
 namespace Algorithms.Algorithms.Sorting.Implementations
 {
-    public class BubbleSort : ISort
+    public class BubbleSort : BaseSort, ISort
     {
         public Enums.SortAlgorithms GetSortingAlgorithm()
         {
@@ -16,9 +15,10 @@ namespace Algorithms.Algorithms.Sorting.Implementations
         {
             for(int outer=0; outer<values.Count; outer++)
             {
-                for (int inner=0; inner<values.Count; inner++)
+                if (outer > values.Count + 1) { break; }
+
+                for (int inner=0; inner<values.Count-1; inner++)
                 {
-                    if (inner + 1 >= values.Count) { break; }
                     long innerCompare = 0;
                     long innerPlusOneCompare = 0;
 
@@ -49,80 +49,6 @@ namespace Algorithms.Algorithms.Sorting.Implementations
             }
 
             return swap;
-        }
-        
-        private void SortName
-        (
-            int inner, 
-            int innerPlusOne, 
-            IList<BucketListItem> values, 
-            out long innerCompare, 
-            out long innerPlusOneCompare
-        ) {
-            var innerCompareArray = values[inner].Name.Split(" ");
-            var innerPlusOneCompareArray = values[innerPlusOne].Name.Split(" ");
-            var shorterBucketListItemArray = innerCompareArray.Length < innerPlusOneCompareArray.Length 
-                                            ? innerCompareArray : innerPlusOneCompareArray;
-            innerCompare = 0;
-            innerPlusOneCompare = 0;
-
-            for (var i=0; i<shorterBucketListItemArray.Length; i++)
-            {
-                var innerCompareCurrent = Convert.ToChar(innerCompareArray[i].ToLower().Substring(0, 1));
-                var innerPlusOneCompareCurrent = Convert.ToChar(innerPlusOneCompareArray[i].ToLower().Substring(0, 1));
-
-                if (innerCompareCurrent != innerPlusOneCompareCurrent)
-                {
-                    innerCompare = innerCompareCurrent;
-                    innerPlusOneCompare = innerPlusOneCompareCurrent;
-                    break;
-                }
-            }
-
-            // TODO - update tests to handle and fail gracefully...
-            if (innerCompare == 0 && innerPlusOneCompare == 0)
-            {
-                throw new Exception("Bubble sort cannot sort list");
-            }
-        }
-
-        private void SortCreated
-        (
-            int inner,
-            int innerPlusOne,
-            IList<BucketListItem> values,
-            out long innerCompare,
-            out long innerPlusOneCompare
-        )
-        {
-            innerCompare = long.Parse(values[inner].Created.ToString("yyyyMMddHHmmss"));
-            innerPlusOneCompare = long.Parse(values[innerPlusOne].Created.ToString("yyyyMMddHHmmss"));
-        }
-
-        private void SortCategory
-        (
-            int inner,
-            int innerPlusOne,
-            IList<BucketListItem> values,
-            out long innerCompare,
-            out long innerPlusOneCompare
-        )
-        {
-            innerCompare = Convert.ToChar(values[inner].Category.ToLower().Substring(0, 1));
-            innerPlusOneCompare = Convert.ToChar(values[innerPlusOne].Category.ToLower().Substring(0, 1));
-        }
-
-        private void SortAchieved
-        (
-            int inner,
-            int innerPlusOne,
-            IList<BucketListItem> values,
-            out long innerCompare,
-            out long innerPlusOneCompare
-        )
-        {
-            innerCompare = Convert.ToInt64(values[inner].Achieved);
-            innerPlusOneCompare = Convert.ToInt64(values[innerPlusOne].Achieved);
         }
     }
 }
