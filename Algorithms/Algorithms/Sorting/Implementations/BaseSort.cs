@@ -37,12 +37,6 @@ namespace Algorithms.Algorithms.Sorting.Implementations
                     break;
                 }
             }
-
-            // TODO - update tests to handle and fail gracefully...
-            if (innerCompare == 0 && innerPlusOneCompare == 0)
-            {
-                throw new Exception("Name sort cannot sort list");
-            }
         }
 
         protected void SortCreated
