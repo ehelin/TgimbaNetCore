@@ -17,5 +17,10 @@
             Bubble,
             Insertion
         }
+        public enum SearchAlgorithms
+        {
+            Linq,
+            Binary
+        }
     }
 }

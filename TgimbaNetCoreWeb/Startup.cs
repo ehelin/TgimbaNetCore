@@ -57,7 +57,17 @@ namespace TgimbaNetCoreWeb
             services.AddSingleton<IPassword>(new PasswordHelper());
             services.AddSingleton<IGenerator>(new GeneratorHelper());
             services.AddSingleton<IString>(new StringHelper());
+
+            // TODO - replace single ISearch w/searching algorithm class
             services.AddSingleton<ISearch>(new LinqSearch());
+            //services.AddSingleton(new AvailableSearchingAlgorithms(
+            //    new List<ISearch>()
+            //    {
+            //            new LinqSearch(),
+            //            new BinarySearch()
+            //     }
+            // ));
+
             services.AddSingleton(new AvailableSortingAlgorithms(
                 new List<ISort>() 
                 { 
