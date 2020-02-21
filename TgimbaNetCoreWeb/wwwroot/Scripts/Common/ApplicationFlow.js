@@ -24,6 +24,7 @@ ApplicationFlow.SetLayout = function ()
 
                 ApplicationFlow.SetupScreenTypeCss(response.isMobile);
                 SessionSet(SESSION_AVAILABLE_SORTING_ALGORITHMS, response.availableSortingAlgorithms);
+                SessionSet(SESSION_AVAILABLE_SEARCHING_ALGORITHMS, response.availableSearchingAlgorithms);
             }
         );
 };

@@ -298,9 +298,9 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == decodedUserToReturn)))
                             .Returns(bucketListItemsToReturn);
 
-            this.mockSearch.Setup(x => x.Search(It.IsAny<List<BucketListItem>>(), 
-                                                It.Is<string>(s => s == decodedSrchStringToReturn)))
-                                                .Returns(bucketListItemsToReturn);
+            //this.mockSearch.Setup(x => x.Search(It.IsAny<List<BucketListItem>>(), 
+            //                                    It.Is<string>(s => s == decodedSrchStringToReturn)))
+            //                                    .Returns(bucketListItemsToReturn);
             
             this.mockSort.Setup(x => x.Sort
                         (It.IsAny<IList<BucketListItem>>(),
@@ -381,7 +381,7 @@ namespace TestAPINetCore_Unit
                     SortVerifyNever(decodedSortStringToReturn);
                 }
 
-                SearchVerify(decodedSrchStringToReturn);
+                //SearchVerify(decodedSrchStringToReturn);
 
                 this.mockBucketListData.Verify(x => x.GetBucketList
                         (It.Is<string>(s => s == decodedUserNameToReturn))
@@ -397,20 +397,20 @@ namespace TestAPINetCore_Unit
             }
         }
 
-        private void SearchVerify(string decodedSrchStringToReturn)
-        {
-            if (!string.IsNullOrEmpty(decodedSrchStringToReturn))
-            {
-                this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
-                                                     It.Is<string>(s => s == decodedSrchStringToReturn))
-                                                        , Times.Once);
-            } else 
-            {
-                this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
-                                                     It.Is<string>(s => s == decodedSrchStringToReturn))
-                                                        , Times.Never);
-            }
-        }
+        //private void SearchVerify(string decodedSrchStringToReturn)
+        //{
+        //    if (!string.IsNullOrEmpty(decodedSrchStringToReturn))
+        //    {
+        //        this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
+        //                                             It.Is<string>(s => s == decodedSrchStringToReturn))
+        //                                                , Times.Once);
+        //    } else 
+        //    {
+        //        this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
+        //                                             It.Is<string>(s => s == decodedSrchStringToReturn))
+        //                                                , Times.Never);
+        //    }
+        //}
 
         private void SortVerifyOnce(string decodedSortStringToReturn)
         {

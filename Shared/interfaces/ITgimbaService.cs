@@ -8,9 +8,15 @@ namespace Shared.interfaces
         string ProcessUser(string encodedUser, string encodedPass);
         bool ProcessUserRegistration(string encodedUserName, string encodedEmail, string encodedPassword);
 
-        IList<BucketListItem> GetBucketListItems(string encodedUserName, string encodedSortString, 
-											string encodedToken, string encodedSrchString = "",
-                                            string encodedSortType = "");
+        IList<BucketListItem> GetBucketListItems
+        (
+            string encodedUserName, 
+            string encodedSortString, 
+            string encodedToken, 
+            string encodedSrchString = "",
+            string encodedSortType = "",
+            string encodedSearchType = ""
+        );
         bool UpsertBucketListItem(BucketListItem bucketListItem, string encodedUser, string encodedToken);
         bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
  

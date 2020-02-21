@@ -16,7 +16,8 @@ namespace TgimbaNetCoreWebShared.Controllers
             var initializeResult = new InitializeResult()
             {
                 IsMobile = Utilities.IsMobile(userAgent),
-                AvailableSortingAlgorithms = Utilities.GetAvailableSortingAlgorithms()
+                AvailableSortingAlgorithms = Utilities.GetAvailableSortingAlgorithms(),
+                AvailableSearchingAlgorithms = Utilities.GetAvailableSearchingAlgorithms()
             };
 
             return initializeResult;

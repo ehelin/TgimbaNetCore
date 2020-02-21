@@ -41,8 +41,14 @@ namespace TgimbaNetCoreWebShared
             return availableSortingAlgorithms;
         }
 
-	
-		public static string ConvertModelToString(SharedBucketListModel model) 
+        public static string[] GetAvailableSearchingAlgorithms()
+        {
+            var availableSearchingAlgorithms = Enum.GetNames(typeof(Enums.SearchAlgorithms));
+
+            return availableSearchingAlgorithms;
+        }
+
+        public static string ConvertModelToString(SharedBucketListModel model) 
 		{	   			
 			string bucketListItem = null;
 

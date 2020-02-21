@@ -59,14 +59,14 @@ namespace TgimbaNetCoreWeb
             services.AddSingleton<IString>(new StringHelper());
 
             // TODO - replace single ISearch w/searching algorithm class
-            services.AddSingleton<ISearch>(new LinqSearch());
-            //services.AddSingleton(new AvailableSearchingAlgorithms(
-            //    new List<ISearch>()
-            //    {
-            //            new LinqSearch(),
-            //            new BinarySearch()
-            //     }
-            // ));
+            //services.AddSingleton<ISearch>(new LinqSearch());
+            services.AddSingleton(new AvailableSearchingAlgorithms(
+                new List<ISearch>()
+                {
+                        new LinqSearch(),
+                        new BinarySearch()
+                 }
+             ));
 
             services.AddSingleton(new AvailableSortingAlgorithms(
                 new List<ISort>() 
@@ -82,7 +82,7 @@ namespace TgimbaNetCoreWeb
                                    x.GetRequiredService<IGenerator>(),
                                    x.GetRequiredService<IString>(),
                                    x.GetRequiredService<AvailableSortingAlgorithms>(),
-                                   x.GetRequiredService<ISearch>()
+                                   x.GetRequiredService<AvailableSearchingAlgorithms>()
                                    ));
             services.AddSingleton<IValidationHelper>(new ValidationHelper());
             services.AddSingleton<IConfiguration>(Configuration);

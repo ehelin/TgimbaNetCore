@@ -10,6 +10,7 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
 	}
     else if (view === VIEW_SORT) {
         Display.BindSortView();
+        Display.BindSearchView();   
     }
 
 	if (htmlContent) {
@@ -22,6 +23,23 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
         }
 	}
 };
+
+Display.BindSearchView = function() 
+{	  
+    var availableSearchingAlgorithms = SessionGet(SESSION_AVAILABLE_SEARCHING_ALGORITHMS);
+    var searchingAlgorithmsCtrl = document.getElementById('hvJsSearchAvailableSearchAlgorithmsSelect');
+
+    isNullUndefined(searchingAlgorithmsCtrl, 'Display.js', 'searchingAlgorithmsCtrl');
+
+    availableSearchingAlgorithms = availableSearchingAlgorithms.split(",")
+
+    for(var i=0; i<availableSearchingAlgorithms.length; i++)
+    {
+        var searchCtrlLength = searchingAlgorithmsCtrl.options.length;
+        var currentOption = searchingAlgorithmsCtrl[i];
+        searchingAlgorithmsCtrl.options[searchCtrlLength] = new Option(currentOption, currentOption);
+    }	
+}
 
 Display.BindSortView = function() 
 {	  

@@ -17,6 +17,8 @@ namespace TestTgimbaNetCoreWeb
             Assert.IsFalse(initializeResult.IsMobile);
             Assert.AreEqual(Utilities.GetAvailableSortingAlgorithms().Length
                             , initializeResult.AvailableSortingAlgorithms.Length);
+            Assert.AreEqual(Utilities.GetAvailableSearchingAlgorithms().Length
+                            , initializeResult.AvailableSearchingAlgorithms.Length);
         }
 
         [TestMethod]

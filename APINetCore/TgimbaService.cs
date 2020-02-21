@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Algorithms.Algorithms.Search;
 using Algorithms.Algorithms.Sorting;
 using Shared;
 using Shared.dto;
@@ -17,7 +16,7 @@ namespace APINetCore
         private IGenerator generatorHelper = null;
         private IString stringHelper = null;
         private IAvailableSortingAlgorithms availableSortingAlgorithms = null;
-        private ISearch searchAlgorithm = null;
+        private IAvailableSearchingAlgorithms availableSearchingAlgorithms = null;
 
         public TgimbaService
         (
@@ -26,14 +25,14 @@ namespace APINetCore
             IGenerator generatorHelper,
             IString stringHelper,
             IAvailableSortingAlgorithms availableSortingAlgorithms,
-            ISearch searchAlgorithm
+            IAvailableSearchingAlgorithms availableSearchingAlgorithms
         ) {
             this.bucketListData = bucketListData;
             this.passwordHelper = passwordHelper;
             this.generatorHelper = generatorHelper;
             this.stringHelper = stringHelper;
             this.availableSortingAlgorithms = availableSortingAlgorithms;
-            this.searchAlgorithm = searchAlgorithm;
+            this.availableSearchingAlgorithms = availableSearchingAlgorithms;
         }
 
         #region User 
@@ -133,13 +132,15 @@ namespace APINetCore
             string encodedSortString, 
             string encodedToken, 
             string encodedSrchString = "",
-            string encodedSortType = ""
+            string encodedSortType = "",
+            string encodedSearchType = ""
         ) {
             IList <BucketListItem> bucketListItems = null;
 
             string decodedSortString = this.stringHelper.DecodeBase64String(encodedSortString);
             string decodedSortType = this.stringHelper.DecodeBase64String(encodedSortType);
             string decodedSrchString = this.stringHelper.DecodeBase64String(encodedSrchString);
+            string decodedSrchType = this.stringHelper.DecodeBase64String(encodedSearchType);
 
             if (this.IsValidToken(encodedUserName, encodedToken))
             {               
@@ -152,9 +153,24 @@ namespace APINetCore
 
                 if (!string.IsNullOrEmpty(decodedSrchString))
                 {
-                    bucketListItems = this.searchAlgorithm.Search(bucketListItems, decodedSrchString);
+                    bucketListItems = Search(bucketListItems, decodedSrchString, decodedSrchType);
                 }
             }
+
+            return bucketListItems;
+        }
+
+        private IList<BucketListItem> Search
+        (
+          IList<BucketListItem> bucketListItems,
+          string decodedSrchString,
+          string decodedSrchType
+        )
+        {
+            Enums.SearchAlgorithms selectedSearchAlgorithm = (Enums.SearchAlgorithms)Enum.Parse(typeof(Enums.SearchAlgorithms), decodedSrchType);
+            var searchAlgorithm = availableSearchingAlgorithms.GetAlgorithm(selectedSearchAlgorithm);
+
+            bucketListItems = searchAlgorithm.Search(bucketListItems, decodedSrchString);
 
             return bucketListItems;
         }

@@ -6,6 +6,7 @@ var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';
 var SESSION_CLIENT_IS_MOBILE = 'SessionIsMobile';
 var SESSION_AVAILABLE_SORTING_ALGORITHMS = 'SessionAvailableSortingAlgorithms';
+var SESSION_AVAILABLE_SEARCHING_ALGORITHMS = 'SessionAvailableSearchingAlgorithms';
 
 var SESSION_CLIENT_WEB_AZURE_IS_UP = 'SystemWebSiteAzureFunctionIsUp';
 var SESSION_CLIENT_DB_AZURE_IS_UP = 'SystemDbAzureFunctionIsUp';

@@ -87,7 +87,8 @@ namespace TgimbaNetCoreWebShared.Controllers
                                                                         request.EncodedSortString,
                                                                         request.EncodedToken,
                                                                         request.EncodedSearchString,
-                                                                        request.EncodedSortType);
+                                                                        request.EncodedSortType,
+                                                                        request.EncodedSearchType);
 
                 return Ok(bucketListItems); // 200
             }
