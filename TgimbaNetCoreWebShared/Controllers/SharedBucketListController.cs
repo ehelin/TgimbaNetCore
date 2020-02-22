@@ -54,7 +54,8 @@ namespace TgimbaNetCoreWebShared.Controllers
 			string encodedSortString, 
 			string encodedToken,
 			string encodedSrchTerm = "",
-            string encodedSortType = ""
+            string encodedSortType = "",
+            string encodedSearchType = ""
         ) 
 		{					
 			var bucketListItem = webClient.GetBucketListItems
@@ -63,7 +64,8 @@ namespace TgimbaNetCoreWebShared.Controllers
 				encodedSortString, 
 				encodedToken, 
 				encodedSrchTerm,
-                encodedSortType
+                encodedSortType,
+                encodedSearchType
             );
 
 			return bucketListItem;

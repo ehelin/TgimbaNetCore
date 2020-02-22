@@ -32,8 +32,9 @@ namespace TgimbaNetCoreWebShared
 			string encodedSortString, 
 			string encodedToken,
 			string encodedSrchTerm = "",
-            string encodedSortType = ""
-		);
+            string encodedSortType = "",
+            string encodedSearchType = ""
+        );
         List<SystemStatistic> GetSystemStatistics();
         List<SystemBuildStatistic> GetSystemBuildStatistics();
     }

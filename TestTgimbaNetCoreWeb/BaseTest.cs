@@ -23,13 +23,13 @@ namespace TestTgimbaNetCoreWeb
             var bucketListItem = GetBucketListItemModel("base64EncodedGoodUser", "newBucketListItem", "dbId", true);
             var bucketListItems = new List<SharedBucketListModel>();
             bucketListItems.Add(bucketListItem);
-            mockWebClient.Setup(x => x.GetBucketListItems(
-                                                        "YmFzZTY0RW5jb2RlZEdvb2RVc2Vy",//"base64EncodedGoodUser", 
-                                                        "base64EncodedGoodSortString",
-                                                        "base64EncodedGoodToken",
-                                                        "base64EncodedGoodSrchTerm",
-                                                        "base64EncodedGoodSortType"
-                                                        )).Returns(bucketListItems);
+            //mockWebClient.Setup(x => x.GetBucketListItems(
+            //                                            "YmFzZTY0RW5jb2RlZEdvb2RVc2Vy",//"base64EncodedGoodUser", 
+            //                                            "base64EncodedGoodSortString",
+            //                                            "base64EncodedGoodToken",
+            //                                            "base64EncodedGoodSrchTerm",
+            //                                            "base64EncodedGoodSortType"
+            //                                            )).Returns(bucketListItems);
 
             mockWebClient.Setup(x => x.AddBucketListItem(
                                                         It.IsAny<SharedBucketListModel>(),

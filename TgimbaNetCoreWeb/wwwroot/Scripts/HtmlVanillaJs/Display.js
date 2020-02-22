@@ -9,8 +9,7 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
 	    MainController.SetAddViewDate();
 	}
     else if (view === VIEW_SORT) {
-        Display.BindSortView();
-        Display.BindSearchView();   
+        Display.BindSortView();  
     }
 
 	if (htmlContent) {
@@ -20,6 +19,7 @@ Display.SetView = function (view, contentDiv, loadedView, htmlContent, srchView)
 		// load bucket list item view
 		else {
             Display.BindMainView(htmlContent);
+            Display.BindSearchView(); 
         }
 	}
 };
@@ -36,7 +36,7 @@ Display.BindSearchView = function()
     for(var i=0; i<availableSearchingAlgorithms.length; i++)
     {
         var searchCtrlLength = searchingAlgorithmsCtrl.options.length;
-        var currentOption = searchingAlgorithmsCtrl[i];
+        var currentOption = availableSearchingAlgorithms[i];
         searchingAlgorithmsCtrl.options[searchCtrlLength] = new Option(currentOption, currentOption);
     }	
 }

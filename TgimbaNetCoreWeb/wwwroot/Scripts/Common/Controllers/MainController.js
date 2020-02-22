@@ -20,7 +20,7 @@ MainController.Edit_ParameterNames = [
 	"EDIT_USERNAME"
 ];
 	 
-MainController.Index = function (srchTerm) {
+MainController.Index = function (srchTerm, srchType) {
 	var params = [];
 	
 	params.push(SessionGetUsername(SESSION_USERNAME));
@@ -28,6 +28,7 @@ MainController.Index = function (srchTerm) {
 
 	if (srchTerm && srchTerm.length > 0) {
 		params.push(srchTerm);
+        params.push(srchType);
 		SessionSetIsSearch(SESSION_IS_SRCH_VIEW, true);
 	}
 	else {
@@ -50,9 +51,10 @@ MainController.SetAddViewDate = function () {
 MainController.Search = function ()
 {
 	var srchTerm = GetElementValue('USER_CONTROL_SEARCH_TEXT_BOX');	// Utilities.js
+    var srchType = GetElementValue('hvJsSearchAvailableSearchAlgorithmsSelect');
 
 	if (srchTerm) {
-		return MainController.Index(srchTerm);
+		return MainController.Index(srchTerm, srchType);
 	}
 
 	alert('No search term entered');
