@@ -23,6 +23,7 @@ namespace TestAPINetCore_Unit
         protected Mock<IAvailableSortingAlgorithms> mockSortAlgorithm { get; set; }
         protected Mock<IAvailableSearchingAlgorithms> mockSearchAlgorithm { get; set; }
         protected Mock<ISort> mockSort { get; set; }
+        protected Mock<ISearch> mockSearch { get; set; }
 
         public BaseTest()
         {
@@ -33,6 +34,7 @@ namespace TestAPINetCore_Unit
             this.mockSearchAlgorithm = new Mock<IAvailableSearchingAlgorithms>();
             this.mockSortAlgorithm = new Mock<IAvailableSortingAlgorithms>();
             this.mockSort = new Mock<ISort>();
+            this.mockSearch = new Mock<ISearch>();
             this.service = new TgimbaService(this.mockBucketListData.Object, 
                                     mockPassword.Object, mockGenerator.Object,
                                         mockString.Object, mockSortAlgorithm.Object,

@@ -212,12 +212,12 @@ namespace TestAPINetCore_Unit
         #region GetBucketListItems(args)
 
         [DataTestMethod]
-        //[DataRow(true, null)]                   //valid token/null sort string    
-        //[DataRow(true, "")]                     //valid token/empty sort string  
+        [DataRow(true, null)]                   //valid token/null sort string    
+        [DataRow(true, "")]                     //valid token/empty sort string  
         [DataRow(true, "ListItemName")]           //valid token/sort string    
-        //[DataRow(false, null)]                  //invalid token/null sort string    
-        //[DataRow(false, "")]                    //invalid token/empty sort string  
-        //[DataRow(false, "ListItemName")]          //invalid token/sort string    
+        [DataRow(false, null)]                  //invalid token/null sort string    
+        [DataRow(false, "")]                    //invalid token/empty sort string  
+        [DataRow(false, "ListItemName")]          //invalid token/sort string    
         public void GetBucketListItems_Tests(bool isValidToken, string sortString)
         {
             var encodedUser = "base64=>username";
@@ -225,11 +225,13 @@ namespace TestAPINetCore_Unit
             var encodedToken = "base64=>token";
             var encodedSrchString = "base64=>srchString";
             var encodedSortType = "base64=>sortType";
+            var encodedSearchType = "base64=>searchType";
             var decodedUserToReturn = "username";
             var decodedSortStringToReturn = sortString;
             var decodedTokenToReturn = "token";
             var decodedSrchStringToReturn = "srchString";
             var decodedSortTypeToReturn = "Linq";
+            var decodedSearchTypeToReturn = "Linq";
             var userToReturn = GetUser(decodedUserToReturn, decodedTokenToReturn);
             var bucketListItemToReturn = GetBucketListItemObject();
             var bucketListItems = new List<BucketListItem>();
@@ -239,9 +241,10 @@ namespace TestAPINetCore_Unit
                                                     decodedUserToReturn, decodedSortStringToReturn, 
                                                     decodedTokenToReturn, decodedSrchStringToReturn,
                                                     userToReturn, bucketListItems, isValidToken,
-                                                    encodedSortType, decodedSortTypeToReturn);
+                                                    encodedSortType, decodedSortTypeToReturn, 
+                                                    encodedSearchType, decodedSearchTypeToReturn);
 
-            var response = this.service.GetBucketListItems(encodedUser, encodedSortString, encodedToken, encodedSrchString, encodedSortType);
+            var response = this.service.GetBucketListItems(encodedUser, encodedSortString, encodedToken, encodedSrchString, encodedSortType, encodedSearchType);
             if (isValidToken)
             {
                 Assert.IsNotNull(response);
@@ -273,7 +276,9 @@ namespace TestAPINetCore_Unit
             IList<BucketListItem> bucketListItemsToReturn,
             bool isValidToken,
             string encodedSortType,
-            string decodedSortTypeToReturn
+            string decodedSortTypeToReturn,
+            string encodedSearchType,
+            string decodedSearchTypeToReturn
         ) {
             this.mockString.Setup(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedUser)))
@@ -288,6 +293,9 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == encodedSrchString)))
                             .Returns(decodedSrchStringToReturn);
             this.mockString.Setup(x => x.DecodeBase64String
+                        (It.Is<string>(s => s == encodedSearchType)))
+                            .Returns(decodedSearchTypeToReturn);
+            this.mockString.Setup(x => x.DecodeBase64String
                         (It.Is<string>(s => s == encodedSortType)))
                             .Returns(decodedSortTypeToReturn);
 
@@ -298,18 +306,22 @@ namespace TestAPINetCore_Unit
                         (It.Is<string>(s => s == decodedUserToReturn)))
                             .Returns(bucketListItemsToReturn);
 
-            //this.mockSearch.Setup(x => x.Search(It.IsAny<List<BucketListItem>>(), 
-            //                                    It.Is<string>(s => s == decodedSrchStringToReturn)))
-            //                                    .Returns(bucketListItemsToReturn);
-            
+            this.mockSearch.Setup(x => x.Search
+                        (It.IsAny<IList<BucketListItem>>(),
+                         It.IsAny<string>()))
+                            .Returns(bucketListItemsToReturn);
             this.mockSort.Setup(x => x.Sort
                         (It.IsAny<IList<BucketListItem>>(),
                         It.IsAny<Enums.SortColumns>(),
                         It.IsAny<bool>()))
                             .Returns(bucketListItemsToReturn);
+
             this.mockSortAlgorithm.Setup(x => x.GetAlgorithm(
                                         It.IsAny<Enums.SortAlgorithms>()))
                                         .Returns(mockSort.Object);
+            this.mockSearchAlgorithm.Setup(x => x.GetAlgorithm(
+                                        It.IsAny<Enums.SearchAlgorithms>()))
+                                        .Returns(mockSearch.Object);
 
             this.mockPassword.Setup(x => x.IsValidToken
                         (It.Is<User>(s => s.Email == userToReturn.Email),
@@ -381,7 +393,7 @@ namespace TestAPINetCore_Unit
                     SortVerifyNever(decodedSortStringToReturn);
                 }
 
-                //SearchVerify(decodedSrchStringToReturn);
+                SearchVerify(decodedSrchStringToReturn);
 
                 this.mockBucketListData.Verify(x => x.GetBucketList
                         (It.Is<string>(s => s == decodedUserNameToReturn))
@@ -397,20 +409,21 @@ namespace TestAPINetCore_Unit
             }
         }
 
-        //private void SearchVerify(string decodedSrchStringToReturn)
-        //{
-        //    if (!string.IsNullOrEmpty(decodedSrchStringToReturn))
-        //    {
-        //        this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
-        //                                             It.Is<string>(s => s == decodedSrchStringToReturn))
-        //                                                , Times.Once);
-        //    } else 
-        //    {
-        //        this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
-        //                                             It.Is<string>(s => s == decodedSrchStringToReturn))
-        //                                                , Times.Never);
-        //    }
-        //}
+        private void SearchVerify(string decodedSrchStringToReturn)
+        {
+            if (!string.IsNullOrEmpty(decodedSrchStringToReturn))
+            {
+                this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
+                                                     It.Is<string>(s => s == decodedSrchStringToReturn))
+                                                        , Times.Once);
+            }
+            else
+            {
+                this.mockSearch.Verify(x => x.Search(It.IsAny<IList<BucketListItem>>(),
+                                                     It.Is<string>(s => s == decodedSrchStringToReturn))
+                                                        , Times.Never);
+            }
+        }
 
         private void SortVerifyOnce(string decodedSortStringToReturn)
         {

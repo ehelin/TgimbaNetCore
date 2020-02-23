@@ -80,7 +80,8 @@ namespace TestTgimbaNetCoreWeb
                                                                       "base64EncodedGoodSortString",
                                                                       "base64EncodedGoodToken",
                                                                       "base64EncodedGoodSrchTerm",
-                                                                      "base64EncodedGoodSortType");
+                                                                      "base64EncodedGoodSortType",
+                                                                      "base64EncodedGoodSearchType");
 
             Assert.IsNotNull(bucketListItems);
             Assert.AreEqual(1, bucketListItems.Count);

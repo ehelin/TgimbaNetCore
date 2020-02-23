@@ -42,7 +42,7 @@ namespace TestTgimbaNetCoreWeb
             Assert.AreEqual(expectedEnumValues.Length, availableSearchingAlgorithms.Length);
             foreach (var availableSearchingAlgorithm in availableSearchingAlgorithms)
             {
-                Assert.IsTrue(Array.IndexOf(expectedEnumValues, availableSearchingAlgorithms) != -1);
+                Assert.IsTrue(Array.IndexOf(expectedEnumValues, availableSearchingAlgorithm) != -1);
             }
         }
 
