@@ -2,7 +2,7 @@
     var lists = GetLocalStorageLists();
 
     if (lists == null || lists == 'null') {
-        lists = "The Body,xmas2018List,MeetupList,Clothing,Colors,Family Members,Fruits,House Terms,Map Terms,Prepositions Misc,Questions,Shops,Time,Vegetables,VerbsAR,VerbsER,VerbsIR,Verbs2,VerbsA,VerbsB,VerbsC,VerbsD,VerbsE,VerbsF,VerbsG,VerbsH,VerbsI,VerbsJ,VerbsK,VerbsL,VerbsM,VerbsN,VerbsO,VerbsP,VerbsQ,VerbsR,VerbsS,VerbsT,VerbsU,VerbsV,VerbsW,VerbsX,VerbsY,VerbsZ";
+        lists = "CompleteVerbList,The Body,xmas2018List,MeetupList,Clothing,Colors,Family Members,Fruits,House Terms,Map Terms,Prepositions Misc,Questions,Shops,Time,Vegetables,VerbsAR,VerbsER,VerbsIR,Verbs2";
         SetLocalStorageLists(lists);
     }
 
@@ -12,110 +12,61 @@
 function GetSelectedListContents(selectedList) {
     var list = null;
 
-    if (selectedList == 'The Body')
-        list = GetBodyParts();
-    else if (selectedList == 'xmas2018List')
-        list = GetXmas2018List();
-    else if (selectedList == 'Clothing')
-        list = GetClothing();
-    else if (selectedList == 'Colors')
-        list = GetColors();
-    else if (selectedList == 'Family Members')
-        list = GetFamilyMembers();
-    else if (selectedList == 'Fruits')
-        list = GetFruits();
-    else if (selectedList == 'House Terms')
-        list = GetHouseTerms();
-    else if (selectedList == 'Map Terms')
-        list = GetMapTerms();
-    else if (selectedList == 'Prepositions Misc')
-        list = GetPrepositions();
-    else if (selectedList == 'Questions')
-        list = GetQuestions();
-    else if (selectedList == 'Shops')
-        list = GetShops();
-
-    else if (selectedList == 'MeetupList')
-        list = GetMeetupList();
-
-    else if (selectedList == 'Time')
-        list = GetTimeWords();
-    else if (selectedList == 'Vegetables')
-        list = GetVegetables();
-
-    else if (selectedList == 'VerbsAR')
-        list = GetVerbsAR();
-
-    else if (selectedList == 'VerbsER')
-        list = GetVerbsER();
-
-    else if (selectedList == 'VerbsIR')
-        list = GetVerbsIR();
-
-    else if (selectedList == 'Verbs2')
-        list = GetVerbs2();
-
-    else if (selectedList == 'VerbsA')
-        list = GetVerbsA();
-    else if (selectedList == 'VerbsB')
-        list = GetVerbsB();
-    else if (selectedList == 'VerbsC')
-        list = GetVerbsC();
-    else if (selectedList == 'VerbsD')
-        list = GetVerbsD();
-    else if (selectedList == 'VerbsE')
-        list = GetVerbsE();
-    else if (selectedList == 'VerbsF')
-        list = GetVerbsF();
-    else if (selectedList == 'VerbsG')
-        list = GetVerbsG();
-    else if (selectedList == 'VerbsH')
-        list = GetVerbsH();
-    else if (selectedList == 'VerbsI')
-        list = GetVerbsI();
-    else if (selectedList == 'VerbsJ')
-        list = GetVerbsJ();
-    else if (selectedList == 'VerbsK')
-        list = GetVerbsK();
-    else if (selectedList == 'VerbsL')
-        list = GetVerbsL();
-    else if (selectedList == 'VerbsM')
-        list = GetVerbsM();
-    else if (selectedList == 'VerbsN')
-        list = GetVerbsN();
-    else if (selectedList == 'VerbsO')
-        list = GetVerbsO();
-    else if (selectedList == 'VerbsP')
-        list = GetVerbsP();
-    else if (selectedList == 'VerbsQ')
-        list = GetVerbsQ();
-    else if (selectedList == 'VerbsR')
-        list = GetVerbsR();
-    else if (selectedList == 'VerbsS')
-        list = GetVerbsS();
-    else if (selectedList == 'VerbsT')
-        list = GetVerbsT();
-    else if (selectedList == 'VerbsU')
-        list = GetVerbsU();
-    else if (selectedList == 'VerbsV')
-        list = GetVerbsV();
-    else if (selectedList == 'VerbsW')
-        list = GetVerbsW();
-    else if (selectedList == 'VerbsX')
-        list = GetVerbsX();
-    else if (selectedList == 'VerbsY')
-        list = GetVerbsY();
-    else if (selectedList == 'VerbsZ')
-        list = GetVerbsZ();
-
-    if (list == null || list == 'null') {
-        list = GetTargetList(selectedList);
-
-        if (list != null) {
-            var pos = list.indexOf(RIGHT_BRACKET);
-            list = list.substring(pos + 1);
-        }
+    if (selectedList == 'CompleteVerbList') {
+        list = GetCompleteVerbList();
     }
+
+    //if (selectedList == 'The Body')
+    //    list = GetBodyParts();
+    //else if (selectedList == 'xmas2018List')
+    //    list = GetXmas2018List();
+    //else if (selectedList == 'Clothing')
+    //    list = GetClothing();
+    //else if (selectedList == 'Colors')
+    //    list = GetColors();
+    //else if (selectedList == 'Family Members')
+    //    list = GetFamilyMembers();
+    //else if (selectedList == 'Fruits')
+    //    list = GetFruits();
+    //else if (selectedList == 'House Terms')
+    //    list = GetHouseTerms();
+    //else if (selectedList == 'Map Terms')
+    //    list = GetMapTerms();
+    //else if (selectedList == 'Prepositions Misc')
+    //    list = GetPrepositions();
+    //else if (selectedList == 'Questions')
+    //    list = GetQuestions();
+    //else if (selectedList == 'Shops')
+    //    list = GetShops();
+
+    //else if (selectedList == 'MeetupList')
+    //    list = GetMeetupList();
+
+    //else if (selectedList == 'Time')
+    //    list = GetTimeWords();
+    //else if (selectedList == 'Vegetables')
+    //    list = GetVegetables();
+
+    //else if (selectedList == 'VerbsAR')
+    //    list = GetVerbsAR();
+
+    //else if (selectedList == 'VerbsER')
+    //    list = GetVerbsER();
+
+    //else if (selectedList == 'VerbsIR')
+    //    list = GetVerbsIR();
+
+    //else if (selectedList == 'Verbs2')
+    //    list = GetVerbs2();
+
+    //if (list == null || list == 'null') {
+    //    list = GetTargetList(selectedList);
+
+    //    if (list != null) {
+    //        var pos = list.indexOf(RIGHT_BRACKET);
+    //        list = list.substring(pos + 1);
+    //    }
+    //}
 
     return list;
 }
@@ -128,7 +79,6 @@ function GetPhrases() {
     vegetables = "1,What does it mean?,Que quiere dicer?  ;";
 
 }
-
 function GetVegetables() {
     var vegetables = '';
 
@@ -1338,7 +1288,6 @@ function GetVerbsAR() {
 
     return verbs;
 }
-
 function GetVerbsER() {
     var verbs = "1,"
         + "to learn,"
@@ -1586,7 +1535,6 @@ function GetVerbsER() {
 
     return verbs;
 }
-
 function GetVerbsIR() {
     var verbs = "1,"
         + "to open,"
@@ -1810,7 +1758,6 @@ function GetVerbsIR() {
 
     return verbs;
 }
-
 function GetVerbs2() {
     var verbs = "1,"
         + " to skate,"
