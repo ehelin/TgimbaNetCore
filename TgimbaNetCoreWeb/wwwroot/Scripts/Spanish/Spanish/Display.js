@@ -268,14 +268,14 @@ function BuildTermDisplay(curList) {
 
     if (language == 'English') {
         contents = contents + questionPrefix + curItem[1] + questionSuffix;
-        answer = answerPrefix + GetSpanishAnswerSection(curItem[2]) + answerSuffix;
+        //answer = answerPrefix + GetSpanishAnswerSection(curItem[2]) + answerSuffix;
     }
     else {
         contents = contents + questionPrefix + curItem[2] + questionSuffix;
-        answer = answerPrefix + curItem[1] + answerSuffix;
+        //answer = answerPrefix + curItem[1] + answerSuffix;
     }
 
-    contents = contents + answer;
+    //contents = contents + answer;
 
     listDisplay.append(contents);
 
