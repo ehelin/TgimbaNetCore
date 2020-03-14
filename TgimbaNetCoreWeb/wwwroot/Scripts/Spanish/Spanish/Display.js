@@ -282,3 +282,12 @@ function BuildTermDisplay(curList) {
     $("#nextTargetClick").click(nextTargetClick);
     $("#showAnswerClick").click(showAnswerClick);
 }
+
+function LoadVerb(verbUrl) {
+    ServerCalls.GetJson(verbUrl);
+};
+
+function SetJson(verbJson) {
+    // TODO - start here...take json and create verb viewer for new format
+    var StartHere = 1;
+};

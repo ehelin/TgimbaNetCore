@@ -25,3 +25,18 @@ ServerCalls.GetAjaxView = function (viewUrl, contentDiv, htmlContent) {
         return Error_Handler('ServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
     }
 };
+
+ServerCalls.GetJson = function (url) {
+    try {
+        return ServerCall.Get(url)
+            .then(
+                function (json) {
+                    var test = 1;
+                    SetJson(json);
+                    //Display.SetView(viewUrl, contentDiv, response, htmlContent);
+                });
+    }
+    catch (ex) {
+        return Error_Handler('ServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
+    }
+};

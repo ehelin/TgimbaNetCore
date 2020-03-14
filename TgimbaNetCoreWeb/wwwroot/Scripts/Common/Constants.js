@@ -1,7 +1,7 @@
 ﻿var SESSION_TOKEN = 'SessionToken';		
 var SESSION_USERNAME = 'SessionUsername';
 var SESSION_IS_SRCH_VIEW = 'SessionSearchView';
-var SESSION_CLIENT = 'SessionClient';
+var SESSION_CLIENT = 'SessionClient'; VIEW_MAIN_EDIT
 var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';
 var SESSION_CLIENT_IS_MOBILE = 'SessionIsMobile';
@@ -31,6 +31,8 @@ var VIEW_MENU = '/Markup/HtmlVanillaJs/Views/Menu/Index.html'
 var VIEW_SORT = '/Markup/HtmlVanillaJs/Views/Menu/Sort.html'
 var VIEW_WELCOME = '/Markup/Welcome/Views/Main/Index.html'
 var VIEW_PARTIAL_SYSTEM_STATISTICS = '/Markup/Welcome/Views/Main/Partial_SystemStatus.html'
+
+var SPANISH_VERB_PATH = '/Json/Spanish/';
 
 var CSS_FILE_MOBILE = 'Content/Mobile.css';
 var CSS_FILE_DESKTOP = 'Content/Desktop.css';

@@ -1,0 +1,66 @@
+{
+	"Name": "abrazar",
+	"EnglishMeaning": "to embrace, hug; to include",
+	"PresentParticiple": "need to get",
+	"PastParticiple": "need to get",
+	"Indicative": {
+		"PresentTense": {
+			"Yo": "abrazo",
+			"Tu": "abrazas",
+			"ElEllaUsted": "abraza",
+			"Nosotros": "abrazamos",
+			"Vosotros": "abrazáis",
+			"EllosEllasUstedes": "abrazan"
+		},
+		"Pretérito": {
+			"Yo": "abracé",
+			"Tu": "abrazaste",
+			"ElEllaUsted": "abrazó",
+			"Nosotros": "abrazamos",
+			"Vosotros": "abrazasteis",
+			"EllosEllasUstedes": "abrazaron"
+		},
+		"Conditional": {
+			"Yo": "abrazaría",
+			"Tu": "abrazarías",
+			"ElEllaUsted": "abrazaría",
+			"Nosotros": "abrazaríamos",
+			"Vosotros": "abrazaríais",
+			"EllosEllasUstedes": "abrazarían"
+		},
+		"Future": {
+			"Yo": "abrazaré",
+			"Tu": "abrazarás",
+			"ElEllaUsted": "abrazará",
+			"Nosotros": "abrazaremos",
+			"Vosotros": "abrazaréis",
+			"EllosEllasUstedes": "abrazarán"
+		}
+	},
+	"Subjunctive": {
+		"PresentTense": {
+			"Yo": "abrace",
+			"Tu": "abraces",
+			"ElEllaUsted": "abrace",
+			"Nosotros": "abracemos",
+			"Vosotros": "abracéis",
+			"EllosEllasUstedes": "abracen"
+		},
+		"Imperfect": {
+			"Yo": "abrazaba",
+			"Tu": "abrazabas",
+			"ElEllaUsted": "abrazaba",
+			"Nosotros": "abrazábamos",
+			"Vosotros": "abrazabais",
+			"EllosEllasUstedes": "abrazaban"
+		},
+		"Future": {
+			"Yo": "need to get",
+			"Tu": "need to get",
+			"ElEllaUsted": "need to get",
+			"Nosotros": "need to get",
+			"Vosotros": "need to get",
+			"EllosEllasUstedes": "need to get",
+		}
+	}
+}
