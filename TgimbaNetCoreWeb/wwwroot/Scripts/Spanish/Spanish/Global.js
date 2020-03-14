@@ -8,11 +8,6 @@
 //});
 
 function Load() {
-    // test start ---------------------
-    // TODO take this call and move to verb viewer for new format...
-    //var verbJson = LoadVerb(SPANISH_VERB_PATH + '/abandonar.json');
-    // test end -----------------------
-
     ResetPage();
     BuildMnuButton();
     //BuildMnuButtons();

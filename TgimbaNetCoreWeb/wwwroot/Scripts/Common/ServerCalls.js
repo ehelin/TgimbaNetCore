@@ -26,17 +26,16 @@ ServerCalls.GetAjaxView = function (viewUrl, contentDiv, htmlContent) {
     }
 };
 
-ServerCalls.GetJson = function (url) {
+ServerCalls.GetJson = function (url, listDisplay) {
     try {
         return ServerCall.Get(url)
             .then(
-                function (json) {
-                    var test = 1;
-                    SetJson(json);
-                    //Display.SetView(viewUrl, contentDiv, response, htmlContent);
+                function (jsonResponse) {
+                    var jsonParsed = JSON.parse(jsonResponse);
+                    SetJson(jsonParsed, listDisplay);
                 });
     }
     catch (ex) {
-        return Error_Handler('ServerCalls.GetView(3 args) - ' + view + ' - Error: ' + ex);
+        return Error_Handler('ServerCalls.GetJson(3 args) - ' + view + ' - Error: ' + ex);
     }
 };

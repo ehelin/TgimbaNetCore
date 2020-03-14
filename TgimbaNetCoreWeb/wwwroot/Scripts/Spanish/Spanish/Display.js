@@ -59,6 +59,13 @@ function SetupDisplayList() {
     var firstListItem = list[0].split(",");
     var firstListItemId = firstListItem[0];
     SetLocalStorageCurrentItemId(firstListItemId);
+
+    //if (selectedList === 'CurrentVerbList') {
+    //    LoadVerb(SPANISH_VERB_PATH + firstListItem[1] + '.json');
+    //} else {
+    //    var firstListItemId = firstListItem[0];
+    //    SetLocalStorageCurrentItemId(firstListItemId);
+    //}
 }
 
 function BuildMnuButton() {
@@ -241,17 +248,10 @@ function ClearTermDisplay() {
     mgnList.html('');
 }
 
-function BuildTermDisplay(curList) {
-    var nextButton = '<input type="button" class="yellowBlue" value="Next" id="nextTargetClick" name="nextTargetClick" />';
-    var showAnswerButton = '<input type="button" class="yellowBlue" value="Show Answer" id="showAnswerClick" name="showAnswerClick" />';
-    var answerPrefix = '<div class="answerHide  yellowBlue" id="answerDiv" name="answerDiv">';
-    var answerSuffix = '</div>';
-    var questionPrefix = '<div class="yellowBlue" >';
-    var questionSuffix = '</div>';
-    var answer = null;
-    var listDisplay = $("#listTarget");
+function BuildTermDisplay() {
+    var selectedList = GetSelectedList();
     var curItem = GetListItemById();
-    var language = GetLanguage();
+    var listDisplay = $("#listTarget");
 
     if (curItem == null || curItem == 'null' || curItem.length <= 1) {
         Alert(NO_MORE_ITEMS);
@@ -259,6 +259,24 @@ function BuildTermDisplay(curList) {
     }
 
     listDisplay.html('');
+
+    if (selectedList === 'CurrentVerbList') {
+        var verbUrl = SPANISH_VERB_PATH + curItem[1] + '.json'; 
+        LoadVerb(verbUrl, listDisplay);
+    } else {
+        buildRegularListTermDisplay(curItem, listDisplay);
+    }
+}
+
+function buildRegularListTermDisplay(curItem, listDisplay) {
+    var nextButton = '<input type="button" class="yellowBlue" value="Next" id="nextTargetClick" name="nextTargetClick" />';
+    var showAnswerButton = '<input type="button" class="yellowBlue" value="Show Answer" id="showAnswerClick" name="showAnswerClick" />';
+    var answerPrefix = '<div class="answerHide  yellowBlue" id="answerDiv" name="answerDiv">';
+    var answerSuffix = '</div>';
+    var questionPrefix = '<div class="yellowBlue" >';
+    var questionSuffix = '</div>';
+    var answer = null;
+    var language = GetLanguage();
 
     var contents = '';
 
@@ -268,14 +286,14 @@ function BuildTermDisplay(curList) {
 
     if (language == 'English') {
         contents = contents + questionPrefix + curItem[1] + questionSuffix;
-        //answer = answerPrefix + GetSpanishAnswerSection(curItem[2]) + answerSuffix;
+        answer = answerPrefix + GetSpanishAnswerSection(curItem[2]) + answerSuffix;
     }
     else {
         contents = contents + questionPrefix + curItem[2] + questionSuffix;
-        //answer = answerPrefix + curItem[1] + answerSuffix;
+        answer = answerPrefix + curItem[1] + answerSuffix;
     }
 
-    //contents = contents + answer;
+    contents = contents + answer;
 
     listDisplay.append(contents);
 
@@ -283,11 +301,33 @@ function BuildTermDisplay(curList) {
     $("#showAnswerClick").click(showAnswerClick);
 }
 
-function LoadVerb(verbUrl) {
-    ServerCalls.GetJson(verbUrl);
+function LoadVerb(verbUrl, listDisplay) {
+    ServerCalls.GetJson(verbUrl, listDisplay);
 };
 
-function SetJson(verbJson) {
-    // TODO - start here...take json and create verb viewer for new format
-    var StartHere = 1;
+// TODO - start here...create verb answer wrapper for available conjungations.
+function SetJson(verbJson, listDisplay) {
+    var nextButton = '<input type="button" class="yellowBlue" value="Next" id="nextTargetClick" name="nextTargetClick" />';
+    var showAnswerButton = '<input type="button" class="yellowBlue" value="Show Answer" id="showAnswerClick" name="showAnswerClick" />';
+    var answerPrefix = '<div class="answerHide  yellowBlue" id="answerDiv" name="answerDiv">';
+    var answerSuffix = '</div>';
+    var questionPrefix = '<div class="yellowBlue" >';
+    var questionSuffix = '</div>';
+    var answer = null;
+
+    var contents = '';
+
+    contents = contents + nextButton;
+    contents = contents + showAnswerButton;
+    contents = contents + '<br/>';
+
+    contents = contents + questionPrefix + verbJson.Name + questionSuffix;
+    answer = answerPrefix + 'add verb section here' + answerSuffix;
+
+    contents = contents + answer;
+
+    listDisplay.append(contents);
+
+    $("#nextTargetClick").click(nextTargetClick);
+    $("#showAnswerClick").click(showAnswerClick);
 };

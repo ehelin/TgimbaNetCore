@@ -16,57 +16,57 @@ function GetSelectedListContents(selectedList) {
         list = GetCurrentVerbList();
     }
 
-    //if (selectedList == 'The Body')
-    //    list = GetBodyParts();
-    //else if (selectedList == 'xmas2018List')
-    //    list = GetXmas2018List();
-    //else if (selectedList == 'Clothing')
-    //    list = GetClothing();
-    //else if (selectedList == 'Colors')
-    //    list = GetColors();
-    //else if (selectedList == 'Family Members')
-    //    list = GetFamilyMembers();
-    //else if (selectedList == 'Fruits')
-    //    list = GetFruits();
-    //else if (selectedList == 'House Terms')
-    //    list = GetHouseTerms();
-    //else if (selectedList == 'Map Terms')
-    //    list = GetMapTerms();
-    //else if (selectedList == 'Prepositions Misc')
-    //    list = GetPrepositions();
-    //else if (selectedList == 'Questions')
-    //    list = GetQuestions();
-    //else if (selectedList == 'Shops')
-    //    list = GetShops();
+    else if (selectedList == 'The Body')
+        list = GetBodyParts();
+    else if (selectedList == 'xmas2018List')
+        list = GetXmas2018List();
+    else if (selectedList == 'Clothing')
+        list = GetClothing();
+    else if (selectedList == 'Colors')
+        list = GetColors();
+    else if (selectedList == 'Family Members')
+        list = GetFamilyMembers();
+    else if (selectedList == 'Fruits')
+        list = GetFruits();
+    else if (selectedList == 'House Terms')
+        list = GetHouseTerms();
+    else if (selectedList == 'Map Terms')
+        list = GetMapTerms();
+    else if (selectedList == 'Prepositions Misc')
+        list = GetPrepositions();
+    else if (selectedList == 'Questions')
+        list = GetQuestions();
+    else if (selectedList == 'Shops')
+        list = GetShops();
 
-    //else if (selectedList == 'MeetupList')
-    //    list = GetMeetupList();
+    else if (selectedList == 'MeetupList')
+        list = GetMeetupList();
 
-    //else if (selectedList == 'Time')
-    //    list = GetTimeWords();
-    //else if (selectedList == 'Vegetables')
-    //    list = GetVegetables();
+    else if (selectedList == 'Time')
+        list = GetTimeWords();
+    else if (selectedList == 'Vegetables')
+        list = GetVegetables();
 
-    //else if (selectedList == 'VerbsAR')
-    //    list = GetVerbsAR();
+    else if (selectedList == 'VerbsAR')
+        list = GetVerbsAR();
 
-    //else if (selectedList == 'VerbsER')
-    //    list = GetVerbsER();
+    else if (selectedList == 'VerbsER')
+        list = GetVerbsER();
 
-    //else if (selectedList == 'VerbsIR')
-    //    list = GetVerbsIR();
+    else if (selectedList == 'VerbsIR')
+        list = GetVerbsIR();
 
-    //else if (selectedList == 'Verbs2')
-    //    list = GetVerbs2();
+    else if (selectedList == 'Verbs2')
+        list = GetVerbs2();
 
-    //if (list == null || list == 'null') {
-    //    list = GetTargetList(selectedList);
+    if (list == null || list == 'null') {
+        list = GetTargetList(selectedList);
 
-    //    if (list != null) {
-    //        var pos = list.indexOf(RIGHT_BRACKET);
-    //        list = list.substring(pos + 1);
-    //    }
-    //}
+        if (list != null) {
+            var pos = list.indexOf(RIGHT_BRACKET);
+            list = list.substring(pos + 1);
+        }
+    }
 
     return list;
 }
