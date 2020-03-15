@@ -21,7 +21,7 @@ var SPANISH_MOBILE_LOCAL_STORAGE_clsSpanishLists = "SpanishFlashCards_0001_Mobil
 var SPANISH_MOBILE_LOCAL_STORAGE_clsDynamicSpanishLists = "SpanishFlashCards_0001_Mobile_clsDynamicSpanishLists";
 var LOCAL_STORAGE = "localStorage";
 
-var TOTAL_SPANISH_CONJUNCATIONS = 4;
+var TOTAL_SPANISH_CONJUNCATIONS = 12;
 
 var LANGUAGE_ENGLISH = "English";
 var LANGUAGE_SPANISH = "Spanish";

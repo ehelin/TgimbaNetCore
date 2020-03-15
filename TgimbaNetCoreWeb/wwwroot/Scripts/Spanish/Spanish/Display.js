@@ -232,8 +232,10 @@ function showSelectedConjuncation(clickedConjuncation) {
 
     for (var i = 1; i <= TOTAL_SPANISH_CONJUNCATIONS; i++) {
         conjuncation = $(JQUERY_CTL_CONJUNCTION + i);
-        conjuncation.removeClass(CSS_CONJUNCTION_SHOW);
-        conjuncation.addClass(CSS_CONJUNCTION_HIDE);
+        if (conjuncation) {
+            conjuncation.removeClass(CSS_CONJUNCTION_SHOW);
+            conjuncation.addClass(CSS_CONJUNCTION_HIDE);
+        }
     }
 
     conjuncation = $(JQUERY_CTL_CONJUNCTION + clickedConjuncation);
@@ -268,6 +270,7 @@ function BuildTermDisplay() {
     }
 }
 
+// TODO - refactor this method and json method to share common elements
 function buildRegularListTermDisplay(curItem, listDisplay) {
     var nextButton = '<input type="button" class="yellowBlue" value="Next" id="nextTargetClick" name="nextTargetClick" />';
     var showAnswerButton = '<input type="button" class="yellowBlue" value="Show Answer" id="showAnswerClick" name="showAnswerClick" />';
@@ -305,7 +308,6 @@ function LoadVerb(verbUrl, listDisplay) {
     ServerCalls.GetJson(verbUrl, listDisplay);
 };
 
-// TODO - start here...create verb answer wrapper for available conjungations.
 function SetJson(verbJson, listDisplay) {
     var nextButton = '<input type="button" class="yellowBlue" value="Next" id="nextTargetClick" name="nextTargetClick" />';
     var showAnswerButton = '<input type="button" class="yellowBlue" value="Show Answer" id="showAnswerClick" name="showAnswerClick" />';
@@ -321,8 +323,9 @@ function SetJson(verbJson, listDisplay) {
     contents = contents + showAnswerButton;
     contents = contents + '<br/>';
 
-    contents = contents + questionPrefix + verbJson.Name + questionSuffix;
-    answer = answerPrefix + 'add verb section here' + answerSuffix;
+    contents = contents + questionPrefix + verbJson.EnglishMeaning + questionSuffix;
+    var jsonAnswerSection = GetSpanishVerbAnswerSectionJson(verbJson);
+    answer = answerPrefix + jsonAnswerSection + answerSuffix;
 
     contents = contents + answer;
 
@@ -331,3 +334,56 @@ function SetJson(verbJson, listDisplay) {
     $("#nextTargetClick").click(nextTargetClick);
     $("#showAnswerClick").click(showAnswerClick);
 };
+
+// TODO - refactor this method and older verb (3 conjungations) to share common components
+function GetSpanishVerbAnswerSectionJson(verbJson) {
+    var conjuncationSplit = '';
+    var showConjuncationButton = '';
+    var spanishContent = "<div class='masterConjuncationHide' id='SpanishContentsMaster' name='SpanishContentsMaster'>";
+    var verbFrontDivPrefix = "<div class='conjuncationHide' id='";
+    var verbFrontDivMiddle = "' name='";
+    var verbFrontDivSuffix = "'>";
+    var verbDivSuffix = "</div>";
+    var curVerbDiv = '';
+
+    spanishContent = verbJson.Name + '<br/>';
+    
+    spanishContent = InsertParticiple(spanishContent, "Present Participle", verbJson.PresentParticiple, 1);
+    spanishContent = InsertParticiple(spanishContent, "Past Participle", verbJson.PastParticiple, 2);
+    spanishContent = InsertTense(spanishContent, "Indicative - Present Tense", verbJson.Indicative.PresentTense, 3);
+    spanishContent = InsertTense(spanishContent, "Indicative - Pretérito", verbJson.Indicative.Pretérito, 4);
+    spanishContent = InsertTense(spanishContent, "Indicative - Conditional", verbJson.Indicative.Conditional, 5);
+    spanishContent = InsertTense(spanishContent, "Indicative - Future", verbJson.Indicative.Future, 6);
+    spanishContent = InsertTense(spanishContent, "Subjunctive - PresentTense", verbJson.Subjunctive.PresentTense, 7);
+    spanishContent = InsertTense(spanishContent, "Subjunctive - Imperfect", verbJson.Subjunctive.Imperfect, 8);
+    spanishContent = InsertTense(spanishContent, "Subjunctive - PresentTense", verbJson.Subjunctive.Future, 9);
+
+    spanishContent = spanishContent + "<br/></div>";
+
+    return spanishContent;
+}
+
+function InsertParticiple(spanishContent, title, participle, conjunctionIndex) {
+    spanishContent = spanishContent + "<input type='button' class='yellowBlue' value='" + title + "' onclick='showConjuncationButton(" + conjunctionIndex + ")' />";
+    spanishContent = spanishContent + "<div class='conjuncationHide' id='Conjuncation" + conjunctionIndex + "' name='Conjuncation" + conjunctionIndex + "'>";
+    spanishContent = spanishContent + title + " - " +  participle + " <br/>";
+    spanishContent = spanishContent + "</div><br/>";
+
+    return spanishContent;
+}
+function InsertTense(spanishContent, title, verbJson, conjunctionIndex) {
+    if (verbJson) {
+        spanishContent = spanishContent + "<input type='button' class='yellowBlue' value='" + title + "' onclick='showConjuncationButton(" + conjunctionIndex + ")' />";
+        spanishContent = spanishContent + "<div class='conjuncationHide' id='Conjuncation" + conjunctionIndex + "' name='Conjuncation" + conjunctionIndex + "'>";
+        spanishContent = spanishContent + title + "<br/>";
+        spanishContent = spanishContent + "Yo: " + verbJson.Yo + "<br/>";
+        spanishContent = spanishContent + "Tu: " + verbJson.Tu + "<br/>";
+        spanishContent = spanishContent + "ElEllaUsted: " + verbJson.ElEllaUsted + "<br/>";
+        spanishContent = spanishContent + "Nosotros: " + verbJson.Nosotros + "<br/>";
+        spanishContent = spanishContent + "Vosotros: " + verbJson.Vosotros + "<br/>";
+        spanishContent = spanishContent + "EllosEllasUstedes: " + verbJson.EllosEllasUstedes + "<br/>";
+        spanishContent = spanishContent + "</div><br/>";
+    }
+
+    return spanishContent;
+}
