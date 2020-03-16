@@ -2,7 +2,7 @@
     var lists = GetLocalStorageLists();
 
     if (lists == null || lists == 'null') {
-        lists = "CurrentVerbList,The Body,xmas2018List,MeetupList,Clothing,Colors,Family Members,Fruits,House Terms,Map Terms,Prepositions Misc,Questions,Shops,Time,Vegetables,VerbsAR,VerbsER,VerbsIR,Verbs2";
+        lists = "CompleteVerbList,CurrentVerbList,The Body,xmas2018List,MeetupList,Clothing,Colors,Family Members,Fruits,House Terms,Map Terms,Prepositions Misc,Questions,Shops,Time,Vegetables,VerbsAR,VerbsER,VerbsIR,Verbs2";
         SetLocalStorageLists(lists);
     }
 
@@ -12,10 +12,10 @@
 function GetSelectedListContents(selectedList) {
     var list = null;
 
-    if (selectedList == 'CurrentVerbList') {
+    if (selectedList == 'CompleteVerbList')
+        list = GetCompleteVerbList();
+    else if (selectedList == 'CurrentVerbList') 
         list = GetCurrentVerbList();
-    }
-
     else if (selectedList == 'The Body')
         list = GetBodyParts();
     else if (selectedList == 'xmas2018List')

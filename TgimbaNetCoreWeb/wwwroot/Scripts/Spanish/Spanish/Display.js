@@ -262,7 +262,7 @@ function BuildTermDisplay() {
 
     listDisplay.html('');
 
-    if (selectedList === 'CurrentVerbList') {
+    if (selectedList === 'CurrentVerbList' || selectedList === 'CompleteVerbList') {
         var verbUrl = SPANISH_VERB_PATH + curItem[1] + '.json'; 
         LoadVerb(verbUrl, listDisplay);
     } else {
@@ -270,7 +270,6 @@ function BuildTermDisplay() {
     }
 }
 
-// TODO - refactor this method and json method to share common elements
 function buildRegularListTermDisplay(curItem, listDisplay) {
     var nextButton = '<input type="button" class="yellowBlue" value="Next" id="nextTargetClick" name="nextTargetClick" />';
     var showAnswerButton = '<input type="button" class="yellowBlue" value="Show Answer" id="showAnswerClick" name="showAnswerClick" />';
@@ -323,7 +322,7 @@ function SetJson(verbJson, listDisplay) {
     contents = contents + showAnswerButton;
     contents = contents + '<br/>';
 
-    contents = contents + questionPrefix + verbJson.EnglishMeaning + questionSuffix;
+    contents = contents + questionPrefix + verbJson.Name + questionSuffix;
     var jsonAnswerSection = GetSpanishVerbAnswerSectionJson(verbJson);
     answer = answerPrefix + jsonAnswerSection + answerSuffix;
 
@@ -335,18 +334,8 @@ function SetJson(verbJson, listDisplay) {
     $("#showAnswerClick").click(showAnswerClick);
 };
 
-// TODO - refactor this method and older verb (3 conjungations) to share common components
 function GetSpanishVerbAnswerSectionJson(verbJson) {
-    var conjuncationSplit = '';
-    var showConjuncationButton = '';
-    var spanishContent = "<div class='masterConjuncationHide' id='SpanishContentsMaster' name='SpanishContentsMaster'>";
-    var verbFrontDivPrefix = "<div class='conjuncationHide' id='";
-    var verbFrontDivMiddle = "' name='";
-    var verbFrontDivSuffix = "'>";
-    var verbDivSuffix = "</div>";
-    var curVerbDiv = '';
-
-    spanishContent = verbJson.Name + '<br/>';
+    spanishContent = verbJson.EnglishMeaning + '<br/>';
     
     spanishContent = InsertParticiple(spanishContent, "Present Participle", verbJson.PresentParticiple, 1);
     spanishContent = InsertParticiple(spanishContent, "Past Participle", verbJson.PastParticiple, 2);
