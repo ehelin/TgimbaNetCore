@@ -140,6 +140,33 @@ namespace Algorithms.Algorithms
             //"Zeus is a word for a greek god"
         }
 
+        private void GetTermCharForComparison(string term1, string term2, out char term1Char, out char term2Char)
+        {
+            var charCountToIterate = term1.Length > term2.Length ? term2.Length : term1.Length;
+            var ctr = 0;
+            char term1CharTmp = '0';
+            char term2CharTmp = '0';
+
+            while (ctr < charCountToIterate)
+            {
+                term1CharTmp = Convert.ToChar(term1.Substring(ctr, 1).ToLower());
+                term2CharTmp = Convert.ToChar(term2.Substring(ctr, 1).ToLower());
+
+                if (term1CharTmp == term2CharTmp)
+                {
+                    ctr++;
+                    continue; 
+                }
+                else 
+                {
+                    break;
+                }
+            }
+
+            term1Char = term1CharTmp;
+            term2Char = term2CharTmp;
+        }
+        
         private List<BucketListItem> GetBucketListItems()
         {
             var bucketListItems = new List<BucketListItem>();
@@ -163,13 +190,10 @@ namespace Algorithms.Algorithms
 
                     var term1 = sentenceTerms[inner].Term;
                     var term2 = sentenceTerms[inner+1].Term;
+                    var term1CharVal = '0';
+                    var term2CharVal = '0';
 
-                    if (term1 == "word") {
-                        var test = 1;
-                    }
-
-                    var term1CharVal = Convert.ToChar(term1.Substring(0, 1).ToLower());
-                    var term2CharVal = Convert.ToChar(term2.Substring(0, 1).ToLower());
+                    GetTermCharForComparison(term1, term2, out term1CharVal, out term2CharVal);
 
                     if (term1CharVal > term2CharVal)
                     {
