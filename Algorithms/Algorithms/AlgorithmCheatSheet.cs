@@ -97,20 +97,15 @@ namespace Algorithms.Algorithms
         #endregion
 
         #region Binary search multiple sentence single search term prototype
-        // delete when done
-
 
         public void RunBinarySearchSentencesSingleSearchTermPrototype()
         {
-            //var bucketListItems = GetBucketListItems();
-            
             var sentences = GetBinarySearchSentences();
             var sentenceTerms = CreateSentenceIdTermArray(sentences);
             var sortedSentenceTerms = SortSentenceTerms(sentenceTerms);
 
             var result = "Search Not Run";
             var searchTerm = "word";  //picked arbitrarily
-            var searchTermChar = Convert.ToChar(searchTerm.Substring(0,1).ToLower());
 
             int start = 0;
             int end = sortedSentenceTerms.Count - 1;
@@ -125,19 +120,16 @@ namespace Algorithms.Algorithms
                     result = "Search term '" + searchTerm.ToString() + "' found!";
                     break;
                 }
-                var currentTermChar = Convert.ToChar(currentValue.Term.Substring(0,1).ToLower());
+                
+                var currentTermChar = '0';
+                var searchTermChar = '0';
+
+                GetTermCharForComparison(currentValue.Term, searchTerm, out currentTermChar, out searchTermChar);
                 if (currentTermChar < searchTermChar) { start = mid + 1; }
                 if (currentTermChar > searchTermChar) { end = mid - 1; }
             }
 
             var test = result;
-
-            //"A sentence that contains a word"
-            //"A sentence that contains the word"
-            //"French is a language"
-            //"Robin and Lili are our cats."
-            //"Silvia is my wife"
-            //"Zeus is a word for a greek god"
         }
 
         private void GetTermCharForComparison(string term1, string term2, out char term1Char, out char term2Char)
@@ -165,20 +157,6 @@ namespace Algorithms.Algorithms
 
             term1Char = term1CharTmp;
             term2Char = term2CharTmp;
-        }
-        
-        private List<BucketListItem> GetBucketListItems()
-        {
-            var bucketListItems = new List<BucketListItem>();
-
-            bucketListItems.Add(new BucketListItem() { Name = "Zeus is a greek god" });
-            bucketListItems.Add(new BucketListItem() { Name = "French is a language" });
-            bucketListItems.Add(new BucketListItem() { Name = "Silvia is my wife" });
-            bucketListItems.Add(new BucketListItem() { Name = "A sentence that contains the word" });
-            bucketListItems.Add(new BucketListItem() { Name = "A sentence that contains a word" });
-            bucketListItems.Add(new BucketListItem() { Name = "Robin and Lili are our cats." });
-
-            return bucketListItems;
         }
         private List<SentenceTerm> SortSentenceTerms(List<SentenceTerm> sentenceTerms)
         {
