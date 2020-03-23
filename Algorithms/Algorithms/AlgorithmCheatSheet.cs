@@ -100,12 +100,81 @@ namespace Algorithms.Algorithms
 
         public void RunBinarySearchSentencesSingleSearchTermPrototype()
         {
+            var searchTerm = "word";  //picked arbitrarily
+
             var sentences = GetBinarySearchSentences();
             var sentenceTerms = CreateSentenceIdTermArray(sentences);
             var sortedSentenceTerms = SortSentenceTerms(sentenceTerms);
+            var searchResult = SentenceBinarySearch(sortedSentenceTerms, searchTerm);
+      
+            if (searchResult.SearchTermFound)
+            {
+                var matchingIndexes = FindAdditionalMatches(sortedSentenceTerms, searchResult.Index, searchTerm);
+                var matchingSentences = GetMatchingSentences(sentences, matchingIndexes);
+            } 
+            else 
+            {
+                throw new Exception("Sentence Binary Search failed");
+            }
+        }
+        
+        private List<string> GetMatchingSentences(List<string> sentences, List<int> matchingIndexes)
+        {
+            var matchingSentences = new List<string>();
+            
+            for(int i=0; i<sentences.Count; i++)
+            {
+                if (matchingIndexes.Contains(i))
+                {
+                    matchingSentences.Add(sentences[i]);
+                }
+            }
 
-            var result = "Search Not Run";
-            var searchTerm = "word";  //picked arbitrarily
+            return matchingSentences;
+        }
+        private List<int> FindAdditionalMatches(List<SentenceTerm> sortedSentenceTerms, int fndIndex, string srchString)
+        {
+            var matchingIndexes = new List<int>();
+            matchingIndexes.Add(sortedSentenceTerms[fndIndex].SentenceId);
+
+            //search greater than index
+            matchingIndexes = SearchIndexes(matchingIndexes, sortedSentenceTerms, fndIndex, srchString, true);
+
+            //search less than index
+            matchingIndexes = SearchIndexes(matchingIndexes, sortedSentenceTerms, fndIndex, srchString, false);
+
+            return matchingIndexes;
+        }
+
+        private List<int> SearchIndexes(List<int> matchingIndexes, List<SentenceTerm> sortedSentenceTerms, int fndIndex, string srchString, bool greaterThan)
+        {
+            int ctr = greaterThan ? ++fndIndex : --fndIndex;
+
+            while(true)
+            {
+                var curSortedSentenceTerm = sortedSentenceTerms[ctr];
+
+                if (curSortedSentenceTerm.Term == srchString && !matchingIndexes.Contains(curSortedSentenceTerm.SentenceId)) 
+                {
+                    matchingIndexes.Add(curSortedSentenceTerm.SentenceId);
+                }
+                else 
+                {
+                    break;
+                }
+
+                if (greaterThan && ctr >= sortedSentenceTerms.Count) { break; }
+                if (!greaterThan && ctr <= 0) { break; }
+
+                if (greaterThan) { ctr++; } else { ctr--; }
+            }
+
+            return matchingIndexes;
+        }
+
+        private SentenceBinarySearchResult SentenceBinarySearch(List<SentenceTerm> sortedSentenceTerms, string searchTerm)
+        {
+            var srchResult = new SentenceBinarySearchResult();
 
             int start = 0;
             int end = sortedSentenceTerms.Count - 1;
@@ -117,10 +186,11 @@ namespace Algorithms.Algorithms
 
                 if (currentValue.Term == searchTerm)
                 {
-                    result = "Search term '" + searchTerm.ToString() + "' found!";
+                    srchResult.SearchTermFound = true;
+                    srchResult.Index = mid;
                     break;
                 }
-                
+
                 var currentTermChar = '0';
                 var searchTermChar = '0';
 
@@ -129,9 +199,8 @@ namespace Algorithms.Algorithms
                 if (currentTermChar > searchTermChar) { end = mid - 1; }
             }
 
-            var test = result;
+            return srchResult;
         }
-
         private void GetTermCharForComparison(string term1, string term2, out char term1Char, out char term2Char)
         {
             var charCountToIterate = term1.Length > term2.Length ? term2.Length : term1.Length;
@@ -201,7 +270,7 @@ namespace Algorithms.Algorithms
         {
             var sentenceTerms = new List<SentenceTerm>();
 
-            var sentenceId = 1;
+            var sentenceId = 0;
             foreach (var sentence in sentences)
             {
                 var curSentenceTerms = sentence.Split(" ").ToList();
@@ -228,5 +297,11 @@ namespace Algorithms.Algorithms
     {
         public int SentenceId { get; set; }
         public string Term { get; set; }
+    }
+
+    public class SentenceBinarySearchResult
+    {
+        public int Index { get; set; }
+        public bool SearchTermFound { get; set; }
     }
 }
