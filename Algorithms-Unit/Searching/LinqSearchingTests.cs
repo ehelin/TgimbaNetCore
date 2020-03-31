@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
-using Algorithms.Algorithms.Sorting;
-using Algorithms.Algorithms.Sorting.Implementations;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shared.dto;
-using Shared.misc;
 using Algorithms.Algorithms.Search;
 using Algorithms.Algorithms.Search.Implementations;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shared.dto;
 
 namespace Algorithms_Unit
 {

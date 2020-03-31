@@ -288,6 +288,8 @@ namespace Algorithms.Algorithms
         #endregion
     }
 
+    #region Binary search multiple sentence single search term prototype - objects
+
     public class SentenceTerm
     {
         public int SentenceId { get; set; }
@@ -298,4 +300,6 @@ namespace Algorithms.Algorithms
         public int Index { get; set; }
         public bool SearchTermFound { get; set; }
     }
+
+    #endregion
 }
