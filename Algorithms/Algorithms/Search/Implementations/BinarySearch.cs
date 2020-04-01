@@ -90,6 +90,7 @@ namespace Algorithms.Algorithms.Search.Implementations
 
             while (start < end)
             {
+                bool startLastIncremented = false;
                 int mid = start + (end - start) / 2;
                 var currentValue = sortedSentenceTerms[mid];
 
@@ -104,7 +105,22 @@ namespace Algorithms.Algorithms.Search.Implementations
                 var searchTermChar = '0';
 
                 GetTermCharForComparison(currentValue.Term, searchTerm, out currentTermChar, out searchTermChar);
-                if (currentTermChar < searchTermChar) { start = mid + 1; }
+                if (currentTermChar == searchTermChar && startLastIncremented) 
+                {
+                    start++; 
+                    continue;
+                }
+                if (currentTermChar == searchTermChar && !startLastIncremented) 
+                { 
+                    end--; 
+                    continue;
+                }
+
+                if (currentTermChar < searchTermChar) 
+                { 
+                    start = mid + 1;
+                    startLastIncremented = true;
+                }
                 if (currentTermChar > searchTermChar) { end = mid - 1; }
             }
 
