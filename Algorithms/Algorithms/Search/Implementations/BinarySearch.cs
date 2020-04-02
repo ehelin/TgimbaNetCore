@@ -37,23 +37,48 @@ namespace Algorithms.Algorithms.Search.Implementations
             var sentenceTerms = new List<BucketListItemNameTerm>();
 
             var bucketListItemNameId = 0;
+            var ctr = 1;
             foreach (var bucketListItem in bucketListItems)
             {
                 var curSentenceTerms = bucketListItem.Name.Split(" ").ToList();
 
                 foreach (var sentenceTerm in curSentenceTerms)
                 {
-                    sentenceTerms.Add(new BucketListItemNameTerm()
+                    var processedSentenceTerm = RemoveCharacters(sentenceTerm);
+                    if (!string.IsNullOrEmpty(processedSentenceTerm))
                     {
-                        Term = sentenceTerm,
-                        BucketListItemNameId = bucketListItemNameId
-                    });
+                        sentenceTerms.Add(new BucketListItemNameTerm()
+                        {
+                            Term = processedSentenceTerm,
+                            BucketListItemNameId = bucketListItemNameId
+                        });
+                        ctr++;
+                    }
                 }
 
                 bucketListItemNameId++;
             }
 
             return sentenceTerms;
+        }
+        private string RemoveCharacters(string sentenceTerm)
+        {
+            sentenceTerm = sentenceTerm.Replace("(", "");
+            sentenceTerm = sentenceTerm.Replace(")", "");
+            sentenceTerm = sentenceTerm.Replace("'", "");
+            sentenceTerm = sentenceTerm.Replace("\"", "");
+            sentenceTerm = sentenceTerm.Replace("-", "");
+            sentenceTerm = sentenceTerm.Replace("<", "");
+            sentenceTerm = sentenceTerm.Replace(">", "");
+
+            int sentenceTermConvertedToNumber = 0;
+            bool isNumeric = int.TryParse(sentenceTerm, out sentenceTermConvertedToNumber);
+            if (isNumeric)
+            {
+                sentenceTerm = null;
+            }
+
+            return sentenceTerm;
         }
         private List<BucketListItemNameTerm> SortBucketListItemNameTerms(List<BucketListItemNameTerm> sentenceTerms)
         {
@@ -84,6 +109,7 @@ namespace Algorithms.Algorithms.Search.Implementations
         private SentenceBinarySearchResult SentenceBinarySearch(List<BucketListItemNameTerm> sortedSentenceTerms, string searchTerm)
         {
             var srchResult = new SentenceBinarySearchResult();
+            var searchTermLower = searchTerm.ToLower();
 
             int start = 0;
             int end = sortedSentenceTerms.Count - 1;
@@ -93,8 +119,9 @@ namespace Algorithms.Algorithms.Search.Implementations
                 bool startLastIncremented = false;
                 int mid = start + (end - start) / 2;
                 var currentValue = sortedSentenceTerms[mid];
+                var compareTerm = currentValue.Term.ToLower();
 
-                if (currentValue.Term == searchTerm)
+                if (compareTerm == searchTerm)
                 {
                     srchResult.SearchTermFound = true;
                     srchResult.Index = mid;
