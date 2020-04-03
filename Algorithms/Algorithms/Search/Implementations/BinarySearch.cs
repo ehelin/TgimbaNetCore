@@ -49,7 +49,7 @@ namespace Algorithms.Algorithms.Search.Implementations
                     {
                         sentenceTerms.Add(new BucketListItemNameTerm()
                         {
-                            Term = processedSentenceTerm,
+                            Term = processedSentenceTerm.ToLower(),
                             BucketListItemNameId = bucketListItemNameId
                         });
                         ctr++;
@@ -70,6 +70,7 @@ namespace Algorithms.Algorithms.Search.Implementations
             sentenceTerm = sentenceTerm.Replace("-", "");
             sentenceTerm = sentenceTerm.Replace("<", "");
             sentenceTerm = sentenceTerm.Replace(">", "");
+            sentenceTerm = sentenceTerm.Replace(".", "");
 
             int sentenceTermConvertedToNumber = 0;
             bool isNumeric = int.TryParse(sentenceTerm, out sentenceTermConvertedToNumber);
@@ -82,29 +83,11 @@ namespace Algorithms.Algorithms.Search.Implementations
         }
         private List<BucketListItemNameTerm> SortBucketListItemNameTerms(List<BucketListItemNameTerm> sentenceTerms)
         {
-            for (var outer = 0; outer < sentenceTerms.Count; outer++)
-            {
-                for (var inner = 0; inner < sentenceTerms.Count; inner++)
-                {
-                    if (inner + 1 >= sentenceTerms.Count) { break; }
+            var sortedSentenceTerms = (from sentenceTerm in sentenceTerms
+                                       orderby sentenceTerm.Term
+                                       select sentenceTerm).ToList();
 
-                    var term1 = sentenceTerms[inner].Term;
-                    var term2 = sentenceTerms[inner + 1].Term;
-                    var term1CharVal = '0';
-                    var term2CharVal = '0';
-
-                    GetTermCharForComparison(term1, term2, out term1CharVal, out term2CharVal);
-
-                    if (term1CharVal > term2CharVal)
-                    {
-                        var tmp = sentenceTerms[inner];
-                        sentenceTerms[inner] = sentenceTerms[inner + 1];
-                        sentenceTerms[inner + 1] = tmp;
-                    }
-                }
-            }
-
-            return sentenceTerms;
+            return sortedSentenceTerms;
         }
         private SentenceBinarySearchResult SentenceBinarySearch(List<BucketListItemNameTerm> sortedSentenceTerms, string searchTerm)
         {
@@ -130,16 +113,15 @@ namespace Algorithms.Algorithms.Search.Implementations
 
                 var currentTermChar = '0';
                 var searchTermChar = '0';
-
                 GetTermCharForComparison(currentValue.Term, searchTerm, out currentTermChar, out searchTermChar);
-                if (currentTermChar == searchTermChar && startLastIncremented) 
+                if (currentTermChar == searchTermChar && startLastIncremented)
                 {
-                    start++; 
+                    start++;
                     continue;
                 }
-                if (currentTermChar == searchTermChar && !startLastIncremented) 
-                { 
-                    end--; 
+                if (currentTermChar == searchTermChar && !startLastIncremented)
+                {
+                    end--;
                     continue;
                 }
 
@@ -174,9 +156,12 @@ namespace Algorithms.Algorithms.Search.Implementations
             {
                 var curSortedSentenceTerm = sortedBucketListItemNameTerms[ctr];
 
-                if (curSortedSentenceTerm.Term == srchString && !matchingIndexes.Contains(curSortedSentenceTerm.BucketListItemNameId))
+                if (curSortedSentenceTerm.Term == srchString)
                 {
-                    matchingIndexes.Add(curSortedSentenceTerm.BucketListItemNameId);
+                    if (!matchingIndexes.Contains(curSortedSentenceTerm.BucketListItemNameId))
+                    {
+                        matchingIndexes.Add(curSortedSentenceTerm.BucketListItemNameId);
+                    }
                 }
                 else
                 {
