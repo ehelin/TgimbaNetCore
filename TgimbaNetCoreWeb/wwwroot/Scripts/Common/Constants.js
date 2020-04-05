@@ -1,6 +1,8 @@
 ﻿var SESSION_TOKEN = 'SessionToken';		
 var SESSION_USERNAME = 'SessionUsername';
 var SESSION_IS_SRCH_VIEW = 'SessionSearchView';
+var SESSION_SRCH_TERM = 'SessionSearchTerm';
+var SESSION_SRCH_TYPE = 'SessionSearchType';
 var SESSION_CLIENT = 'SessionClient'; VIEW_MAIN_EDIT
 var SESSION_CLIENT_JQUERY = 'JQueryClient';
 var SESSION_CLIENT_VANILLA_JS = 'VanillJsClient';

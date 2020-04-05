@@ -39,13 +39,13 @@ function SessionGetSystemDbWebsiteIsUp(key) {
     return val;
 }
 
-function SessionSetIsSearch(key, value) {
-	sessionStorage.setItem(key, value);
-}
-function SessionGetIsSearch(key) {
-	var val = sessionStorage.getItem(key);
-	return val;
-}
+//function SessionSetIsSearch(key, value) {
+//	sessionStorage.setItem(key, value);
+//}
+//function SessionGetIsSearch(key) {
+//	var val = sessionStorage.getItem(key);
+//	return val;
+//}
 
 function SessionSetUsername(key, value) {
     sessionStorage.setItem(key, value);
@@ -71,6 +71,5 @@ function SessionClearStorage() {
 	sessionStorage.clear();
 
 	//preserve client type once set
-	sessionStorage.setItem(SESSION_CLIENT, sessionClient);
-	
+	sessionStorage.setItem(SESSION_CLIENT, sessionClient);	
 }

@@ -29,10 +29,14 @@ MainController.Index = function (srchTerm, srchType) {
 	if (srchTerm && srchTerm.length > 0) {
 		params.push(srchTerm);
         params.push(srchType);
-		SessionSetIsSearch(SESSION_IS_SRCH_VIEW, true);
+        SessionSet(SESSION_IS_SRCH_VIEW, true);
+        SessionSet(SESSION_SRCH_TERM, srchTerm);
+        SessionSet(SESSION_SRCH_TYPE, srchType);
 	}
 	else {
-		SessionSetIsSearch(SESSION_IS_SRCH_VIEW, undefined);
+        SessionSet(SESSION_IS_SRCH_VIEW, undefined);
+        SessionSet(SESSION_SRCH_TERM, undefined);
+        SessionSet(SESSION_SRCH_TYPE, undefined);
 	}
 
 	HtmlVanillaJsServerCalls.GetBucketListItems(BUCKET_LIST_PROCESS_GET, params);
@@ -47,6 +51,18 @@ MainController.SetAddViewDate = function () {
 	var today = new Date();
 	addViewDateInput.value = today.toLocaleDateString('en-US');
 };
+
+MainController.GetSearchTermAndType = function () {
+    var srchTerm = SessionGet(SESSION_SRCH_TERM);
+    var srchType = SessionGet(SESSION_SRCH_TYPE);
+    var srchTermTypeDisplay = '';
+
+    if (srchTerm && srchType) {
+        srchTermTypeDisplay = ['Search Term: ', srchTerm, ', Search Type: ', srchType].join("");
+    }
+
+    return srchTermTypeDisplay;
+}
 
 MainController.Search = function ()
 {

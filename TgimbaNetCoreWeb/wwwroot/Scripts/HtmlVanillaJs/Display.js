@@ -64,17 +64,20 @@ Display.BindMainView = function(htmlContent)
 	LoadMainPage();
 
 	// srch results	cancel			
-	var cancelSrchResultsContainer = document.getElementById('cancelSrchResults');
+    var cancelSrchResultsContainer = document.getElementById('cancelSrchResults');
+    var srchTermTypeLabel = document.getElementById('USER_CONTROL_SRCH_TERM_TYPE_LABEL'); 
 	isNullUndefined(cancelSrchResultsContainer, 'Display.js', 'cancelSrchResults does not exist');
-	var isSearch = SessionGetIsSearch(SESSION_IS_SRCH_VIEW);
+    var isSearch = SessionGet(SESSION_IS_SRCH_VIEW);
 	var mainHeaderDiv = document.getElementById("tgimbaMainHeader");
 
 	if (isSearch && isSearch === 'true') {
 		cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterdisplay');
-		cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterhidden');
+        cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterhidden');
+        srchTermTypeLabel.innerHTML = MainController.GetSearchTermAndType();
 	} else {
 		cancelSrchResultsContainer.classList.add('tgimbaMainheadercenterhidden');
-		cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterdisplay');
+        cancelSrchResultsContainer.classList.remove('tgimbaMainheadercenterdisplay');
+        srchTermTypeLabel.innerHTML = '';
 	}
 };
 
