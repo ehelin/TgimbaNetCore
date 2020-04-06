@@ -34,7 +34,7 @@ MainController.Index = function (srchTerm, srchType) {
         SessionSet(SESSION_SRCH_TYPE, srchType);
 	}
 	else {
-        SessionSet(SESSION_IS_SRCH_VIEW, undefined);
+        SessionSet(SESSION_IS_SRCH_VIEW, false);
         SessionSet(SESSION_SRCH_TERM, undefined);
         SessionSet(SESSION_SRCH_TYPE, undefined);
 	}
