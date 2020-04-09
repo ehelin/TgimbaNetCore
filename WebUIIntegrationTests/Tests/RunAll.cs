@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TgimbaSeleniumTests.Tests
 {
@@ -17,8 +17,8 @@ namespace TgimbaSeleniumTests.Tests
         
         public void CleanUpLocal()
         {
-            BaseTest bt = new BaseTest();
-            bt.CleanUpLocal();
+            var utilities = new Shared.misc.testUtilities.TestUtilities();
+            utilities.CleanUpLocal(Constants.TEST_USER);
         }
         
         private void RunAllTestsLocalDesktop(string url)

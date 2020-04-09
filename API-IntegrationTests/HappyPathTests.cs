@@ -12,22 +12,22 @@ namespace API_IntegrationTests
     [TestClass]
     public class HappyPathTests
     {
-        private string host = "http://localhost:64602/api/TgimbaApi/";
-        private string userName = null;
+        private string host = "http://www.tgimba.com/api/TgimbaApi/";
+        private string userName = "fredFlintstone";
         private string password = "wilmaRules87&";
         private string email = "fred@bedrock.com";
 
-        private void SetUser()
+        private void CleanUser()
         {
-            var guid = System.Guid.NewGuid().ToString();
-            this.userName = "fredFlintstone" + guid;
+            var utilities = new Shared.misc.testUtilities.TestUtilities();
+            utilities.CleanUpLocal(userName);
         }
 
         [TestMethod]
         public void HappyPathTest()
         {
             EndPoint_TestPage();
-            SetUser();
+            CleanUser();
 
             EndPoint_Register();
             var token = EndPoint_Login();
@@ -53,6 +53,8 @@ namespace API_IntegrationTests
             EndPoint_GetSystemBuildStatistics(token);
             EndPoint_Log(token);
             EndPoint_TestPage();
+
+            CleanUser();
         }
 
         private void EndPoint_Register()

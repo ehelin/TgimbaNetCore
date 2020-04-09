@@ -1,7 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
-using System.Data.SqlClient;
 using OpenQA.Selenium.Support.UI;
 using Shared.misc;
 
@@ -9,13 +8,13 @@ namespace TgimbaSeleniumTests.Tests
 {
     public class BaseTest
     {
-        protected int _testStepInterval = 3000;
+        protected int _testStepInterval = 1000;
         protected string url = string.Empty;
 
         #region Base Test Methods		
 
 		protected void ClickAction(RemoteWebDriver browser, string buttonName)
-		{			
+        {
             IWebElement link = browser.FindElement(By.Id(buttonName));
             link.Click();
             System.Threading.Thread.Sleep(_testStepInterval);
@@ -210,54 +209,6 @@ namespace TgimbaSeleniumTests.Tests
 			System.Threading.Thread.Sleep(_testStepInterval);
 		}
       
-		#endregion
-
-        #region Support 
-        
-        public void CleanUpLocal()
-        {
-            var connectionString = Shared.misc.Utilities.GetTestDbSetting();
-            DeleteTestUser(Constants.TEST_USER, connectionString);
-        }
-    	protected void DeleteTestUser(string userName, string connectionString)
-		{
-			SqlConnection conn = null;
-			SqlCommand cmd = null;
-
-			try
-			{
-				conn = new SqlConnection(connectionString);
-				cmd = conn.CreateCommand();
-				cmd.CommandText = Constants.DELETE_TEST_USER;
-				cmd.CommandType = System.Data.CommandType.Text;
-
-				cmd.Parameters.Add(new SqlParameter("@userName", userName));
-
-				cmd.Connection.Open();
-
-				cmd.ExecuteNonQuery();
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			finally
-			{
-				if (conn != null)
-				{
-					conn.Close();
-					conn.Dispose();
-					conn = null;
-				}
-
-				if (cmd != null)
-				{
-					cmd.Dispose();
-					cmd = null;
-				}
-			}
-		}
-
 		#endregion
 	}
 }
