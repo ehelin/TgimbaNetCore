@@ -40,16 +40,7 @@ namespace TgimbaSeleniumTests.Tests
             ClickAction(browser, "hvJsAddCancellBtn");
 
             // main grid tests --------------------------------------------------
-            // add item	  	
-            AddItem(browser, "Bucket item test 1", "Hot", true, "1.2", "2.1");
-            System.Threading.Thread.Sleep(_testStepInterval);
-
-            // edit item
-            EditItem(browser, "Updated Bucket item test 1", "Warm", "3.4", "10.9");
-            System.Threading.Thread.Sleep(_testStepInterval);
-
-            // delete item
-            ClickAction(browser, "hvJsFormDeleteBtn");
+            MainGridTests(browser);
 
             //sort ----------------------------------------------------------
             // show sort menu and return to main bucket list
@@ -61,15 +52,30 @@ namespace TgimbaSeleniumTests.Tests
             System.Threading.Thread.Sleep(_testStepInterval);
 
             // linq (default) sort
-            Sort(browser);
+            Sort(browser, Shared.misc.Enums.SortAlgorithms.Linq);
             System.Threading.Thread.Sleep(_testStepInterval);
 
             // bubble sort
-            Sort(browser, true);
+            Sort(browser, Shared.misc.Enums.SortAlgorithms.Bubble);
             System.Threading.Thread.Sleep(_testStepInterval);
 
-            //search -------------------------------------------------------
-            Search(browser);
+            // insertion sort
+            Sort(browser, Shared.misc.Enums.SortAlgorithms.Insertion);
+            System.Threading.Thread.Sleep(_testStepInterval);
+
+            //search -------------------------------------------------------            
+            Search(browser);                    // regular search (i.e. linq)
+
+            // clear out previous bucket list items
+            var utilities = new Shared.misc.testUtilities.TestUtilities();
+            utilities.CleanUpLocal(Constants.TEST_USER, true);
+            System.Threading.Thread.Sleep(_testStepInterval);
+
+            // repopulate bucket list items for binary search test
+            AddSortCategoryTestItems(browser);
+            System.Threading.Thread.Sleep(_testStepInterval);
+          
+            Search(browser, true);              // binary search
 
             // logout and close browser
             ClickAction(browser, "btnMainMenu");
@@ -77,10 +83,37 @@ namespace TgimbaSeleniumTests.Tests
             Utilities.CloseBrowser(browser);
         }
 
-        protected void Search(RemoteWebDriver browser)
+        private void MainGridTests(RemoteWebDriver browser)
         {
-			//search 1 - find item
-            browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).SendKeys("Bucket item test 1");
+            // main grid tests --------------------------------------------------
+            // add item	  	
+            AddItem(browser, "Bucket item test 1", "Hot", true, "1.2", "2.1");
+            System.Threading.Thread.Sleep(_testStepInterval);
+
+            // edit item
+            EditItem(browser, "Updated Bucket item test 1", "Warm", "3.4", "10.9");
+            System.Threading.Thread.Sleep(_testStepInterval);
+
+            // delete item
+            ClickAction(browser, "hvJsFormDeleteBtn");
+        }
+
+        // At this time, there is only two searches...linq is default and binary is the one selectable
+        private void SelectSearch(RemoteWebDriver browser)
+        {
+            IWebElement rankingItemSelect = browser.FindElement(By.Id("hvJsSearchAvailableSearchAlgorithmsSelect"));
+            SelectElement selectElement = new SelectElement(rankingItemSelect);
+            selectElement.SelectByText("Binary");
+            System.Threading.Thread.Sleep(_testStepInterval);
+        }
+
+        // TODO - update to include binary search
+        protected void Search(RemoteWebDriver browser, bool isBinarySearch = false)
+        {
+            //search 1 - find item
+            if (isBinarySearch) { SelectSearch(browser); }
+            var searchTerm = isBinarySearch ? "item" : "Bucket item test 1";
+            browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).SendKeys(searchTerm);
             System.Threading.Thread.Sleep(_testStepInterval);
 
             IWebElement link = browser.FindElement(By.Id("USER_CONTROL_SEARCH_BUTTON"));
@@ -91,7 +124,8 @@ namespace TgimbaSeleniumTests.Tests
             link.Click();
             System.Threading.Thread.Sleep(_testStepInterval);
 
-			//search 2 - do not find item				 			   	   
+            //search 2 - do not find item		
+            if (isBinarySearch) { SelectSearch(browser); }
             browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).Clear();
             System.Threading.Thread.Sleep(_testStepInterval);
             browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).SendKeys("drive");
@@ -105,10 +139,11 @@ namespace TgimbaSeleniumTests.Tests
             link.Click();
             System.Threading.Thread.Sleep(_testStepInterval);
 
-			//search 3 - find item and edit it								   
+            //search 3 - find item and edit it	
+            if (isBinarySearch) { SelectSearch(browser); }
             browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).Clear();
             System.Threading.Thread.Sleep(_testStepInterval);
-            browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).SendKeys("Bucket item test 1");
+            browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).SendKeys(searchTerm);
             System.Threading.Thread.Sleep(_testStepInterval);
 
             link = browser.FindElement(By.Id("USER_CONTROL_SEARCH_BUTTON"));
@@ -125,11 +160,13 @@ namespace TgimbaSeleniumTests.Tests
             link = browser.FindElement(By.Id("hvJsEditSubmitBtn"));
             link.Click();
             System.Threading.Thread.Sleep(_testStepInterval);
-								 
-			//search 4 - find item and delete it			   
+
+            //search 4 - find item and delete it	
+            var searchDeleteTerm = isBinarySearch ? "2" : "Bucket item test 1";
+            if (isBinarySearch) { SelectSearch(browser); }
             browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).Clear();
             System.Threading.Thread.Sleep(_testStepInterval);
-            browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).SendKeys("Bucket item test 2");
+            browser.FindElement(By.Id("USER_CONTROL_SEARCH_TEXT_BOX")).SendKeys(searchDeleteTerm);
             System.Threading.Thread.Sleep(_testStepInterval);
 
             link = browser.FindElement(By.Id("USER_CONTROL_SEARCH_BUTTON"));

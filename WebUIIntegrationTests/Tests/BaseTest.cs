@@ -8,7 +8,7 @@ namespace TgimbaSeleniumTests.Tests
 {
     public class BaseTest
     {
-        protected int _testStepInterval = 1000;
+        protected int _testStepInterval = 2000;
         protected string url = string.Empty;
 
         #region Base Test Methods		
@@ -139,23 +139,23 @@ namespace TgimbaSeleniumTests.Tests
             if (expectedAlert)
                 browser.SwitchTo().Alert().Accept();			 
         }
-        protected void Sort(RemoteWebDriver browser, bool useBubbleSort = false)
+        protected void Sort(RemoteWebDriver browser, Enums.SortAlgorithms sortAlgorithm)
         {
-            SelectSort(browser, "hvJsSortItemBtn", false, useBubbleSort);
-            SelectSort(browser, "hvJsSortItemBtn", true, useBubbleSort);
+            SelectSort(browser, "hvJsSortItemBtn", false, sortAlgorithm);
+            SelectSort(browser, "hvJsSortItemBtn", true, sortAlgorithm);
 
-            SelectSort(browser, "hvJsSortCreatedBtn", false, useBubbleSort);
-            SelectSort(browser, "hvJsSortCreatedBtn", true, useBubbleSort);
+            SelectSort(browser, "hvJsSortCreatedBtn", false, sortAlgorithm);
+            SelectSort(browser, "hvJsSortCreatedBtn", true, sortAlgorithm);
 
-            SelectSort(browser, "hvJsSortCategoryBtn", false, useBubbleSort);
-            SelectSort(browser, "hvJsSortCategoryBtn", true, useBubbleSort);
+            SelectSort(browser, "hvJsSortCategoryBtn", false, sortAlgorithm);
+            SelectSort(browser, "hvJsSortCategoryBtn", true, sortAlgorithm);
 
-            SelectSort(browser, "hvJsSortAchievedBtn", false, useBubbleSort);
-            SelectSort(browser, "hvJsSortAchievedBtn", true, useBubbleSort);
+            SelectSort(browser, "hvJsSortAchievedBtn", false, sortAlgorithm);
+            SelectSort(browser, "hvJsSortAchievedBtn", true, sortAlgorithm);
 
-            SelectSort(browser, "hvJsCancelBtn", false);	
+            SelectSort(browser, "hvJsCancelBtn", false, sortAlgorithm);	
         }
-        private void SelectSort(RemoteWebDriver browser, string buttonName, bool desc, bool useBubbleSort = false)
+        private void SelectSort(RemoteWebDriver browser, string buttonName, bool desc, Enums.SortAlgorithms sortAlgorithm)
         {
             IWebElement link = browser.FindElement(By.Id("btnMainMenu"));
             link.Click();
@@ -165,11 +165,11 @@ namespace TgimbaSeleniumTests.Tests
             link.Click();
             System.Threading.Thread.Sleep(_testStepInterval);
 
-            if (useBubbleSort)
+            if (sortAlgorithm == Enums.SortAlgorithms.Bubble || sortAlgorithm == Enums.SortAlgorithms.Insertion)
             {
                 var selectBox = browser.FindElement(By.Id("hvJsSortAvailableSortAlgorithmsSelect"));
                 var selectElement = new SelectElement(selectBox);
-                selectElement.SelectByText("Bubble");
+                selectElement.SelectByText(sortAlgorithm.ToString());
                 System.Threading.Thread.Sleep(_testStepInterval);
             }
 
