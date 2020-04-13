@@ -24,9 +24,9 @@ namespace Algorithms_Unit
         }
 
         #endregion
-        
-        #region name tests
 
+        #region name tests
+      
         [TestMethod]
         public void BinarySearchNameTest()
         {
@@ -62,6 +62,28 @@ namespace Algorithms_Unit
             }
 
             Assert.AreEqual(expectedMatchCount, ctr);
+        }
+
+        [TestMethod]
+        public void BinarySearchNameTestTwo()
+        {
+            ISearch sut = new BinarySearch();
+            var bucketListItems = new List<BucketListItem>();
+            var searchTerm = "2";
+            var expectedMatchCount = 1;
+
+            bucketListItems.Add(new BucketListItem() { Name = "Bucket item test 3" });
+            bucketListItems.Add(new BucketListItem() { Name = "Bucket item test 1" });
+            bucketListItems.Add(new BucketListItem() { Name = "Bucket item test 7" });
+            bucketListItems.Add(new BucketListItem() { Name = "Bucket item test 5" });
+            bucketListItems.Add(new BucketListItem() { Name = "Bucket item test 4" });
+            bucketListItems.Add(new BucketListItem() { Name = "Bucket item test 2" });
+            bucketListItems.Add(new BucketListItem() { Name = "Bucket item test 6" });
+
+            var searchResults = sut.Search(bucketListItems, searchTerm);
+
+            Assert.IsNotNull(searchResults);
+            Assert.AreEqual(expectedMatchCount, searchResults.Count);
         }
 
         #endregion

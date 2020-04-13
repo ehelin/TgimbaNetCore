@@ -72,13 +72,6 @@ namespace Algorithms.Algorithms.Search.Implementations
             sentenceTerm = sentenceTerm.Replace(">", "");
             sentenceTerm = sentenceTerm.Replace(".", "");
 
-            int sentenceTermConvertedToNumber = 0;
-            bool isNumeric = int.TryParse(sentenceTerm, out sentenceTermConvertedToNumber);
-            if (isNumeric)
-            {
-                sentenceTerm = null;
-            }
-
             return sentenceTerm;
         }
         private List<BucketListItemNameTerm> SortBucketListItemNameTerms(List<BucketListItemNameTerm> sentenceTerms)
@@ -97,7 +90,7 @@ namespace Algorithms.Algorithms.Search.Implementations
             int start = 0;
             int end = sortedSentenceTerms.Count - 1;
 
-            while (start < end)
+            while (start <= end)
             {
                 bool startLastIncremented = false;
                 int mid = start + (end - start) / 2;
