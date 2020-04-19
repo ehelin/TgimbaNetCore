@@ -105,12 +105,11 @@ namespace TgimbaNetCoreWeb
             
             app.UseSession();
 
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
             {
-				routes.MapRoute(
-					name: "welcome",
-					template: "{controller=Welcome}/{action=Index}/{id?}");
-			});
+                endpoints.MapControllerRoute("default", "{controller=Welcome}/{action=Index}/{id?}");
+            });
         }
     }
 }
