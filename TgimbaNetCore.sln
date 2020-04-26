@@ -24,8 +24,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsTgimbaNetCoreWeb-Unit"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsShared-Unit", "TestShared\TestsShared-Unit.csproj", "{1DDCF869-166F-46EA-ADAB-C3168E96B788}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestJavaScriptV2-Unit", "TestJavaScriptV2\TestJavaScriptV2-Unit.csproj", "{234F724E-F026-4475-BBFB-924E4F7D4586}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgimbaNetCoreWebShared", "TgimbaNetCoreWebShared\TgimbaNetCoreWebShared.csproj", "{81334608-BA69-427E-BB7B-99861B473211}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms", "Algorithms\Algorithms.csproj", "{ED1BE359-AACE-43A7-9F59-7152088AF8BE}"
@@ -36,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALNetCore", "DALNetCore\DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBLLNetCore-Unit", "TestAPINetCore-Unit\TestBLLNetCore-Unit.csproj", "{F4D9823F-CF3C-4DCC-A400-B27C7CA5E2CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms-Unit", "Algorithms-Unit\Algorithms-Unit.csproj", "{8EEE02AC-4F57-4D50-827E-15F19D4ED0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms-Unit", "Algorithms-Unit\Algorithms-Unit.csproj", "{8EEE02AC-4F57-4D50-827E-15F19D4ED0D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,10 +58,6 @@ Global
 		{1DDCF869-166F-46EA-ADAB-C3168E96B788}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DDCF869-166F-46EA-ADAB-C3168E96B788}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DDCF869-166F-46EA-ADAB-C3168E96B788}.Release|Any CPU.Build.0 = Release|Any CPU
-		{234F724E-F026-4475-BBFB-924E4F7D4586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{234F724E-F026-4475-BBFB-924E4F7D4586}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{234F724E-F026-4475-BBFB-924E4F7D4586}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{234F724E-F026-4475-BBFB-924E4F7D4586}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81334608-BA69-427E-BB7B-99861B473211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81334608-BA69-427E-BB7B-99861B473211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81334608-BA69-427E-BB7B-99861B473211}.Release|Any CPU.ActiveCfg = Release|Any CPU
