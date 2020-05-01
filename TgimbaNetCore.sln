@@ -32,9 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLLNetCore", "APINetCore\BL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALNetCore", "DALNetCore\DALNetCore.csproj", "{67C21877-1332-4B7D-A2FE-410C69D5336B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBLLNetCore-Unit", "TestAPINetCore-Unit\TestBLLNetCore-Unit.csproj", "{F4D9823F-CF3C-4DCC-A400-B27C7CA5E2CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsBLLNetCore-Unit", "TestAPINetCore-Unit\TestsBLLNetCore-Unit.csproj", "{F4D9823F-CF3C-4DCC-A400-B27C7CA5E2CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms-Unit", "Algorithms-Unit\Algorithms-Unit.csproj", "{8EEE02AC-4F57-4D50-827E-15F19D4ED0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsAlgorithms-Unit", "Algorithms-Unit\TestsAlgorithms-Unit.csproj", "{8EEE02AC-4F57-4D50-827E-15F19D4ED0D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
