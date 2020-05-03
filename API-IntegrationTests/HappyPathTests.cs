@@ -12,7 +12,7 @@ namespace API_IntegrationTests
     [TestClass]
     public class HappyPathTests
     {
-        private string host = "http://www.tgimba.com/api/TgimbaApi/";
+        private string host = "https://www.tgimba.com/api/TgimbaApi/";
         private string userName = "fredFlintstone";
         private string password = "wilmaRules87&";
         private string email = "fred@bedrock.com";
@@ -118,7 +118,7 @@ namespace API_IntegrationTests
             var url = host + "delete";
             var query = CreateDeleteQueryString(token, userName, id);
             var fullUrl = url + query;
-            var result = Delete(fullUrl).Result;
+            var result = Get(fullUrl).Result;
 
             Assert.AreEqual(true, System.Convert.ToBoolean(result));
         }
