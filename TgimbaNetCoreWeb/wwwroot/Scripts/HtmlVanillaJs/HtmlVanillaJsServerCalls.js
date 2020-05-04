@@ -65,7 +65,7 @@ HtmlVanillaJsServerCalls.EditBucketListItem = function (url, params) {
 					MainController.Index();
 				} else {
 					// TODO - handle error
-					alert('Add failed');
+					alert('Edit failed');
 				}
 			});
 };
@@ -100,13 +100,15 @@ HtmlVanillaJsServerCalls.AddBucketListItem = function (url, params) {
 
 HtmlVanillaJsServerCalls.DeleteBucketListItem = function (url, dbId) {
 	var formData = new FormData();
-	var user = SessionGetUsername(SESSION_USERNAME);
-													 
-	formData.append("dbId", dbId);
-	formData.append("encodedUser", btoa(user));
-	formData.append("encodedToken", btoa(SessionGetToken(SESSION_TOKEN)));
+    var user = SessionGetUsername(SESSION_USERNAME);
 
-	return ServerCall.Delete(url, formData)
+    var queryUrl = url
+        + "?dbId=" + dbId
+        + "&encodedUser=" + btoa(user)
+        + "&encodedToken=" + btoa(SessionGetToken(SESSION_TOKEN));
+
+    // TODO - Hack Alert: Rewrite to be a proper HTTP Delete
+    return ServerCall.Get(queryUrl)
 		.then(
 			function (response) {
 				// TODO - convert response to boolean
@@ -114,7 +116,7 @@ HtmlVanillaJsServerCalls.DeleteBucketListItem = function (url, dbId) {
 					MainController.Index();
 				} else {
 					// TODO - handle error
-					alert('Add failed');
+					alert('Delete failed');
 				}
 			});
 };
