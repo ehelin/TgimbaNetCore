@@ -59,6 +59,9 @@ namespace DALNetCore
                             .Where(x => x.UserName == userName)
                             .FirstOrDefault();
 
+            // TODO - update tests
+            if (dbUser == null) { return null; }
+
             var user = this.userHelper.ConvertDbUserToUser(dbUser);
           
             return user;

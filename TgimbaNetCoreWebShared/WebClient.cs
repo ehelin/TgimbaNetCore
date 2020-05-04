@@ -102,7 +102,8 @@ namespace TgimbaNetCoreWebShared
                             + "&BucketListItemId=" + dbId;
             var fullUrl = url + query;
 
-            var result = httpClient.Delete(fullUrl);
+            // TODO - Hack Alert: Rewrite to be a proper HTTP Delete
+            var result = httpClient.Get(fullUrl);
 
             return System.Convert.ToBoolean(result);
         }
