@@ -34,11 +34,13 @@ namespace TgimbaNetCoreWebShared.Controllers
         #endregion
 
         #region Bucket List Items
-
-        // TODO - Hack Alert: Rewrite to be a proper HTTP Delete
-        [HttpGet("delete")]
-        public IActionResult DeleteBucketListItem(string EncodedUserName, string EncodedToken, int BucketListItemId)
+        
+        [HttpDelete("delete/{BucketListItemId:int}")]
+        public IActionResult DeleteBucketListItem(int BucketListItemId)
         {
+            var EncodedUserName = this.Request.Headers["EncodedUserName"];
+            var EncodedToken = this.Request.Headers["EncodedToken"];
+
             return this.sharedTgimbaApiController.DeleteBucketListItem(EncodedUserName, EncodedToken, BucketListItemId);
         }
 

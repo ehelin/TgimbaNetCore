@@ -12,7 +12,8 @@ namespace API_IntegrationTests
     [TestClass]
     public class HappyPathTests
     {
-        private string host = "https://www.tgimba.com/api/TgimbaApi/";
+        private string host = "http://localhost:64602/api/TgimbaApi/";
+        //private string host = "https://www.tgimba.com/api/TgimbaApi/";
         private string userName = "fredFlintstone";
         private string password = "wilmaRules87&";
         private string email = "fred@bedrock.com";
@@ -115,10 +116,8 @@ namespace API_IntegrationTests
         }
         private void EndPoint_Delete(string token, int id)
         {
-            var url = host + "delete";
-            var query = CreateDeleteQueryString(token, userName, id);
-            var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
+            var url = host + "delete/" + id.ToString();
+            var result = Delete(url, Base64Encode(userName), Base64Encode(token)).Result;
 
             Assert.AreEqual(true, System.Convert.ToBoolean(result));
         }
@@ -167,9 +166,12 @@ namespace API_IntegrationTests
 
         #region Http methods
 
-        private async Task<string> Delete(string url)
+        private async Task<string> Delete(string url, string userName, string token)
         {
-            var client = new HttpClient();
+            var client = new HttpClient(); 
+
+            client.DefaultRequestHeaders.Add("EncodedUserName", userName);
+            client.DefaultRequestHeaders.Add("EncodedToken", token);
 
             var response = await client.DeleteAsync(url);
             CheckStatus(response);
