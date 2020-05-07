@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Linq;
 
 namespace Shared.misc
 {
@@ -24,7 +23,6 @@ namespace Shared.misc
             return Credentials.GetDbConnectionTest();
         }
 
-        // TODO - remove this method when new API is live
         public static string DecodeClientBase64String(string encodedString)
         {
             string decodedString = string.Empty;
@@ -37,7 +35,7 @@ namespace Shared.misc
 
             return decodedString;
         }
-        // TODO - remove this method when new API is live
+
         public static string EncodeClientBase64String(string val)
         {
             string encodedString = string.Empty;
@@ -49,75 +47,6 @@ namespace Shared.misc
             }
 
             return encodedString;
-        }
-        // TODO - remove this method when new API is live
-        public static string GenerateToken()
-        {
-            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            byte[] key = Guid.NewGuid().ToByteArray();
-            string token = Convert.ToBase64String(time.Concat(key).ToArray());
-
-            return token;
-        }
-        public static string[] GetInValidTokenResponse()
-        {
-            string[] result = null;
-
-            result = new string[1];
-            result[0] = Error.ERR_000002 + "-" + ErrorMsg.ERR_MSG_000002;
-
-            return result;
-        }
-        public static string[] GetValidTokenResponse()
-        {
-            string[] result = null;
-
-            result = new string[1];
-            result[0] = Shared.Constants.TOKEN_VALID;
-
-            return result;
-        }
-        // TODO - remove this method when new API is live
-        public static bool ValidUserToRegistration(string user, string email, string password)
-        {
-            bool valid = true;
-
-            if (string.IsNullOrEmpty(user) || user.Equals("null"))
-                valid = false;
-            else if (string.IsNullOrEmpty(email) || email.Equals("null"))
-                valid = false;
-            else if (string.IsNullOrEmpty(password) || password.Equals("null"))
-                valid = false;
-            else if (user.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
-                valid = false;
-            else if (password.Length < Shared.Constants.REGISTRATION_VALUE_LENGTH)
-                valid = false;
-            else if (!ContainsOneNumber(password))
-                valid = false;
-            else if (email.IndexOf(Shared.Constants.EMAIL_AT_SIGN) < 1)
-                valid = false;
-
-            return valid;
-        }
-        // TODO - remove this method when new API is live
-        public static bool ContainsOneNumber(string password)
-        {
-            char[] charArray = password.ToArray();
-            var numberFound = false;
-
-            for (var i = 0; i < charArray.Length; i++)
-            {
-                string curChar = charArray[i].ToString();
-
-                int j;
-                if (Int32.TryParse(curChar, out j))
-                {
-                    numberFound = true;
-                    break;
-                }
-            }
-
-            return numberFound;
         }
     }
 }

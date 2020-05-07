@@ -124,9 +124,7 @@ namespace API_IntegrationTests
         private void EndPoint_GetSystemStatistics(string token)
         {
             var url = host + "getsystemstatistics";
-            var query = CreateTokenQueryString(token, userName);
-            var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
+            var result = Get(url, Base64Encode(userName), Base64Encode(token)).Result;
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
@@ -134,9 +132,7 @@ namespace API_IntegrationTests
         private void EndPoint_GetSystemBuildStatistics(string token)
         {
             var url = host + "getsystembuildstatistics";
-            var query = CreateTokenQueryString(token, userName);
-            var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
+            var result = Get(url, Base64Encode(userName), Base64Encode(token)).Result;
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
@@ -193,9 +189,18 @@ namespace API_IntegrationTests
             return result;
         }
 
-        private async Task<string> Get(string url)
+        private async Task<string> Get(string url, string encodedUserName = "", string encodedToken = "")
         {
             var client = new HttpClient();
+
+            if (!string.IsNullOrEmpty(encodedUserName))
+            {
+                client.DefaultRequestHeaders.Add("EncodedUserName", encodedUserName);
+            }
+            if (!string.IsNullOrEmpty(encodedToken))
+            {
+                client.DefaultRequestHeaders.Add("EncodedToken", encodedToken);
+            }
 
             var response = await client.GetAsync(url);
             CheckStatus(response);

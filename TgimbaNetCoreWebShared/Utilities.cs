@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Shared.misc;
 using TgimbaNetCoreWebShared.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace TgimbaNetCoreWebShared
 {
@@ -18,6 +19,11 @@ namespace TgimbaNetCoreWebShared
             }
 
             return section.Value;
+        }
+
+        public static string GetHeaderValue(string headerKeyName, HttpRequest Request)
+        {
+            return Request?.Headers[headerKeyName];
         }
 
         public static bool IsMobile(string userAgent) 

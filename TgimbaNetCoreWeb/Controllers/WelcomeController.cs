@@ -28,8 +28,11 @@ namespace TgimbaNetCoreWeb.Controllers
         {
             var systemStatistics = new SystemStatistics();
 
-            systemStatistics.SystemStats = this.sharedWelcomeController.webClient.GetSystemStatistics();
-            systemStatistics.SystemBuildStats = this.sharedWelcomeController.webClient.GetSystemBuildStatistics();
+            //systemStatistics.SystemStats = this.sharedWelcomeController.webClient.GetSystemStatistics();
+            //systemStatistics.SystemBuildStats = this.sharedWelcomeController.webClient.GetSystemBuildStatistics();
+
+            systemStatistics.SystemStats = new System.Collections.Generic.List<SystemStatistic>();
+            systemStatistics.SystemBuildStats = new System.Collections.Generic.List<SystemBuildStatistic>();
 
             return systemStatistics;
         }

@@ -38,10 +38,12 @@ namespace TgimbaNetCoreWebShared.Controllers
         [HttpDelete("delete/{BucketListItemId:int}")]
         public IActionResult DeleteBucketListItem(int BucketListItemId)
         {
-            var EncodedUserName = this.Request.Headers["EncodedUserName"];
-            var EncodedToken = this.Request.Headers["EncodedToken"];
-
-            return this.sharedTgimbaApiController.DeleteBucketListItem(EncodedUserName, EncodedToken, BucketListItemId);
+            return this.sharedTgimbaApiController.DeleteBucketListItem
+            (
+                Utilities.GetHeaderValue("EncodedUserName", this.Request),
+                Utilities.GetHeaderValue("EncodedToken", this.Request), 
+                BucketListItemId
+             );
         }
 
         [HttpGet("getbucketlistitems")]
@@ -61,15 +63,23 @@ namespace TgimbaNetCoreWebShared.Controllers
         #region Misc
 
         [HttpGet("getsystemstatistics")]
-        public IActionResult GetSystemStatistics(string encodedUser, string encodedToken)
+        public IActionResult GetSystemStatistics()
         {
-            return this.sharedTgimbaApiController.GetSystemStatistics(encodedUser, encodedToken);
+            return this.sharedTgimbaApiController.GetSystemStatistics
+            (
+                Utilities.GetHeaderValue("EncodedUserName", this.Request),
+                Utilities.GetHeaderValue("EncodedToken", this.Request)
+            );
         }
 
         [HttpGet("getsystembuildstatistics")]
         public IActionResult GetSystemBuildStatistics(string encodedUser, string encodedToken)
         {
-            return this.sharedTgimbaApiController.GetSystemBuildStatistics(encodedUser, encodedToken);
+            return this.sharedTgimbaApiController.GetSystemBuildStatistics
+            (
+                Utilities.GetHeaderValue("EncodedUserName", this.Request),
+                Utilities.GetHeaderValue("EncodedToken", this.Request)
+            );
         }
 
         [HttpPost("log")]
