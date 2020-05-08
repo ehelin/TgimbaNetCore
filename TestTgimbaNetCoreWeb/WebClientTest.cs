@@ -159,8 +159,10 @@ namespace TestTgimbaNetCoreWeb
             bucketListItems.Add(bucketListItem);
             var bucketListItemsToReturn = JsonConvert.SerializeObject(bucketListItems);
 
-            mockTgimbaHttpClient.Setup(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems"))))
-                                                              .Returns(bucketListItemsToReturn);
+            mockTgimbaHttpClient.Setup(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems")), 
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+                .Returns(bucketListItemsToReturn);
 
             var user = Shared.misc.Utilities.EncodeClientBase64String("base64EncodedGoodUser");
             var results = GetWebClient().GetBucketListItems(user,
@@ -170,21 +172,27 @@ namespace TestTgimbaNetCoreWeb
 
             Assert.IsNotNull(results);
             Assert.AreEqual("newBucketListItem", results[0].Name);
-            mockTgimbaHttpClient.Verify(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems")))
-                                                                , Times.Once);
+            mockTgimbaHttpClient.Verify(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems")),
+                It.IsAny<string>(),
+                It.IsAny<string>())
+                , Times.Once);
         }
 
         [TestMethod]
         public void Test_BadGetBucketListItems()
         {
-            mockTgimbaHttpClient.Setup(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems"))))
-                                                            .Returns("");
+            mockTgimbaHttpClient.Setup(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems")),
+             It.IsAny<string>(),
+             It.IsAny<string>()))
+             .Returns("");
 
             var bucketItemList = GetWebClient().GetBucketListItems("", "", "");
 
             Assert.IsNull(bucketItemList);
-            mockTgimbaHttpClient.Verify(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems")))
-                                                                , Times.Once);
+            mockTgimbaHttpClient.Verify(x => x.Get(It.Is<string>(s => s.Contains("/api/tgimbaapi/getbucketlistitems")),
+              It.IsAny<string>(),
+              It.IsAny<string>())
+              , Times.Once);
         }
 
         private IWebClient GetWebClient()

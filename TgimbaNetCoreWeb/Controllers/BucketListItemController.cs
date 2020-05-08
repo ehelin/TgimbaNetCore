@@ -47,14 +47,18 @@ namespace TgimbaNetCoreWeb.Controllers
 			return sharedBucketListController.EditBucketListItem(model, encodedUser, encodedToken);
 		}
 
-        // TODO - Hack Alert: Rewrite to be a proper HTTP Delete
-        [HttpGet]
-        public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
-		{
-			return sharedBucketListController.DeleteBucketListItem(dbId, encodedUser, encodedToken);
-		}
+        [HttpDelete]
+        public bool DeleteBucketListItem(int BucketListItemId)
+        {
+            return this.sharedBucketListController.DeleteBucketListItem
+            (
+                BucketListItemId.ToString(),
+                Utilities.GetHeaderValue("EncodedUserName", this.Request),
+                Utilities.GetHeaderValue("EncodedToken", this.Request)
+             );
+        }
 
-		[HttpGet]
+        [HttpGet]
         public List<SharedBucketListModel> GetBucketListItems
 		(
 			string encodedUserName, 

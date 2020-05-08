@@ -6,16 +6,16 @@ namespace TgimbaNetCoreWebShared
     // TODO - is this client still needed?
     public class TgimbaHttpClient : ITgimbaHttpClient
     {
-        public string Delete(string url)
+        public string Delete(string url, string encodedUserName = "", string encodedToken = "")
         {
-            var result = DeleteMethod(url).Result;
+            var result = DeleteMethod(url, encodedUserName, encodedToken).Result;
 
             return result;
         }
 
-        public string Get(string url)
+        public string Get(string url, string encodedUserName = "", string encodedToken = "")
         {
-            var result = GetMethod(url).Result;
+            var result = GetMethod(url, encodedUserName, encodedToken).Result;
 
             return result;
         }
@@ -29,9 +29,10 @@ namespace TgimbaNetCoreWebShared
 
         #region Http methods
 
-        private async Task<string> DeleteMethod(string url)
+        private async Task<string> DeleteMethod(string url, string encodedUserName = "", string encodedToken = "")
         {
             var client = new HttpClient();
+            SetHeaders(client, encodedUserName, encodedToken);
 
             var response = await client.DeleteAsync(url);
 
@@ -51,15 +52,28 @@ namespace TgimbaNetCoreWebShared
             return result;
         }
 
-        private async Task<string> GetMethod(string url)
+        private async Task<string> GetMethod(string url, string encodedUserName = "", string encodedToken = "")
         {
             var client = new HttpClient();
+            SetHeaders(client, encodedUserName, encodedToken);
 
             var response = await client.GetAsync(url);
 
             var result = await response.Content.ReadAsStringAsync();
 
             return result;
+        }
+
+        private void SetHeaders(HttpClient client, string encodedUserName = "", string encodedToken = "")
+        {
+            if (!string.IsNullOrEmpty(encodedUserName))
+            {
+                client.DefaultRequestHeaders.Add("EncodedUserName", encodedUserName);
+            }
+            if (!string.IsNullOrEmpty(encodedToken))
+            {
+                client.DefaultRequestHeaders.Add("EncodedToken", encodedToken);
+            }
         }
 
         #endregion

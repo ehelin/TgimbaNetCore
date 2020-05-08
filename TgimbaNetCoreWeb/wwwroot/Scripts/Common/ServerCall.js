@@ -25,7 +25,7 @@ ServerCall.Post = function (subUrl, formData)
     return promise;
 };
 
-ServerCall.Delete = function (subUrl, formData) {
+ServerCall.Delete = function (subUrl, encodedUserName, encodedToken) {
 	var promise = new Promise(
 		function (resolve, reject) {
 			var request = new XMLHttpRequest();
@@ -37,8 +37,12 @@ ServerCall.Delete = function (subUrl, formData) {
 			};
 
 			var base_url = GetHost();
-			request.open("DELETE", base_url + subUrl);
-			request.send(formData);
+            request.open("DELETE", base_url + subUrl);
+
+            request.setRequestHeader("EncodedUserName", encodedUserName);
+            request.setRequestHeader("EncodedToken", encodedToken);
+
+			request.send('');
 
 			successCallback = function () {
 				return resolve(request.responseText);
@@ -89,6 +93,7 @@ ServerCall.Get = function (subUrl) {
             var base_url = GetHost();
 			var url = base_url + subUrl;
             request.open('GET', url, true);
+
             request.send('');
 
             successCallback = function () {

@@ -40,9 +40,9 @@ namespace TgimbaNetCoreWebShared.Controllers
 		}
 			   
 		[HttpDelete]
-		public bool DeleteBucketListItem(string dbIt, string encodedUser, string encodedToken)
+		public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
 		{ 
-			var itemDeleted = webClient.DeleteBucketListItem(dbIt, encodedUser, encodedToken);
+			var itemDeleted = webClient.DeleteBucketListItem(dbId, encodedUser, encodedToken);
 
 			return itemDeleted;
 		}

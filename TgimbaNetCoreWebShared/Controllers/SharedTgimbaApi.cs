@@ -175,7 +175,6 @@ namespace TgimbaNetCoreWebShared.Controllers
             }
         }
 
-        //[HttpGet("test")]
         public IActionResult GetTestResult()
         {
             try

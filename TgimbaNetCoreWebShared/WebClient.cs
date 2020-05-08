@@ -24,13 +24,10 @@ namespace TgimbaNetCoreWebShared
         {
             var url = host + "/api/tgimbaapi/getsystemstatistics";
             var token = DemoUserLogin();
-            var query = CreateTokenQueryString
-                        (
-                            Shared.misc.Utilities.EncodeClientBase64String(token), 
-                            Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER)
-                        );
-            var fullUrl = url + query;
-            var result = httpClient.Get(fullUrl);
+
+            var result = httpClient.Get(url,
+                Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER),
+                Shared.misc.Utilities.EncodeClientBase64String(token));
 
             var systemStatistics = JsonConvert.DeserializeObject<List<SystemStatistic>>(result);
 
@@ -51,13 +48,10 @@ namespace TgimbaNetCoreWebShared
         {
             var url = host + "/api/tgimbaapi/getsystembuildstatistics";
             var token = DemoUserLogin();
-            var query = CreateTokenQueryString
-            (
-                Shared.misc.Utilities.EncodeClientBase64String(token),
-                Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER)
-            );
-            var fullUrl = url + query;
-            var result = httpClient.Get(fullUrl);
+   
+            var result = httpClient.Get(url,
+                Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER),
+                Shared.misc.Utilities.EncodeClientBase64String(token));
 
             var systemBuildStatistics = JsonConvert.DeserializeObject<List<SystemBuildStatistic>>(result);
 
@@ -97,13 +91,8 @@ namespace TgimbaNetCoreWebShared
 		public bool DeleteBucketListItem(string dbId, string encodedUserName, string encodedToken)
         {
             var url = host + "/api/tgimbaapi/delete";
-            var query = "?EncodedUserName=" + encodedUserName
-                            + "&EncodedToken=" + encodedToken
-                            + "&BucketListItemId=" + dbId;
-            var fullUrl = url + query;
 
-            // TODO - Hack Alert: Rewrite to be a proper HTTP Delete
-            var result = httpClient.Get(fullUrl);
+            var result = httpClient.Delete(url, encodedUserName, encodedUserName);
 
             return System.Convert.ToBoolean(result);
         }

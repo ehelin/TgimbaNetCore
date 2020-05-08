@@ -99,16 +99,10 @@ HtmlVanillaJsServerCalls.AddBucketListItem = function (url, params) {
 };
 
 HtmlVanillaJsServerCalls.DeleteBucketListItem = function (url, dbId) {
-	var formData = new FormData();
     var user = SessionGetUsername(SESSION_USERNAME);
+    var token = SessionGetToken(SESSION_TOKEN);
 
-    var queryUrl = url
-        + "?dbId=" + dbId
-        + "&encodedUser=" + btoa(user)
-        + "&encodedToken=" + btoa(SessionGetToken(SESSION_TOKEN));
-
-    // TODO - Hack Alert: Rewrite to be a proper HTTP Delete
-    return ServerCall.Get(queryUrl)
+    return ServerCall.Delete(url + '/' + dbId, btoa(user), btoa(token))
 		.then(
 			function (response) {
 				// TODO - convert response to boolean
