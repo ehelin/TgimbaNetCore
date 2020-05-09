@@ -102,7 +102,7 @@ HtmlVanillaJsServerCalls.DeleteBucketListItem = function (url, dbId) {
     var user = SessionGetUsername(SESSION_USERNAME);
     var token = SessionGetToken(SESSION_TOKEN);
 
-    return ServerCall.Delete(url + '/' + dbId, btoa(user), btoa(token))
+    return ServerCall.Delete(url + '/?id=' + dbId, btoa(user), btoa(token))
 		.then(
 			function (response) {
 				// TODO - convert response to boolean

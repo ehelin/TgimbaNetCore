@@ -48,11 +48,11 @@ namespace TgimbaNetCoreWeb.Controllers
 		}
 
         [HttpDelete]
-        public bool DeleteBucketListItem(int BucketListItemId)
+        public bool DeleteBucketListItem(int id)
         {
             return this.sharedBucketListController.DeleteBucketListItem
             (
-                BucketListItemId.ToString(),
+                id.ToString(),
                 Utilities.GetHeaderValue("EncodedUserName", this.Request),
                 Utilities.GetHeaderValue("EncodedToken", this.Request)
              );

@@ -90,9 +90,9 @@ namespace TgimbaNetCoreWebShared
 
 		public bool DeleteBucketListItem(string dbId, string encodedUserName, string encodedToken)
         {
-            var url = host + "/api/tgimbaapi/delete";
+            var url = host + "/api/tgimbaapi/delete/" + dbId;
 
-            var result = httpClient.Delete(url, encodedUserName, encodedUserName);
+            var result = httpClient.Delete(url, encodedUserName, encodedToken);
 
             return System.Convert.ToBoolean(result);
         }
