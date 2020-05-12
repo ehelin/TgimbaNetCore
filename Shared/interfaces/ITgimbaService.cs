@@ -18,7 +18,8 @@ namespace Shared.interfaces
             string encodedSearchType = ""
         );
         bool UpsertBucketListItem(BucketListItem bucketListItem, string encodedUser, string encodedToken);
-        bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
+        //bool DeleteBucketListItem(int bucketListDbId, string encodedUser, string encodedToken);
+        bool DeleteBucketListItem(int bucketListDbId);
  
         IList<SystemStatistic> GetSystemStatistics(string encodedUser, string encodedToken);
         IList<SystemBuildStatistic> GetSystemBuildStatistics(string encodedUser, string encodedToken);

@@ -38,12 +38,33 @@ namespace TgimbaNetCoreWebShared.Controllers
         [HttpDelete("delete/{BucketListItemId:int}")]
         public IActionResult DeleteBucketListItem(int BucketListItemId)
         {
-            return this.sharedTgimbaApiController.DeleteBucketListItem
-            (
-                Utilities.GetHeaderValue("EncodedUserName", this.Request),
-                Utilities.GetHeaderValue("EncodedToken", this.Request), 
-                BucketListItemId
-             );
+            IActionResult result = null;
+            try 
+            {
+                var logRequest = new LogMessageRequest();
+                logRequest.Message = "Api Starting delete " + BucketListItemId.ToString();
+                this.Log(logRequest);
+
+                result = this.sharedTgimbaApiController.DeleteBucketListItem(BucketListItemId);
+                //return this.sharedTgimbaApiController.DeleteBucketListItem
+                //(
+                //    Utilities.GetHeaderValue("EncodedUserName", this.Request),
+                //    Utilities.GetHeaderValue("EncodedToken", this.Request), 
+                //    BucketListItemId
+                // );
+
+                var logRequest2 = new LogMessageRequest();
+                logRequest2.Message = "Api Starting leaving";
+                this.Log(logRequest2);
+            } 
+            catch(System.Exception ex)
+            {
+                var logRequest3 = new LogMessageRequest();
+                logRequest3.Message = "Delete Error: " + ex.Message;
+                this.Log(logRequest3);
+            }
+
+            return result;
         }
 
         [HttpGet("getbucketlistitems")]

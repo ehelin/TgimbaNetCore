@@ -62,9 +62,9 @@ namespace TestDALNetCore_Integration
             return bucketListItem;
         }
 
-        protected BucketListContext GetDbContext()
+        protected BucketListContext GetDbContext(bool useTestDb = false)
         {
-            var dbContext = new BucketListContext();
+            var dbContext = new BucketListContext(useTestDb);
 
             return dbContext;
         }

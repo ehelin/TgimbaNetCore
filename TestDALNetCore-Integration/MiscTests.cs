@@ -14,7 +14,7 @@ namespace TestDALNetCore_Integration
         public void GetSystemBuildStatisticsHappyPath_Test()
         {
             //set up ------------------------------------------------------
-            var dbContext = this.GetDbContext();
+            var dbContext = this.GetDbContext(true);
             var now = DateTime.Now;
             var buildStatisticsToSave = new BuildStatistics
             {

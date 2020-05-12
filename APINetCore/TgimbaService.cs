@@ -111,17 +111,17 @@ namespace APINetCore
 
         public bool DeleteBucketListItem
         (
-            int bucketListDbId, 
-            string encodedUser, 
-            string encodedToken
+            int bucketListDbId//, 
+            //string encodedUser, 
+            //string encodedToken
         ) {
             bool bucketListItemDeleted = false;
 
-            if (this.IsValidToken(encodedUser, encodedToken))
-            {
+            //if (this.IsValidToken(encodedUser, encodedToken))
+            //{
                 this.bucketListData.DeleteBucketListItem(bucketListDbId);
                 bucketListItemDeleted = true;
-            }
+            //}
 
             return bucketListItemDeleted;
         }

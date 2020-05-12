@@ -58,21 +58,36 @@ namespace TgimbaNetCoreWebShared.Controllers
         #endregion
 
         #region Bucket List Items
-
-        public IActionResult DeleteBucketListItem(string EncodedUserName, string EncodedToken, int BucketListItemId)
+        
+        //public IActionResult DeleteBucketListItem(string EncodedUserName, string EncodedToken, int BucketListItemId)
+        public IActionResult DeleteBucketListItem(int BucketListItemId)
         {
+            var logRequest = new LogMessageRequest();
+            logRequest.Message = "Service - start eteBucketListItem(arg)";
+            this.Log(logRequest);
+
             try
             {
-                this.validationHelper.IsValidRequest(EncodedUserName, EncodedToken, BucketListItemId);
+                //this.validationHelper.IsValidRequest(EncodedUserName, EncodedToken, BucketListItemId);
 
-                var userRegistered = this.service.DeleteBucketListItem(BucketListItemId,
-                                                                        EncodedUserName,
-                                                                        EncodedToken);
+                //var userRegistered = this.service.DeleteBucketListItem(BucketListItemId,
+                //                                                        EncodedUserName,
+                //                                                        EncodedToken);
+
+                var userRegistered = this.service.DeleteBucketListItem(BucketListItemId);
+
+                var logRequest2 = new LogMessageRequest();
+                logRequest2.Message = "Service - leaving DeleteBucketListItem(arg)";
+                this.Log(logRequest2);
 
                 return Ok(userRegistered); // 200
             }
             catch (Exception ex)
             {
+                var logRequest3 = new LogMessageRequest();
+                logRequest3.Message = "Service - Error - " + ex.Message;
+                this.Log(logRequest3);
+
                 return this.HandleError(ex);
             }
         }
