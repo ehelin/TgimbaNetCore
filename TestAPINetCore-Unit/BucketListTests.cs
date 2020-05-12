@@ -11,32 +11,32 @@ namespace TestAPINetCore_Unit
     {
         #region DeletetBucketListItem(args)
 
-        [DataTestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public void DeletetBucketListItem_HappyPathTest(bool returnValidToken)
-        {
-            var encodedUser = "base64=>username";
-            var encodedToken = "base64=>token";
-            var decodedUser = "username";
-            var decodedToken = "token";
-            var bucketListItemToReturn = GetBucketListItemObject();
-            var userToReturn = GetUser(decodedUser, decodedToken);
-            var dbBucketListItemId = 3;
+        //[DataTestMethod]
+        //[DataRow(true)]
+        //[DataRow(false)]
+        //public void DeletetBucketListItem_HappyPathTest(bool returnValidToken)
+        //{
+        //    var encodedUser = "base64=>username";
+        //    var encodedToken = "base64=>token";
+        //    var decodedUser = "username";
+        //    var decodedToken = "token";
+        //    var bucketListItemToReturn = GetBucketListItemObject();
+        //    var userToReturn = GetUser(decodedUser, decodedToken);
+        //    var dbBucketListItemId = 3;
 
-            DeletetBucketListItem_HappyPathTest_SetUps(encodedUser, encodedToken,
-                                                    decodedUser, decodedToken,
-                                                    userToReturn, bucketListItemToReturn,
-                                                    returnValidToken);
+        //    DeletetBucketListItem_HappyPathTest_SetUps(encodedUser, encodedToken,
+        //                                            decodedUser, decodedToken,
+        //                                            userToReturn, bucketListItemToReturn,
+        //                                            returnValidToken);
 
-            var response = this.service.DeleteBucketListItem(dbBucketListItemId, encodedUser, encodedToken);
-            Assert.IsTrue(returnValidToken ? response == true : response == false);
+        //    var response = this.service.DeleteBucketListItem(dbBucketListItemId, encodedUser, encodedToken);
+        //    Assert.IsTrue(returnValidToken ? response == true : response == false);
 
-            DeletetBucketListItem_HappyPathTest_Asserts(encodedUser, encodedToken,
-                                                        decodedUser, decodedToken, userToReturn,
-                                                        bucketListItemToReturn,
-                                                        returnValidToken, dbBucketListItemId);
-        }
+        //    DeletetBucketListItem_HappyPathTest_Asserts(encodedUser, encodedToken,
+        //                                                decodedUser, decodedToken, userToReturn,
+        //                                                bucketListItemToReturn,
+        //                                                returnValidToken, dbBucketListItemId);
+        //}
 
         private void DeletetBucketListItem_HappyPathTest_SetUps
         (
