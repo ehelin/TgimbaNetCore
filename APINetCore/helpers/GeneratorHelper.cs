@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
+using Shared.misc;
 using Shared.interfaces;
 
 namespace BLLNetCore.Security // TODO - change namespace to BLLNetCore.helpers
@@ -19,14 +20,14 @@ namespace BLLNetCore.Security // TODO - change namespace to BLLNetCore.helpers
 
             //NOTE: Temporary key generated from NetClassicUtility...replace when .net core has 
             //      same functionality as .Net Classic
-            string key = Credentials.GetJwtPrivateKey();
+            string key = Utilities.GetJwtPrivateKey();
 
             return key;
         }
 
         public string GetJwtIssuer() 
         {
-            var issuer = Credentials.GetJwtIssuer();
+            var issuer = Utilities.GetJwtIssuer();
 
             return issuer;
         }

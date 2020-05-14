@@ -5,22 +5,34 @@ namespace Shared.misc
 {
     public class Utilities
     {
-        public static string GetDbSetting()
+        public static string GetDbSetting(bool useTestDb = false)
         {
-            string dbConn = Environment.GetEnvironmentVariable("dataConnectionString");
+            string dbConn = string.Empty;
 
-            if (string.IsNullOrEmpty(dbConn))
+            if(useTestDb)
             {
-                dbConn = Credentials.GetDbConnection();
-                //dbConn = Credentials.GetDbConnectionTest();
+                dbConn = Environment.GetEnvironmentVariable("DbConnectionTest");
+            }
+            else
+            {
+                dbConn = Environment.GetEnvironmentVariable("DbConnection");
             }
            
             return dbConn;
         }
 
-        public static string GetTestDbSetting()
+        public static string GetJwtPrivateKey()
         {
-            return Credentials.GetDbConnectionTest();
+            var key = Environment.GetEnvironmentVariable("JwtPrivateKey");
+
+            return key;
+        }
+
+        public static string GetJwtIssuer()
+        {
+            var key = Environment.GetEnvironmentVariable("JwtIssuer");
+
+            return key;
         }
 
         public static string DecodeClientBase64String(string encodedString)

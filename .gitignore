@@ -276,3 +276,4 @@ __pycache__/
 /TgimbaPingAzureFunction/Properties/PublishProfiles/TgimbaPingAzureFunction20190606095955 - Zip Deploy.pubxml
 /TgimbaNetCoreWeb/Controllers/Properties
 /TgimbaNetCoreWeb/Properties/PublishProfiles/FolderProfile.pubxml
+/TgimbaNetCoreWeb/Properties/launchSettings.json
