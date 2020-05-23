@@ -4,12 +4,25 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shared.dto;
 using Shared;
+using Shared.misc.testUtilities;
 
 namespace TestAPINetCore_Unit
 {
     [TestClass]
     public class MiscTests : BaseTest
     {
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForUnitTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForUnitTests();
+        }
+
         [DataTestMethod]
         [DataRow(true)]
         [DataRow(false)]

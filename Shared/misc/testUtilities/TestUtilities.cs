@@ -79,5 +79,17 @@ namespace Shared.misc.testUtilities
                 }
             }
         }
+
+        public static void ClearEnvironmentalVariablesForUnitTests()
+        {
+            Environment.SetEnvironmentVariable("JwtPrivateKey", null);
+            Environment.SetEnvironmentVariable("JwtIssuer", null);
+        }
+
+        public static void SetEnvironmentalVariablesForUnitTests()
+        {
+            Environment.SetEnvironmentVariable("JwtPrivateKey", "123134123412341341AEARSERAserae54893475384983945vsdeausceauiseycauie");
+            Environment.SetEnvironmentVariable("JwtIssuer", "IAmAJstIssuer");
+        }
     }
 }

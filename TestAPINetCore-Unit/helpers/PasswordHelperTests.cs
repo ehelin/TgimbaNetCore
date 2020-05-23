@@ -5,6 +5,7 @@ using Moq;
 using Shared;
 using Shared.dto;
 using Shared.interfaces;
+using Shared.misc.testUtilities;
 
 namespace TestAPINetCore_Unit.helpers
 {
@@ -15,6 +16,18 @@ namespace TestAPINetCore_Unit.helpers
 
         public PasswordHelperTests() {
             sut = new PasswordHelper();
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForUnitTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForUnitTests();
         }
 
         #region Passwords match

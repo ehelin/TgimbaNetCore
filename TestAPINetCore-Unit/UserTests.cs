@@ -2,12 +2,25 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shared;
 using Shared.dto;
+using Shared.misc.testUtilities;
 
 namespace TestAPINetCore_Unit
 {
     [TestClass]
     public class UserTests : BaseTest
     {
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForUnitTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForUnitTests();
+        }
+
         #region ProcessUser(args)
 
         [DataTestMethod]

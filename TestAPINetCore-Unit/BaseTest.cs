@@ -1,14 +1,13 @@
 ﻿using System;
+using Algorithms.Algorithms.Search;
+using Algorithms.Algorithms.Sorting;
 using APINetCore;
 using BLLNetCore.Security;
-using System.Collections.Generic;
 using Moq;
 using Shared;
 using Shared.dto;
 using Shared.interfaces;
 using Shared.misc;
-using Algorithms.Algorithms.Sorting;
-using Algorithms.Algorithms.Search;
 using TestAPINetCore_Unit.dto;
 
 namespace TestAPINetCore_Unit
@@ -77,8 +76,7 @@ namespace TestAPINetCore_Unit
                 Achieved = true,
                 Latitude = (decimal)123.333,
                 Longitude = (decimal)555.1345,
-                Id = dbIdStr//,
-                //UserName = userName
+                Id = dbIdStr
             };
 
             return model;

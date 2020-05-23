@@ -3,12 +3,25 @@ using Moq;
 using Shared.dto;
 using Shared.misc;
 using System.Collections.Generic;
+using Shared.misc.testUtilities;
 
 namespace TestAPINetCore_Unit
 {
     [TestClass]
     public class BucketListTests : BaseTest
     {
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForUnitTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForUnitTests();
+        }
+
         #region DeletetBucketListItem(args)
 
         [DataTestMethod]
