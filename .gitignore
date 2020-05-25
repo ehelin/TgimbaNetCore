@@ -277,3 +277,6 @@ __pycache__/
 /TgimbaNetCoreWeb/Controllers/Properties
 /TgimbaNetCoreWeb/Properties/PublishProfiles/FolderProfile.pubxml
 /TgimbaNetCoreWeb/Properties/launchSettings.json
+/API-IntegrationTests/Properties/launchSettings.json
+/WebUIIntegrationTests/Properties/launchSettings.json
+/TestDALNetCore-Integration/Properties/launchSettings.json

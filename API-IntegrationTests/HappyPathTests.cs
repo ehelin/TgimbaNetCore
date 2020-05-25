@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Shared.dto;
 using Shared.dto.api;
 using Shared.misc;
+using Shared.misc.testUtilities;
 
 namespace API_IntegrationTests
 {
@@ -17,10 +18,16 @@ namespace API_IntegrationTests
         private string password = "wilmaRules87&";
         private string email = "fred@bedrock.com";
 
-        private void CleanUser()
+        [TestCleanup]
+        public void Cleanup()
         {
-            var utilities = new Shared.misc.testUtilities.TestUtilities();
-            utilities.CleanUpLocal(userName);
+            TestUtilities.ClearEnvironmentalVariablesForIntegrationTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForIntegrationTests();
         }
 
         [TestMethod]
@@ -55,108 +62,6 @@ namespace API_IntegrationTests
             EndPoint_TestPage();
 
             CleanUser();
-        }
-
-        private void EndPoint_Register()
-        {            
-            var request = new RegistrationRequest() 
-            {
-                Login = new LoginRequest() 
-                { 
-                    EncodedUserName = Base64Encode(userName),
-                    EncodedPassword = Base64Encode(password)
-                },
-                EncodedEmail = Base64Encode(email)
-            };
-            
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var url = host + "processuserregistration";
-            var result = Post(url, content).Result;
-
-            Assert.AreEqual(true, System.Convert.ToBoolean(result));
-        }
-        private string EndPoint_Login()
-        {
-            var request =  new LoginRequest()
-            {
-                EncodedUserName = Base64Encode(userName),
-                EncodedPassword = Base64Encode(password)
-            };
-
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var url = host + "processuser";
-            var token = Post(url, content).Result;
-
-            Assert.AreEqual(true, token.Length > 1);
-
-            return token;
-        }
-        private List<BucketListItem> EndPoint_Get(string token)
-        {
-            var url = host + "getbucketlistitems";
-            var query = CreateGetQueryString(token, this.userName, "", "");
-            var fullUrl = url + query;
-            var result = Get(fullUrl).Result;
-            var bucketListItems = JsonConvert.DeserializeObject<List<BucketListItem>>(result);
-            
-            return bucketListItems;
-        }
-        private void EndPoint_Upsert(string token)
-        {
-            var request = CreateUpsertRequest(token);
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var url = host + "upsert";
-            var result = Post(url, content).Result;
-
-            Assert.AreEqual(true, System.Convert.ToBoolean(result));
-        }
-        private void EndPoint_Delete(string token, int id)
-        {
-            var url = host + "delete/" + id.ToString();
-            var result = Delete(url, Base64Encode(userName), Base64Encode(token)).Result;
-
-            Assert.AreEqual(true, System.Convert.ToBoolean(result));
-        }
-        private void EndPoint_GetSystemStatistics(string token)
-        {
-            var url = host + "getsystemstatistics";
-            var result = Get(url, Base64Encode(userName), Base64Encode(token)).Result;
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
-        }
-        private void EndPoint_GetSystemBuildStatistics(string token)
-        {
-            var url = host + "getsystembuildstatistics";
-            var result = Get(url, Base64Encode(userName), Base64Encode(token)).Result;
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
-        }
-        private void EndPoint_Log(string token)
-        {
-            var request = new LoginRequest()
-            {
-                EncodedUserName = Base64Encode(userName),
-                EncodedPassword = Base64Encode(password)
-            };
-
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var url = host + "log";
-
-            // Test is if a 200 returns
-            Post(url, content);    
-        }
-        private void EndPoint_TestPage()
-        {
-            var url = host + "test";
-            var result = Get(url).Result;
-
-            Assert.AreEqual("Test Service Response", result);
         }
 
         #region Http methods
@@ -212,6 +117,114 @@ namespace API_IntegrationTests
         #endregion
 
         #region Private methods
+
+        private void EndPoint_Register()
+        {
+            var request = new RegistrationRequest()
+            {
+                Login = new LoginRequest()
+                {
+                    EncodedUserName = Base64Encode(userName),
+                    EncodedPassword = Base64Encode(password)
+                },
+                EncodedEmail = Base64Encode(email)
+            };
+
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "processuserregistration";
+            var result = Post(url, content).Result;
+
+            Assert.AreEqual(true, System.Convert.ToBoolean(result));
+        }
+        private string EndPoint_Login()
+        {
+            var request = new LoginRequest()
+            {
+                EncodedUserName = Base64Encode(userName),
+                EncodedPassword = Base64Encode(password)
+            };
+
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "processuser";
+            var token = Post(url, content).Result;
+
+            Assert.AreEqual(true, token.Length > 1);
+
+            return token;
+        }
+        private List<BucketListItem> EndPoint_Get(string token)
+        {
+            var url = host + "getbucketlistitems";
+            var query = CreateGetQueryString(token, this.userName, "", "");
+            var fullUrl = url + query;
+            var result = Get(fullUrl).Result;
+            var bucketListItems = JsonConvert.DeserializeObject<List<BucketListItem>>(result);
+
+            return bucketListItems;
+        }
+        private void EndPoint_Upsert(string token)
+        {
+            var request = CreateUpsertRequest(token);
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "upsert";
+            var result = Post(url, content).Result;
+
+            Assert.AreEqual(true, System.Convert.ToBoolean(result));
+        }
+        private void EndPoint_Delete(string token, int id)
+        {
+            var url = host + "delete/" + id.ToString();
+            var result = Delete(url, Base64Encode(userName), Base64Encode(token)).Result;
+
+            Assert.AreEqual(true, System.Convert.ToBoolean(result));
+        }
+        private void EndPoint_GetSystemStatistics(string token)
+        {
+            var url = host + "getsystemstatistics";
+            var result = Get(url, Base64Encode(userName), Base64Encode(token)).Result;
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
+        }
+        private void EndPoint_GetSystemBuildStatistics(string token)
+        {
+            var url = host + "getsystembuildstatistics";
+            var result = Get(url, Base64Encode(userName), Base64Encode(token)).Result;
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
+        }
+        private void EndPoint_Log(string token)
+        {
+            var request = new LoginRequest()
+            {
+                EncodedUserName = Base64Encode(userName),
+                EncodedPassword = Base64Encode(password)
+            };
+
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "log";
+
+            // Test is if a 200 returns
+            Post(url, content);
+        }
+        private void EndPoint_TestPage()
+        {
+            var url = host + "test";
+            var result = Get(url).Result;
+
+            Assert.AreEqual("Test Service Response", result);
+        }
+
+        private void CleanUser()
+        {
+            var utilities = new Shared.misc.testUtilities.TestUtilities();
+            utilities.CleanUpLocal(userName);
+        }
 
         private void CheckStatus(HttpResponseMessage response)
         {

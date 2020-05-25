@@ -1,10 +1,23 @@
 ﻿ using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shared.misc.testUtilities;
 
 namespace TgimbaSeleniumTests.Tests
 {
     [TestClass]
     public class RunAll
-    {        
+    {
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForIntegrationTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForIntegrationTests();
+        }
+
         [TestMethod]
         public void RunAllLocalTests()
         {				  

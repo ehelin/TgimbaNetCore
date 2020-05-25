@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using Newtonsoft.Json;
 
 namespace Shared.misc.testUtilities
 {
@@ -80,6 +81,8 @@ namespace Shared.misc.testUtilities
             }
         }
 
+        #region Unit Test Environment Variables
+
         public static void ClearEnvironmentalVariablesForUnitTests()
         {
             Environment.SetEnvironmentVariable("JwtPrivateKey", null);
@@ -91,5 +94,36 @@ namespace Shared.misc.testUtilities
             Environment.SetEnvironmentVariable("JwtPrivateKey", "123134123412341341AEARSERAserae54893475384983945vsdeausceauiseycauie");
             Environment.SetEnvironmentVariable("JwtIssuer", "IAmAJstIssuer");
         }
+
+        #endregion
+
+        #region Integration Test Environment Variables
+
+        public static void ClearEnvironmentalVariablesForIntegrationTests()
+        {
+            Environment.SetEnvironmentVariable("JwtPrivateKey", null);
+            Environment.SetEnvironmentVariable("JwtIssuer", null);
+            Environment.SetEnvironmentVariable("DbConnectionTest", null);
+            Environment.SetEnvironmentVariable("DbConnection", null);
+        }
+
+        public static void SetEnvironmentalVariablesForIntegrationTests()
+        {
+            var fileContents = System.IO.File.ReadAllText("Properties\\launchSettings.json");
+            dynamic jsonValues = JsonConvert.DeserializeObject(fileContents);
+            
+            foreach (dynamic levelOne in jsonValues.profiles)
+            {
+                foreach (dynamic levelTwo in levelOne)
+                {
+                    foreach (dynamic environmentVariable in levelTwo.environmentVariables)
+                    {
+                        Environment.SetEnvironmentVariable(environmentVariable.Name, environmentVariable.Value.ToString());
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }

@@ -1,15 +1,27 @@
 using System.Linq;
 using DALNetCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shared.interfaces;
-using Shared.misc;
 using Shared.exceptions;
+using Shared.interfaces;
+using Shared.misc.testUtilities;
 
 namespace TestDALNetCore_Integration
 {
     [TestClass]
     public class BucketListTests : BaseTest
     {
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForIntegrationTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForIntegrationTests();
+        }
+
         [TestMethod]
         public void BucketListItem_HappyPath_Test()
         {

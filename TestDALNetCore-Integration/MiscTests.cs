@@ -4,12 +4,25 @@ using DALNetCore;
 using DALNetCore.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
+using Shared.misc.testUtilities;
 
 namespace TestDALNetCore_Integration
 {
     [TestClass]
     public class MiscTests : BaseTest
     {
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForIntegrationTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForIntegrationTests();
+        }
+
         [TestMethod]
         public void GetSystemBuildStatisticsHappyPath_Test()
         {

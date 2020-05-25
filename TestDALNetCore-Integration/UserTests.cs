@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shared.interfaces;
 using Shared.exceptions;
 using Shared.dto;
+using Shared.misc.testUtilities;
 using models = DALNetCore.Models;
 
 namespace TestDALNetCore_Integration
@@ -10,6 +11,19 @@ namespace TestDALNetCore_Integration
     [TestClass]
     public class UserTests : BaseTest
     {
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            TestUtilities.ClearEnvironmentalVariablesForIntegrationTests();
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TestUtilities.SetEnvironmentalVariablesForIntegrationTests();
+        }
+
         [TestMethod]
         public void User_HappyPath_Test()
         {
