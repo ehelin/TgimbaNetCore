@@ -20,14 +20,14 @@ namespace BLLNetCore.Security // TODO - change namespace to BLLNetCore.helpers
 
             //NOTE: Temporary key generated from NetClassicUtility...replace when .net core has 
             //      same functionality as .Net Classic
-            string key = Utilities.GetJwtPrivateKey();
+            string key = EnvironmentalConfig.GetJwtPrivateKey();
 
             return key;
         }
 
         public string GetJwtIssuer() 
         {
-            var issuer = Utilities.GetJwtIssuer();
+            var issuer = EnvironmentalConfig.GetJwtIssuer();
 
             return issuer;
         }

@@ -37,8 +37,8 @@ namespace Shared.misc.testUtilities
 
         public void CleanUpLocal(string user, bool deleteBucketListItems = false)
         {
-            //var connectionString = Shared.misc.Utilities.GetTestDbSetting();
-            var connectionString = Shared.misc.Utilities.GetDbSetting();
+            //var connectionString = Shared.misc.EnvironmentalConfig.GetTestDbSetting();
+            var connectionString = Shared.misc.EnvironmentalConfig.GetDbSetting();
             DeleteTestUser(user, connectionString, deleteBucketListItems);
         }
 

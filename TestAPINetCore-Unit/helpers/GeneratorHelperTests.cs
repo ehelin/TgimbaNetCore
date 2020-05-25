@@ -35,7 +35,7 @@ namespace TestAPINetCore_Unit.helpers
             var decodedJwtToken = sut.DecryptJwtToken(jwtToken);
 
             Assert.IsNotNull(decodedJwtToken);
-            Assert.IsTrue(decodedJwtToken.Issuer == Utilities.GetJwtIssuer());
+            Assert.IsTrue(decodedJwtToken.Issuer == EnvironmentalConfig.GetJwtIssuer());
         }
 
         #region JWT 

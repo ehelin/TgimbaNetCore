@@ -35,11 +35,11 @@ namespace DALNetCore
             {
                 if (useTestDatabase)
                 {
-                    optionsBuilder.UseSqlServer(Utilities.GetDbSetting(true));
+                    optionsBuilder.UseSqlServer(EnvironmentalConfig.GetDbSetting(true));
                 } 
                 else
                 {
-                    optionsBuilder.UseSqlServer(Utilities.GetDbSetting());
+                    optionsBuilder.UseSqlServer(EnvironmentalConfig.GetDbSetting());
                 }
             }
         }
