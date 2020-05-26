@@ -17,7 +17,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.interfaces;
 using Swashbuckle.AspNetCore.Swagger;
-//using TgimbaNetCoreWebShared;
 
 namespace HttpAPINetCore
 {

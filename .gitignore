@@ -280,3 +280,4 @@ __pycache__/
 /API-IntegrationTests/Properties/launchSettings.json
 /WebUIIntegrationTests/Properties/launchSettings.json
 /TestDALNetCore-Integration/Properties/launchSettings.json
+/HttpAPINetCore/Properties/launchSettings.json
