@@ -65,7 +65,13 @@ namespace TestHttpAPINetCore_Unit
 
             IActionResult result = tgimbaApi.GetBucketListItem(request);
             GoodResultVerify(result);
-            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), 
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>())
+                , Times.Once);
         }
 
         [TestMethod]
@@ -79,9 +85,14 @@ namespace TestHttpAPINetCore_Unit
 
             IActionResult result = tgimbaApi.GetBucketListItem(request);
             BadResultVerify(result);
-            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(), 
-                                                             It.IsAny<string>(), It.IsAny<string>()), 
-                                                                Times.Never);
+
+            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>())
+                , Times.Never);
         }
         
         [TestMethod]
@@ -89,9 +100,13 @@ namespace TestHttpAPINetCore_Unit
         {
             var request = GetBucketListItemRequest();
 
-            tgimbaService.Setup(x => x.GetBucketListItems(It.IsAny<string>(), It.IsAny<string>(),
-                                                             It.IsAny<string>(), It.IsAny<string>()))
-                                                                .Throws(new Exception("I am an exception"));
+            tgimbaService.Setup(x => x.GetBucketListItems(It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+                .Throws(new Exception("I am an exception"));
 
             IActionResult result = tgimbaApi.GetBucketListItem(request);
             BadResultVerify(result, 500);
