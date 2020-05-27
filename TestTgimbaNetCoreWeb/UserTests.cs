@@ -1,124 +1,137 @@
-//using System;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using Shared.dto.api;
+using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Shared.dto.api;
+using TgimbaNetCoreWebShared.Controllers;
 
-//namespace TestHttpAPINetCore_Unit
-//{
-//    [TestClass]
-//    public class UserTests : BaseTest
-//    {
-//        #region Process User
+namespace TestTgimbaNetCoreWeb
+{
+    [TestClass]
+    public class UserTests : BaseTest
+    {
+        #region Process User
 
-//        [TestMethod]
-//        public void ProcessUser_HappyPathTest()
-//        {
-//            var request = GetLoginRequest();
-//            var tokenToReturn = "token";
-//            tgimbaService.Setup(x => x.ProcessUser
-//                                    (It.Is<string>(s => s == request.EncodedUserName),
-//                                      It.Is<string>(s => s == request.EncodedPassword)
-//                                        )).Returns(tokenToReturn);
+        [TestMethod]
+        public void ProcessUser_HappyPathTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            IActionResult result = tgimbaApi.ProcessUser(request);
-//            OkObjectResult requestResult = (OkObjectResult)result;
+            var request = GetLoginRequest();
+            var tokenToReturn = "token";
+            tgimbaService.Setup(x => x.ProcessUser
+                                    (It.Is<string>(s => s == request.EncodedUserName),
+                                      It.Is<string>(s => s == request.EncodedPassword)
+                                        )).Returns(tokenToReturn);
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.ProcessUser
-//                                        (It.Is<string>(s => s == request.EncodedUserName),
-//                                            It.Is<string>(s => s == request.EncodedPassword)
-//                                                ), Times.Once);
-//            var token = (string)requestResult.Value;
-//            Assert.AreEqual(tokenToReturn, token);
-//        }
+            IActionResult result = tgimbaApi.ProcessUser(request);
+            OkObjectResult requestResult = (OkObjectResult)result;
 
-//        [TestMethod]
-//        public void ProcessUser_ValidationErrorTest()
-//        {
-//            var request = GetLoginRequest();
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.ProcessUser
+                                        (It.Is<string>(s => s == request.EncodedUserName),
+                                            It.Is<string>(s => s == request.EncodedPassword)
+                                                ), Times.Once);
+            var token = (string)requestResult.Value;
+            Assert.AreEqual(tokenToReturn, token);
+        }
 
-//            validationHelper.Setup(x => x.IsValidRequest
-//                                    (It.IsAny<LoginRequest>()))
-//                                        .Throws(new ArgumentNullException(""));
+        [TestMethod]
+        public void ProcessUser_ValidationErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            IActionResult result = tgimbaApi.ProcessUser(request);
-//            BadResultVerify(result);
-//            tgimbaService.Verify(x => x.ProcessUser(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-//        }
+            var request = GetLoginRequest();
 
-//        [TestMethod]
-//        public void ProcessUser_GeneralErrorTest()
-//        {
-//            var request = GetLoginRequest();
+            validationHelper.Setup(x => x.IsValidRequest
+                                    (It.IsAny<LoginRequest>()))
+                                        .Throws(new ArgumentNullException(""));
 
-//            tgimbaService.Setup(x => x.ProcessUser
-//                                (It.IsAny<string>(), It.IsAny<string>()))
-//                                     .Throws(new Exception("I am an exception"));
+            IActionResult result = tgimbaApi.ProcessUser(request);
+            BadResultVerify(result);
+            tgimbaService.Verify(x => x.ProcessUser(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        }
 
-//            IActionResult result = tgimbaApi.ProcessUser(request);
-//            BadResultVerify(result, 500);
-//        }
+        [TestMethod]
+        public void ProcessUser_GeneralErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//        #endregion
+            var request = GetLoginRequest();
 
-//        #region Process User Registration
+            tgimbaService.Setup(x => x.ProcessUser
+                                (It.IsAny<string>(), It.IsAny<string>()))
+                                     .Throws(new Exception("I am an exception"));
 
-//        [TestMethod]
-//        public void ProcessUserRegistration_HappyPathTest()
-//        {
-//            var email = "email";
-//            var userRegisteredToReturn = true;
-//            var registration = new RegistrationRequest() { Login = GetLoginRequest(), EncodedEmail = email };
-//            tgimbaService.Setup(x => x.ProcessUserRegistration
-//                                        (It.Is<string>(s => s == registration.Login.EncodedUserName),
-//                                            It.Is<string>(s => s == email),
-//                                                It.Is<string>(s => s == registration.Login.EncodedPassword)
-//                                                    )).Returns(userRegisteredToReturn);
+            IActionResult result = tgimbaApi.ProcessUser(request);
+            BadResultVerify(result, 500);
+        }
 
-//            IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
-//            OkObjectResult requestResult = (OkObjectResult)result;
+        #endregion
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.ProcessUserRegistration
-//                                        (It.Is<string>(s => s == registration.Login.EncodedUserName),
-//                                            It.Is<string>(s => s == email),
-//                                                It.Is<string>(s => s == registration.Login.EncodedPassword)
-//                                                    ), Times.Once);
-//            var userRegistered = (bool)requestResult.Value;
-//            Assert.AreEqual(userRegisteredToReturn, userRegistered);
-//        }
+        #region Process User Registration
 
-//        [TestMethod]
-//        public void ProcessUserRegistration_ErrorTest()
-//        {
-//            var registration = new RegistrationRequest() { Login = GetLoginRequest(), EncodedEmail = "email" };
+        [TestMethod]
+        public void ProcessUserRegistration_HappyPathTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            validationHelper.Setup(x => x.IsValidRequest
-//                                    (It.IsAny<RegistrationRequest>()))
-//                                        .Throws(new ArgumentNullException(""));
+            var email = "email";
+            var userRegisteredToReturn = true;
+            var registration = new RegistrationRequest() { Login = GetLoginRequest(), EncodedEmail = email };
+            tgimbaService.Setup(x => x.ProcessUserRegistration
+                                        (It.Is<string>(s => s == registration.Login.EncodedUserName),
+                                            It.Is<string>(s => s == email),
+                                                It.Is<string>(s => s == registration.Login.EncodedPassword)
+                                                    )).Returns(userRegisteredToReturn);
 
-//            IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
-//            BadResultVerify(result);
-//            tgimbaService.Verify(x => x.ProcessUserRegistration(It.IsAny<string>(), It.IsAny<string>()
-//                                                                    , It.IsAny<string>()), Times.Never);
-//        }
+            IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
+            OkObjectResult requestResult = (OkObjectResult)result;
 
-//        [TestMethod]
-//        public void ProcessUserRegistration_GeneralErrorTest()
-//        {
-//            var request = new RegistrationRequest() { Login = GetLoginRequest(), EncodedEmail = "email" };
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.ProcessUserRegistration
+                                        (It.Is<string>(s => s == registration.Login.EncodedUserName),
+                                            It.Is<string>(s => s == email),
+                                                It.Is<string>(s => s == registration.Login.EncodedPassword)
+                                                    ), Times.Once);
+            var userRegistered = (bool)requestResult.Value;
+            Assert.AreEqual(userRegisteredToReturn, userRegistered);
+        }
 
-//            tgimbaService.Setup(x => x.ProcessUserRegistration
-//                                    (It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-//                                        .Throws(new Exception("I am an exception"));
+        [TestMethod]
+        public void ProcessUserRegistration_ErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            IActionResult result = tgimbaApi.ProcessUserRegistration(request);
-//            BadResultVerify(result, 500);
-//        }
+            var registration = new RegistrationRequest() { Login = GetLoginRequest(), EncodedEmail = "email" };
 
-//        #endregion
-//    }
-//}
+            validationHelper.Setup(x => x.IsValidRequest
+                                    (It.IsAny<RegistrationRequest>()))
+                                        .Throws(new ArgumentNullException(""));
+
+            IActionResult result = tgimbaApi.ProcessUserRegistration(registration);
+            BadResultVerify(result);
+            tgimbaService.Verify(x => x.ProcessUserRegistration(It.IsAny<string>(), It.IsAny<string>()
+                                                                    , It.IsAny<string>()), Times.Never);
+        }
+
+        [TestMethod]
+        public void ProcessUserRegistration_GeneralErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
+
+            var request = new RegistrationRequest() { Login = GetLoginRequest(), EncodedEmail = "email" };
+
+            tgimbaService.Setup(x => x.ProcessUserRegistration
+                                    (It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                                        .Throws(new Exception("I am an exception"));
+
+            IActionResult result = tgimbaApi.ProcessUserRegistration(request);
+            BadResultVerify(result, 500);
+        }
+
+        #endregion
+    }
+}

@@ -1,14 +1,14 @@
 ﻿using Shared.interfaces;
 using TgimbaSupport;
-using Shared;
+using Shared.misc;
 
-namespace TgimbaPingDriver
+namespace TgimbaSupportDriver
 {
     class Program
     {
         static void Main(string[] args)
         {
-            ITgimbaDatabase database = new TgimbaDatabase(Credentials.GetDbConnection());
+            ITgimbaDatabase database = new TgimbaDatabase(EnvironmentalConfig.GetDbSetting());
             ITgimbaHttpClient httpClient = new TgimbaHttpClient();
             ITgimbaPing ping = new TgimbaPing("https://www.tgimba.com/", httpClient, database);
             ping.PingWebSite();           

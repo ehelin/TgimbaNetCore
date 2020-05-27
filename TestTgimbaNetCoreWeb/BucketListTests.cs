@@ -1,196 +1,218 @@
-//using System;
-//using HttpAPINetCore.Controllers;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using Shared.dto.api;
-//using Shared.dto;
-//using Shared.interfaces;
+using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Shared.dto.api;
+using Shared.dto;
+using Shared.interfaces;
+using TgimbaNetCoreWebShared.Controllers;
 
-//namespace TestHttpAPINetCore_Unit
-//{
-//    [TestClass]
-//    public class BucketListTests : BaseTest
-//    {
-//        #region DeleteBucketListItem
+namespace TestTgimbaNetCoreWeb
+{
+    [TestClass]
+    public class BucketListTests : BaseTest
+    {
+        #region DeleteBucketListItem
 
-//        [TestMethod]
-//        public void DeleteBucketListItem_HappyPathTest()
-//        {
-//            var request = GetDeleteListItemRequest();
+        [TestMethod]
+        public void DeleteBucketListItem_HappyPathTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
-//            GoodResultVerify(result);
-//            tgimbaService.Verify(x => x.DeleteBucketListItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-//        }
+            var request = GetDeleteListItemRequest();
 
-//        [TestMethod]
-//        public void DeleteBucketListItem_ValidationErrorTest()
-//        {
-//            var request = GetDeleteListItemRequest();
+            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
+            GoodResultVerify(result);
+            tgimbaService.Verify(x => x.DeleteBucketListItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        }
 
-//            validationHelper.Setup(x => x.IsValidRequest
-//                                        (It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
-//                                            .Throws(new ArgumentNullException(""));
+        [TestMethod]
+        public void DeleteBucketListItem_ValidationErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
-//            BadResultVerify(result);
-//            tgimbaService.Verify(x => x.DeleteBucketListItem(
-//                                        It.IsAny<int>(), It.IsAny<string>(), 
-//                                            It.IsAny<string>()), Times.Never);
-//        }
-        
-//        [TestMethod]
-//        public void DeleteBucketListItem_GeneralErrorTest()
-//        {
-//            var request = GetDeleteListItemRequest();
+            var request = GetDeleteListItemRequest();
 
-//            tgimbaService.Setup(x => x.DeleteBucketListItem(
-//                                        It.IsAny<int>(), It.IsAny<string>(),
-//                                            It.IsAny<string>()))
-//                                                .Throws(new Exception("I am an exception"));
+            validationHelper.Setup(x => x.IsValidRequest
+                                        (It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
+                                            .Throws(new ArgumentNullException(""));
 
-//            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
-//            BadResultVerify(result, 500);
-//        }
+            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
+            BadResultVerify(result);
+            tgimbaService.Verify(x => x.DeleteBucketListItem(
+                                        It.IsAny<int>(), It.IsAny<string>(),
+                                            It.IsAny<string>()), Times.Never);
+        }
 
-//        #endregion
+        [TestMethod]
+        public void DeleteBucketListItem_GeneralErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//        #region GetBucketListItem
+            var request = GetDeleteListItemRequest();
 
-//        [TestMethod]
-//        public void GetBucketListItem_HappyPathTest()
-//        {
-//            var request = GetBucketListItemRequest();
+            tgimbaService.Setup(x => x.DeleteBucketListItem(
+                                        It.IsAny<int>(), It.IsAny<string>(),
+                                            It.IsAny<string>()))
+                                                .Throws(new Exception("I am an exception"));
 
-//            IActionResult result = tgimbaApi.GetBucketListItem(request);
-//            GoodResultVerify(result);
-//            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(), 
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>())
-//                , Times.Once);
-//        }
+            IActionResult result = tgimbaApi.DeleteBucketListItem(request.EncodedUserName, request.EncodedToken, request.BucketListItemId);
+            BadResultVerify(result, 500);
+        }
 
-//        [TestMethod]
-//        public void GetBucketListItem_ValidationErrorTest()
-//        {
-//            var request = GetBucketListItemRequest();
+        #endregion
 
-//            validationHelper.Setup(x => x.IsValidRequest
-//                                        (It.IsAny<GetBucketListItemRequest>()))
-//                                            .Throws(new ArgumentNullException(""));
+        #region GetBucketListItem
 
-//            IActionResult result = tgimbaApi.GetBucketListItem(request);
-//            BadResultVerify(result);
+        [TestMethod]
+        public void GetBucketListItem_HappyPathTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>())
-//                , Times.Never);
-//        }
-        
-//        [TestMethod]
-//        public void GetBucketListItem_GeneralErrorTest()
-//        {
-//            var request = GetBucketListItemRequest();
+            var request = GetBucketListItemRequest();
 
-//            tgimbaService.Setup(x => x.GetBucketListItems(It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>(),
-//                It.IsAny<string>()))
-//                .Throws(new Exception("I am an exception"));
+            IActionResult result = tgimbaApi.GetBucketListItem(request);
+            GoodResultVerify(result);
+            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>())
+                , Times.Once);
+        }
 
-//            IActionResult result = tgimbaApi.GetBucketListItem(request);
-//            BadResultVerify(result, 500);
-//        }
+        [TestMethod]
+        public void GetBucketListItem_ValidationErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//        #endregion
+            var request = GetBucketListItemRequest();
 
-//        #region UpsertBucketListItem
+            validationHelper.Setup(x => x.IsValidRequest
+                                        (It.IsAny<GetBucketListItemRequest>()))
+                                            .Throws(new ArgumentNullException(""));
 
-//        [TestMethod]
-//        public void UpsertBucketListItem_HappyPathTest()
-//        {
-//            var request = GetUpsertRequest();
+            IActionResult result = tgimbaApi.GetBucketListItem(request);
+            BadResultVerify(result);
 
-//            IActionResult result = tgimbaApi.UpsertBucketListItem(request);
-//            GoodResultVerify(result);
-//            tgimbaService.Verify(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-//        }
+            tgimbaService.Verify(x => x.GetBucketListItems(It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>())
+                , Times.Never);
+        }
 
-//        [TestMethod]
-//        public void LogMessage_HappyPathTest()
-//        {
-//            var request = GetLogMessageRequest();
+        [TestMethod]
+        public void GetBucketListItem_GeneralErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            IActionResult result = tgimbaApi.Log(request);
+            var request = GetBucketListItemRequest();
 
-//            OkResult requestResult = (OkResult)result;
+            tgimbaService.Setup(x => x.GetBucketListItems(It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+                .Throws(new Exception("I am an exception"));
 
-//            Assert.IsNotNull(requestResult);
-//            Assert.AreEqual(200, requestResult.StatusCode);
-//            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
-//            tgimbaService.Verify(x => x.LogAuthenticated(It.Is<string>(s => s == request.Message), 
-//                                                            It.IsAny<string>(), 
-//                                                                It.IsAny<string>()), 
-//                                                                    Times.Once);
-//        }
+            IActionResult result = tgimbaApi.GetBucketListItem(request);
+            BadResultVerify(result, 500);
+        }
 
-//        [TestMethod]
-//        public void LogMessage_ValidationError()
-//        {
-//            var request = GetLogMessageRequest();
-//            validationHelper.Setup(x => x.IsValidRequest
-//                                        (It.IsAny<LogMessageRequest>()))
-//                                            .Throws(new ArgumentNullException(""));
+        #endregion
 
-//            IActionResult result = tgimbaApi.Log(request);
+        #region UpsertBucketListItem
 
-//            Assert.IsNotNull(result);
-//            Assert.AreEqual(500, Convert.ToInt32(System.Net.HttpStatusCode.InternalServerError));
-//            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
-//            tgimbaService.Verify(x => x.LogAuthenticated(It.Is<string>(s => s == request.Message),
-//                                                        It.IsAny<string>(),
-//                                                            It.IsAny<string>()),
-//                                                                Times.Never);
-//        }
+        [TestMethod]
+        public void UpsertBucketListItem_HappyPathTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//        [TestMethod]
-//        public void UpsertBucketListItem_ValidationErrorTest()
-//        {
-//            var request = GetUpsertRequest();
-            
-//            validationHelper.Setup(x => x.IsValidRequest
-//                                        (It.IsAny<UpsertBucketListItemRequest>()))
-//                                            .Throws(new ArgumentNullException(""));
+            var request = GetUpsertRequest();
 
-//            IActionResult result = tgimbaApi.UpsertBucketListItem(request);
-//            BadResultVerify(result);
-//            tgimbaService.Verify(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-//        }
+            IActionResult result = tgimbaApi.UpsertBucketListItem(request);
+            GoodResultVerify(result);
+            tgimbaService.Verify(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void LogMessage_HappyPathTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
+
+            var request = GetLogMessageRequest();
+
+            IActionResult result = tgimbaApi.Log(request);
+
+            OkResult requestResult = (OkResult)result;
+
+            Assert.IsNotNull(requestResult);
+            Assert.AreEqual(200, requestResult.StatusCode);
+            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
+            tgimbaService.Verify(x => x.LogAuthenticated(It.Is<string>(s => s == request.Message),
+                                                            It.IsAny<string>(),
+                                                                It.IsAny<string>()),
+                                                                    Times.Once);
+        }
+
+        [TestMethod]
+        public void LogMessage_ValidationError()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
+
+            var request = GetLogMessageRequest();
+            validationHelper.Setup(x => x.IsValidRequest
+                                        (It.IsAny<LogMessageRequest>()))
+                                            .Throws(new ArgumentNullException(""));
+
+            IActionResult result = tgimbaApi.Log(request);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(500, Convert.ToInt32(System.Net.HttpStatusCode.InternalServerError));
+            tgimbaService.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
+            tgimbaService.Verify(x => x.LogAuthenticated(It.Is<string>(s => s == request.Message),
+                                                        It.IsAny<string>(),
+                                                            It.IsAny<string>()),
+                                                                Times.Never);
+        }
+
+        [TestMethod]
+        public void UpsertBucketListItem_ValidationErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
+
+            var request = GetUpsertRequest();
+
+            validationHelper.Setup(x => x.IsValidRequest
+                                        (It.IsAny<UpsertBucketListItemRequest>()))
+                                            .Throws(new ArgumentNullException(""));
+
+            IActionResult result = tgimbaApi.UpsertBucketListItem(request);
+            BadResultVerify(result);
+            tgimbaService.Verify(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        }
 
 
-//        [TestMethod]
-//        public void UpsertBucketListItem_GeneralErrorTest()
-//        {
-//            var request = GetUpsertRequest();
+        [TestMethod]
+        public void UpsertBucketListItem_GeneralErrorTest()
+        {
+            var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
 
-//            tgimbaService.Setup(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(),
-//                                                             It.IsAny<string>(), It.IsAny<string>()))
-//                                                                .Throws(new Exception("I am an exception"));
+            var request = GetUpsertRequest();
 
-//            IActionResult result = tgimbaApi.UpsertBucketListItem(request);
-//            BadResultVerify(result, 500);
-//        }
+            tgimbaService.Setup(x => x.UpsertBucketListItem(It.IsAny<BucketListItem>(),
+                                                             It.IsAny<string>(), It.IsAny<string>()))
+                                                                .Throws(new Exception("I am an exception"));
 
-//        #endregion
-//    }
-//}
+            IActionResult result = tgimbaApi.UpsertBucketListItem(request);
+            BadResultVerify(result, 500);
+        }
+
+        #endregion
+    }
+}

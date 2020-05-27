@@ -1,8 +1,8 @@
 using Microsoft.Azure.WebJobs;
-using MS = Microsoft.Extensions.Logging;
 using Shared.interfaces;
+using Shared.misc;
 using TgimbaSupport;
-using Shared;
+using MS = Microsoft.Extensions.Logging;
 
 namespace TgimbaPingAzureFunction
 {
@@ -11,7 +11,8 @@ namespace TgimbaPingAzureFunction
         [FunctionName("Function1")]
         public static void Run([TimerTrigger("0 30 9 * * *")]TimerInfo myTimer, MS.ILogger log)
         {
-            ITgimbaDatabase database = new TgimbaDatabase(Credentials.GetDbConnection());
+            // NOTE: If using environmental variables, this has to be set up on the azure function cloud provider
+            ITgimbaDatabase database = new TgimbaDatabase(EnvironmentalConfig.GetDbSetting());
             ITgimbaHttpClient httpClient = new TgimbaHttpClient();
             ITgimbaPing ping = new TgimbaPing("https://www.tgimba.com/", httpClient, database);
             ping.PingWebSite();
