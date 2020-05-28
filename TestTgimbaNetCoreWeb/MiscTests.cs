@@ -19,8 +19,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void GetSystemBuildStatistics_HappyPathTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             var createdDate = DateTime.UtcNow.ToString();
             var systemBuildStatisticsToReturn = new List<SystemBuildStatistic>();
@@ -88,8 +86,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void GetSystemBuildStatistics_GeneralErrorTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.GetSystemBuildStatistics(It.IsAny<string>(),
@@ -110,8 +106,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void GetSystemStatistics_HappyPathTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             var createdDate = DateTime.UtcNow.ToString();
             var systemStatisticsToReturn = new List<SystemStatistic>();
@@ -180,8 +174,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void GetSystemStatistics_GeneralErrorTest()
         {
-            var validationHelper = new Mock<IValidationHelper>();
-            var tgimbaService = new Mock<ITgimbaService>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.GetSystemStatistics(It.IsAny<string>(),
@@ -202,8 +194,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void Log_HappyPathTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             var request = new LogMessageRequest()
             {
@@ -228,8 +218,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void Log_GeneralErrorTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             tgimbaService.Setup(x => x.LogAuthenticated(It.IsAny<string>(),
                                                           It.IsAny<string>(),
@@ -258,8 +246,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void GetTestResult_HappyPathTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             tgimbaService.Setup(x => x.GetTestResult())
                             .Returns(Constants.API_TEST_RESULT);
@@ -277,8 +263,6 @@ namespace TestTgimbaNetCoreWeb
         [TestMethod]
         public void GetTestResult_GeneralErrorTest()
         {
-            var tgimbaService = new Mock<ITgimbaService>();
-            var validationHelper = new Mock<IValidationHelper>();
             var tgimbaApi = new SharedTgimbaApiController(this.tgimbaService.Object, this.validationHelper.Object);
             var exception = "I am an exception";
             tgimbaService.Setup(x => x.GetTestResult())

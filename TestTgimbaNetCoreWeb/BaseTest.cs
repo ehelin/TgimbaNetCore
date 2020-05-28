@@ -4,7 +4,6 @@ using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Models;
 using System;
 using System.Net;
-//using HttpAPINetCore.Controllers;
 using TgimbaNetCoreWebShared.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,23 +17,15 @@ namespace TestTgimbaNetCoreWeb
     {
         protected Mock<IWebClient> mockWebClient { get; set; }
         protected Mock<ITgimbaHttpClient> mockTgimbaHttpClient { get; set; }
-
-        //protected TgimbaApiController tgimbaApi = null;
         protected Mock<SharedInterfaces.ITgimbaService> tgimbaService = null;
         protected Mock<SharedInterfaces.IValidationHelper> validationHelper = null;
-
-        //public BaseTest()
-        //{
-        //    this.validationHelper = new Mock<IValidationHelper>();
-        //    this.tgimbaService = new Mock<ITgimbaService>();
-        //    this.tgimbaApi = new TgimbaApiController(tgimbaService.Object, validationHelper.Object);
-        //}
-
 
         public BaseTest()
         {
             mockWebClient = new Mock<IWebClient>();
             mockTgimbaHttpClient = new Mock<ITgimbaHttpClient>();
+            tgimbaService = new Mock<SharedInterfaces.ITgimbaService>();
+            validationHelper = new Mock<SharedInterfaces.IValidationHelper>();
 
             SetupWebClient();
         }
