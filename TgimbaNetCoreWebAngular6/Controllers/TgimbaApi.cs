@@ -6,7 +6,7 @@ using Shared.interfaces;
 using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Controllers;
 
-namespace TgimbaNetCoreWeb.Controllers
+namespace TgimbaNetCoreWebAngular6.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -36,14 +36,14 @@ namespace TgimbaNetCoreWeb.Controllers
         #endregion
 
         #region Bucket List Items
-        
+
         [HttpDelete("delete/{BucketListItemId:int}")]
         public IActionResult DeleteBucketListItem(int BucketListItemId)
         {
             return this.sharedTgimbaApiController.DeleteBucketListItem
             (
                 Utilities.GetHeaderValue("EncodedUserName", this.Request),
-                Utilities.GetHeaderValue("EncodedToken", this.Request), 
+                Utilities.GetHeaderValue("EncodedToken", this.Request),
                 BucketListItemId
              );
         }

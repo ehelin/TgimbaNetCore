@@ -6,18 +6,20 @@ using TgimbaNetCoreWebShared.Models;
 using System.Collections.Generic;   
 
 namespace TgimbaNetCoreWeb.Controllers
-{				 
-	//[RequireHttpsAttribute]
+{
+#if !DEBUG
+    [RequireHttpsAttribute]
+#endif
     public class BucketListItemController : Controller
     {
-		private SharedBucketListController sharedBucketListController = null;
+        private SharedBucketListController sharedBucketListController = null;
 
-        public BucketListItemController(ITgimbaService service, IWebClient webClient)
+        public BucketListItemController(IWebClient webClient)
         {
-			sharedBucketListController = new SharedBucketListController(service, webClient);
-		}	  
-								
-		[HttpPost]
+            sharedBucketListController = new SharedBucketListController(webClient);
+        }
+
+        [HttpPost]
         public bool EditBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
 									string Latitude,string Longitude, string DatabaseId, string UserName, 
 									string encodedUser, string encodedToken)

@@ -5,18 +5,20 @@ using TgimbaNetCoreWebShared.Models;
 using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
-{				 
-	//[RequireHttpsAttribute]
-    public class RegistrationController	: Controller
+{
+#if !DEBUG
+    [RequireHttpsAttribute]
+#endif
+    public class RegistrationController : Controller
     {
-		private SharedRegistrationController sharedRegistrationController = null;
+        private SharedRegistrationController sharedRegistrationController = null;
 
-        public RegistrationController(ITgimbaService service, IWebClient webClient)
+        public RegistrationController(IWebClient webClient)
         {
-			sharedRegistrationController = new SharedRegistrationController(service, webClient);
-		}	         
-															   
-		[HttpPost]
+            sharedRegistrationController = new SharedRegistrationController(webClient);
+        }
+
+        [HttpPost]
 		public bool Registration(
 			string encodedUser,  
 			string encodedPass,

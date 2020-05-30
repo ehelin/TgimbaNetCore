@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;		  
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;  
-using Shared.interfaces;         
+using Microsoft.Extensions.DependencyInjection;
 using TgimbaNetCoreWebShared;
-using API;
 
 namespace TgimbaNetCoreWeb
 {
@@ -21,21 +17,12 @@ namespace TgimbaNetCoreWeb
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {                                                            		
-			ITgimbaService service = new TgimbaService(); 
+        {
+            Utilities.SetUpDI(services, Configuration);
+            services.AddMvc();
 
-            services.AddSingleton<ITgimbaService>(service);																  
-			services.AddSingleton<IWebClient>(new WebClient(service));
-
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,28 +35,17 @@ namespace TgimbaNetCoreWeb
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
-            app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            app.UseHttpsRedirection();  // TODO - add local flag to handle
 
-            app.UseMvc(routes =>
+            app.UseSession();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-
-                 routes.MapRoute(
-                    name: "welcome",
-                    template: "{controller=Welcome}/{action=Index}/{id?}");
-
-                  routes.MapRoute(
-                    name: "vanillaJsEntry",
-                    template: "{controller=Home}/{action=HtmlVanillaJsIndex}/{id?}");     
-
+                endpoints.MapControllerRoute("default", "{controller=Welcome}/{action=Index}/{id?}");
             });
         }
     }

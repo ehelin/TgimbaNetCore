@@ -5,17 +5,19 @@ using TgimbaNetCoreWebShared.Models;
 using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
-{				 
-	//[RequireHttpsAttribute]
+{
+#if !DEBUG
+    [RequireHttpsAttribute]
+#endif
     public class LoginController : Controller
     {
-		private SharedLoginController sharedLoginController = null;
+        private SharedLoginController sharedLoginController = null;
 
-        public LoginController(ITgimbaService service, IWebClient webClient)
+        public LoginController(IWebClient webClient)
         {
-			sharedLoginController = new SharedLoginController(service, webClient);
-		}		  
-				
+            sharedLoginController = new SharedLoginController(webClient);
+        }
+
         [HttpPost]
         public string Login([FromQuery] string encodedUser, string encodedPass)
         {							 									 

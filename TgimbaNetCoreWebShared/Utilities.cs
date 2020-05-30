@@ -1,9 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Algorithms.Algorithms.Search;
+using Algorithms.Algorithms.Search.Implementations;
+using Algorithms.Algorithms.Sorting;
+using Algorithms.Algorithms.Sorting.Implementations;
+using APINetCore;
+using BLLNetCore.helpers;
+using BLLNetCore.Security;  // TODO - remove after namespaces changed to bllnetcore.helpers
+using DALNetCore;
+using DALNetCore.helpers;
+using DALNetCore.interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.interfaces;
 using Shared.misc;
 using TgimbaNetCoreWebShared.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace TgimbaNetCoreWebShared
 {
@@ -19,6 +32,55 @@ namespace TgimbaNetCoreWebShared
             }
 
             return section.Value;
+        }
+
+        public static void SetUpDI(IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddSingleton<IWebClient>(new WebClient(Configuration["ApiHost"], new TgimbaHttpClient()));
+            services.AddSingleton<IUserHelper>(new UserHelper());
+
+            // true load test db connection, false load prod db connection
+            services.AddSingleton(new BucketListContext
+            (
+                Configuration["Env"] != null
+                    && Configuration["Env"] == "Development"
+                        ? true
+                            : false
+            ));
+            services.AddSingleton<IBucketListData>(x =>
+                new BucketListData(x.GetRequiredService<BucketListContext>(),
+                                   x.GetRequiredService<IUserHelper>()
+                                   ));
+            services.AddSingleton<IPassword>(new PasswordHelper());
+            services.AddSingleton<IGenerator>(new GeneratorHelper());
+            services.AddSingleton<IString>(new StringHelper());
+
+            services.AddSingleton(new AvailableSearchingAlgorithms(
+                new List<ISearch>()
+                {
+                        new LinqSearch(),
+                        new BinarySearch()
+                 }
+             ));
+
+            services.AddSingleton(new AvailableSortingAlgorithms(
+                new List<ISort>()
+                {
+                    new LinqSort(),
+                    new BubbleSort(),
+                    new InsertionSort()
+                 }
+             ));
+            services.AddSingleton<ITgimbaService>(x =>
+                new TgimbaService(x.GetRequiredService<IBucketListData>(),
+                                   x.GetRequiredService<IPassword>(),
+                                   x.GetRequiredService<IGenerator>(),
+                                   x.GetRequiredService<IString>(),
+                                   x.GetRequiredService<AvailableSortingAlgorithms>(),
+                                   x.GetRequiredService<AvailableSearchingAlgorithms>()
+                                   ));
+            services.AddSingleton<IValidationHelper>(new ValidationHelper());
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         public static string GetHeaderValue(string headerKeyName, HttpRequest Request)
