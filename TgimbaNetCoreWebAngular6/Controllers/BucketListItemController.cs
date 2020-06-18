@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Shared.interfaces;		
-using TgimbaNetCoreWebShared; 
+using Shared.dto;
+using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Controllers;
-using TgimbaNetCoreWebShared.Models;	
-using System.Collections.Generic;   
+using TgimbaNetCoreWebShared.Models;
 
 namespace TgimbaNetCoreWeb.Controllers
 {
@@ -19,67 +19,83 @@ namespace TgimbaNetCoreWeb.Controllers
             sharedBucketListController = new SharedBucketListController(webClient);
         }
 
-        [HttpPost]
-        public bool EditBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
-									string Latitude,string Longitude, string DatabaseId, string UserName, 
+		[HttpGet]
+		public InitializeResult Initialize(string userAgent)
+		{
+			return sharedBucketListController.Initialize(userAgent);
+		}
+
+		[HttpPost]
+		public bool AddBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed,
+									string Latitude, string Longitude, string DatabaseId, string UserName,
 									string encodedUser, string encodedToken)
-        {								   
-            var model = ConvertArgsToModel(Name, DateCreated, BucketListItemType, Completed, 
+		{
+			var model = ConvertArgsToModel(Name, DateCreated, BucketListItemType, Completed,
+												Latitude, Longitude, DatabaseId, UserName);
+
+			return sharedBucketListController.AddBucketListItem(model, encodedUser, encodedToken);
+		}
+
+		[HttpPost]
+		public bool EditBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed,
+									string Latitude, string Longitude, string DatabaseId, string UserName,
+									string encodedUser, string encodedToken)
+		{
+			var model = ConvertArgsToModel(Name, DateCreated, BucketListItemType, Completed,
 												Latitude, Longitude, DatabaseId, UserName);
 
 			return sharedBucketListController.EditBucketListItem(model, encodedUser, encodedToken);
-        }				  
-									 			      
-        [HttpDelete]
-        public bool DeleteBucketListItem(string dbId, string encodedUser, string encodedToken)
-        {									   																	  
-			return sharedBucketListController.DeleteBucketListItem(dbId, encodedUser, encodedToken);
-        }		   
+		}
 
-		[HttpPost]
-        public bool AddBucketListItemJQuery([FromBody] SharedBucketListModel model)
-        {
-			return sharedBucketListController.AddBucketListItem(model, model.encodedUser, model.encodedToken);
-        }
+		[HttpDelete]
+		public bool DeleteBucketListItem(int id)
+		{
+			return this.sharedBucketListController.DeleteBucketListItem
+			(
+				id.ToString(),
+				Utilities.GetHeaderValue("EncodedUserName", this.Request),
+				Utilities.GetHeaderValue("EncodedToken", this.Request)
+			 );
+		}
 
-        [HttpPost]
-        public bool AddBucketListItem(string Name, string DateCreated, string BucketListItemType, string Completed, 
-									string Latitude,string Longitude, string DatabaseId, string UserName, 
-									string encodedUser, string encodedToken)
-        {
-            var model = ConvertArgsToModel(Name, DateCreated, BucketListItemType, Completed, 
-												Latitude, Longitude, DatabaseId, UserName);
-			
-			return sharedBucketListController.AddBucketListItem(model, encodedUser,	encodedToken);
-        }
-		   
-        [HttpGet]
-        public List<SharedBucketListModel> GetBucketListItems
+		[HttpGet]
+		public List<SharedBucketListModel> GetBucketListItems
 		(
-			string encodedUserName, 
-			string encoderedSortString, 
+			string encodedUserName,
+			string encoderedSortString,
 			string encodedToken,
-			string encodedSrchTerm = ""
+			string encodedSrchTerm = "",
+			string encodedSortType = "",
+			string encodedSearchType = ""
 		)
-        {
-            return sharedBucketListController.GetBucketListItems(encodedUserName, encoderedSortString, encodedToken, encodedSrchTerm);
-        }	 
+		{
+			var result = sharedBucketListController.GetBucketListItems(encodedUserName,
+																	   encoderedSortString,
+																	   encodedToken,
+																	   encodedSrchTerm,
+																	   encodedSortType,
+																	   encodedSearchType);
+			return result;
+		}
 
 		// TODO - temp solution - figure out why Vanilla javascript model has null values
-		private SharedBucketListModel ConvertArgsToModel(string Name, string DateCreated, string BucketListItemType, string Completed, 
-														string Latitude,string Longitude, string DatabaseId, string UserName) {
-			var model = new SharedBucketListModel() {
-				Name = Name, 
+		private SharedBucketListModel ConvertArgsToModel(string Name, string DateCreated, string BucketListItemType, string Completed,
+														string Latitude, string Longitude, string DatabaseId, string UserName)
+		{
+			var model = new SharedBucketListModel()
+			{
+				Name = Name,
 				DateCreated = DateCreated,
 				BucketListItemType = Utilities.ConvertCategoryToEnum(BucketListItemType),
 				Completed = System.Convert.ToBoolean(Completed),
-				Latitude = Latitude,  
+				Latitude = Latitude,
 				Longitude = Longitude,
 				DatabaseId = DatabaseId,
-				UserName =	 UserName
+				UserName = UserName
 			};
 
 			return model;
 		}
-    }
+
+	}
 }
