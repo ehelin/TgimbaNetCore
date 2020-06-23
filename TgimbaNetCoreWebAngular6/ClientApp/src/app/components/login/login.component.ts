@@ -59,7 +59,7 @@ export class LoginComponent {
 		).subscribe(
 			data => {
 				if (data !== null && data !== undefined && data !== '') {
-					let token = JSON.stringify(data);
+					let token = data; 
 					SessionComponent.SessionSetValue(ConstantsComponent.SESSION_TOKEN, token);
 					SessionComponent.SessionSetValue(ConstantsComponent.SESSION_USERNAME, loginUsername);
 					this.router.navigate(['/main']);
