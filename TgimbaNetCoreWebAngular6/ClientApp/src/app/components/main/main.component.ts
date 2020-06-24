@@ -39,12 +39,15 @@ export class MainComponent {
 		let userName = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_USERNAME);
 		let token = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN);		   
 
-		const url = this.baseUrl + '/BucketListItem/DeleteBucketListItem?'
-			+ 'dbId=' + databaseId		   
-			+ '&encodedUser=' + btoa(userName)
-			+ '&encodedToken=' + btoa(token);		
+		const url = this.baseUrl + '/BucketListItem/DeleteBucketListItem/' + databaseId;
 
-		return this.http.delete(url)
+		const headers = new HttpHeaders()
+			.set('EncodedUserName', btoa(userName))
+			.set('EncodedToken', btoa(token));
+
+		return this.http.delete(
+			url,
+			{ headers: headers })
 			.subscribe(
 			data => {
 				if (data && data === true) {
@@ -87,6 +90,10 @@ export class MainComponent {
 		if (searchTerm && searchTerm.length > 0) {
 			url += '&encodedSrchTerm=' + btoa(this.searchTerm);
 		}
+
+		// temp until all supported parameters added
+		url += "&encodedSortType=" + btoa("Linq");
+		url += "&encodedSearchType=" + btoa("Linq");
 
 		const headers = new HttpHeaders()
 			.set('Content-Type', 'application/json')
