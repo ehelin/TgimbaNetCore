@@ -11,5 +11,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class ConstantsComponent {				   
 	public static get SESSION_TOKEN(): string { return "SessionToken"; }
-	public static get SESSION_USERNAME(): string { return "SessionUserName"; }				 
+	public static get SESSION_USERNAME(): string { return "SessionUserName"; }
+	public static get SESSION_SORT_ALGORITHMS(): string { return "SessionAvailableSortAlgorithms"; }
+	public static get SESSION_SEARCH_ALGORITHMS(): string { return "SessionAvailableSearchAlgorithms"; }				 
 }
