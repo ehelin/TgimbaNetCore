@@ -81,6 +81,7 @@ export class MainComponent {
 		let encodedUserName = btoa(SessionComponent.SessionGetValue(ConstantsComponent.SESSION_USERNAME));
 		let encodedToken = btoa(SessionComponent.SessionGetValue(ConstantsComponent.SESSION_TOKEN));
 		let encodedSortString = btoa(this.sortService.getSort());
+		let encodedSortingAlgorithm = btoa(this.sortService.getSortAlgorithm());
 
 		let url = this.baseUrl + '/BucketListItem/GetBucketListItems?'
 			+ 'encodedUserName=' + encodedUserName
@@ -92,7 +93,7 @@ export class MainComponent {
 		}
 
 		// temp until all supported parameters added
-		url += "&encodedSortType=" + btoa("Linq");
+		url += "&encodedSortType=" + encodedSortingAlgorithm;
 		url += "&encodedSearchType=" + btoa("Linq");
 
 		const headers = new HttpHeaders()

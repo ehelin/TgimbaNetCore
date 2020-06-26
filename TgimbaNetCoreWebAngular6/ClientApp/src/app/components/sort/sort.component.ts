@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { SessionComponent } from '../common/session.component';
+import { ConstantsComponent } from '../common/constants.component';
 import { UtilitiesComponent } from '../common/utilities.component';
 import { SortService } from './sort.service';
 
@@ -16,6 +17,8 @@ import { SortService } from './sort.service';
 export class SortComponent {		
 	private baseUrl: string;	
 	public descOrder: boolean;
+	public selectedSortingAlgorithm = ''; 
+	public sortingAlgorithms: string[];
 
 	constructor(
 		private http: HttpClient,
@@ -23,6 +26,8 @@ export class SortComponent {
 		private sortService: SortService
 	) {
 		this.baseUrl = UtilitiesComponent.GetBaseUrl(); 
+		let sortingAlgorithmsStr = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_SORT_ALGORITHMS);		
+		this.sortingAlgorithms = sortingAlgorithmsStr.split(",");
 	}
 
 	public Sort(sortColumn) { 
@@ -32,12 +37,12 @@ export class SortComponent {
 			sort += ' desc';
 		}
 
-		this.sortService.setSort(sort);
+		this.sortService.setSort(sort, this.selectedSortingAlgorithm);
 		this.router.navigate(['/main']);
 	};
 						 
 	public Cancel() {
-		this.sortService.setSort('');
+		this.sortService.setSort('','');
 
 		if (LoginComponent.IsLoggedIn() === true) {
 			this.router.navigate(['/main']);
