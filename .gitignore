@@ -282,3 +282,5 @@ __pycache__/
 /TestDALNetCore-Integration/Properties/launchSettings.json
 /HttpAPINetCore/Properties/launchSettings.json
 /TgimbaNetCoreWebAngular6/Properties/launchSettings.json
+/TgimbaNetCoreWebAngular6/Properties/PublishProfiles/FolderProfile.pubxml
+/TgimbaNetCoreWebAngular6/.config/dotnet-tools.json
