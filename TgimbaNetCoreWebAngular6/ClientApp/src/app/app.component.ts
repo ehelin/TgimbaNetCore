@@ -36,6 +36,16 @@ export class AppComponent {
 
 	public Initialize()
 	{
+		var sortAlgorithms = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_SORT_ALGORITHMS);
+		var searchAlgorithms = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_SEARCH_ALGORITHMS);
+
+		// do not set values if they are already set
+		if (sortAlgorithms != null && sortAlgorithms != undefined
+			&& searchAlgorithms != null && searchAlgorithms != undefined
+			&& sortAlgorithms.length > 0 && searchAlgorithms.length > 0) {
+			return;
+		}
+
 		let userAgent = window.navigator.userAgent;
 		const url = this.baseUrl + '/BucketListItem/Initialize?userAgent=' + userAgent;
 
@@ -50,8 +60,8 @@ export class AppComponent {
 			(data) => {
 				if (data !== null && data !== undefined)
 				{
-					SessionComponent.SessionSetValue(ConstantsComponent.SESSION_SEARCH_ALGORITHMS, data.availableSortingAlgorithms);
 					SessionComponent.SessionSetValue(ConstantsComponent.SESSION_SORT_ALGORITHMS, data.availableSortingAlgorithms);
+					SessionComponent.SessionSetValue(ConstantsComponent.SESSION_SEARCH_ALGORITHMS, data.availableSearchingAlgorithms);
 				}
 			},
 			error => {

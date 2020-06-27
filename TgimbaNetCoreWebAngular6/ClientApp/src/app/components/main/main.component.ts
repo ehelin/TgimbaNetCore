@@ -18,6 +18,8 @@ export class MainComponent {
 	private baseUrl: string;
 	public htmlTableWData: any;	
 	public searchTerm: string;
+	public selectedSearchAlgorithm = ''; 
+	public searchAlgorithms: string[];
 
 	constructor(
 		private http: HttpClient,
@@ -28,6 +30,8 @@ export class MainComponent {
 		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 		this.LoadBucketListItems("");
 		this.searchTerm = '';
+		let searchAlgorithmsStr = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_SEARCH_ALGORITHMS);
+		this.searchAlgorithms = searchAlgorithmsStr.split(",");
 	}
 
 	public FormEdit(bucketListItem) {

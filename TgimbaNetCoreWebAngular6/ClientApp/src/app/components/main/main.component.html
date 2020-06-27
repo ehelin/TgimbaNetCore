@@ -6,6 +6,9 @@
 				<button (click)="ShowMainMenu()" id="btnMainMenu">Menu</button>
 			</td>								   
 			<td>
+				<select [(ngModel)]="selectedSearchAlgorithm" id="USER_CONTROL_SEARCH_ALGORITHM">
+					<option *ngFor="let searchAlgorithm of searchAlgorithms" [ngValue]="searchAlgorithm">{{searchAlgorithm}}</option>
+				</select>
 				<input type="text" [(ngModel)]="searchTerm" id="USER_CONTROL_SEARCH_TEXT_BOX" />
 				<button (click)="Search()" id="USER_CONTROL_SEARCH_BUTTON">Search</button>
 				<div id="cancelSrchResults" style="display:none">
