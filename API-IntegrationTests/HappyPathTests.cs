@@ -197,6 +197,7 @@ namespace API_IntegrationTests
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Length > 1);  // Convert to object and check for params?
         }
+        // TODO - revisit this test...looks incorrect (i.e. should be logmessage request)
         private void EndPoint_Log(string token)
         {
             var request = new LoginRequest()

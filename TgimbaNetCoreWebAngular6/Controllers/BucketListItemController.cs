@@ -13,15 +13,19 @@ namespace TgimbaNetCoreWeb.Controllers
     public class BucketListItemController : Controller
     {
         private SharedBucketListController sharedBucketListController = null;
+		private IWebClient client;
 
-        public BucketListItemController(IWebClient webClient)
+		public BucketListItemController(IWebClient webClient)
         {
             sharedBucketListController = new SharedBucketListController(webClient);
-        }
+			this.client = webClient;
+			this.client.LogMessage("BucketListItemController Constructor");
+		}
 
 		[HttpGet]
 		public InitializeResult Initialize(string userAgent)
 		{
+			this.client.LogMessage("BucketListItemController Initialize(args)");
 			return sharedBucketListController.Initialize(userAgent);
 		}
 

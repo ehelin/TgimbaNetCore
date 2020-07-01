@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Shared.dto;
+using Shared.dto.api;
 using TgimbaNetCoreWebShared.Models;
 using SharedApi = Shared.dto.api;
 using SharedMisc = Shared.misc;
@@ -173,9 +174,29 @@ namespace TgimbaNetCoreWebShared
 
             return registered;
 		}
-        
+
+        public void LogMessage(string message)//, string encodedUserName, string encodedToken)
+        {
+            var token = DemoUserLogin();
+
+            var request = new LogMessageRequest()
+            {
+                Message = message,
+                Token = new TokenRequest()
+                {
+                    EncodedUserName = Shared.misc.Utilities.EncodeClientBase64String(Shared.Constants.DEMO_USER),
+                    EncodedToken = Shared.misc.Utilities.EncodeClientBase64String(token)
+                }
+            };
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var url = host + "/log";
+
+            httpClient.Post(url, content);
+        }
+
         #region Private methods
-               
+
         private string CreateTokenQueryString(string encodedToken, string encodedUserName)
         {
             var query = "?encodedUser=" + encodedUserName

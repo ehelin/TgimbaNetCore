@@ -37,5 +37,6 @@ namespace TgimbaNetCoreWebShared
         );
         List<SystemStatistic> GetSystemStatistics();
         List<SystemBuildStatistic> GetSystemBuildStatistics();
+		void LogMessage(string message);//, string encodedUserName, string encodedToken); // TODO - add unit test
     }
 }

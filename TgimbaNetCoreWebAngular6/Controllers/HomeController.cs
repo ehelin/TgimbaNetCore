@@ -1,6 +1,11 @@
 using Microsoft.AspNetCore.Mvc;               
 using Shared.interfaces;   
 using SharedControllers = TgimbaNetCoreWebShared.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Shared.interfaces;
+using TgimbaNetCoreWebShared;
+using TgimbaNetCoreWebShared.Models;
+using TgimbaNetCoreWebShared.Controllers;
 
 namespace TgimbaNetCoreWeb.Controllers
 {
@@ -8,12 +13,21 @@ namespace TgimbaNetCoreWeb.Controllers
     [RequireHttpsAttribute]
 #endif
     public class HomeController : Controller
-    {                                      
-		public HomeController() {}
+    {
+        private IWebClient client;
+
+        //public HomeController() {}
+        public HomeController(IWebClient webClient)
+        {
+            this.client = webClient;
+            this.client.LogMessage("HomeController Constructor");
+        }
 
         public IActionResult Index()
         {
+            this.client.LogMessage("HomeController Index()");
             return View();
-        }         
+        }
+
     }
 }
