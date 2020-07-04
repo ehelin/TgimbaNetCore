@@ -24,6 +24,8 @@ export class AppComponent {
 		this.session = new SessionComponent();
 		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 
+		alert("AppComponent-constructor");
+
 		this.Initialize();
 
 		if (LoginComponent.IsLoggedIn() === true) {
@@ -40,11 +42,11 @@ export class AppComponent {
 		var searchAlgorithms = SessionComponent.SessionGetValue(ConstantsComponent.SESSION_SEARCH_ALGORITHMS);
 
 		// do not set values if they are already set
-		if (sortAlgorithms != null && sortAlgorithms != undefined
-			&& searchAlgorithms != null && searchAlgorithms != undefined
-			&& sortAlgorithms.length > 0 && searchAlgorithms.length > 0) {
-			return;
-		}
+		//if (sortAlgorithms != null && sortAlgorithms != undefined
+		//	&& searchAlgorithms != null && searchAlgorithms != undefined
+		//	&& sortAlgorithms.length > 0 && searchAlgorithms.length > 0) {
+		//	return;
+		//}
 
 		let userAgent = window.navigator.userAgent;
 		const url = this.baseUrl + '/BucketListItem/Initialize?userAgent=' + userAgent;
