@@ -21,10 +21,11 @@ namespace TgimbaNetCoreWeb
         public void ConfigureServices(IServiceCollection services)
         {
             Utilities.SetUpDI(services, Configuration);
-            services.AddMvc();
+            services.AddControllersWithViews();
+            //services.AddMvc();
 
-            services.AddDistributedMemoryCache();
-            services.AddSession();
+            //services.AddDistributedMemoryCache();
+            //services.AddSession();
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -35,25 +36,33 @@ namespace TgimbaNetCoreWeb
         //Microsoft.Extensions.Hosting
         public void Configure(IApplicationBuilder app, Microsoft.Extensions.Hosting.IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+     if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseHttpsRedirection();  // TODO - add local flag to handle
-
-            app.UseSession();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
 
             app.UseRouting();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Welcome}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
             });
+
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,

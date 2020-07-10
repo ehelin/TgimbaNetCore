@@ -7,7 +7,7 @@ using TgimbaNetCoreWebShared;
 using TgimbaNetCoreWebShared.Models;
 using TgimbaNetCoreWebShared.Controllers;
 
-namespace TgimbaNetCoreWeb.Controllers
+namespace TgimbaNetCoreWebAngular6.Controllers
 {
 #if !DEBUG
     [RequireHttpsAttribute]
