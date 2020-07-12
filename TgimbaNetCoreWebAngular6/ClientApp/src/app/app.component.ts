@@ -24,8 +24,6 @@ export class AppComponent {
 		this.session = new SessionComponent();
 		this.baseUrl = UtilitiesComponent.GetBaseUrl();
 
-		alert("AppComponent-constructor");
-
 		this.Initialize();
 
 		if (LoginComponent.IsLoggedIn() === true) {
