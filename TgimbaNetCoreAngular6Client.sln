@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4584033D-F538-457D-AB20-588B537A7865}"
 	ProjectSection(SolutionItems) = preProject
 		FolderProfile.pubxml = FolderProfile.pubxml
+		FolderProfileAngularTypeScript.pubxml = FolderProfileAngularTypeScript.pubxml
 		JSTest.dll = JSTest.dll
 		tgimbaNetCoreBuild.bat = tgimbaNetCoreBuild.bat
 		Todo.txt = Todo.txt
