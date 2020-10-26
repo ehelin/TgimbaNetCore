@@ -71,7 +71,7 @@ Blog Post(s):
 		</ul>
 	</li>
 	<li><a href="https://erichelin.wordpress.com/2019/07/06/tgimba-net-core-new-dashboard-oriented-welcome-pae/">New Dashboard Welcome Page</a></li>
-	<li><a href="https://erichelin.wordpress.com/2019/06/08/tgimba-net-core-ci-cd-pipeline-revamp/">Pipeline Plumbing Refit</a>/li>
+	<li><a href="https://erichelin.wordpress.com/2019/06/08/tgimba-net-core-ci-cd-pipeline-revamp/">Pipeline Plumbing Refit</a></li>
 	<li><a href="https://erichelin.wordpress.com/2019/04/26/tgimba-net-core-css-beautification-the-desktop-layout-is-done/">Desktop Layout Done!</a></li>
 	<li><a href="https://erichelin.wordpress.com/2019/04/24/tgimba-net-core-css-beautification-the-layout-is-done/">Mobile Layout Done!</a></li>
 	<li><a href="https://erichelin.wordpress.com/2019/04/18/tgimba-net-core-css-beautification-loading-dynamic-css/">Loading Dynamic CSS</a></li>
