@@ -1,3 +1,22 @@
+# TgimbaNetCore
+A .NET Core 3.1 application w/Vanilla JavaScript/Angular TypeScript web clients, Application Programmable Interface (API) and Selenium User Interface (UI) and MS Unit/Integration test suites.
+
+The Globe In My BucketList Application (TGIMBA) is my demonstration project for learning new technologies.  It is also the application I use for my personal bucket list for items I wish to do before I pass away.  This version incorporates the latest technologies.
+
+## Related Projects/Items
+
+These items are also related to this project. 
+
+Project(s):
+<ul>
+<li>TGIMBA (https://github.com/ehelin/TGIMBA) - JQuery/.NET Framework Web/API version.</li>
+<li>TGIMBANodeJSAPI (https://github.com/ehelin/TGIMBANodeJSAPI) - Node JS API w/docker containers.</li>
+<li>TGIMBAAndroid (https://github.com/ehelin/TGIMBAAndroid) - Java based Android client.</li>
+<li>TGIMBAWindows81_WindowsPhone81 (https://github.com/ehelin/TGIMBAWindows81_WindowsPhone81) - Windows phone/desktop client.</li>
+<li>SimulatedCyberAttacks (https://github.com/ehelin/SimulatedCyberAttacks) - Simulated cyber attacks on .NET Framework version of TGIMBA.</li>
+</ul>
+
+Blog Post(s):
 <ul>
 	<li>Cloud Native Series
 		<ul>
@@ -57,3 +76,6 @@
 	<li><a href="https://erichelin.wordpress.com/2019/04/24/tgimba-net-core-css-beautification-the-layout-is-done/">Mobile Layout Done!</a></li>
 	<li><a href="https://erichelin.wordpress.com/2019/04/18/tgimba-net-core-css-beautification-loading-dynamic-css/">Loading Dynamic CSS</a></li>
 </ul>
+
+## How To Use
+Download the zip file, open up in Visual Studio, clean, restore packages, build and run.
