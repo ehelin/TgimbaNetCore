@@ -70,11 +70,43 @@ Blog Post(s):
 			<li><a href="https://erichelin.wordpress.com/2019/12/26/tgimba-net-core-api-the-new-api-and-service-layers-part-3-bucket-list-item-methods/">New Bucket List Item Methods</a></li>
 		</ul>
 	</li>
+	<li>CSS Series
+		<ul>
+			<li><a href="https://erichelin.wordpress.com/2019/04/05/tgimba-net-core-css-beautification/">Is it mobile or desktop?</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/04/10/tgimba-net-core-css-beautification-whats-in-a-color-scheme/">What's in a color scheme?</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/04/17/tgimba-net-core-css-beautification-look-ma-i-can-display-two-layouts/">Two Layouts</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/04/17/tgimba-net-core-css-beautification-look-ma-i-can-display-two-layouts/">Loading Dynamic CSS</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/04/26/tgimba-net-core-css-beautification-the-desktop-layout-is-done/">Desktop Layout Done!</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/04/24/tgimba-net-core-css-beautification-the-layout-is-done/">Mobile Layout Done!</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/04/18/tgimba-net-core-css-beautification-loading-dynamic-css/">Loading Dynamic CSS</a></li>
+		</ul>
+	</li>
 	<li><a href="https://erichelin.wordpress.com/2019/07/06/tgimba-net-core-new-dashboard-oriented-welcome-pae/">New Dashboard Welcome Page</a></li>
 	<li><a href="https://erichelin.wordpress.com/2019/06/08/tgimba-net-core-ci-cd-pipeline-revamp/">Pipeline Plumbing Refit</a></li>
-	<li><a href="https://erichelin.wordpress.com/2019/04/26/tgimba-net-core-css-beautification-the-desktop-layout-is-done/">Desktop Layout Done!</a></li>
-	<li><a href="https://erichelin.wordpress.com/2019/04/24/tgimba-net-core-css-beautification-the-layout-is-done/">Mobile Layout Done!</a></li>
-	<li><a href="https://erichelin.wordpress.com/2019/04/18/tgimba-net-core-css-beautification-loading-dynamic-css/">Loading Dynamic CSS</a></li>
+	<li><a href="https://erichelin.wordpress.com/2019/04/02/tgimba-net-core-upgrade-react-redux-js-refactor/">React refactor</a></li>
+	<li>Upgrade from .NET Framework to .NET Core
+		<li>Login
+			<ul>
+				<li><a href="https://erichelin.wordpress.com/2018/09/05/tgimba-net-core-upgrade-login-view-added/">Vanilla JavaScript View</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-angular-5-typescript-login-view-added/">Angular View</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-react-js-client-research/">React Login</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/10/06/tgimba-net-core-upgrade-angular-5-replaced-with-angular-6-logined/">Angular TypeScript Login</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/10/15/tgimba-net-core-upgrade-jquery-login/">Jquery Login</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/10/27/tgimba-net-core-upgrade-react-js-redux-login/">React Login</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/11/02/tgimba-net-core-upgrade-login-page-selenium-integration-test/">Selenium Test</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/11/04/tgimba-net-core-upgrade-vanilla-javascript-login-page-objectified/">JavaScript Login</a></li>
+			</ul>
+		</li>
+		<ul>
+			<li><a href="https://erichelin.wordpress.com/2018/11/30/tgimba-net-core-upgrade-registration-page-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Registration Page</a></li>	
+			<li><a href="https://erichelin.wordpress.com/2018/12/12/tgimba-net-core-upgrade-main-display-panel-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Main Display Panel</a></li>	
+			<li><a href="https://erichelin.wordpress.com/2019/01/08/tgimba-net-core-upgrade-main-menu-with-partial-functionality-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Main Menu</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/02/11/tgimba-net-core-upgrade-adding-displaying-bucket-list-items-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Adding and Displaying</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/02/16/tgimba-net-core-upgrade-editing-deleting-bucket-list-items-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Editing and Deleting</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/03/07/tgimba-net-core-upgrade-sorting-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Sorting</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/03/18/tgimba-net-core-upgrade-searching-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Searching</a></li>
+		</ul>
+	</li>
 </ul>
 
 ## How To Use
