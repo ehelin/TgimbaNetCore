@@ -125,9 +125,8 @@ Blog Post(s):
 			<li><a href="https://erichelin.wordpress.com/2018/07/08/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-1-local-batch-file/">Local batch file</a></li>
 			<li><a href="https://erichelin.wordpress.com/2018/07/15/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-2-building-on-visual-studio-team-services/">Still building...</a></li>
 			<li><a href="https://erichelin.wordpress.com/2018/07/21/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-3-building-on-visual-studio-team-services-continued-tests-and-more-pre-deploy/">Testing and predeployment items</a></li>
-
-			<li><a href="https://erichelin.wordpress.com/2018/07/29/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-4-build-artifact-correctly-built-using-vsts/">Building Artifact</a></li>
-			<li><a href="https://erichelin.wordpress.com/2018/08/12/tgimba-net-core-upgrade-finally-a-working-continuous-integration-continuous-deployment-ci-cd-pipeline-using-visual-studio-team-services-vsts/">Working!</a></li>
+<li><a href="https://erichelin.wordpress.com/2018/07/29/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-4-build-artifact-correctly-built-using-vsts/">Building Artifact</a></li>
+<li><a href="https://erichelin.wordpress.com/2018/08/12/tgimba-net-core-upgrade-finally-a-working-continuous-integration-continuous-deployment-ci-cd-pipeline-using-visual-studio-team-services-vsts/">Working!</a></li>
 		</ul>
 	</li>
 </ul>
