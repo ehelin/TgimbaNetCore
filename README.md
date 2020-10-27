@@ -9,10 +9,10 @@ These items are also related to this project.
 
 Project(s):
 <ul>
-<li>TGIMBA (https://github.com/ehelin/TGIMBA) - JQuery/.NET Framework Web/API version.</li>
-<li>TGIMBANodeJSAPI (https://github.com/ehelin/TGIMBANodeJSAPI) - Node JS API w/docker containers.</li>
-<li>TGIMBAAndroid (https://github.com/ehelin/TGIMBAAndroid) - Java based Android client.</li>
-<li>TGIMBAWindows81_WindowsPhone81 (https://github.com/ehelin/TGIMBAWindows81_WindowsPhone81) - Windows phone/desktop client.</li>
+<li>TGIMBA (https://github.com/ehelin/TGIMBA) - JQuery/.NET Framework Web/API version (predecessor to .NET Core version).</li>
+<li>TGIMBANodeJSAPI (https://github.com/ehelin/TGIMBANodeJSAPI) - Node JS API w/docker containers (never deployed).</li>
+<li>TGIMBAAndroid (https://github.com/ehelin/TGIMBAAndroid) - Java based Android client (deployed, but later deprecated).</li>
+<li>TGIMBAWindows81_WindowsPhone81 (https://github.com/ehelin/TGIMBAWindows81_WindowsPhone81) - Windows phone/desktop client (never deployed).</li>
 <li>SimulatedCyberAttacks (https://github.com/ehelin/SimulatedCyberAttacks) - Simulated cyber attacks on .NET Framework version of TGIMBA.</li>
 </ul>
 
