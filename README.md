@@ -1,5 +1,5 @@
 # TgimbaNetCore
-A .NET Core 3.1 application w/Vanilla JavaScript/Angular TypeScript web clients, Application Programmable Interface (API) and Selenium User Interface (UI) and MS Unit/Integration test suites.
+A .NET Core 3.1 application w/Vanilla JavaScript/Angular TypeScript web clients, Application Programmable Interface (API) and Selenium User Interface (UI)/MS Unit/Integration test suites.
 
 The Globe In My BucketList Application (TGIMBA) is my demonstration project for learning new technologies.  It is also the application I use for my personal bucket list for items I wish to do before I pass away.  This version incorporates the latest technologies.
 
