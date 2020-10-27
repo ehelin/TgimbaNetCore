@@ -87,6 +87,8 @@ Blog Post(s):
 	<li>Upgrade from .NET Framework to .NET Core
 		<li>Login
 			<ul>
+				<li><a href="https://erichelin.wordpress.com/2018/08/19/tgimba-net-core-upgrade-adding-plumbing-for-html-vanilla-javascript-views/">Additional JavaScript Views</a></li>
+				<li><a href="https://erichelin.wordpress.com/2018/08/25/tgimba-net-core-upgrade-javascript-unit-tests-with-jstest-net-truly-awesome/">JTest - JavaScript Unit Tests</a></li>
 				<li><a href="https://erichelin.wordpress.com/2018/09/05/tgimba-net-core-upgrade-login-view-added/">Vanilla JavaScript View</a></li>
 				<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-angular-5-typescript-login-view-added/">Angular View</a></li>
 				<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-react-js-client-research/">React Login</a></li>
@@ -98,6 +100,14 @@ Blog Post(s):
 			</ul>
 		</li>
 		<ul>
+			<li><a href="https://erichelin.wordpress.com/2018/02/02/tgimba-net-core-upgrade-part-1-dal-conversion-with-test-stubs/">Test Stubs</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/02/06/tgimba-net-core-upgrade-part-2-dal-integration-test-complete/">DAL complete!</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/02/19/tgimba-net-core-upgrade-part-3-api-code-integration-test-complete/">API complete!</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/02/22/tgimba-net-core-upgrade-part-4-basic-angular-user-interface/">Angular Interfaces</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/02/25/tgimba-net-core-upgrade-part-5-understanding-basic-angular-unit-testing-in-preparation-for-adding-tgimba-user-interface/">Basic Angular Unit Testing</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/02/26/tgimba-net-core-upgrade-part-6-adding-tgimba-user-interface-placeholders/">Interface placedholders</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/02/28/tgimba-net-core-upgrade-part-7-tgimba-user-interface-dashboard/">Dashboard 1</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/06/10/tgimba-net-core-upgrade-part-7-5-tgimba-user-interface-dashboard/">Dashboard 2</a></li>
 			<li><a href="https://erichelin.wordpress.com/2018/11/30/tgimba-net-core-upgrade-registration-page-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Registration Page</a></li>	
 			<li><a href="https://erichelin.wordpress.com/2018/12/12/tgimba-net-core-upgrade-main-display-panel-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Main Display Panel</a></li>	
 			<li><a href="https://erichelin.wordpress.com/2019/01/08/tgimba-net-core-upgrade-main-menu-with-partial-functionality-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Main Menu</a></li>
@@ -105,6 +115,19 @@ Blog Post(s):
 			<li><a href="https://erichelin.wordpress.com/2019/02/16/tgimba-net-core-upgrade-editing-deleting-bucket-list-items-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Editing and Deleting</a></li>
 			<li><a href="https://erichelin.wordpress.com/2019/03/07/tgimba-net-core-upgrade-sorting-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Sorting</a></li>
 			<li><a href="https://erichelin.wordpress.com/2019/03/18/tgimba-net-core-upgrade-searching-vanilla-js-jquery-js-angular-6-type-script-and-react-redux-js-w-selenium-test/">Searching</a></li>
+		</ul>
+	</li>
+	<li>Continuous Integration Continuous Deployment (CI/CD) Pipeline(s)
+		<ul>
+			<li><a href="https://erichelin.wordpress.com/2018/06/10/tgimba-net-core-upgrade-part-7-6-quick-deploy/">Quick Deploy</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/06/17/tgimba-net-core-upgrade-part-7-7-deploy-continued-and-some-additional-unit-tests/">Additional Unit Tests</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/06/30/tgimba-net-core-upgrade-part-7-8-deploy-completed/">This part is complete</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/07/08/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-1-local-batch-file/">Local batch file</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/07/15/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-2-building-on-visual-studio-team-services/">Still building...</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/07/21/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-3-building-on-visual-studio-team-services-continued-tests-and-more-pre-deploy/">Testing and predeployment items</a></li>
+
+			<li><a href="https://erichelin.wordpress.com/2018/07/29/tgimba-net-core-upgrade-part-8-continuous-integration-continuous-deployment-part-4-build-artifact-correctly-built-using-vsts/">Building Artifact</a></li>
+			<li><a href="https://erichelin.wordpress.com/2018/08/12/tgimba-net-core-upgrade-finally-a-working-continuous-integration-continuous-deployment-ci-cd-pipeline-using-visual-studio-team-services-vsts/">Working!</a></li>
 		</ul>
 	</li>
 </ul>
