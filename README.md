@@ -50,8 +50,8 @@ Blog Post(s):
 	</li>
 	<li><a href="https://erichelin.wordpress.com/2020/05/28/tgimba-sensitive-configuration-has-gone-environmental/">Simpler Configuration</a></li>
 	<li><a href="https://erichelin.wordpress.com/2020/05/01/tgimba-upgrade-to-net-core-3-1/">Upgrade to .NET Core 3.1</a></li>
-	<li><a href="https://erichelin.wordpress.com/2020/04/07/tgimba-net-core-binary-search-algorithm-implemented/">Simpler Configuration</a></li>
-	<li><a href="https://erichelin.wordpress.com/2020/03/24/tgimba-net-core-binary-search-algorithm-with-multiple-results-what/">Simpler Configuration</a></li>
+	<li><a href="https://erichelin.wordpress.com/2020/04/07/tgimba-net-core-binary-search-algorithm-implemented/">Binary Search Algorithm Implemented!</a></li>
+	<li><a href="https://erichelin.wordpress.com/2020/03/24/tgimba-net-core-binary-search-algorithm-with-multiple-results-what/">Binary Search Algorithm w/Sentences Implemented!</a></li>
 	<li><a href="https://erichelin.wordpress.com/2020/02/17/tgimba-net-core-inserting-a-new-sort-algorithm/">Simpler Configuration</a></li>
 	<li><a href="https://erichelin.wordpress.com/2020/02/17/tgimba-net-core-centralizing-integration-tests/">Moving Selenium Test Project into TgimbaNetCore solution</a></li>
 	<li><a href="https://erichelin.wordpress.com/2020/02/03/tgimba-net-core-algorithm-fun-bubble-sort/">Bubble Sort</a></li>
@@ -64,7 +64,7 @@ Blog Post(s):
 					<li><a href="https://erichelin.wordpress.com/2019/07/16/tgimba-net-core-pre-api-work-jwt-embedded-object/">Embedded JWT Object</a></li>
 				</ul>
 			</li>		
-			<li><a href="https://erichelin.wordpress.com/2019/09/15/tgimba-net-core-api-the-new-data-layer/">New Service Layer</a></li>
+			<li><a href="https://erichelin.wordpress.com/2019/09/15/tgimba-net-core-api-the-new-data-layer/">New Data Layer</a></li>
 			<li><a href="https://erichelin.wordpress.com/2019/10/13/tgimba-net-core-api-the-new-service-layer/">New Service Layer</a></li>
 			<li><a href="https://erichelin.wordpress.com/2019/10/26/tgimba-net-core-api-the-new-api-and-service-layers-part-2-user-methods/">New User Method</a></li>
 			<li><a href="https://erichelin.wordpress.com/2019/12/26/tgimba-net-core-api-the-new-api-and-service-layers-part-3-bucket-list-item-methods/">New Bucket List Item Methods</a></li>
