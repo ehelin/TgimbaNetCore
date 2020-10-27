@@ -85,21 +85,21 @@ Blog Post(s):
 	<li><a href="https://erichelin.wordpress.com/2019/06/08/tgimba-net-core-ci-cd-pipeline-revamp/">Pipeline Plumbing Refit</a></li>
 	<li><a href="https://erichelin.wordpress.com/2019/04/02/tgimba-net-core-upgrade-react-redux-js-refactor/">React refactor</a></li>
 	<li>Upgrade from .NET Framework to .NET Core
-		<li>Login
-			<ul>
-				<li><a href="https://erichelin.wordpress.com/2018/08/19/tgimba-net-core-upgrade-adding-plumbing-for-html-vanilla-javascript-views/">Additional JavaScript Views</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/08/25/tgimba-net-core-upgrade-javascript-unit-tests-with-jstest-net-truly-awesome/">JTest - JavaScript Unit Tests</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/09/05/tgimba-net-core-upgrade-login-view-added/">Vanilla JavaScript View</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-angular-5-typescript-login-view-added/">Angular View</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-react-js-client-research/">React Login</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/10/06/tgimba-net-core-upgrade-angular-5-replaced-with-angular-6-logined/">Angular TypeScript Login</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/10/15/tgimba-net-core-upgrade-jquery-login/">Jquery Login</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/10/27/tgimba-net-core-upgrade-react-js-redux-login/">React Login</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/11/02/tgimba-net-core-upgrade-login-page-selenium-integration-test/">Selenium Test</a></li>
-				<li><a href="https://erichelin.wordpress.com/2018/11/04/tgimba-net-core-upgrade-vanilla-javascript-login-page-objectified/">JavaScript Login</a></li>
-			</ul>
-		</li>
 		<ul>
+			<li>Login
+				<ul>
+					<li><a href="https://erichelin.wordpress.com/2018/08/19/tgimba-net-core-upgrade-adding-plumbing-for-html-vanilla-javascript-views/">Additional JavaScript Views</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/08/25/tgimba-net-core-upgrade-javascript-unit-tests-with-jstest-net-truly-awesome/">JTest - JavaScript Unit Tests</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/09/05/tgimba-net-core-upgrade-login-view-added/">Vanilla JavaScript View</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-angular-5-typescript-login-view-added/">Angular View</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/09/23/tgimba-net-core-upgrade-react-js-client-research/">React Login</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/10/06/tgimba-net-core-upgrade-angular-5-replaced-with-angular-6-logined/">Angular TypeScript Login</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/10/15/tgimba-net-core-upgrade-jquery-login/">Jquery Login</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/10/27/tgimba-net-core-upgrade-react-js-redux-login/">React Login</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/11/02/tgimba-net-core-upgrade-login-page-selenium-integration-test/">Selenium Test</a></li>
+					<li><a href="https://erichelin.wordpress.com/2018/11/04/tgimba-net-core-upgrade-vanilla-javascript-login-page-objectified/">JavaScript Login</a></li>
+				</ul>
+			</li>
 			<li><a href="https://erichelin.wordpress.com/2018/02/02/tgimba-net-core-upgrade-part-1-dal-conversion-with-test-stubs/">Test Stubs</a></li>
 			<li><a href="https://erichelin.wordpress.com/2018/02/06/tgimba-net-core-upgrade-part-2-dal-integration-test-complete/">DAL complete!</a></li>
 			<li><a href="https://erichelin.wordpress.com/2018/02/19/tgimba-net-core-upgrade-part-3-api-code-integration-test-complete/">API complete!</a></li>
