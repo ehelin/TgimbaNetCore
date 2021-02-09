@@ -36,6 +36,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsBLLNetCore-Unit", "Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsAlgorithms-Unit", "Algorithms-Unit\TestsAlgorithms-Unit.csproj", "{8EEE02AC-4F57-4D50-827E-15F19D4ED0D8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Containerization", "Containerization", "{683F8935-7583-4549-A604-8E0539B2E750}"
+	ProjectSection(SolutionItems) = preProject
+		Containerization\Dockerfile = Containerization\Dockerfile
+		Containerization\TgimbaApache.conf = Containerization\TgimbaApache.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +91,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{683F8935-7583-4549-A604-8E0539B2E750} = {4584033D-F538-457D-AB20-588B537A7865}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55A67A5D-9803-4B7C-B6A0-F9E172C7171D}
