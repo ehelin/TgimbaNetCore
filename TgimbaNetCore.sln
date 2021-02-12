@@ -38,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsAlgorithms-Unit", "Alg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Containerization", "Containerization", "{683F8935-7583-4549-A604-8E0539B2E750}"
 	ProjectSection(SolutionItems) = preProject
-		Containerization\Dockerfile = Containerization\Dockerfile
+		Dockerfile = Dockerfile
 		Containerization\TgimbaApache.conf = Containerization\TgimbaApache.conf
 	EndProjectSection
 EndProject
