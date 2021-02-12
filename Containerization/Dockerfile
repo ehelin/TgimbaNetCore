@@ -15,7 +15,7 @@ RUN apt-get update && \
 apt-get -y install apache2
 
 #copy Tgimba .conf file to apache available site list
-COPY TgimbaNetCore/Containerization/TgimbaApache.conf /etc/apache2/sites-available/
+COPY TgimbaApache.conf /etc/apache2/sites-available/
 COPY TgimbaNetCore/ /build/
 RUN cd /build && \
 dotnet restore && \
