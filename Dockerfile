@@ -18,9 +18,9 @@ apt-get -y install apache2
 COPY Containerization/TgimbaApache.conf /etc/apache2/sites-available/
 COPY . /build/
 RUN cd /build && \
-dotnet restore && \
-dotnet build && \
-dotnet publish -c Release -o /var/TgimbaApache -r win-x64 --self-contained false
+dotnet restore TgimbaNetCore.sln && \
+dotnet build TgimbaNetCore.sln && \
+dotnet publish TgimbaNetCore.sln -c Release -o /var/TgimbaApache -r win-x64 --self-contained false
 
 #create some directories for environment variables (set in environment above)
 RUN mkdir -p $APACHE_RUN_DIR
